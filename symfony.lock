@@ -5,6 +5,9 @@
     "behat/transliterator": {
         "version": "v1.2.0"
     },
+    "cocur/slugify": {
+        "version": "v3.2"
+    },
     "composer/ca-bundle": {
         "version": "1.2.3"
     },
@@ -149,6 +152,18 @@
     "knplabs/knp-paginator-bundle": {
         "version": "v3.0.0"
     },
+    "lexik/maintenance-bundle": {
+        "version": "2.1",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "master",
+            "version": "2.1",
+            "ref": "c7b1a155b60c553d2c6e272d210e8614c89a7e5c"
+        },
+        "files": [
+            "config/packages/lexik_maintenance.yaml"
+        ]
+    },
     "liip/imagine-bundle": {
         "version": "1.8",
         "recipe": {
@@ -246,6 +261,50 @@
         "files": [
             "config/packages/security_checker.yaml"
         ]
+    },
+    "sonata-project/admin-bundle": {
+        "version": "3.31",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "master",
+            "version": "3.31",
+            "ref": "0e5931df1732e3dccfba42a20853049e5e9db6ae"
+        },
+        "files": [
+            "config/packages/sonata_admin.yaml",
+            "config/routes/sonata_admin.yaml",
+            "src/Admin/.gitignore"
+        ]
+    },
+    "sonata-project/block-bundle": {
+        "version": "3.17.0"
+    },
+    "sonata-project/cache": {
+        "version": "2.0.1"
+    },
+    "sonata-project/core-bundle": {
+        "version": "3.9",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "master",
+            "version": "3.9",
+            "ref": "2f69bd1995730b73a5211a9707622fb25a925df7"
+        },
+        "files": [
+            "config/packages/sonata_core.yaml"
+        ]
+    },
+    "sonata-project/datagrid-bundle": {
+        "version": "2.5.0"
+    },
+    "sonata-project/doctrine-extensions": {
+        "version": "1.3.0"
+    },
+    "sonata-project/doctrine-orm-admin-bundle": {
+        "version": "3.10.0"
+    },
+    "sonata-project/exporter": {
+        "version": "2.0.1"
     },
     "stof/doctrine-extensions-bundle": {
         "version": "1.2",
@@ -482,6 +541,9 @@
             "config/packages/test/routing.yaml",
             "config/routes.yaml"
         ]
+    },
+    "symfony/security-acl": {
+        "version": "v3.0.2"
     },
     "symfony/security-bundle": {
         "version": "3.3",
