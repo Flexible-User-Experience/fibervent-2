@@ -16,7 +16,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
  * @author   Anton Serra <aserratorta@gmail.com>
  *
  * @ORM\Table(uniqueConstraints={@ORM\UniqueConstraint(name="windfarm_code_unique", columns={"windfarm_id", "code"})})
- * @ORM\Entity(repositoryClass="AppBundle\Repository\WindmillRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\WindmillRepository")
  * @Gedmo\SoftDeleteable(fieldName="removedAt", timeAware=false)
  */
 class Windmill extends AbstractBase

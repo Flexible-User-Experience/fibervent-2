@@ -2,7 +2,7 @@
 
 namespace App\Enum;
 
-use AppBundle\Entity\BladeDamage;
+use App\Entity\BladeDamage;
 
 /**
  * Class BladeDamageEdgeEnum.

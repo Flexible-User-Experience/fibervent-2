@@ -2,7 +2,7 @@
 
 namespace App\Entity;
 
-use App\Entity\Traits\AddresTrait;
+use App\Entity\Traits\AddressTrait;
 use App\Entity\Traits\CityTrait;
 use App\Entity\Traits\CodeTrait;
 use App\Entity\Traits\ImageTrait;
@@ -24,14 +24,14 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  * @author   Anton Serra <aserratorta@gmail.com>
  *
  * @ORM\Table()
- * @ORM\Entity(repositoryClass="AppBundle\Repository\CustomerRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\CustomerRepository")
  * @Gedmo\SoftDeleteable(fieldName="removedAt", timeAware=false)
  * @Vich\Uploadable
  */
 class Customer extends AbstractBase
 {
     use NameTrait;
-    use AddresTrait;
+    use AddressTrait;
     use PostalCodeTrait;
     use StateTrait;
     use CityTrait;

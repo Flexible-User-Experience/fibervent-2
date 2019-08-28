@@ -16,7 +16,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @author   Anton Serra <aserratorta@gmail.com>
  *
  * @ORM\Table()
- * @ORM\Entity(repositoryClass="AppBundle\Repository\BladeRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\BladeRepository")
  * @UniqueEntity("model")
  * @Gedmo\SoftDeleteable(fieldName="removedAt", timeAware=false)
  */

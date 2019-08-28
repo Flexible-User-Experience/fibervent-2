@@ -12,7 +12,7 @@ use Sonata\UserBundle\Entity\BaseGroup as BaseGroup;
  *
  * @author   David Romaní <david@flux.cat>
  *
- * @ORM\Entity(repositoryClass="AppBundle\Repository\GroupRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\GroupRepository")
  * @ORM\Table(name="admin_group")
  */
 class Group extends BaseGroup

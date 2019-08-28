@@ -20,7 +20,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @author   Anton Serra <aserratorta@gmail.com>
  *
  * @ORM\Table()
- * @ORM\Entity(repositoryClass="AppBundle\Repository\DamageRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\DamageRepository")
  * @UniqueEntity("code")
  * @Gedmo\SoftDeleteable(fieldName="removedAt", timeAware=false)
  * @Gedmo\TranslationEntity(class="AppBundle\Entity\Translations\DamageTranslation")

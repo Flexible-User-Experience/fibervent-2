@@ -14,7 +14,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  * @author   Jordi Sort <jordi.sort@mirmit.com>
  *
  * @ORM\Table()
- * @ORM\Entity(repositoryClass="AppBundle\Repository\WorkOrderRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\WorkOrderRepository")
  * @UniqueEntity("projectNumber")
  * @Gedmo\SoftDeleteable(fieldName="removedAt", timeAware=false)
  */

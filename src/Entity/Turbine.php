@@ -16,7 +16,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  * @author   Anton Serra <aserratorta@gmail.com>
  *
  * @ORM\Table(uniqueConstraints={@ORM\UniqueConstraint(name="model_unique", columns={"model", "power", "tower_height"})})
- * @ORM\Entity(repositoryClass="AppBundle\Repository\TurbineRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\TurbineRepository")
  * @Gedmo\SoftDeleteable(fieldName="removedAt", timeAware=false)
  * @UniqueEntity({"model", "power", "towerHeight"})
  */

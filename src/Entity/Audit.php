@@ -16,7 +16,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
  * @author   Anton Serra <aserratorta@gmail.com>
  *
  * @ORM\Table()
- * @ORM\Entity(repositoryClass="AppBundle\Repository\AuditRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\AuditRepository")
  * @Gedmo\SoftDeleteable(fieldName="removedAt", timeAware=false)
  */
 class Audit extends AbstractBase

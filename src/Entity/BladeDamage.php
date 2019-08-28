@@ -17,7 +17,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @author   Anton Serra <aserratorta@gmail.com>
  *
  * @ORM\Table()
- * @ORM\Entity(repositoryClass="AppBundle\Repository\BladeDamageRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\BladeDamageRepository")
  * @Gedmo\SoftDeleteable(fieldName="removedAt", timeAware=false)
  */
 class BladeDamage extends AbstractBase

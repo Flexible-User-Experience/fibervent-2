@@ -14,7 +14,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
  * @author   Anton Serra <aserratorta@gmail.com>
  *
  * @ORM\Table()
- * @ORM\Entity(repositoryClass="AppBundle\Repository\WindmillBladeRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\WindmillBladeRepository")
  * @Gedmo\SoftDeleteable(fieldName="removedAt", timeAware=false)
  */
 class WindmillBlade extends AbstractBase

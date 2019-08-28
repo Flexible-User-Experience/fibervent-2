@@ -15,7 +15,7 @@ use Symfony\Component\Intl\Intl;
  * @author   Anton Serra <aserratorta@gmail.com>
  *
  * @ORM\Table()
- * @ORM\Entity(repositoryClass="AppBundle\Repository\StateRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\StateRepository")
  * @Gedmo\SoftDeleteable(fieldName="removedAt", timeAware=false)
  */
 class State extends AbstractBase

@@ -14,7 +14,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
  * @author   Anton Serra <aserratorta@gmail.com>
  *
  * @ORM\Table()
- * @ORM\Entity(repositoryClass="AppBundle\Repository\ObservationRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\ObservationRepository")
  * @Gedmo\SoftDeleteable(fieldName="removedAt", timeAware=false)
  */
 class Observation extends AbstractBase

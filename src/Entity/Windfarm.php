@@ -2,7 +2,7 @@
 
 namespace App\Entity;
 
-use App\Entity\Traits\AddresTrait;
+use App\Entity\Traits\AddressTrait;
 use App\Entity\Traits\CityTrait;
 use App\Entity\Traits\CodeTrait;
 use App\Entity\Traits\GpsCoordinatesTrait;
@@ -23,14 +23,14 @@ use Cocur\Slugify\Slugify;
  * @author   Anton Serra <aserratorta@gmail.com>
  *
  * @ORM\Table()
- * @ORM\Entity(repositoryClass="AppBundle\Repository\WindfarmRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\WindfarmRepository")
  * @Gedmo\SoftDeleteable(fieldName="removedAt", timeAware=false)
  */
 class Windfarm extends AbstractBase
 {
     use NameTrait;
     use CodeTrait;
-    use AddresTrait;
+    use AddressTrait;
     use PostalCodeTrait;
     use StateTrait;
     use CityTrait;

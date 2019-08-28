@@ -2,7 +2,7 @@
 
 namespace App\Enum;
 
-use AppBundle\Entity\Audit;
+use App\Entity\Audit;
 
 /**
  * Class AuditTypeEnum.
