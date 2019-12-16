@@ -69,6 +69,7 @@ class Audit extends AbstractBase
      * @var Windmill
      *
      * @ORM\ManyToOne(targetEntity="Windmill", inversedBy="audits")
+     * @ORM\JoinColumn(name="windmill_id", referencedColumnName="id")
      */
     private $windmill;
 
@@ -108,6 +109,20 @@ class Audit extends AbstractBase
      * @ORM\Column(type="integer", options={"default"=0})
      */
     protected $language = 0;
+
+    /**
+     * @var WorkOrder
+     * @ORM\ManyToOne(targetEntity="WorkOrder", inversedBy="audits")
+     * @ORM\JoinColumn(name="workorder_id", referencedColumnName="id", nullable=true)
+     */
+    private $workOrder;
+
+    /**
+     * @var bool
+     *
+     * @ORM\Column(type="boolean", options={"default"=false})
+     */
+    private $hasWorkOrder;
 
     /**
      * Methods.
@@ -446,8 +461,56 @@ class Audit extends AbstractBase
     /**
      * @return string
      */
+    public function toStringWithoutJoins()
+    {
+        return $this->id ? $this->getBeginDate()->format('d/m/Y').' · '.$this->getWindfarm()->getCustomer()->getName().' · '.$this->getWindfarm()->getName().' · ' : '---';
+    }
+
+    /**
+     * @return string
+     */
     public function __toString()
     {
         return $this->id ? $this->getBeginDate()->format('d/m/Y').' · '.$this->getWindmill() : '---';
+    }
+
+    /**
+     * @return WorkOrder
+     */
+    public function getWorkOrder(): ?WorkOrder
+    {
+        return $this->workOrder;
+    }
+
+    /**
+     * @param WorkOrder $workOrder
+     *
+     * @return Audit
+     */
+    public function setWorkOrder(WorkOrder $workOrder): Audit
+    {
+        $this->workOrder = $workOrder;
+
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isHasWorkOrder(): bool
+    {
+        return $this->hasWorkOrder;
+    }
+
+    /**
+     * @param bool $hasWorkOrder
+     *
+     * @return Audit
+     */
+    public function setHasWorkOrder(bool $hasWorkOrder): Audit
+    {
+        $this->hasWorkOrder = $hasWorkOrder;
+
+        return $this;
     }
 }
