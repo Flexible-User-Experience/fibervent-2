@@ -4,7 +4,7 @@ namespace App\Repository;
 
 use App\Entity\WindmillBlade;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\Persistence\ManagerRegistry as RegistryInterface;
+use Doctrine\Common\Persistence\ManagerRegistry as RegistryInterface;
 
 /**
  * Class WindmillBladeRepository.

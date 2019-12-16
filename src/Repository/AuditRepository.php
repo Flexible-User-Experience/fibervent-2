@@ -10,7 +10,7 @@ use App\Enum\AuditStatusEnum;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\Query;
 use Doctrine\ORM\QueryBuilder;
-use Doctrine\Persistence\ManagerRegistry as RegistryInterface;
+use Doctrine\Common\Persistence\ManagerRegistry as RegistryInterface;
 
 /**
  * Class AuditRepository.
