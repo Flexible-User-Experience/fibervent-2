@@ -4,7 +4,7 @@ namespace App\Repository;
 
 use App\Entity\BladePhoto;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\Persistence\ManagerRegistry as RegistryInterface;
 
 /**
  * Class BladePhotoRepository.
