@@ -22,7 +22,7 @@ use Gedmo\Translatable\Entity\MappedSuperclass\AbstractPersonalTranslation;
 class DamageCategoryTranslation extends AbstractPersonalTranslation
 {
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\DamageCategory", inversedBy="translations")
+     * @ORM\ManyToOne(targetEntity="App\Entity\DamageCategory", inversedBy="translations")
      * @ORM\JoinColumn(name="object_id", referencedColumnName="id", onDelete="CASCADE")
      */
     protected $object;

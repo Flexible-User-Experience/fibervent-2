@@ -23,7 +23,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Entity(repositoryClass="App\Repository\DamageRepository")
  * @UniqueEntity("code")
  * @Gedmo\SoftDeleteable(fieldName="removedAt", timeAware=false)
- * @Gedmo\TranslationEntity(class="AppBundle\Entity\Translations\DamageTranslation")
+ * @Gedmo\TranslationEntity(class="App\Entity\Translations\DamageTranslation")
  */
 class Damage extends AbstractBase
 {
@@ -47,7 +47,7 @@ class Damage extends AbstractBase
 
     /**
      * @ORM\OneToMany(
-     *     targetEntity="AppBundle\Entity\Translations\DamageTranslation",
+     *     targetEntity="App\Entity\Translations\DamageTranslation",
      *     mappedBy="object",
      *     cascade={"persist", "remove"}
      * )
