@@ -6,8 +6,6 @@ namespace App\Enum;
  * RepairAccessTypeEnum class.
  *
  * @category Enum
- *
- * @author   Jordi Sort <jordi.sort@mirmit.com>
  */
 class RepairAccessTypeEnum
 {
@@ -17,15 +15,29 @@ class RepairAccessTypeEnum
     const GROUND = 3;
 
     /**
+     * Methods.
+     */
+
+    /**
      * @return array
      */
     public static function getEnumArray()
     {
         return array(
-            self::CRANE => 'Grua',
-            self::BASKET_CRANE => 'Cistella FV',
-            self::ROPES => 'Cordes',
-            self::GROUND => 'Terra',
+            self::CRANE => 'enum.repair_access_type.crane',
+            self::BASKET_CRANE => 'enum.repair_access_type.basket_crane',
+            self::ROPES => 'enum.repair_access_type.ropes',
+            self::GROUND => 'enum.repair_access_type.ground',
         );
+    }
+
+    /**
+     * @param int $type
+     *
+     * @return string
+     */
+    public static function getDecodedStringFromType(int $type)
+    {
+        return self::getEnumArray()[$type];
     }
 }

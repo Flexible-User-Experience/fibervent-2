@@ -8,14 +8,16 @@ use App\Entity\BladeDamage;
  * Class BladeDamageEdgeEnum.
  *
  * @category Enum
- *
- * @author   David Romaní <david@flux.cat>
  */
 class BladeDamageEdgeEnum
 {
     const EDGE_IN = 0;
     const EDGE_OUT = 1;
     const EDGE_UNDEFINED = 2;
+
+    /**
+     * Methods.
+     */
 
     /**
      * @return array

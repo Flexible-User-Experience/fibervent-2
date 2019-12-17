@@ -6,8 +6,6 @@ namespace App\Enum;
  * UserRolesEnum class.
  *
  * @category Enum
- *
- * @author   David Romaní <david@flux.cat>
  */
 class UserRolesEnum
 {
@@ -17,6 +15,10 @@ class UserRolesEnum
     const ROLE_TECHNICIAN = 'ROLE_TECHNICIAN';
     const ROLE_ADMIN = 'ROLE_ADMIN';
     const ROLE_SUPER_ADMIN = 'ROLE_SUPER_ADMIN';
+
+    /**
+     * Methods.
+     */
 
     /**
      * @return array

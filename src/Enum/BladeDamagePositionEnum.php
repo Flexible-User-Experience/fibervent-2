@@ -8,8 +8,6 @@ use App\Entity\BladeDamage;
  * Class BladeDamagePositionEnum.
  *
  * @category Enum
- *
- * @author   David Romaní <david@flux.cat>
  */
 class BladeDamagePositionEnum
 {
@@ -17,6 +15,10 @@ class BladeDamagePositionEnum
     const VALVE_SUCTION = 1;
     const EDGE_IN = 2;
     const EDGE_OUT = 3;
+
+    /**
+     * Methods.
+     */
 
     /**
      * @return array

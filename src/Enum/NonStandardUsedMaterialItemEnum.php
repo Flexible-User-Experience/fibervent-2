@@ -2,12 +2,12 @@
 
 namespace App\Enum;
 
+use App\Entity\NonStandardUsedMaterial;
+
 /**
  * NonStandardUsedMaterialItemEnum class.
  *
  * @category Enum
- *
- * @author   Jordi Sort <jordi.sort@mirmit.com>
  */
 class NonStandardUsedMaterialItemEnum
 {
@@ -20,18 +20,32 @@ class NonStandardUsedMaterialItemEnum
     const LEP = 6;
 
     /**
+     * Methods.
+     */
+
+    /**
      * @return array
      */
     public static function getEnumArray()
     {
         return array(
-            self::OTHERS => 'Altres',
-            self::RECEIVERS => 'Receptors',
-            self::VORTEX => 'Vortex',
-            self::STALL_STRIP => 'Stall strip',
-            self::DIVERTER_S => 'Diverter S.',
-            self::BELT_3M => 'Cinta 3m',
-            self::LEP => 'LEP',
+            self::OTHERS => 'enum.non_standard_used_material_item.others',
+            self::RECEIVERS => 'enum.non_standard_used_material_item.receivers',
+            self::VORTEX => 'enum.non_standard_used_material_item.vortex',
+            self::STALL_STRIP => 'enum.non_standard_used_material_item.stall_strip',
+            self::DIVERTER_S => 'enum.non_standard_used_material_item.diverter_s',
+            self::BELT_3M => 'enum.non_standard_used_material_item.belt_3m',
+            self::LEP => 'enum.non_standard_used_material_item.lep',
         );
+    }
+
+    /**
+     * @param NonStandardUsedMaterial $nonStandardUsedMaterial
+     *
+     * @return string
+     */
+    public static function getStringValue(NonStandardUsedMaterial $nonStandardUsedMaterial)
+    {
+        return self::getEnumArray()[$nonStandardUsedMaterial->getItem()];
     }
 }

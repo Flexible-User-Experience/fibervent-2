@@ -6,13 +6,15 @@ namespace App\Enum;
  * Class BladeDamageStatusEnum.
  *
  * @category Enum
- *
- * @author   David Romaní <david@flux.cat>
  */
 class BladeDamageStatusEnum
 {
     const STATUS_NOT_VALIDATED = 0;
     const STATUS_VALIDATED = 1;
+
+    /**
+     * Methods.
+     */
 
     /**
      * @return array

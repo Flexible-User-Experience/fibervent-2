@@ -6,8 +6,6 @@ namespace App\Enum;
  * Class AuditLanguageEnum.
  *
  * @category Enum
- *
- * @author   David Romaní <david@flux.cat>
  */
 class AuditLanguageEnum
 {
@@ -17,6 +15,10 @@ class AuditLanguageEnum
     const PORTUGUESE = 3;
     const GERMAN = 4;
     const ITALIAN = 5;
+
+    /**
+     * Methods.
+     */
 
     /**
      * @return array
@@ -42,9 +44,9 @@ class AuditLanguageEnum
             self::SPANISH => 'español',
             self::ENGLISH => 'english',
             self::FRENCH => 'français',
-//            self::PORTUGUESE => 'portuguès',
-//            self::GERMAN     => 'alemany',
-//            self::ITALIAN    => 'italià',
+            self::PORTUGUESE => 'portuguès',
+            self::GERMAN     => 'alemany',
+            self::ITALIAN    => 'italià',
         );
     }
 }

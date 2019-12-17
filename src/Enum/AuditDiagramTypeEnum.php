@@ -6,8 +6,6 @@ namespace App\Enum;
  * AuditDiagramTypeEnum class.
  *
  * @category Enum
- *
- * @author   David Romaní <david@flux.cat>
  */
 class AuditDiagramTypeEnum
 {
@@ -17,6 +15,10 @@ class AuditDiagramTypeEnum
     const TYPE_4 = 4;
     const TYPE_5 = 5;
     const TYPE_6 = 6;
+
+    /**
+     * Methods.
+     */
 
     /**
      * @return array

@@ -6,8 +6,6 @@ namespace App\Enum;
  * RepairWindmillSectionEnum class.
  *
  * @category Enum
- *
- * @author   Jordi Sort <jordi.sort@mirmit.com>
  */
 class RepairWindmillSectionEnum
 {
@@ -16,14 +14,28 @@ class RepairWindmillSectionEnum
     const TOWER = 2;
 
     /**
+     * Methods.
+     */
+
+    /**
      * @return array
      */
     public static function getEnumArray()
     {
         return array(
-            self::BLADE => 'Pala',
-            self::NACELLE => 'Nacelle',
-            self::TOWER => 'Torre',
+            self::BLADE => 'enum.repair_windmill_section.blade',
+            self::NACELLE => 'enum.repair_windmill_section.nacelle',
+            self::TOWER => 'enum.repair_windmill_section.tower',
         );
+    }
+
+    /**
+     * @param int $type
+     *
+     * @return string
+     */
+    public static function getDecodedStringFromType(int $type)
+    {
+        return self::getEnumArray()[$type];
     }
 }

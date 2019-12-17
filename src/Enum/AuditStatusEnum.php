@@ -6,8 +6,6 @@ namespace App\Enum;
  * AuditStatusEnum class.
  *
  * @category Enum
- *
- * @author   Anton Serra <aserratorta@gmail.com>
  */
 class AuditStatusEnum
 {
@@ -15,6 +13,10 @@ class AuditStatusEnum
     const DOING = 1;
     const DONE = 2;
     const INVOICED = 3;
+
+    /**
+     * Methods.
+     */
 
     /**
      * @return array

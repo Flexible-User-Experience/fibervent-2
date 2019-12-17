@@ -8,8 +8,6 @@ use App\Entity\Audit;
  * Class AuditTypeEnum.
  *
  * @category Enum
- *
- * @author   David Romaní <david@flux.cat>
  */
 class AuditTypeEnum
 {
