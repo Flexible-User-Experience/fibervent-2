@@ -10,13 +10,11 @@ use Doctrine\Common\Persistence\ManagerRegistry as RegistryInterface;
  * Class PhotoRepository.
  *
  * @category Repository
- *
- * @author   Anton Serra <aserratorta@gmail.com>
  */
 class PhotoRepository extends ServiceEntityRepository
 {
     /**
-     * EventCategoryRepository constructor.
+     * PhotoRepository constructor.
      *
      * @param RegistryInterface $registry
      */

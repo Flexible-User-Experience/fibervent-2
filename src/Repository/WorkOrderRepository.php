@@ -4,21 +4,19 @@ namespace App\Repository;
 
 use App\Entity\WorkOrder;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Common\Persistence\ManagerRegistry as RegistryInterface;
 use Doctrine\ORM\Query;
 use Doctrine\ORM\QueryBuilder;
-use Doctrine\Common\Persistence\ManagerRegistry as RegistryInterface;
 
 /**
  * Class WorkOrderRepository.
  *
  * @category Repository
- *
- * @author   Jordi Sort <jordi.sort@mirmit.com>
  */
 class WorkOrderRepository extends ServiceEntityRepository
 {
     /**
-     * EventCategoryRepository constructor.
+     * WorkOrderRepository constructor.
      *
      * @param RegistryInterface $registry
      */
@@ -35,10 +33,7 @@ class WorkOrderRepository extends ServiceEntityRepository
      */
     public function findAllSortedByProjectNumberQB($limit = null, $order = 'ASC')
     {
-        $query = $this
-            ->createQueryBuilder('t')
-            ->orderBy('t.projectNumber', $order);
-
+        $query = $this->createQueryBuilder('t')->orderBy('t.projectNumber', $order);
         if (!is_null($limit)) {
             $query->setMaxResults($limit);
         }

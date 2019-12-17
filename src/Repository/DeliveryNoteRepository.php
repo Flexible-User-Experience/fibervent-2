@@ -2,27 +2,27 @@
 
 namespace App\Repository;
 
-use App\Entity\State;
+use App\Entity\DeliveryNote;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\Common\Persistence\ManagerRegistry as RegistryInterface;
 use Doctrine\ORM\Query;
 use Doctrine\ORM\QueryBuilder;
+use Doctrine\Common\Persistence\ManagerRegistry as RegistryInterface;
 
 /**
- * Class StateRepository.
+ * Class DeliveryNoteRepository.
  *
  * @category Repository
  */
-class StateRepository extends ServiceEntityRepository
+class DeliveryNoteRepository extends ServiceEntityRepository
 {
     /**
-     * StateRepository constructor.
+     * DeliveryNoteRepository constructor.
      *
      * @param RegistryInterface $registry
      */
     public function __construct(RegistryInterface $registry)
     {
-        parent::__construct($registry, State::class);
+        parent::__construct($registry, DeliveryNote::class);
     }
 
     /**
@@ -31,9 +31,9 @@ class StateRepository extends ServiceEntityRepository
      *
      * @return QueryBuilder
      */
-    public function findAllSortedByNameQB($limit = null, $order = 'ASC')
+    public function findAllSortedByIdQB($limit = null, $order = 'ASC')
     {
-        $query = $this->createQueryBuilder('s')->orderBy('s.countryCode', $order)->addOrderBy('s.name', $order);
+        $query = $this->createQueryBuilder('t')->orderBy('t.id', $order);
         if (!is_null($limit)) {
             $query->setMaxResults($limit);
         }
@@ -47,9 +47,9 @@ class StateRepository extends ServiceEntityRepository
      *
      * @return Query
      */
-    public function findAllSortedByNameQ($limit = null, $order = 'ASC')
+    public function findAllSortedByIdQ($limit = null, $order = 'ASC')
     {
-        return $this->findAllSortedByNameQB($limit, $order)->getQuery();
+        return $this->findAllSortedByIdQB($limit, $order)->getQuery();
     }
 
     /**
@@ -58,8 +58,8 @@ class StateRepository extends ServiceEntityRepository
      *
      * @return array
      */
-    public function findAllSortedByName($limit = null, $order = 'ASC')
+    public function findAllSortedById($limit = null, $order = 'ASC')
     {
-        return $this->findAllSortedByNameQ($limit, $order)->getResult();
+        return $this->findAllSortedByIdQ($limit, $order)->getResult();
     }
 }

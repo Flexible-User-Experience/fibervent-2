@@ -4,21 +4,19 @@ namespace App\Repository;
 
 use App\Entity\Turbine;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Common\Persistence\ManagerRegistry as RegistryInterface;
 use Doctrine\ORM\Query;
 use Doctrine\ORM\QueryBuilder;
-use Doctrine\Common\Persistence\ManagerRegistry as RegistryInterface;
 
 /**
  * Class TurbineRepository.
  *
  * @category Repository
- *
- * @author   Anton Serra <aserratorta@gmail.com>
  */
 class TurbineRepository extends ServiceEntityRepository
 {
     /**
-     * EventCategoryRepository constructor.
+     * TurbineRepository constructor.
      *
      * @param RegistryInterface $registry
      */
@@ -35,10 +33,7 @@ class TurbineRepository extends ServiceEntityRepository
      */
     public function findAllSortedByModelQB($limit = null, $order = 'ASC')
     {
-        $query = $this
-            ->createQueryBuilder('t')
-            ->orderBy('t.model', $order);
-
+        $query = $this->createQueryBuilder('t')->orderBy('t.model', $order);
         if (!is_null($limit)) {
             $query->setMaxResults($limit);
         }

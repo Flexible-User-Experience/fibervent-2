@@ -8,6 +8,7 @@ use App\Entity\User;
 use App\Entity\Windfarm;
 use App\Enum\AuditStatusEnum;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\AbstractQuery;
 use Doctrine\ORM\Query;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Common\Persistence\ManagerRegistry as RegistryInterface;
@@ -16,13 +17,11 @@ use Doctrine\Common\Persistence\ManagerRegistry as RegistryInterface;
  * Class AuditRepository.
  *
  * @category Repository
- *
- * @author   Anton Serra <aserratorta@gmail.com>
  */
 class AuditRepository extends ServiceEntityRepository
 {
     /**
-     * EventCategoryRepository constructor.
+     * AuditRepository constructor.
      *
      * @param RegistryInterface $registry
      */
@@ -38,9 +37,7 @@ class AuditRepository extends ServiceEntityRepository
      */
     public function getDoingAuditsByStatusQB($status)
     {
-        return $this->createQueryBuilder('a')
-            ->where('a.status = :status')
-            ->setParameter('status', $status);
+        return $this->createQueryBuilder('a')->where('a.status = :status')->setParameter('status', $status);
     }
 
     /**
@@ -100,15 +97,13 @@ class AuditRepository extends ServiceEntityRepository
      */
     public function getInvoicedOrDoneAuditsByWindfarmSortedByBeginDateQB(Windfarm $windfarm)
     {
-        $query = $this->createQueryBuilder('a')
+        return $this->createQueryBuilder('a')
             ->where('a.windfarm = :windfarm')
             ->andWhere('a.status = :done OR a.status = :invoiced')
             ->setParameter('windfarm', $windfarm)
             ->setParameter('done', AuditStatusEnum::DONE)
             ->setParameter('invoiced', AuditStatusEnum::INVOICED)
             ->orderBy('a.beginDate', 'DESC');
-
-        return $query;
     }
 
     /**
@@ -139,15 +134,12 @@ class AuditRepository extends ServiceEntityRepository
      */
     public function getAllAuditsByWindfarmByYearQB(Windfarm $windfarm, $year)
     {
-        $query = $this->createQueryBuilder('a')
+        return $this->createQueryBuilder('a')
             ->where('a.windfarm = :windfarm')
-            ->setParameter('windfarm', $windfarm)
             ->andWhere('YEAR(a.beginDate) = :year')
+            ->setParameter('windfarm', $windfarm)
             ->setParameter('year', $year)
-            ->orderBy('a.beginDate', 'DESC')
-        ;
-
-        return $query;
+            ->orderBy('a.beginDate', 'DESC');
     }
 
     /**
@@ -226,15 +218,11 @@ class AuditRepository extends ServiceEntityRepository
     {
         $query = $this->getAuditsByWindfarmByStatusesAndYearQB($windfarm, $statuses, $year);
         if (is_array($range)) {
-            if ($range['start'] != '') {
-                $query
-                    ->andWhere('a.beginDate >= :start')
-                    ->setParameter('start', $this->transformReverseDateString($range['start']));
+            if ('' != $range['start']) {
+                $query->andWhere('a.beginDate >= :start')->setParameter('start', $this->transformReverseDateString($range['start']));
             }
-            if ($range['end'] != '') {
-                $query
-                    ->andWhere('a.beginDate <= :end')
-                    ->setParameter('end', $this->transformReverseDateString($range['end']));
+            if ('' != $range['end']) {
+                $query->andWhere('a.beginDate <= :end')->setParameter('end', $this->transformReverseDateString($range['end']));
             }
         }
 
@@ -277,13 +265,10 @@ class AuditRepository extends ServiceEntityRepository
      */
     public function getAuditDatesForAuditsByWindfarmByStatusesYearAndRangeQB(Windfarm $windfarm, $statuses, $year, $range)
     {
-        $qb = $this->getAuditsByWindfarmByStatusesYearAndRangeQB($windfarm, $statuses, $year, $range)
+        return $this->getAuditsByWindfarmByStatusesYearAndRangeQB($windfarm, $statuses, $year, $range)
             ->select('a.beginDate, a.endDate')
             ->orderBy('a.beginDate', 'ASC')
-            ->addOrderBy('a.endDate', 'ASC')
-        ;
-
-        return $qb;
+            ->addOrderBy('a.endDate', 'ASC');
     }
 
     /**
@@ -311,7 +296,6 @@ class AuditRepository extends ServiceEntityRepository
     {
         $result = array();
         $audits = $this->getAuditDatesForAuditsByWindfarmByStatusesYearAndRangeQ($windfarm, $statuses, $year, $range)->getResult();
-
         if (count($audits) > 0) {
             /** @var Audit $begin */
             $begin = $audits[0];
@@ -334,12 +318,7 @@ class AuditRepository extends ServiceEntityRepository
      */
     public function getAuditTypesForAuditsByWindfarmByStatusesYearAndRangeQB(Windfarm $windfarm, $statuses, $year, $range)
     {
-        $qb = $this->getAuditsByWindfarmByStatusesYearAndRangeQB($windfarm, $statuses, $year, $range)
-            ->select('a.type')
-            ->groupBy('a.type')
-        ;
-
-        return $qb;
+        return $this->getAuditsByWindfarmByStatusesYearAndRangeQB($windfarm, $statuses, $year, $range)->select('a.type')->groupBy('a.type');
     }
 
     /**
@@ -376,11 +355,7 @@ class AuditRepository extends ServiceEntityRepository
      */
     public function getInvoicedOrDoneAuditsByWindfarmByYearQB(Windfarm $windfarm, $year)
     {
-        $query = $this->getInvoicedOrDoneAuditsByWindfarmSortedByBeginDateQB($windfarm)
-                ->andWhere('YEAR(a.beginDate) = :year')
-                ->setParameter('year', $year);
-
-        return $query;
+        return $this->getInvoicedOrDoneAuditsByWindfarmSortedByBeginDateQB($windfarm)->andWhere('YEAR(a.beginDate) = :year')->setParameter('year', $year);
     }
 
     /**
@@ -421,7 +396,6 @@ class AuditRepository extends ServiceEntityRepository
             ->setParameter('invoiced', AuditStatusEnum::INVOICED)
             ->orderBy('year', 'DESC')
             ->groupBy('year');
-
         $yearsArray = $query->getQuery()->getArrayResult();
         $choicesArray = array();
         foreach ($yearsArray as $year) {
@@ -445,7 +419,6 @@ class AuditRepository extends ServiceEntityRepository
             ->setParameter('windfarm', $windfarmId)
             ->orderBy('year', 'DESC')
             ->groupBy('year');
-
         $yearsArray = $query->getQuery()->getArrayResult();
         $choicesArray = array();
         foreach ($yearsArray as $year) {
@@ -464,24 +437,18 @@ class AuditRepository extends ServiceEntityRepository
         $query = $this->createQueryBuilder('a')
             ->orderBy('a.beginDate', 'ASC')
             ->setMaxResults(1);
-
         $audits = $query->getQuery()->getResult();
-        if (count($audits) === 0) {
+        if (0 === count($audits)) {
             return array('2016' => 2016);
         }
-
         /** @var Audit $firstAudit */
         $firstAudit = $audits[0];
-
         $query = $this->createQueryBuilder('a')
             ->orderBy('a.beginDate', 'DESC')
             ->setMaxResults(1);
-
         $audits = $query->getQuery()->getResult();
-
         /** @var Audit $lastAudit */
         $lastAudit = $audits[0];
-
         $yearsArray = array();
         $firstYear = intval($firstAudit->getBeginDate()->format('Y'));
         $lastYear = intval($lastAudit->getBeginDate()->format('Y'));
@@ -490,6 +457,82 @@ class AuditRepository extends ServiceEntityRepository
         }
 
         return $yearsArray;
+    }
+
+    /**
+     * @param int $cid
+     *
+     * @return QueryBuilder
+     */
+    public function getAuditsFromCustomerIdForAjaxSelectLoadQB($cid)
+    {
+        return $this->createQueryBuilder('a')
+            ->select('a.id')
+            ->addSelect('CONCAT(DATE_FORMAT(a.beginDate, :format), :separator, wf.name, :separator, wm.code) AS text')
+            ->leftJoin('a.customer', 'c')
+            ->leftJoin('a.windfarm', 'wf')
+            ->leftJoin('a.windmill', 'wm')
+            ->where('a.customer = :cid')
+            ->andWhere('(a.status = :done OR a.status = :invoiced)')
+            ->andWhere('a.enabled = :enabled')
+            ->setParameter('format', '%d/%m/%Y')
+            ->setParameter('separator', ' · ')
+            ->setParameter('cid', $cid)
+            ->setParameter('done', AuditStatusEnum::DONE)
+            ->setParameter('invoiced', AuditStatusEnum::INVOICED)
+            ->setParameter('enabled', true);
+    }
+
+    /**
+     * @param int $cid
+     *
+     * @return Query
+     */
+    public function getAuditsFromCustomerIdForAjaxSelectLoadQ($cid)
+    {
+        return $this->getAuditsFromCustomerIdForAjaxSelectLoadQB($cid)->getQuery();
+    }
+
+    /**
+     * @param int $cid
+     *
+     * @return array
+     */
+    public function getAuditsFromCustomerIdForAjaxSelectLoad($cid)
+    {
+        return $this->getAuditsFromCustomerIdForAjaxSelectLoadQ($cid)->getResult(AbstractQuery::HYDRATE_ARRAY);
+    }
+
+    /**
+     * @return QueryBuilder
+     */
+    public function buildEmptyListQB()
+    {
+        return $this->createQueryBuilder('a')->where('a.id < 0');
+    }
+
+    /**
+     * @return Query
+     */
+    public function buildEmptyListQ()
+    {
+        return $this->buildEmptyListQB()->getQuery();
+    }
+
+    /**
+     * @return array
+     */
+    public function buildEmptyList()
+    {
+        return $this->buildEmptyListQ()->getResult();
+    }
+
+    /**
+     * @return QueryBuilder
+     */
+    public function getAllAuditsJoinedSortedByBeginDateQB()
+    {
+        return $this->createQueryBuilder('a')->join('a.windmill', 'windmill');
     }
 
     /**

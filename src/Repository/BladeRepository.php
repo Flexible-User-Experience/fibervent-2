@@ -12,13 +12,11 @@ use Doctrine\Common\Persistence\ManagerRegistry as RegistryInterface;
  * Class BladeRepository.
  *
  * @category Repository
- *
- * @author   Anton Serra <aserratorta@gmail.com>
  */
 class BladeRepository extends ServiceEntityRepository
 {
     /**
-     * EventCategoryRepository constructor.
+     * BladeRepository constructor.
      *
      * @param RegistryInterface $registry
      */
@@ -35,10 +33,7 @@ class BladeRepository extends ServiceEntityRepository
      */
     public function findAllSortedByModelQB($limit = null, $order = 'ASC')
     {
-        $query = $this
-            ->createQueryBuilder('b')
-            ->orderBy('b.model', $order);
-
+        $query = $this->createQueryBuilder('b')->orderBy('b.model', $order);
         if (!is_null($limit)) {
             $query->setMaxResults($limit);
         }

@@ -13,13 +13,11 @@ use Doctrine\Common\Persistence\ManagerRegistry as RegistryInterface;
  * Class BladeDamageRepository.
  *
  * @category Repository
- *
- * @author   Anton Serra <aserratorta@gmail.com>
  */
 class BladeDamageRepository extends ServiceEntityRepository
 {
     /**
-     * EventCategoryRepository constructor.
+     * BladeDamageRepository constructor.
      *
      * @param RegistryInterface $registry
      */
@@ -35,13 +33,10 @@ class BladeDamageRepository extends ServiceEntityRepository
      */
     public function getItemsOfAuditWindmillBladeSortedByRadiusQB(AuditWindmillBlade $auditWindmillBlade)
     {
-        $query = $this
-            ->createQueryBuilder('bd')
+        return $this->createQueryBuilder('bd')
             ->where('bd.auditWindmillBlade = :awb')
             ->setParameter('awb', $auditWindmillBlade)
             ->orderBy('bd.radius', 'ASC');
-
-        return $query;
     }
 
     /**

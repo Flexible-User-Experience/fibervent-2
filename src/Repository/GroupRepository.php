@@ -10,13 +10,11 @@ use Doctrine\Common\Persistence\ManagerRegistry as RegistryInterface;
  * Class GroupRepository.
  *
  * @category Repository
- *
- * @author   Anton Serra <aserratorta@gmail.com>
  */
 class GroupRepository extends ServiceEntityRepository
 {
     /**
-     * EventCategoryRepository constructor.
+     * GroupRepository constructor.
      *
      * @param RegistryInterface $registry
      */

@@ -10,13 +10,11 @@ use Doctrine\Common\Persistence\ManagerRegistry as RegistryInterface;
  * Class AuditWindmillBladeRepository.
  *
  * @category Repository
- *
- * @author   Anton Serra <aserratorta@gmail.com>
  */
 class AuditWindmillBladeRepository extends ServiceEntityRepository
 {
     /**
-     * EventCategoryRepository constructor.
+     * AuditWindmillBladeRepository constructor.
      *
      * @param RegistryInterface $registry
      */
