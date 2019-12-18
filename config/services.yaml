@@ -11,6 +11,10 @@ parameters:
     default_locale: '%env(resolve:DEFAULT_LOCALE)%'
     database_server_version: '%env(resolve:DATABASE_SERVER_VERSION)%'
     project_web_title: '%env(resolve:PROJECT_WEB_TITLE)%'
+    google_analytics_enabled: '%env(resolve:GOOGLE_ANALYTICS_IS_ENABLED)%'
+    google_analytics_account: '%env(resolve:GOOGLE_ANALYTICS_ACCOUNT)%'
+    google_maps_api_key: '%env(resolve:GOOGLE_MAPS_API_KEY)%'
+    delivery_dev_address: '%env(resolve:DEV_DELIVERY_ADDRESS)%'
 
 services:
     _defaults:
