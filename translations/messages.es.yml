@@ -1,0 +1,461 @@
+pdf:
+  cover:
+    1_inspection: INSPECCIÓN DE PALAS DEL PARQUE EÓLICO
+    2_resume: INFORME INDIVIDUAL AEROGENERADOR
+    3_country: PAÍS/REGION
+    4_windfarm: PARQUE EÓLICO
+    5_turbine_model: MODELO AEROGENERADOR
+    6_turbine_size: DIMENSIONES AEROGENERADOR
+    6_turbine_size_value: 'Torre %height%m / Rotor Ø%diameter%m / Pala %length%m'
+    7_blade_type: MODELO PALA
+    8_total_turbines: TOTAL No. AG / Capacidad PE
+    8_total_turbines_value: '%windmills% aerogeneradores / %power%MW'
+    9_startup_year: Puesta en marcha (años del PE)
+    9_startup_year_value: '%year% (%diff% años)'
+    10_om_regional_manager: O&M REGIONAL MANAGER
+    11_technicians: TÉCNICOS INSPECCIÓN
+    12_audit_type: TIPO DE INSPECCIÓN
+    12_audit_type_value: SUELO (Telescopio FIBERVENT)
+    13_audit_date: FECHA DE INSPECCIÓN
+    14_blades_amout: No. de AG / palas inspeccionadas
+    14_blades_amout_value: 1 AG / 3 palas
+  intro:
+    1_title: '1. INTRODUCCIÓN'
+    2_description: 'Este informe es el resultado de la inspección visual realizada con telescopio desde suelo en el Parque Eólico "%windfarm%". El equipo, propiedad de FIBERVENT, y utilizado para la inspección es el siguiente:'
+    3_list: 'CÁMARAS<ul><li>Canon Eos 5D MARK II // Canon Eos 70D</li></ul>LENTES<ul><li>Canon zoom lens EF 24-105 mm. 1:4 L IS USM</li><li>Canon zoom lens EF 100-400 mm. 1:4.5-5.6 L IS USM</li><li>Canon lens EF 500 mm. F4 L IS USM</li><li>Canon extender EF 1.4x II // EF 2x II</li></ul>TRÍPODE<ul><li>Trípode Feisol Tournament Carbon CT-3342</li></ul>'
+  damage_catalog:
+    1_title: '2. CATALOGACIÓN DE DAÑOS'
+    2_subtitle: 'Los daños encontrados se han categorizado según los siguientes criterios:'
+    table:
+      1_category: Categoría
+      2_priority: Prioridad
+      3_description: Descripción / Hallazgos
+      4_action: Acción recomendada
+  audit_description:
+    1_title: '3. DESCRIPCIÓN DE LA INSPECCIÓN'
+    2_description: 'El esquema en la numeración de palas (1, 2, 3) se describe en la siguiente imagen:'
+  audit_blade_damage:
+    1_title: RESUMEN INDIVIDUAL DAÑOS PALA
+    2_description: En la siguiente tabla se describe el resultado de la inspección con la categorización, descripciones, ubicación y links a fotografías de los daños.
+  blade_damage_diagram:
+    1_vp_s: 'VALVA PRESIÓN'
+    2_vs_s: 'VALVA SUCCIÓN'
+    3_vp_l: 'VP: Valva Presión/Concha Presión'
+    4_vs_l: 'VS: Valva Succión/Concha Succión'
+    5_ba_l: 'BA: Borde Ataque'
+    5_ba_l_short: 'BORDE ATAQUE'
+    6_bs_l: 'BS: Borde Salida'
+    6_bs_l_short: 'BORDE SALIDA'
+  observations_table:
+    1_damage: DAÑO
+    2_observations: OBSERVACIONES
+  blade_damage_images:
+    1_general_blade_views: 1 VISTAS GENERALES PALA
+    1_general_blade_views_short: VISTAS GENERALES PALA
+  inspection_description:
+    1_contact: 4. CONTACTO
+    2_description: 'Podrá contactar con nosotros en las siguientes direcciones y teléfonos:'
+    3_offices: 'Oficinas Fibervent:'
+    4_phones_emails: 'Teléfonos y emails de contacto:'
+    5_gratitude: 'Agradecemos la confianza depositada en el equipo técnico de FIBERVENT.'
+  damage_table_header:
+    1_damage: DAÑO
+    2_position: LOCALIZACIÓN
+    3_number: 'Nº'
+    4_code: 'Cód.'
+    5_radius: Radio
+    6_size: TAMAÑO
+    7_description: DESCRIPCIÓN
+    8_distance: Dist.
+    9_excel_title: 'RESUMEN DAÑOS AEROGENERADORES DEL PARQUE EÓLICO'
+    10_blade: PALA
+    damage_class: Categoria de daño
+  damage_table_body:
+    none: '-'
+    BA_dist_cm: '%dist%cm BA'
+    BS_dist_cm: '%dist%cm BS'
+    BA_dist_m: '%dist%m BA'
+    BS_dist_m: '%dist%m BS'
+    no_damages_found: No se detectan daños en pala
+  damage_table_footer:
+    total_records_displayed: Total daños encontrados
+  set_document_information:
+    1_title: 'Auditoria #'
+    2_subject: Inspección palas parque eólico
+  header:
+    1_description: 'Parque Eólico %name%'
+  footer:
+    1_page: Página
+    2_of: de
+pdf_windfarm:
+  set_document_information:
+    1_title:
+    2_subject:
+  cover:
+    1_inspection: 'INSPECCIÓN DE PALAS EN "%windfarm%"'
+    2_resume: 'INFORME GENERAL PARQUE EÓLICO'
+    3_country: 'PAÍS/REGION'
+    4_windfarm: 'PARQUE EÓLICO'
+    8_total_turbines: 'TOTAL No. AG / Capacidad PE'
+    8_total_turbines_value: '%windmills% aerogeneradores / %power%MW'
+    9_startup_year: 'Puesta en marcha (años del PE)'
+    9_startup_year_value: '%year% (%diff% años)'
+    10_om_regional_manager: 'O&M REGIONAL MANAGER'
+    14_blades_amout: 'No. de AG / palas inspeccionadas'
+    14_blades_amout_value: '%audits_amount% AG / 3 palas'
+  damage_catalog:
+    1_title: 'CATALOGACIÓN DE DAÑOS'
+  inspection_overview:
+    1_title: 'RESUMEN INSPECCIONES PARQUE EÓLICO'
+    2_table_header:
+      1_number: 'No. WTG'
+      2_blade: 'PALA'
+      3_damage_class: 'CATEGORIA DAÑO'
+      4_damages: 'DAÑOS'
+  intro:
+    1_title: 'INTRODUCCIÓN'
+    2_description: 'Este informe es el resultado de la inspección visual realizada con telescopio desde suelo en el Parque Eólico "%windfarm%" durante el año %year%. El equipo, propiedad de FIBERVENT, y utilizado para la inspección es el siguiente:'
+  inspection_description:
+    1_title: 'DESCRIPCIÓN DE LA INSPECCIÓN'
+  general_summary:
+    1_title: 'RESUMEN GENERAL DE DAÑOS'
+    2_description: 'La siguiente tabla muestra los resultados de la inspección de palas analizadas en el Parque Eólico.'
+  individual_summary:
+    1_title: 'RESUMEN INDIVIDUAL DE DAÑOS'
+  contact_section:
+    1_title: 'CONTACTO'
+enum:
+  blade_damage_position:
+    1_VP: VP
+    2_VS: VS
+    3_BA: BA
+    4_BS: BS
+  audit_type:
+    ground: SUELO (Telescopio FIBERVENT)
+    rope: CUERDAS
+    inside: INTERIOR PALA
+    platform: PLATAFORMA
+  audit_status:
+    pending: Pendiente
+    doing: En proceso
+    done: Realizado
+    invoiced: Facturado
+  user_roles:
+    user: Usuario
+    customer: Cliente
+    operator: Operario
+    technician: Técnico
+    admin: Administrador
+    super_admin: Superadministrador
+  repair_access_type:
+    crane: Grua
+    basket_crane: Cesta FV
+    ropes: Cuerdas
+    ground: Suelo
+  repair_windmill_section:
+    blade: Pala
+    nacelle: Nacelle
+    tower: Torre
+  time_register_type:
+    trip: Desplazamiento
+    stop: Parada
+    work: Trabajo
+  time_register_shift:
+    morning: Mañana
+    afternoon: Tarde
+    night: Noche
+  non_standard_used_material_item:
+    others: Otros
+    receivers: Receptores
+    vortex: Vortex
+    stall_strip: Stall strip
+    diverter_s: Diverter S.
+    belt_3m: Cinta 3M
+    lep: LEP
+  presence_monitoring_category:
+    workday: Laborable
+    dayoff: Vacaciones
+    permits: Permiso
+    leave: Baja
+admin:
+  common:
+    general: General
+    controls: Controles
+    action: Acciones
+    enabled: Activo
+    developed: Desarrollado por
+    send_email: Envía un correo
+    here: aquí
+    for_help: para recibir ayuda
+    details: Detalle
+  audit:
+    title: Inspección
+    title_list: Inspección
+    title_create: Crear
+    title_show: Mostrar
+    title_delete: Borrar
+    windmill: Aerogenerador
+    observations: Observaciones
+    year: Año
+    dates_range: Rango de fechas opcional
+    generate: Generar informe anual
+    download_xls: Descargar informe anual en XLS
+    begindate: Fecha inicio
+    enddate: Fecha fin
+    operators: Técnicos Inspección
+    type: Tipo de Inspección
+    status: Estado
+    diagramtype_title: Diagrama de palas
+    diagramtype: Tipo de diagrama
+    auditwindmillblade_title: Palas inspeccionadas
+    email:
+      to: Para
+      cc: Con copia para
+      subject: Asunto
+      subject_placeholder: Resultado inspección Fibervent
+      message: Mensaje
+      send: Enviar email
+    create_workorder: Crear proyecto
+  auditwindmillblade:
+    title: Auditoría Pala Aerogenerador
+    title_list: Auditoría Pala Aerogenerador
+    title_create: Crear
+    audit: Auditoría
+    windmillblade: Pala
+    damages: Daños
+    actions: Acciones
+    damage_position: 'Situación y descripción de los daños · Pala '
+    bladedamages: Daños
+    photos: Fotos
+    blade_observations: 'Observaciones · Pala '
+    blade_photos: 'Fotos generales · Pala '
+  blade:
+    title: Pala
+    title_list: Pala
+    title_create: Crear
+    model: Modelo
+    length: Longitud
+  bladedamage:
+    title: Daño Pala
+    title_list: Daño Pala
+    title_create: Crear
+    number: Núm.
+    damage: Código
+    position: Posición
+    radius: Radio (m)
+    distance: Distancia (cm)
+    edge: Borde
+    size: Dimensión (cm)
+    damagecategory: Cat.
+    damagecategory_long: Categoría de daño
+  bladephoto:
+    title: Foto Pala
+    title_list: Foto Pala
+    title_create: Crear
+    imagefile: Foto
+  customer:
+    title: Cliente
+    title_list: Cliente
+    title_create: Crear
+    title_show: Mapa
+    image: Logo
+    code: CIF
+    name: Nombre
+    contact: Contacto
+    email: Correo Electrónico
+    phone: Teléfono
+    web: Web
+    postal_data: Datos Postales
+    address: Dirección
+    zip: Código Postal
+    city: Ciudad
+    state: Provincia
+    contacts: Contactos
+    windfarms: Parques Eólicos
+    show_logo_in_pdfs: Mostrar logo en PDFs
+  damage:
+    title: Tipo Daño
+    title_list: Tipo Daño
+    title_create: Crear
+    section: Sección
+    code: Código
+    description: Descripción
+    translations: Traducciones
+  damagecategory:
+    title: Categoría Daño
+    title_list: Categoría Daño
+    title_create: Crear
+    category: Categoría
+    priority: Prioridad
+    description: Descripción
+    recomended_action: Acción Recomendada
+    colour: Color
+  observation:
+    title: Observaciones Daños Pala
+    title_list: Observaciones Daños Pala
+    title_create: Crear
+    position: Orden
+    damage_number: Número Daño
+  photo:
+    title: Foto
+    title_list: Foto
+    title_create: Crear
+    imagename: Nombre
+    help: 'hasta 10MB con formato PNG, JPG o GIF y anchura mínima de %width%px.'
+  state:
+    title: Provincia
+    title_list: Provincia
+    title_create: Crear
+    country: País
+  turbine:
+    title: Turbina
+    title_list: Turbina
+    title_create: Crear
+    height: Altura (m)
+    diameter: Diámetro (m)
+    power: Potencia (MW)
+  user:
+    title: Usuario
+    title_list: Usuario
+    title_create: Crear
+    username: Nombre Usuario
+    username_help: utilizar sólo letras en minúscula sin espacios en blanco.
+    password: Password
+    firstname: Nombre
+    lastname: Apellido
+    roles: Roles
+    rol: Rol
+    locked: Bloqueado
+    language: Idioma
+    profile_flash: Tu perfil se ha actualizado correctamente.
+    email: Correo electrónico
+    phone: Teléfono
+    update: Actualizar
+  windfarm:
+    title: Parque Eólico
+    title_list: Parque Eólico
+    title_create: Crear
+    title_show: Mostrar
+    customer: Cliente
+    manager: 'O&M Regional Manager'
+    year: Año
+    language: Idioma PDF
+    geoposition: Geolocalización
+    latlng: Mapa
+    pdf_language: Idioma PDF
+    no_audits: Este parque no tiene auditorias
+    windmill_amount: Nº Aerogeneradores
+    map: Mapa de aerogeneradores
+    select: Filtrar inspecciones
+    download_pdf: Descargar PDF
+    table:
+      results:
+        found: Inspecciones encontradas
+  windmill:
+     title: Aerogenerador
+     title_list: Aerogenerador
+     title_create: Crear
+     windfarm: Parque Eólico
+     code: Número
+     turbine: Turbina
+     bladetype: Pala
+     blades: Palas
+     manager: Administrador
+  windmillblade:
+    title: Palas Aerogenerador
+    title_list: Palas Aerogenerador
+    title_create: Crear
+    sn: 'S/N'
+  workorder:
+    title: Proyecto
+    title_list: Proyecto
+    title_create: Crear
+    project_number: Número de proyecto
+    certifying_company_name: Compañía certificadora
+    certifying_company_contact_person: Persona de contacto (certificadora)
+    certifying_company_email: Email (certificadora)
+    certifying_company_phone: Teléfono (certificadora)
+    is_from_audit: Proviene de auditoría
+    repair_access_types: Tipos de acceso
+  workordertask:
+    title: Tareas
+    title_list: Tareas
+    title_create: Crear
+    is_completed: Completada
+    description: Descripción
+  vehicle:
+    title: Vehículo
+    title_list: Vehículos
+    title_create: Crear
+    name: Nombre
+    licence_plate: Matrícula
+    active: Activo
+  deliverynote:
+    title: Albarán
+    title_list: Albarán
+    title_create: Crear
+    date: Fecha
+    repair_windmill_sections: Secciones reparación aerogenerador
+    crane_company: Empresa grua
+    crane_driver: Conductor grua
+    repair_access_types: Tipo de acceso
+    observations: Observaciones
+    total_trip_hours: Total horas de desplazamiento
+    total_work_hours: Total horas de trabajo
+    total_stop_hours: Total horas de parada
+    team: Equipo
+    team_leader: Jefe equipo
+    team_technician_1: Técnico 1
+    team_technician_2: Técnico 2
+    team_technician_3: Técnico 3
+    team_technician_4: Técnico 4
+  deliverynotetimeregister:
+    title: Fichajes
+    title_list: Fichajes
+    title_create: Crear
+    type: Tipo
+    shift: Turno
+    begin: Inicio
+    end: Fin
+    total_hours: Total horas
+  nonstandardusedmaterial:
+    title: Materiales no estándar utilizados
+    title_list: Materiales no estándar utilizados
+    title_create: Crear
+    quantity: Cantidad
+    item: Artículo
+    description: Descripción
+  workertimesheet:
+    title: Partes de trabajo
+    title_list: Partes de trabajo
+    title_create: Crear
+    worker: Empleado
+    work_description: Descripción del trabajo
+    total_normal_hours: Total horas normales
+    total_vertical_hours: Total horas verticales
+    total_inclement_weather_hours: Total horas incl. meteorológicas
+    total_trip_hours: Total horas desplazamiento
+  presencemonitoring:
+    title: Registro horario
+    title_list: Registro horario
+    title_create: Crear
+    worker: Empleado
+    morning_hour_begin: Hora entrada mañana
+    morning_hour_end: Hora salida mañana
+    afternoon_hour_begin: Hora entrada tarde
+    afternoon_hour_end: Hora salida tarde
+    total_hours: Total horas
+    normal_hours: Total horas ordinarias
+    extra_hours: Total horas extra
+    category: Categoría
+gmap:
+  general: ubicación general
+# Admin defaults
+Cliente: Cliente
+Usuario: Usuario
+Inspección: Inspección
+"Tipo Daño": Tipo Daño
+"Categoría Daño": Categoría Daño
+"Parque Eólico": Parque Eólico
+Aerogenerador: Aerogenerador
+Turbina: Turbina
