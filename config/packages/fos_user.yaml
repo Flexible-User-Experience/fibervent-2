@@ -6,7 +6,7 @@ fos_user:
         address:     'test@test.com'
         sender_name: 'Change this config'
     group:
-        group_class:   Sonata\UserBundle\Entity\BaseGroup
+        group_class:   App\Entity\Group
         group_manager: sonata.user.orm.group_manager
     service:
         user_manager: sonata.user.orm.user_manager
