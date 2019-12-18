@@ -9,6 +9,7 @@
         "ext-iconv": "*",
         "beberlei/doctrineextensions": "^1.0",
         "egulias/email-validator": "^2.1",
+        "friendsofsymfony/ckeditor-bundle": "^2.1",
         "friendsofsymfony/jsrouting-bundle": "^2.5",
         "hautelook/alice-bundle": "^2.5",
         "knplabs/knp-menu-bundle": "^2.0",

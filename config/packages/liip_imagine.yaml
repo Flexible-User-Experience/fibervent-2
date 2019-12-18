@@ -1,4 +1,64 @@
-# See dos how to configure the bundle: https://symfony.com/doc/current/bundles/LiipImagineBundle/basic-usage.html
 liip_imagine:
-    # valid drivers options include "gd" or "gmagick" or "imagick"
-    driver: "gd"
+    driver: gd
+    loaders:
+        default:
+            filesystem:
+                locator: filesystem_insecure
+    resolvers:
+        default:
+            web_path: ~
+    filter_sets:
+        cache: ~
+        960x540:
+            quality: 80
+            filters:
+                auto_rotate: ~
+                strip: ~
+                thumbnail: { size: [ 960, 540 ], mode: outbound }
+        600x960:
+            quality: 80
+            filters:
+                auto_rotate: ~
+                strip: ~
+                thumbnail: { size: [ 600, 960 ], mode: outbound }
+        480xY:
+            quality: 90
+            filters:
+                auto_rotate: ~
+                thumbnail: { size: [ 480, null ], mode: outbound }
+        480x270:
+            quality: 95
+            filters:
+                thumbnail: { size: [ 480, 270 ], mode: outbound }
+        342x342:
+            quality: 95
+            filters:
+                thumbnail: { size: [ 342, 342 ], mode: outbound }
+        252x184:
+            quality: 100
+            filters:
+                thumbnail: { size: [ 252, 184 ], mode: outbound }
+        Xx128:
+            quality: 100
+            filters:
+                thumbnail: { size: [ null, 128 ], mode: outbound }
+        168x123:
+            quality: 100
+            filters:
+                thumbnail: { size: [ 168, 123 ], mode: outbound }
+        128x128:
+            quality: 100
+            filters:
+                thumbnail: { size: [ 128, 128 ], mode: outbound }
+        120xY:
+            quality: 100
+            filters:
+                thumbnail: { size: [ 120, null ], mode: outbound }
+        60x60:
+            quality: 100
+            filters:
+                thumbnail: { size: [ 60, 60 ], mode: outbound }
+        32x32:
+            quality: 100
+            filters:
+                thumbnail: { size: [ 32, 32 ], mode: outbound }
