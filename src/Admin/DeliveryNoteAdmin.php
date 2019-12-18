@@ -107,7 +107,7 @@ class DeliveryNoteAdmin extends AbstractBaseAdmin
                 null,
                 array(
                     'label' => 'admin.workorder.repair_access_types',
-                    'template' => '::Admin/Cells/list__cell_repair_access_type.html.twig',
+                    'template' => 'Admin/Cells/list__cell_repair_access_type.html.twig',
                 )
             )
             ->add('observations',
@@ -147,7 +147,7 @@ class DeliveryNoteAdmin extends AbstractBaseAdmin
                 null,
                 array(
                     'label' => 'admin.deliverynote.repair_windmill_sections',
-                    'template' => '::Admin/Cells/list__cell_repair_windmill_sections.html.twig',
+                    'template' => 'Admin/Cells/list__cell_repair_windmill_sections.html.twig',
                 )
             )
             ->add('teamLeader',
@@ -202,7 +202,7 @@ class DeliveryNoteAdmin extends AbstractBaseAdmin
                 null,
                 array(
                     'label' => 'admin.workorder.repair_access_types',
-                    'template' => '::Admin/Cells/list__cell_repair_access_type.html.twig',
+                    'template' => 'Admin/Cells/list__cell_repair_access_type.html.twig',
                 )
             )
             ->add('observations',
@@ -217,10 +217,10 @@ class DeliveryNoteAdmin extends AbstractBaseAdmin
                 array(
                     'label' => 'admin.common.action',
                     'actions' => array(
-                        'edit' => array('template' => '::Admin/Buttons/list__action_edit_button.html.twig'),
-                        'show' => array('template' => '::Admin/Buttons/list__action_show_button.html.twig'),
-                        //                       'excel' => array('template' => '::Admin/Buttons/list__action_excel_button.html.twig'),
-                        //                       'pdf' => array('template' => '::Admin/Buttons/list__action_pdf_windfarm_button.html.twig'),
+                        'edit' => array('template' => 'Admin/Buttons/list__action_edit_button.html.twig'),
+                        'show' => array('template' => 'Admin/Buttons/list__action_show_button.html.twig'),
+                        //                       'excel' => array('template' => 'Admin/Buttons/list__action_excel_button.html.twig'),
+                        //                       'pdf' => array('template' => 'Admin/Buttons/list__action_pdf_windfarm_button.html.twig'),
                     ),
                 )
             )
@@ -411,7 +411,7 @@ class DeliveryNoteAdmin extends AbstractBaseAdmin
                 null,
                 array(
                     'label' => 'admin.deliverynote.repair_windmill_sections',
-                    'template' => '::Admin/Cells/list__cell_repair_windmill_sections.html.twig',
+                    'template' => 'Admin/Cells/list__cell_repair_windmill_sections.html.twig',
                 )
             )
             ->end()
@@ -471,7 +471,7 @@ class DeliveryNoteAdmin extends AbstractBaseAdmin
                 null,
                 array(
                     'label' => 'admin.workorder.repair_access_types',
-                    'template' => '::Admin/Cells/list__cell_repair_access_type.html.twig',
+                    'template' => 'Admin/Cells/list__cell_repair_access_type.html.twig',
                 )
             )
             ->end()
@@ -481,7 +481,7 @@ class DeliveryNoteAdmin extends AbstractBaseAdmin
                 null,
                 array(
                     'label' => 'admin.deliverynote.repair_windmill_sections',
-                    'template' => '::Admin/Cells/list__time_registers.html.twig',
+                    'template' => 'Admin/Cells/list__time_registers.html.twig',
                 )
             )
             ->end()
@@ -491,7 +491,7 @@ class DeliveryNoteAdmin extends AbstractBaseAdmin
                 null,
                 array(
                     'label' => 'admin.nonstandardusedmaterial.title',
-                    'template' => '::Admin/Cells/list__non_standard_used_materials.html.twig',
+                    'template' => 'Admin/Cells/list__non_standard_used_materials.html.twig',
                 )
             )
             ->end()

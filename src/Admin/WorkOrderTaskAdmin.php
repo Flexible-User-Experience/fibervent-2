@@ -447,7 +447,7 @@ class WorkOrderTaskAdmin extends AbstractBaseAdmin
                 array(
                     'label' => 'admin.common.action',
                     'actions' => array(
-                        'edit' => array('template' => '::Admin/Buttons/list__action_edit_button.html.twig'),
+                        'edit' => array('template' => 'Admin/Buttons/list__action_edit_button.html.twig'),
                     ),
                 )
             )

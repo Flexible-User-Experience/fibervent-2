@@ -130,7 +130,7 @@ class DamageCategoryAdmin extends AbstractBaseAdmin
                 null,
                 array(
                     'label' => 'admin.damagecategory.colour',
-                    'template' => '::Admin/Cells/list__cell_colour.html.twig',
+                    'template' => 'Admin/Cells/list__cell_colour.html.twig',
                     'editable' => false,
                 )
             )
@@ -180,7 +180,7 @@ class DamageCategoryAdmin extends AbstractBaseAdmin
                 array(
                     'label' => 'admin.common.action',
                     'actions' => array(
-                        'edit' => array('template' => '::Admin/Buttons/list__action_edit_button.html.twig'),
+                        'edit' => array('template' => 'Admin/Buttons/list__action_edit_button.html.twig'),
                     ),
                 )
             );

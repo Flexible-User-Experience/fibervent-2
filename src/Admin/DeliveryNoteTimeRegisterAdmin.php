@@ -194,14 +194,14 @@ class DeliveryNoteTimeRegisterAdmin extends AbstractBaseAdmin
                 'string',
                 array(
                     'label' => 'admin.deliverynotetimeregister.type',
-                    'template' => '::Admin/Cells/list__cell_delivery_note_time_register_type.html.twig',
+                    'template' => 'Admin/Cells/list__cell_delivery_note_time_register_type.html.twig',
                 )
             )
             ->add('shift',
                 'string',
                 array(
                     'label' => 'admin.deliverynotetimeregister.shift',
-                    'template' => '::Admin/Cells/list__cell_delivery_note_time_register_shift.html.twig',
+                    'template' => 'Admin/Cells/list__cell_delivery_note_time_register_shift.html.twig',
                 )
             )
             ->add('begin',
@@ -222,7 +222,7 @@ class DeliveryNoteTimeRegisterAdmin extends AbstractBaseAdmin
                 null,
                 array(
                     'label' => 'admin.deliverynotetimeregister.total_hours',
-                    'template' => '::Admin/Cells/list__cell_delivery_note_time_register_total_hours.html.twig',
+                    'template' => 'Admin/Cells/list__cell_delivery_note_time_register_total_hours.html.twig',
                 )
             )
             ->add(
@@ -231,8 +231,8 @@ class DeliveryNoteTimeRegisterAdmin extends AbstractBaseAdmin
                 array(
                     'label' => 'admin.common.action',
                     'actions' => array(
-                        'edit' => array('template' => '::Admin/Buttons/list__action_edit_button.html.twig'),
-                        'delete' => array('template' => '::Admin/Buttons/list__action_delete_button.html.twig'),
+                        'edit' => array('template' => 'Admin/Buttons/list__action_edit_button.html.twig'),
+                        'delete' => array('template' => 'Admin/Buttons/list__action_delete_button.html.twig'),
                     ),
                 )
             )

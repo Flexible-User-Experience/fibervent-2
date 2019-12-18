@@ -289,7 +289,7 @@ class UserAdmin extends ParentUserAdmin
                 null,
                 array(
                     'label' => 'admin.bladephoto.imagefile',
-                    'template' => '::Admin/Cells/list__cell_image_field.html.twig',
+                    'template' => 'Admin/Cells/list__cell_image_field.html.twig',
                 )
             )
             ->add(
@@ -329,7 +329,7 @@ class UserAdmin extends ParentUserAdmin
                 null,
                 array(
                     'label' => 'admin.user.roles',
-                    'template' => '::Admin/Cells/list__cell_user_roles.html.twig',
+                    'template' => 'Admin/Cells/list__cell_user_roles.html.twig',
                 )
             )
             ->add(
@@ -354,7 +354,7 @@ class UserAdmin extends ParentUserAdmin
                 array(
                     'label' => 'admin.common.action',
                     'actions' => array(
-                        'edit' => array('template' => '::Admin/Buttons/list__action_edit_button.html.twig'),
+                        'edit' => array('template' => 'Admin/Buttons/list__action_edit_button.html.twig'),
                     ),
                 )
             );

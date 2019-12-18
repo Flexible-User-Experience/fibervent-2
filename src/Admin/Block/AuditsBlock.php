@@ -103,7 +103,7 @@ class AuditsBlock extends AbstractBlockService
             array(
                 'title' => 'Resume',
                 'content' => 'Default content',
-                'template' => '::Admin/Blocks/block_audits.html.twig',
+                'template' => 'Admin/Blocks/block_audits.html.twig',
             )
         );
     }

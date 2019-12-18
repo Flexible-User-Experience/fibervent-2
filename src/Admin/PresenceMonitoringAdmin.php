@@ -88,7 +88,7 @@ class PresenceMonitoringAdmin extends AbstractBaseAdmin
                 null,
                 array(
                     'label' => 'admin.presencemonitoring.category',
-                    'template' => '::Admin/Cells/list__cell_presence_monitoring_category.html.twig',
+                    'template' => 'Admin/Cells/list__cell_presence_monitoring_category.html.twig',
                 )
             )
             ->add('morningHourBegin',
@@ -143,7 +143,7 @@ class PresenceMonitoringAdmin extends AbstractBaseAdmin
                 array(
                     'label' => 'admin.common.action',
                     'actions' => array(
-                        'edit' => array('template' => '::Admin/Buttons/list__action_edit_button.html.twig'),
+                        'edit' => array('template' => 'Admin/Buttons/list__action_edit_button.html.twig'),
                     ),
                 )
             )

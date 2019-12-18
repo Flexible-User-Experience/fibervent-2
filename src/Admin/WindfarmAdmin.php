@@ -388,7 +388,7 @@ class WindfarmAdmin extends AbstractBaseAdmin
                     'sortable' => true,
                     'sort_field_mapping' => array('fieldName' => 'lastname'),
                     'sort_parent_association_mappings' => array(array('fieldName' => 'manager')),
-                    'template' => '::Admin/Cells/list__windfarm_manager_fullname.html.twig',
+                    'template' => 'Admin/Cells/list__windfarm_manager_fullname.html.twig',
                 )
             )
             ->add(
@@ -405,12 +405,12 @@ class WindfarmAdmin extends AbstractBaseAdmin
                 array(
                     'label' => 'admin.common.action',
                     'actions' => array(
-                        'edit' => array('template' => '::Admin/Buttons/list__action_edit_button.html.twig'),
-                        'show' => array('template' => '::Admin/Buttons/list__action_show_button.html.twig'),
-                        'audits' => array('template' => '::Admin/Buttons/list__action_audits_button.html.twig'),
-                        'excel' => array('template' => '::Admin/Buttons/list__action_excel_button.html.twig'),
-                        'pdf' => array('template' => '::Admin/Buttons/list__action_pdf_windfarm_button.html.twig'),
-                        'map' => array('template' => '::Admin/Buttons/list__action_map_button.html.twig'),
+                        'edit' => array('template' => 'Admin/Buttons/list__action_edit_button.html.twig'),
+                        'show' => array('template' => 'Admin/Buttons/list__action_show_button.html.twig'),
+                        'audits' => array('template' => 'Admin/Buttons/list__action_audits_button.html.twig'),
+                        'excel' => array('template' => 'Admin/Buttons/list__action_excel_button.html.twig'),
+                        'pdf' => array('template' => 'Admin/Buttons/list__action_pdf_windfarm_button.html.twig'),
+                        'map' => array('template' => 'Admin/Buttons/list__action_map_button.html.twig'),
                     ),
                 )
             );

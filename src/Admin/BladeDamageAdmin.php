@@ -181,7 +181,7 @@ class BladeDamageAdmin extends AbstractBaseAdmin
                 ->end();
         }
 
-        $this->setTemplate('edit', '::Admin/BladeDamage/edit.html.twig');
+        $this->setTemplate('edit', 'Admin/BladeDamage/edit.html.twig');
     }
 
     /**
@@ -272,7 +272,7 @@ class BladeDamageAdmin extends AbstractBaseAdmin
                 array(
                     'label' => 'admin.common.action',
                     'actions' => array(
-                        'edit' => array('template' => '::Admin/Buttons/list__action_edit_button.html.twig'),
+                        'edit' => array('template' => 'Admin/Buttons/list__action_edit_button.html.twig'),
                     ),
                 )
             );

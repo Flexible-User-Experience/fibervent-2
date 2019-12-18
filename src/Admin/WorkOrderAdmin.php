@@ -416,7 +416,7 @@ class WorkOrderAdmin extends AbstractBaseAdmin
                 null,
                 array(
                     'label' => 'admin.workorder.repair_access_types',
-                    'template' => '::Admin/Cells/list__cell_repair_access_type.html.twig',
+                    'template' => 'Admin/Cells/list__cell_repair_access_type.html.twig',
                 )
             )
             ->add(
@@ -425,8 +425,8 @@ class WorkOrderAdmin extends AbstractBaseAdmin
                 array(
                     'label' => 'admin.common.action',
                     'actions' => array(
-                        'edit' => array('template' => '::Admin/Buttons/list__action_edit_button.html.twig'),
-                        'show' => array('template' => '::Admin/Buttons/list__action_show_button.html.twig'),
+                        'edit' => array('template' => 'Admin/Buttons/list__action_edit_button.html.twig'),
+                        'show' => array('template' => 'Admin/Buttons/list__action_show_button.html.twig'),
                     ),
                 )
             )
@@ -478,7 +478,7 @@ class WorkOrderAdmin extends AbstractBaseAdmin
                 null,
                 array(
                     'label' => 'admin.workorder.repair_access_types',
-                    'template' => '::Admin/Cells/list__repair_access_type.html.twig',
+                    'template' => 'Admin/Cells/list__repair_access_type.html.twig',
                 )
             )
             ->end()
@@ -514,7 +514,7 @@ class WorkOrderAdmin extends AbstractBaseAdmin
                 null,
                 array(
                     'label' => 'admin.workordertasks.title',
-                    'template' => '::Admin/Cells/list__work_order_tasks.html.twig',
+                    'template' => 'Admin/Cells/list__work_order_tasks.html.twig',
                 )
             )
             ->end()
@@ -524,7 +524,7 @@ class WorkOrderAdmin extends AbstractBaseAdmin
                 null,
                 array(
                     'label' => 'admin.workordertasks.title',
-                    'template' => '::Admin/Cells/list__delivery_notes.html.twig',
+                    'template' => 'Admin/Cells/list__delivery_notes.html.twig',
                 )
             )
             ->end()

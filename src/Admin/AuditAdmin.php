@@ -464,7 +464,7 @@ class AuditAdmin extends AbstractBaseAdmin
                 null,
                 array(
                     'label' => 'admin.audit.status',
-                    'template' => '::Admin/Cells/list__cell_audit_status.html.twig',
+                    'template' => 'Admin/Cells/list__cell_audit_status.html.twig',
                 )
             )
             ->add(
@@ -473,12 +473,12 @@ class AuditAdmin extends AbstractBaseAdmin
                 array(
                     'label' => 'admin.common.action',
                     'actions' => array(
-                        'edit' => array('template' => '::Admin/Buttons/list__action_edit_button.html.twig'),
-                        'show' => array('template' => '::Admin/Buttons/list__action_show_button.html.twig'),
-                        'pdf' => array('template' => '::Admin/Buttons/list__action_pdf_button.html.twig'),
-                        'email' => array('template' => '::Admin/Buttons/list__action_email_button.html.twig'),
-                        'createWorkOrder' => array('template' => '::Admin/Buttons/list__action_create_work_order_button.html.twig'),
-                        'delete' => array('template' => '::Admin/Buttons/list__action_delete_button.html.twig'),
+                        'edit' => array('template' => 'Admin/Buttons/list__action_edit_button.html.twig'),
+                        'show' => array('template' => 'Admin/Buttons/list__action_show_button.html.twig'),
+                        'pdf' => array('template' => 'Admin/Buttons/list__action_pdf_button.html.twig'),
+                        'email' => array('template' => 'Admin/Buttons/list__action_email_button.html.twig'),
+                        'createWorkOrder' => array('template' => 'Admin/Buttons/list__action_create_work_order_button.html.twig'),
+                        'delete' => array('template' => 'Admin/Buttons/list__action_delete_button.html.twig'),
                     ),
                 )
             );

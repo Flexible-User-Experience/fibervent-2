@@ -145,7 +145,7 @@ class NonStandardUsedMaterialAdmin extends AbstractBaseAdmin
                 'string',
                 array(
                     'label' => 'admin.nonstandardusedmaterial.item',
-                    'template' => '::Admin/Cells/list__cell_non_standard_used_material_item.html.twig',
+                    'template' => 'Admin/Cells/list__cell_non_standard_used_material_item.html.twig',
                 )
             )
             ->add('quantity',
@@ -168,8 +168,8 @@ class NonStandardUsedMaterialAdmin extends AbstractBaseAdmin
                 array(
                     'label' => 'admin.common.action',
                     'actions' => array(
-                        'edit' => array('template' => '::Admin/Buttons/list__action_edit_button.html.twig'),
-                        'delete' => array('template' => '::Admin/Buttons/list__action_delete_button.html.twig'),
+                        'edit' => array('template' => 'Admin/Buttons/list__action_edit_button.html.twig'),
+                        'delete' => array('template' => 'Admin/Buttons/list__action_delete_button.html.twig'),
                     ),
                 )
             )

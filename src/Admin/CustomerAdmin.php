@@ -287,7 +287,7 @@ class CustomerAdmin extends AbstractBaseAdmin
                 null,
                 array(
                     'label' => 'admin.customer.image',
-                    'template' => '::Admin/Cells/list__cell_customer_image_field.html.twig',
+                    'template' => 'Admin/Cells/list__cell_customer_image_field.html.twig',
                 )
             )
             ->add(
@@ -352,8 +352,8 @@ class CustomerAdmin extends AbstractBaseAdmin
                 array(
                     'label' => 'admin.common.action',
                     'actions' => array(
-                        'edit' => array('template' => '::Admin/Buttons/list__action_edit_button.html.twig'),
-                        'map' => array('template' => '::Admin/Buttons/list__action_map_button.html.twig'),
+                        'edit' => array('template' => 'Admin/Buttons/list__action_edit_button.html.twig'),
+                        'map' => array('template' => 'Admin/Buttons/list__action_map_button.html.twig'),
                     ),
                 )
             );
