@@ -5,6 +5,7 @@ namespace App\Admin\Block;
 use App\Enum\AuditStatusEnum;
 use App\Service\AuthCustomerService;
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Sonata\BlockBundle\Block\Service\AbstractBlockService;
 use Sonata\BlockBundle\Block\BlockContextInterface;
 use Symfony\Component\HttpFoundation\Response;
@@ -35,12 +36,12 @@ class AuditsBlock extends AbstractBlockService
     /**
      * Constructor.
      *
-     * @param string              $name
-     * @param Environment         $templating
-     * @param EntityManager       $em
-     * @param AuthCustomerService $acs
+     * @param string                 $name
+     * @param Environment            $templating
+     * @param EntityManagerInterface $em
+     * @param AuthCustomerService    $acs
      */
-    public function __construct($name, Environment $templating, EntityManager $em, AuthCustomerService $acs)
+    public function __construct($name, Environment $templating, EntityManagerInterface $em, AuthCustomerService $acs)
     {
         parent::__construct($name, $templating);
         $this->em = $em;

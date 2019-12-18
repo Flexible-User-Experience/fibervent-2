@@ -94,11 +94,12 @@ class AuditPdfBuilderService extends AbstractPdfBuilderService
     }
 
     /**
-     * @param Audit    $audit
+     * @param Audit $audit
      * @param Windmill $windmill
      * @param Windfarm $windfarm
      *
      * @return \TCPDF
+     * @throws \Exception
      */
     private function doInitialConfig(Audit $audit, Windmill $windmill, Windfarm $windfarm)
     {

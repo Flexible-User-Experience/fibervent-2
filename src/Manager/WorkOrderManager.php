@@ -8,6 +8,7 @@ use App\Entity\BladeDamage;
 use App\Entity\WorkOrder;
 use App\Entity\WorkOrderTask;
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 
 /**
  * Class WorkOrderManager
@@ -28,9 +29,9 @@ class WorkOrderManager
     /**
      * WorkOrderManager constructor.
      *
-     * @param EntityManager $entityManager
+     * @param EntityManagerInterface $entityManager
      */
-    public function __construct(EntityManager $entityManager)
+    public function __construct(EntityManagerInterface $entityManager)
     {
         $this->em = $entityManager;
     }

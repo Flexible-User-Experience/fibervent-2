@@ -104,7 +104,7 @@ class AuthCustomerService
     }
 
     /**
-     * @return User
+     * @return User|object|string
      */
     private function getUser()
     {
