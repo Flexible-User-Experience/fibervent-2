@@ -1,3 +1,7 @@
+imports:
+    - { resource: 'repositories.yaml' }
+    - { resource: 'admins.yaml' }
+
 # This file is the entry point to configure your own services.
 # Files in the packages/ subdirectory configure your dependencies.
 
@@ -6,6 +10,7 @@
 parameters:
     default_locale: '%env(resolve:DEFAULT_LOCALE)%'
     database_server_version: '%env(resolve:DATABASE_SERVER_VERSION)%'
+    project_web_title: '%env(resolve:PROJECT_WEB_TITLE)%'
 
 services:
     _defaults:

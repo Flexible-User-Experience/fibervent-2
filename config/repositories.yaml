@@ -1,0 +1,81 @@
+services:
+    app.state_repository:
+        class: App\Repository\StateRepository
+        factory: [ "@doctrine", getRepository ]
+        arguments:
+            - App:State
+    app.turbine_repository:
+        class: App\Repository\TurbineRepository
+        factory: [ "@doctrine", getRepository ]
+        arguments:
+            - App:Turbine
+    app.blade_repository:
+        class: App\Repository\BladeRepository
+        factory: [ "@doctrine", getRepository ]
+        arguments:
+            - App:Blade
+    app.blade_damage_repository:
+        class: App\Repository\BladeDamageRepository
+        factory: [ "@doctrine", getRepository ]
+        arguments:
+            - App:BladeDamage
+    app.windfarm_repository:
+        class: App\Repository\WindfarmRepository
+        factory: [ "@doctrine", getRepository ]
+        arguments:
+            - App:Windfarm
+    app.windmill_repository:
+        class: App\Repository\WindmillRepository
+        factory: [ "@doctrine", getRepository ]
+        arguments:
+            - App:Windmill
+    app.user_repository:
+        class: App\Repository\UserRepository
+        factory: [ "@doctrine", getRepository ]
+        arguments:
+            - App:User
+    app.customer_repository:
+        class: App\Repository\CustomerRepository
+        factory: [ "@doctrine", getRepository ]
+        arguments:
+            - App:Customer
+    app.damage_repository:
+        class: App\Repository\DamageRepository
+        factory: [ "@doctrine", getRepository ]
+        arguments:
+            - App:Damage
+    app.damage_category_repository:
+        class: App\Repository\DamageCategoryRepository
+        factory: [ "@doctrine", getRepository ]
+        arguments:
+            - App:DamageCategory
+    app.audit_repository:
+        class: App\Repository\AuditRepository
+        factory: [ "@doctrine", getRepository ]
+        arguments:
+            - App:Audit
+    app.windmill_blade_repository:
+        class: App\Repository\WindmillBladeRepository
+        factory: [ "@doctrine", getRepository ]
+        arguments:
+            - App:WindmillBlade
+    app.observation_repository:
+        class: App\Repository\ObservationRepository
+        factory: [ "@doctrine", getRepository ]
+        arguments:
+            - App:Observation
+    app.repositories_service:
+        class: App\Service\RepositoriesService
+        arguments:
+            - "@app.customer_repository"
+            - "@app.user_repository"
+            - "@app.windmill_repository"
+            - "@app.windfarm_repository"
+            - "@app.blade_repository"
+            - "@app.turbine_repository"
+            - "@app.state_repository"
+            - "@app.damage_repository"
+            - "@app.damage_category_repository"
+            - "@app.audit_repository"
+            - "@app.windmill_blade_repository"
+            - "@app.blade_damage_repository"

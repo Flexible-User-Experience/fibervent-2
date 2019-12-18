@@ -1,0 +1,13 @@
+services:
+#    admin.student:
+#        class: App\Admin\StudentAdmin
+#        arguments: [ ~, App\Entity\Student, App\Controller\Admin\StudentAdminController, "@vich_uploader.templating.helper.uploader_helper", "@liip_imagine.cache.manager" ]
+#        tags:
+#            - { name: sonata.admin, manager_type: orm, label: "Alumne", group: "Alumnes" }
+#        calls:
+#            - [ setTemplate, [ edit, "admin/student/edit.html.twig" ] ]
+    admin.customer:
+        class: App\Admin\CustomerAdmin
+        arguments: [ ~, App\Entity\Customer, App\Controller\CustomerAdminController, "@security.authorization_checker", "@security.token_storage", "@app.repositories_service", "@vich_uploader.templating.helper.uploader_helper", "@liip_imagine.cache.manager" ]
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: "Cliente", group: "Client", label_translator_strategy: "sonata.admin.label.strategy.noop" }
