@@ -10,6 +10,7 @@ use Sonata\BlockBundle\Block\Service\AbstractBlockService;
 use Sonata\BlockBundle\Block\BlockContextInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Templating\EngineInterface;
 use Twig\Environment;
 
 /**
@@ -37,11 +38,11 @@ class AuditsBlock extends AbstractBlockService
      * Constructor.
      *
      * @param string                 $name
-     * @param Environment            $templating
+     * @param EngineInterface        $templating
      * @param EntityManagerInterface $em
      * @param AuthCustomerService    $acs
      */
-    public function __construct($name, Environment $templating, EntityManagerInterface $em, AuthCustomerService $acs)
+    public function __construct($name, EngineInterface $templating, EntityManagerInterface $em, AuthCustomerService $acs)
     {
         parent::__construct($name, $templating);
         $this->em = $em;

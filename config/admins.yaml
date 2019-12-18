@@ -11,3 +11,10 @@ services:
         arguments: [ ~, App\Entity\Customer, App\Controller\CustomerAdminController, "@security.authorization_checker", "@security.token_storage", "@app.repositories_service", "@vich_uploader.templating.helper.uploader_helper", "@liip_imagine.cache.manager" ]
         tags:
             - { name: sonata.admin, manager_type: orm, label: "Cliente", group: "Client", label_translator_strategy: "sonata.admin.label.strategy.noop" }
+
+    # Sonata Blocks
+    admin.block.audits:
+        class: App\Admin\Block\AuditsBlock
+        tags:
+            - { name: sonata.block }
+        arguments: [ "sonata.admin.block.audits", "@templating", "@doctrine.orm.entity_manager", "@app.auth_customer" ]

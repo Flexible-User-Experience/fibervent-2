@@ -34,3 +34,10 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+
+    # Auth
+    app.auth_customer:
+        class: App\Service\AuthCustomerService
+        arguments:
+            - "@security.authorization_checker"
+            - "@security.token_storage"

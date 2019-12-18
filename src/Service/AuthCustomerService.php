@@ -8,6 +8,7 @@ use App\Entity\User;
 use App\Entity\Windfarm;
 use App\Enum\UserRolesEnum;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationChecker;
 
 /**
@@ -34,10 +35,10 @@ class AuthCustomerService
     /**
      * AuthCustomerService constructor.
      *
-     * @param AuthorizationChecker $acs
-     * @param TokenStorage         $tss
+     * @param AuthorizationChecker  $acs
+     * @param TokenStorageInterface $tss
      */
-    public function __construct(AuthorizationChecker $acs, TokenStorage $tss)
+    public function __construct(AuthorizationChecker $acs, TokenStorageInterface $tss)
     {
         $this->acs = $acs;
         $this->tss = $tss;
