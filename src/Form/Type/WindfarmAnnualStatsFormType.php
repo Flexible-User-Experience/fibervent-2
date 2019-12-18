@@ -7,6 +7,7 @@ use App\Enum\AuditStatusEnum;
 use App\Repository\AuditRepository;
 use App\Repository\DamageCategoryRepository;
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\ORMException;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -46,11 +47,11 @@ class WindfarmAnnualStatsFormType extends AbstractType
     /**
      * WindfarmAnnualStatsFormType constructor.
      *
-     * @param EntityManager            $em
+     * @param EntityManagerInterface   $em
      * @param AuditRepository          $ar
      * @param DamageCategoryRepository $dcr
      */
-    public function __construct(EntityManager $em, AuditRepository $ar, DamageCategoryRepository $dcr)
+    public function __construct(EntityManagerInterface $em, AuditRepository $ar, DamageCategoryRepository $dcr)
     {
         $this->em = $em;
         $this->ar = $ar;

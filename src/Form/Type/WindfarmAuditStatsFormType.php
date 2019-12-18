@@ -5,6 +5,7 @@ namespace App\Form\Type;
 use App\Enum\AuditStatusEnum;
 use App\Repository\AuditRepository;
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Sonata\CoreBundle\Form\Type\DateRangePickerType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -38,10 +39,10 @@ class WindfarmAuditStatsFormType extends AbstractType
     /**
      * WindfarmAnnualStatsFormType constructor.
      *
-     * @param EntityManager   $em
-     * @param AuditRepository $ar
+     * @param EntityManagerInterface $em
+     * @param AuditRepository        $ar
      */
-    public function __construct(EntityManager $em, AuditRepository $ar)
+    public function __construct(EntityManagerInterface $em, AuditRepository $ar)
     {
         $this->em = $em;
         $this->ar = $ar;

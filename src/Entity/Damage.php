@@ -51,7 +51,7 @@ class Damage extends AbstractBase
      *     mappedBy="object",
      *     cascade={"persist", "remove"}
      * )
-     * @Assert\Valid(deep = true)
+     * @Assert\Valid()
      *
      * @var ArrayCollection
      */
