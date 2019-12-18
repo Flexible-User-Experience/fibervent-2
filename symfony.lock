@@ -108,6 +108,21 @@
     "egulias/email-validator": {
         "version": "2.1.11"
     },
+    "friendsofsymfony/jsrouting-bundle": {
+        "version": "2.3",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "master",
+            "version": "2.3",
+            "ref": "a9f2e49180f75cdc71ae279a929c4b2e0638de84"
+        },
+        "files": [
+            "config/routes/fos_js_routing.yaml"
+        ]
+    },
+    "friendsofsymfony/user-bundle": {
+        "version": "v2.1.2"
+    },
     "fzaninotto/faker": {
         "version": "v1.8.0"
     },
@@ -303,8 +318,14 @@
     "sonata-project/doctrine-orm-admin-bundle": {
         "version": "3.10.0"
     },
+    "sonata-project/easy-extends-bundle": {
+        "version": "2.5.0"
+    },
     "sonata-project/exporter": {
         "version": "2.0.1"
+    },
+    "sonata-project/user-bundle": {
+        "version": "4.5.1"
     },
     "stof/doctrine-extensions-bundle": {
         "version": "1.2",
@@ -703,6 +724,9 @@
     "symfony/yaml": {
         "version": "v4.3.4"
     },
+    "tecnickcom/tcpdf": {
+        "version": "6.3.2"
+    },
     "theofidry/alice-data-fixtures": {
         "version": "1.0",
         "recipe": {
@@ -741,6 +765,12 @@
     },
     "webmozart/assert": {
         "version": "1.5.0"
+    },
+    "whiteoctober/tcpdf-bundle": {
+        "version": "1.1.2"
+    },
+    "willdurand/jsonp-callback-validator": {
+        "version": "v1.1.0"
     },
     "zendframework/zend-code": {
         "version": "3.3.1"
