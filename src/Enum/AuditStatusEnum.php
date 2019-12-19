@@ -23,12 +23,7 @@ class AuditStatusEnum
      */
     public static function getEnumArray()
     {
-        return array(
-            self::PENDING => 'enum.audit_status.pending',
-            self::DOING => 'enum.audit_status.doing',
-            self::DONE => 'enum.audit_status.done',
-            self::INVOICED => 'enum.audit_status.invoiced',
-        );
+        return array_flip(self::getReversedEnumArray());
     }
 
     /**

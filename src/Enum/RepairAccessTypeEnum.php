@@ -23,6 +23,14 @@ class RepairAccessTypeEnum
      */
     public static function getEnumArray()
     {
+        return array_flip(self::getReversedEnumArray());
+    }
+
+    /**
+     * @return array
+     */
+    public static function getReversedEnumArray()
+    {
         return array(
             self::CRANE => 'enum.repair_access_type.crane',
             self::BASKET_CRANE => 'enum.repair_access_type.basket_crane',
@@ -38,6 +46,6 @@ class RepairAccessTypeEnum
      */
     public static function getDecodedStringFromType(int $type)
     {
-        return self::getEnumArray()[$type];
+        return self::getReversedEnumArray()[$type];
     }
 }

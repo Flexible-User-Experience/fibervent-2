@@ -25,6 +25,14 @@ class BladeDamagePositionEnum
      */
     public static function getEnumArray()
     {
+        return array_flip(self::getReversedEnumArray());
+    }
+
+    /**
+     * @return array
+     */
+    public static function getReversedEnumArray()
+    {
         return array(
             self::VALVE_PRESSURE => 'VP',
             self::VALVE_SUCTION => 'VS',
@@ -38,6 +46,14 @@ class BladeDamagePositionEnum
      */
     public static function getLocalizedEnumArray()
     {
+        return array_flip(self::getReversedLocalizedEnumArray());
+    }
+
+    /**
+     * @return array
+     */
+    public static function getReversedLocalizedEnumArray()
+    {
         return array(
             self::VALVE_PRESSURE => 'enum.blade_damage_position.1_VP',
             self::VALVE_SUCTION => 'enum.blade_damage_position.2_VS',
@@ -50,6 +66,14 @@ class BladeDamagePositionEnum
      * @return array
      */
     public static function getLongTextEnumArray()
+    {
+        return array_flip(self::getReversedLongTextEnumArray());
+    }
+
+    /**
+     * @return array
+     */
+    public static function getReversedLongTextEnumArray()
     {
         return array(
             self::VALVE_PRESSURE => 'Valva pressió',
@@ -66,7 +90,7 @@ class BladeDamagePositionEnum
      */
     public static function getStringValue(BladeDamage $bladeDamage)
     {
-        return self::getEnumArray()[$bladeDamage->getPosition()];
+        return self::getReversedEnumArray()[$bladeDamage->getPosition()];
     }
 
     /**
@@ -76,6 +100,6 @@ class BladeDamagePositionEnum
      */
     public static function getStringLocalizedValue(BladeDamage $bladeDamage)
     {
-        return self::getLocalizedEnumArray()[$bladeDamage->getPosition()];
+        return self::getReversedLocalizedEnumArray()[$bladeDamage->getPosition()];
     }
 }

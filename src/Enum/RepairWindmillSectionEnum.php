@@ -22,6 +22,14 @@ class RepairWindmillSectionEnum
      */
     public static function getEnumArray()
     {
+        return array_flip(self::getReversedEnumArray());
+    }
+
+    /**
+     * @return array
+     */
+    public static function getReversedEnumArray()
+    {
         return array(
             self::BLADE => 'enum.repair_windmill_section.blade',
             self::NACELLE => 'enum.repair_windmill_section.nacelle',
@@ -36,6 +44,6 @@ class RepairWindmillSectionEnum
      */
     public static function getDecodedStringFromType(int $type)
     {
-        return self::getEnumArray()[$type];
+        return self::getReversedEnumArray()[$type];
     }
 }

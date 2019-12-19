@@ -23,6 +23,14 @@ class PresenceMonitoringCategoryEnum
      */
     public static function getEnumArray()
     {
+        return array_flip(self::getReversedEnumArray());
+    }
+
+    /**
+     * @return array
+     */
+    public static function getReversedEnumArray()
+    {
         return array(
             self::WORKDAY => 'enum.presence_monitoring_category.workday',
             self::DAYOFF => 'enum.presence_monitoring_category.dayoff',
@@ -38,6 +46,6 @@ class PresenceMonitoringCategoryEnum
      */
     public static function getDecodedString(int $category)
     {
-        return self::getEnumArray()[$category];
+        return self::getReversedEnumArray()[$category];
     }
 }

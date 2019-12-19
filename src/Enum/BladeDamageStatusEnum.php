@@ -21,6 +21,14 @@ class BladeDamageStatusEnum
      */
     public static function getEnumArray()
     {
+        return array_flip(self::getReversedEnumArray());
+    }
+
+    /**
+     * @return array
+     */
+    public static function getReversedEnumArray()
+    {
         return array(
             self::STATUS_NOT_VALIDATED => 'No validat',
             self::STATUS_VALIDATED => 'Validat',

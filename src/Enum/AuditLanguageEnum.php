@@ -25,6 +25,14 @@ class AuditLanguageEnum
      */
     public static function getEnumArray()
     {
+        return array_flip(self::getReversedEnumArray());
+    }
+
+    /**
+     * @return array
+     */
+    public static function getReversedEnumArray()
+    {
         return array(
             self::SPANISH => 'es',
             self::ENGLISH => 'en',
@@ -39,6 +47,14 @@ class AuditLanguageEnum
      * @return array
      */
     public static function getEnumArrayString()
+    {
+        return array_flip(self::getReversedEnumArrayString());
+    }
+
+    /**
+     * @return array
+     */
+    public static function getReversedEnumArrayString()
     {
         return array(
             self::SPANISH => 'español',

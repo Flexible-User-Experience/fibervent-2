@@ -24,6 +24,14 @@ class TimeRegisterShiftEnum
      */
     public static function getEnumArray()
     {
+        return array_flip(self::getReversedEnumArray());
+    }
+
+    /**
+     * @return array
+     */
+    public static function getReversedEnumArray()
+    {
         return array(
             self::MORNING => 'enum.time_register_shift.morning',
             self::AFTERNOON => 'enum.time_register_shift.afternoon',
@@ -38,6 +46,6 @@ class TimeRegisterShiftEnum
      */
     public static function getStringValue(DeliveryNoteTimeRegister $deliveryNoteTimeRegister)
     {
-        return self::getEnumArray()[$deliveryNoteTimeRegister->getShift()];
+        return self::getReversedEnumArray()[$deliveryNoteTimeRegister->getShift()];
     }
 }

@@ -25,6 +25,14 @@ class AuditDiagramTypeEnum
      */
     public static function getEnumArray()
     {
+        return array_flip(self::getReversedEnumArray());
+    }
+
+    /**
+     * @return array
+     */
+    public static function getReversedEnumArray()
+    {
         return array(
             self::TYPE_1 => '1',
             self::TYPE_2 => '2',
@@ -39,6 +47,14 @@ class AuditDiagramTypeEnum
      * @return array
      */
     public static function getInitializedArrayForMatchesCounts()
+    {
+        return array_flip(self::getReversedInitializedArrayForMatchesCounts());
+    }
+
+    /**
+     * @return array
+     */
+    public static function getReversedInitializedArrayForMatchesCounts()
     {
         return array(
             self::TYPE_1 => 0,

@@ -25,6 +25,14 @@ class UserRolesEnum
      */
     public static function getEnumArray()
     {
+        return array_flip(self::getReversedEnumArray());
+    }
+
+    /**
+     * @return array
+     */
+    public static function getReversedEnumArray()
+    {
         return array(
             self::ROLE_USER => 'enum.user_roles.user',
             self::ROLE_CUSTOMER => 'enum.user_roles.customer',

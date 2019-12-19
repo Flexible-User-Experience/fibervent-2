@@ -28,6 +28,14 @@ class NonStandardUsedMaterialItemEnum
      */
     public static function getEnumArray()
     {
+        return array_flip(self::getReversedEnumArray());
+    }
+
+    /**
+     * @return array
+     */
+    public static function getReversedEnumArray()
+    {
         return array(
             self::OTHERS => 'enum.non_standard_used_material_item.others',
             self::RECEIVERS => 'enum.non_standard_used_material_item.receivers',
@@ -46,6 +54,6 @@ class NonStandardUsedMaterialItemEnum
      */
     public static function getStringValue(NonStandardUsedMaterial $nonStandardUsedMaterial)
     {
-        return self::getEnumArray()[$nonStandardUsedMaterial->getItem()];
+        return self::getReversedEnumArray()[$nonStandardUsedMaterial->getItem()];
     }
 }

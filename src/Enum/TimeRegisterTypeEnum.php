@@ -24,6 +24,14 @@ class TimeRegisterTypeEnum
      */
     public static function getEnumArray()
     {
+        return array_flip(self::getReversedEnumArray());
+    }
+
+    /**
+     * @return array
+     */
+    public static function getReversedEnumArray()
+    {
         return array(
             self::TRIP => 'enum.time_register_type.trip',
             self::STOP => 'enum.time_register_type.stop',
@@ -38,6 +46,6 @@ class TimeRegisterTypeEnum
      */
     public static function getStringValue(DeliveryNoteTimeRegister $deliveryNoteTimeRegister)
     {
-        return self::getEnumArray()[$deliveryNoteTimeRegister->getType()];
+        return self::getReversedEnumArray()[$deliveryNoteTimeRegister->getType()];
     }
 }
