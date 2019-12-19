@@ -74,7 +74,7 @@
                                         <tbody>
                                         <tr>
                                             <td>
-                                                {% include ':Includes:draw_images_collection.html.twig' with {images: auditWindmillBlade.bladePhotos, filter: 'Xx128'} %}
+                                                {% include 'Includes/draw_images_collection.html.twig' with {images: auditWindmillBlade.bladePhotos, filter: 'Xx128'} %}
                                             </td>
                                         </tr>
                                         </tbody>
@@ -100,41 +100,40 @@
                                         </tbody>
                                     </table>
                                 {% endif %}
-
-                                    <hr>
-                                    <table class="table">
-                                        <thead>
+                                <hr>
+                                <table class="table">
+                                    <thead>
+                                    <tr class="sonata-ba-view-container">
+                                        <th>{{ 'admin.bladedamage.number' | trans }}</th>
+                                        <th>{{ 'admin.bladedamage.damagecategory_long' | trans }}</th>
+                                        <th>{{ 'admin.bladedamage.damage' | trans }}</th>
+                                        <th>{{ 'admin.damage.title_list' | trans }}</th>
+                                        <th>{{ 'admin.bladedamage.position' | trans }}</th>
+                                        <th>{{ 'admin.bladedamage.radius' | trans }}</th>
+                                        <th>{{ 'admin.bladedamage.distance' | trans }}</th>
+                                        <th>{{ 'admin.bladedamage.edge' | trans }}</th>
+                                        <th>{{ 'admin.bladedamage.size' | trans }}</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for bladeDamage in auditWindmillBlade.bladeDamages %}
                                         <tr class="sonata-ba-view-container">
-                                            <th>{{ 'admin.bladedamage.number' | trans }}</th>
-                                            <th>{{ 'admin.bladedamage.damagecategory_long' | trans }}</th>
-                                            <th>{{ 'admin.bladedamage.damage' | trans }}</th>
-                                            <th>{{ 'admin.damage.title_list' | trans }}</th>
-                                            <th>{{ 'admin.bladedamage.position' | trans }}</th>
-                                            <th>{{ 'admin.bladedamage.radius' | trans }}</th>
-                                            <th>{{ 'admin.bladedamage.distance' | trans }}</th>
-                                            <th>{{ 'admin.bladedamage.edge' | trans }}</th>
-                                            <th>{{ 'admin.bladedamage.size' | trans }}</th>
+                                            <td>{{ bladeDamage.id }}</td>
+                                            <td>{{ bladeDamage.damageCategory.category }}</td>
+                                            <td>{{ bladeDamage.damage.code }}</td>
+                                            <td>{{ bladeDamage.damage.description }}</td>
+                                            <td>{{ bladeDamage.position }}</td>
+                                            <td>{{ bladeDamage.radius }}</td>
+                                            <td>{{ bladeDamage.distance }}</td>
+                                            <td>{{ bladeDamage.edge }}</td>
+                                            <td>{{ bladeDamage.size }}</td>
+                                            <th class="sonata-ba-list-field-header sonata-ba-list-field-header-batch">
+                                                <input type="checkbox" id="list_batch_checkbox">
+                                            </th>
                                         </tr>
-                                        </thead>
-                                        <tbody>
-                                        {% for bladeDamage in auditWindmillBlade.bladeDamages %}
-                                            <tr class="sonata-ba-view-container">
-                                                <td>{{ bladeDamage.id }}</td>
-                                                <td>{{ bladeDamage.damageCategory.category }}</td>
-                                                <td>{{ bladeDamage.damage.code }}</td>
-                                                <td>{{ bladeDamage.damage.description }}</td>
-                                                <td>{{ bladeDamage.position }}</td>
-                                                <td>{{ bladeDamage.radius }}</td>
-                                                <td>{{ bladeDamage.distance }}</td>
-                                                <td>{{ bladeDamage.edge }}</td>
-                                                <td>{{ bladeDamage.size }}</td>
-                                                <th class="sonata-ba-list-field-header sonata-ba-list-field-header-batch">
-                                                    <input type="checkbox" id="list_batch_checkbox">
-                                                </th>
-                                            </tr>
-                                        {% endfor %}
-                                        </tbody>
-                                    </table>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>

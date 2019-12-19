@@ -96,7 +96,7 @@
                                         <tbody>
                                         <tr>
                                             <td>
-                                                {% include ':Includes:draw_images_collection.html.twig' with {images: auditWindmillBlade.bladePhotos, filter: 'Xx128'} %}
+                                                {% include 'Includes/draw_images_collection.html.twig' with {images: auditWindmillBlade.bladePhotos, filter: 'Xx128'} %}
                                             </td>
                                         </tr>
                                         </tbody>
@@ -131,7 +131,7 @@
                                     {% if bladeDamage.photos | length > 0 %}
                                         <tr class="sonata-ba-view-container">
                                             <td colspan="8">
-                                                {% include ':Includes:draw_images_collection.html.twig' with {images: bladeDamage.photos, filter: '128x128'} %}
+                                                {% include 'Includes/draw_images_collection.html.twig' with {images: bladeDamage.photos, filter: '128x128'} %}
                                             </td>
                                         </tr>
                                     {% endif %}
