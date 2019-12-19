@@ -198,7 +198,6 @@ class WorkOrderAdmin extends AbstractBaseAdmin
                         'multiple' => false,
                         'btn_add' => false,
                         'query' => $this->cr->findEnabledSortedByNameQ(),
-                        'choices_as_values' => true,
                     )
                 )
                 ->end()

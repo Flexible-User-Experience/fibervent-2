@@ -96,7 +96,6 @@ class WindfarmAdmin extends AbstractBaseAdmin
                     'multiple' => false,
                     'btn_add' => false,
                     'query' => $this->cr->findEnabledSortedByNameQ(),
-                    'choices_as_values' => true,
                 )
             )
             ->add(
@@ -153,7 +152,6 @@ class WindfarmAdmin extends AbstractBaseAdmin
                     'btn_delete' => false,
                     'required' => true,
                     'query' => $this->sr->findAllSortedByNameQ(),
-                    'choices_as_values' => true,
                 )
             )
             ->end()
@@ -168,7 +166,6 @@ class WindfarmAdmin extends AbstractBaseAdmin
                     'required' => false,
                     'property' => 'contactInfoString',
                     'query' => $this->ur->findEnabledSortedByNameQ($customer),
-                    'choices_as_values' => true,
                 )
             )
             ->add(

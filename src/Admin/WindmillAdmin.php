@@ -52,7 +52,6 @@ class WindmillAdmin extends AbstractBaseAdmin
                     'btn_add' => false,
                     'required' => true,
                     'query' => $this->wfr->findEnabledSortedByNameQ(),
-                    'choices_as_values' => true,
                 )
             )
             ->add(
@@ -80,7 +79,6 @@ class WindmillAdmin extends AbstractBaseAdmin
                     'btn_delete' => false,
                     'required' => true,
                     'query' => $this->tr->findAllSortedByModelQ(),
-                    'choices_as_values' => true,
                 )
             )
             ->add(
@@ -92,7 +90,6 @@ class WindmillAdmin extends AbstractBaseAdmin
                     'btn_delete' => false,
                     'required' => true,
                     'query' => $this->br->findAllSortedByModelQ(),
-                    'choices_as_values' => true,
                 )
             )
             ->end();

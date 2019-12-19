@@ -257,7 +257,6 @@ class UserAdmin extends ParentUserAdmin
                     'field_type' => 'choice',
                     'field_options' => array(
                         'choices' => UserRolesEnum::getEnumArray(),
-                        'choices_as_values' => false,
                     ),
                 )
             )

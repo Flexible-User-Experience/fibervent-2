@@ -146,7 +146,6 @@ class CustomerAdmin extends AbstractBaseAdmin
                     'btn_delete' => false,
                     'required' => true,
                     'query' => $this->sr->findAllSortedByNameQ(),
-                    'choices_as_values' => true,
                 )
             )
             ->end()
@@ -165,7 +164,6 @@ class CustomerAdmin extends AbstractBaseAdmin
                         'btn_add' => false,
                         'by_reference' => false,
                         'query' => $this->ur->findOnlyAvailableSortedByNameQ($this->getSubject()),
-                        'choices_as_values' => true,
                     )
                 )
                 ->end()
@@ -180,7 +178,6 @@ class CustomerAdmin extends AbstractBaseAdmin
                         'btn_add' => false,
                         'by_reference' => false,
                         'query' => $this->wfr->findOnlyAvailableSortedByNameQ($this->getSubject()),
-                        'choices_as_values' => true,
                     )
                 )
                 ->end()

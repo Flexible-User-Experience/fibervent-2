@@ -69,7 +69,6 @@ class BladeDamageAdmin extends AbstractBaseAdmin
                     'btn_delete' => false,
                     'required' => true,
                     'query' => $this->dr->findAllEnabledSortedByCodeQ(),
-                    'choices_as_values' => true,
                 )
             )
             ->add(
@@ -130,7 +129,6 @@ class BladeDamageAdmin extends AbstractBaseAdmin
                     'btn_delete' => false,
                     'required' => true,
                     'query' => $this->dcr->findEnabledSortedByCategoryQ(),
-                    'choices_as_values' => true,
                 )
             )
             ->add(
