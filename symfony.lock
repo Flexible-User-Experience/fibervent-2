@@ -153,6 +153,9 @@
     "knplabs/knp-paginator-bundle": {
         "version": "v3.0.0"
     },
+    "krixer/google-map-form-type-bundle": {
+        "version": "v1.2"
+    },
     "lexik/maintenance-bundle": {
         "version": "2.1",
         "recipe": {
