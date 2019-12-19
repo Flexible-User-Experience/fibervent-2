@@ -67,8 +67,7 @@ class WindfarmAuditStatsFormType extends AbstractType
                         'multiple' => true,
                         'expanded' => true,
                         'label' => 'admin.audit.status',
-                        'choices' => AuditStatusEnum::getReversedEnumArray(),
-                        'choices_as_values' => true,
+                        'choices' => AuditStatusEnum::getEnumArray(),
                         'data' => array(AuditStatusEnum::DONE, AuditStatusEnum::INVOICED),
                     )
                 )
