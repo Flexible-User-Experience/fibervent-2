@@ -116,7 +116,6 @@ class AuditAdmin extends AbstractBaseAdmin
                     'btn_delete' => false,
                     'required' => true,
                     'query' => $this->wmr->findEnabledSortedByCustomerWindfarmAndWindmillCodeQ(),
-                    'choices_as_values' => true,
                 )
             )
             ->add(
@@ -160,7 +159,6 @@ class AuditAdmin extends AbstractBaseAdmin
                     'btn_delete' => false,
                     'property' => 'contactInfoString',
                     'query' => $this->ur->findAllTechniciansSortedByNameQ(),
-                    'choices_as_values' => true,
                 )
             )
             ->add(
