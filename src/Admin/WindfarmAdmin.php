@@ -346,7 +346,6 @@ class WindfarmAdmin extends AbstractBaseAdmin
      */
     protected function configureListFields(ListMapper $listMapper)
     {
-        unset($this->listModes['mosaic']);
         if ($this->acs->isGranted(UserRolesEnum::ROLE_OPERATOR)) {
             $listMapper
                 ->add(

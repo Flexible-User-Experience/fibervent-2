@@ -281,7 +281,6 @@ class UserAdmin extends ParentUserAdmin
      */
     protected function configureListFields(ListMapper $listMapper): void
     {
-        unset($this->listModes['mosaic']);
         $listMapper
             ->add(
                 'image',

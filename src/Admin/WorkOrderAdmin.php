@@ -345,7 +345,6 @@ class WorkOrderAdmin extends AbstractBaseAdmin
      */
     protected function configureListFields(ListMapper $listMapper)
     {
-        unset($this->listModes['mosaic']);
         $listMapper
             ->add('projectNumber',
                 null,
