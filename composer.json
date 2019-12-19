@@ -11,7 +11,6 @@
         "egulias/email-validator": "^2.1",
         "friendsofsymfony/ckeditor-bundle": "^2.1",
         "friendsofsymfony/jsrouting-bundle": "^2.5",
-        "hautelook/alice-bundle": "^2.5",
         "knplabs/knp-menu-bundle": "^2.0",
         "knplabs/knp-paginator-bundle": "^3.0",
         "lexik/maintenance-bundle": "^2.0",
@@ -47,7 +46,6 @@
         "whiteoctober/tcpdf-bundle": "^1.0"
     },
     "require-dev": {
-        "hautelook/alice-bundle": "^2.3",
         "sensiolabs/security-checker": "^5.0",
         "symfony/debug-pack": "*",
         "symfony/maker-bundle": "^1.0",
