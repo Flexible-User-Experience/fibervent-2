@@ -7,6 +7,7 @@ use App\Entity\Traits\GpsCoordinatesTrait;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Windmill.
@@ -53,6 +54,7 @@ class Windmill extends AbstractBase
      *
      * @ORM\OneToMany(targetEntity="WindmillBlade", mappedBy="windmill", cascade={"persist"})
      * @ORM\Cache(usage="NONSTRICT_READ_WRITE")
+     * @Assert\Valid
      */
     private $windmillBlades;
 

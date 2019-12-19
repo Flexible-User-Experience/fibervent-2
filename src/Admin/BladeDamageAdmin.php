@@ -169,7 +169,6 @@ class BladeDamageAdmin extends AbstractBaseAdmin
                     array(
                         'label' => ' ',
                         'required' => false,
-                        'cascade_validation' => true,
                     ),
                     array(
                         'edit' => 'inline',

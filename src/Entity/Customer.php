@@ -63,7 +63,7 @@ class Customer extends AbstractBase
      * @var string
      *
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Assert\Url(checkDNS=true)
+     * @Assert\Url(checkDNS="ANY")
      */
     private $web;
 

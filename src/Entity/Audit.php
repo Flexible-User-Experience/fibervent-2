@@ -7,6 +7,7 @@ use App\Enum\AuditTypeEnum;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Audit.
@@ -78,6 +79,7 @@ class Audit extends AbstractBase
      *
      * @ORM\OneToMany(targetEntity="AuditWindmillBlade", mappedBy="audit", cascade={"persist", "remove"}, orphanRemoval=true)
      * @ORM\Cache(usage="NONSTRICT_READ_WRITE")
+     * @Assert\Valid
      */
     private $auditWindmillBlades;
 

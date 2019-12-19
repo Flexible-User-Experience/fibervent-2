@@ -6,6 +6,7 @@ use App\Enum\RepairAccessTypeEnum;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * WorkOrder.
@@ -99,6 +100,7 @@ class WorkOrder extends AbstractBase
      *
      * @ORM\OneToMany(targetEntity="WorkOrderTask", mappedBy="workOrder", cascade={"persist", "remove"}, orphanRemoval=true)
      * @ORM\Cache(usage="NONSTRICT_READ_WRITE")
+     * @Assert\Valid
      */
     private $workOrderTasks;
 
@@ -107,6 +109,7 @@ class WorkOrder extends AbstractBase
      *
      * @ORM\OneToMany(targetEntity="DeliveryNote", mappedBy="workOrder", cascade={"persist", "remove"}, orphanRemoval=true)
      * @ORM\Cache(usage="NONSTRICT_READ_WRITE")
+     * @Assert\Valid
      */
     private $deliveryNotes;
 

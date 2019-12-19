@@ -91,7 +91,6 @@ class AuditWindmillBladeAdmin extends AbstractBaseAdmin
                     array(
                         'label' => 'admin.auditwindmillblade.damages',
                         'required' => true,
-                        'cascade_validation' => true,
                         'error_bubbling' => true,
                     ),
                     array(
@@ -107,7 +106,6 @@ class AuditWindmillBladeAdmin extends AbstractBaseAdmin
                     array(
                         'label' => 'admin.audit.observations',
                         'required' => true,
-                        'cascade_validation' => true,
                         'error_bubbling' => true,
                     ),
                     array(
@@ -123,7 +121,6 @@ class AuditWindmillBladeAdmin extends AbstractBaseAdmin
                     array(
                         'label' => 'admin.auditwindmillblade.photos',
                         'required' => true,
-                        'cascade_validation' => true,
                         'error_bubbling' => true,
                     ),
                     array(

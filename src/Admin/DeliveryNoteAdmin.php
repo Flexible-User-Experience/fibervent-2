@@ -327,7 +327,6 @@ class DeliveryNoteAdmin extends AbstractBaseAdmin
                     'label' => ' ',
                     'required' => false,
                     'btn_add' => true,
-                    'cascade_validation' => true,
                     'error_bubbling' => true,
                     'type_options' => array(
                         'delete' => true,
@@ -360,7 +359,6 @@ class DeliveryNoteAdmin extends AbstractBaseAdmin
                     'label' => ' ',
                     'required' => false,
                     'btn_add' => true,
-                    'cascade_validation' => true,
                     'error_bubbling' => true,
                     'type_options' => array(
                         'delete' => true,

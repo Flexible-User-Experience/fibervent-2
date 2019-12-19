@@ -135,7 +135,6 @@ class WorkOrderAdmin extends AbstractBaseAdmin
                         'label' => ' ',
                         'required' => false,
                         'btn_add' => true,
-                        'cascade_validation' => true,
                         'error_bubbling' => true,
                         'type_options' => array(
                             'delete' => true,
@@ -155,7 +154,6 @@ class WorkOrderAdmin extends AbstractBaseAdmin
                         'label' => ' ',
                         'required' => false,
                         'btn_add' => false,
-                        'cascade_validation' => true,
                         'error_bubbling' => true,
                         'type_options' => array(
                             'delete' => false,

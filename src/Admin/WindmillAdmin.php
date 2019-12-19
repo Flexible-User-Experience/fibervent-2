@@ -103,7 +103,6 @@ class WindmillAdmin extends AbstractBaseAdmin
                         'label' => ' ',
                         'required' => false,
                         'btn_add' => false,
-                        'cascade_validation' => true,
                         'type_options' => array(
                             'delete' => false,
                         ),

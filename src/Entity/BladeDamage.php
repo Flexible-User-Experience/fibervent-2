@@ -100,6 +100,7 @@ class BladeDamage extends AbstractBase
      *
      * @ORM\OneToMany(targetEntity="Photo", mappedBy="bladeDamage", cascade={"persist", "remove"}, orphanRemoval=true))
      * @ORM\Cache(usage="NONSTRICT_READ_WRITE")
+     * @Assert\Valid
      */
     private $photos;
 
