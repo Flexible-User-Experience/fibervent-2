@@ -48,7 +48,7 @@ class UserAdminController extends AbstractBaseAdminController
         }
 
         return $this->renderWithExtraParams(
-            ':Admin/User:profile.html.twig',
+            'Admin/User/profile.html.twig',
             array(
                 'action' => 'show',
                 'object' => $user,

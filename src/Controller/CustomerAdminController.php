@@ -44,7 +44,7 @@ class CustomerAdminController extends AbstractBaseAdminController
         }
 
         return $this->renderWithExtraParams(
-            ':Admin/Customer:map.html.twig',
+            'Admin/Customer/map.html.twig',
             array(
                 'action' => 'show',
                 'object' => $object,

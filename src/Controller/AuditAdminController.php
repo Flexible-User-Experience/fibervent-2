@@ -83,7 +83,7 @@ class AuditAdminController extends AbstractBaseAdminController
         }
 
         return $this->render(
-            ':Admin/Audit:show.html.twig',
+            'Admin/Audit/show.html.twig',
             array(
                 'action' => 'show',
                 'object' => $object,
@@ -131,7 +131,7 @@ class AuditAdminController extends AbstractBaseAdminController
         }
 
         return $this->render(
-            ':Admin/Audit:email.html.twig',
+            'Admin/Audit/email.html.twig',
             array(
                 'action' => 'show',
                 'object' => $object,
@@ -168,7 +168,7 @@ class AuditAdminController extends AbstractBaseAdminController
         }
 
         return $this->render(
-            ':Admin/Audit:create_work_order.html.twig',
+            'Admin/Audit/create_work_order.html.twig',
             array(
                 'action' => 'show',
                 'object' => $object,

@@ -26,6 +26,7 @@ services:
         tags:
             - 'controller.service_arguments'
     app.auth_customer:
+        public: true
         class: App\Service\AuthCustomerService
         arguments:
             - '@security.authorization_checker'

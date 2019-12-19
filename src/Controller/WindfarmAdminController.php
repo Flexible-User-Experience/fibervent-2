@@ -48,7 +48,7 @@ class WindfarmAdminController extends AbstractBaseAdminController
         }
 
         return $this->renderWithExtraParams(
-            ':Admin/Windfarm:show.html.twig',
+            'Admin/Windfarm/show.html.twig',
             array(
                 'action' => 'show',
                 'object' => $object,
@@ -83,7 +83,7 @@ class WindfarmAdminController extends AbstractBaseAdminController
         }
 
         return $this->renderWithExtraParams(
-            ':Admin/Windfarm:map.html.twig',
+            'Admin/Windfarm/map.html.twig',
             array(
                 'action' => 'show',
                 'object' => $object,
@@ -118,7 +118,7 @@ class WindfarmAdminController extends AbstractBaseAdminController
         }
 
         return $this->renderWithExtraParams(
-            ':Admin/Windfarm:map.html.twig',
+            'Admin/Windfarm/map.html.twig',
             array(
                 'action' => 'show',
                 'object' => $object,
@@ -188,7 +188,7 @@ class WindfarmAdminController extends AbstractBaseAdminController
             }
 
             return $this->renderWithExtraParams(
-                ':Admin/Windfarm:annual_stats.html.twig',
+                'Admin/Windfarm/annual_stats.html.twig',
                 array(
                     'action' => 'show',
                     'object' => $object,
@@ -202,7 +202,7 @@ class WindfarmAdminController extends AbstractBaseAdminController
         }
 
         return $this->renderWithExtraParams(
-            ':Admin/Windfarm:annual_stats.html.twig',
+            'Admin/Windfarm/annual_stats.html.twig',
             array(
                 'action' => 'show',
                 'object' => $object,
@@ -270,7 +270,7 @@ class WindfarmAdminController extends AbstractBaseAdminController
         }
 
         $response = $this->renderWithExtraParams(
-            ':Admin/Windfarm:excel.xls.twig',
+            'Admin/Windfarm/excel.xls.twig',
             array(
                 'action' => 'show',
                 'windfarm' => $object,
@@ -332,7 +332,7 @@ class WindfarmAdminController extends AbstractBaseAdminController
             );
 
             return $this->renderWithExtraParams(
-                ':Admin/Windfarm:pdf_filter_pre_build.html.twig',
+                'Admin/Windfarm/pdf_filter_pre_build.html.twig',
                 array(
                     'action' => 'show',
                     'object' => $object,
@@ -352,7 +352,7 @@ class WindfarmAdminController extends AbstractBaseAdminController
         }
 
         return $this->renderWithExtraParams(
-            ':Admin/Windfarm:pdf_filter_pre_build.html.twig',
+            'Admin/Windfarm/pdf_filter_pre_build.html.twig',
             array(
                 'action' => 'show',
                 'object' => $object,
