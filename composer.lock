@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "1b60324826082e70e451a5c395f64041",
+    "content-hash": "316cefa8474f6c57742a52b831801af3",
     "packages": [
         {
             "name": "beberlei/doctrineextensions",
@@ -629,16 +629,16 @@
         },
         {
             "name": "doctrine/doctrine-bundle",
-            "version": "1.12.4",
+            "version": "1.12.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/DoctrineBundle.git",
-                "reference": "f7f32a35fca964df6dd6a3391095ac994a02e03a"
+                "reference": "5d477e6fecac2718b8c43e658abe2a19b225ba25"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/DoctrineBundle/zipball/f7f32a35fca964df6dd6a3391095ac994a02e03a",
-                "reference": "f7f32a35fca964df6dd6a3391095ac994a02e03a",
+                "url": "https://api.github.com/repos/doctrine/DoctrineBundle/zipball/5d477e6fecac2718b8c43e658abe2a19b225ba25",
+                "reference": "5d477e6fecac2718b8c43e658abe2a19b225ba25",
                 "shasum": ""
             },
             "require": {
@@ -662,6 +662,7 @@
             "require-dev": {
                 "doctrine/coding-standard": "^6.0",
                 "doctrine/orm": "^2.6",
+                "ocramius/proxy-manager": "^2.1",
                 "php-coveralls/php-coveralls": "^2.1",
                 "phpunit/phpunit": "^7.5",
                 "symfony/phpunit-bridge": "^4.2",
@@ -717,7 +718,7 @@
                 "orm",
                 "persistence"
             ],
-            "time": "2019-12-18T16:07:31+00:00"
+            "time": "2019-12-18T18:15:25+00:00"
         },
         {
             "name": "doctrine/doctrine-cache-bundle",
@@ -9735,7 +9736,7 @@
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
-        "php": ">=7.3.0",
+        "php": ">=7.2.0",
         "ext-ctype": "*",
         "ext-iconv": "*"
     },
