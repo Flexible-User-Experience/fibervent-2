@@ -13,6 +13,7 @@ use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Form\Type\ModelType;
 use Sonata\AdminBundle\Route\RouteCollection;
 use Sonata\Form\Type\EqualType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 /**
@@ -292,7 +293,7 @@ class WindfarmAdmin extends AbstractBaseAdmin
                     array(
                         'label' => 'admin.windfarm.manager',
                     ),
-                    'entity',
+                    EntityType::class,
                     array(
                         'class' => User::class,
                         'query_builder' => $this->ur->findAllSortedByNameQB(),
@@ -307,7 +308,7 @@ class WindfarmAdmin extends AbstractBaseAdmin
                     array(
                         'label' => 'admin.windfarm.manager',
                     ),
-                    'entity',
+                    EntityType::class,
                     array(
                         'class' => User::class,
                         'query_builder' => $this->ur->findRegionalManagersByCustomerQB($this->tss->getToken()->getUser()->getCustomer()),

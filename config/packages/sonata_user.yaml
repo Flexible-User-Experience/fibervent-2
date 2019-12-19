@@ -1,0 +1,15 @@
+sonata_user:
+    security_acl: false
+    manager_type: orm
+    class:
+        user:  App\Entity\User
+        group: App\Entity\Group
+    admin:
+        user:
+            class:          Sonata\UserBundle\Admin\Entity\UserAdmin
+            controller:     SonataAdminBundle:CRUD
+            translation:    SonataUserBundle
+        group:
+            class:          Sonata\UserBundle\Admin\Entity\GroupAdmin
+            controller:     SonataAdminBundle:CRUD
+            translation:    SonataUserBundle

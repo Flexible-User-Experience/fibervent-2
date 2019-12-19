@@ -21,6 +21,7 @@ use Sonata\AdminBundle\Form\Type\ModelType;
 use Sonata\Form\Type\CollectionType;
 use Sonata\Form\Type\DatePickerType;
 use Sonata\AdminBundle\Route\RouteCollection;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
@@ -263,7 +264,7 @@ class AuditAdmin extends AbstractBaseAdmin
                     array(
                         'label' => 'admin.windmill.windfarm',
                     ),
-                    'entity',
+                    EntityType::class,
                     array(
                         'class' => Windfarm::class,
                         'query_builder' => $this->wfr->findEnabledSortedByNameQB(),
@@ -277,7 +278,7 @@ class AuditAdmin extends AbstractBaseAdmin
                     array(
                         'label' => 'admin.windmill.windfarm',
                     ),
-                    'entity',
+                    EntityType::class,
                     array(
                         'class' => Windfarm::class,
                         'query_builder' => $this->wfr->findCustomerEnabledSortedByNameQB($this->tss->getToken()->getUser()->getCustomer()),
@@ -292,7 +293,7 @@ class AuditAdmin extends AbstractBaseAdmin
                     array(
                         'label' => 'admin.audit.windmill',
                     ),
-                    'entity',
+                    EntityType::class,
                     array(
                         'class' => Windmill::class,
                         'query_builder' => $this->wmr->findEnabledSortedByCustomerWindfarmAndWindmillCodeQB(),
@@ -306,7 +307,7 @@ class AuditAdmin extends AbstractBaseAdmin
                     array(
                         'label' => 'admin.audit.windmill',
                     ),
-                    'entity',
+                    EntityType::class,
                     array(
                         'class' => Windmill::class,
                         'query_builder' => $this->wmr->findCustomerSortedByCustomerWindfarmAndWindmillCodeQB($this->tss->getToken()->getUser()->getCustomer()),
@@ -330,7 +331,7 @@ class AuditAdmin extends AbstractBaseAdmin
                 array(
                     'label' => 'admin.audit.status',
                 ),
-                'choice',
+                ChoiceType::class,
                 array(
                     'expanded' => false,
                     'multiple' => false,
@@ -345,7 +346,7 @@ class AuditAdmin extends AbstractBaseAdmin
                     array(
                         'label' => 'admin.audit.diagramtype',
                     ),
-                    'choice',
+                    ChoiceType::class,
                     array(
                         'expanded' => false,
                         'multiple' => false,
@@ -373,7 +374,7 @@ class AuditAdmin extends AbstractBaseAdmin
                         return true;
                     },
                 ),
-                'choice',
+                ChoiceType::class,
                 array(
                     'choices' => $this->ar->getYearChoices(),
                     'required' => true,

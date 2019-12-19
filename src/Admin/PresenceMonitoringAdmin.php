@@ -50,7 +50,7 @@ class PresenceMonitoringAdmin extends AbstractBaseAdmin
                 array(
                     'label' => 'admin.workertimesheet.worker',
                 ),
-                'entity',
+                EntityType::class,
                 array(
                     'class' => User::class,
                     'query_builder' => $this->ur->findAllSortedByNameQB(),

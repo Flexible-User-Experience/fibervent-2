@@ -273,7 +273,7 @@ class WorkOrderAdmin extends AbstractBaseAdmin
                 array(
                     'label' => 'admin.windfarm.customer',
                 ),
-                'entity',
+                EntityType::class,
                 array(
                     'class' => Customer::class,
                     'query_builder' => $this->cr->findAllSortedByNameQB(),
@@ -290,7 +290,7 @@ class WorkOrderAdmin extends AbstractBaseAdmin
                 array(
                     'label' => 'admin.windfarm.title',
                 ),
-                'entity',
+                EntityType::class,
                 array(
                     'class' => Windfarm::class,
                     'query_builder' => $this->wfr->findAllSortedByNameQB(),
@@ -301,7 +301,7 @@ class WorkOrderAdmin extends AbstractBaseAdmin
                 array(
                     'label' => 'admin.audit.title',
                 ),
-                'entity',
+                EntityType::class,
                 array(
                     'class' => Audit::class,
                     'query_builder' => $this->ar->getAllAuditsJoinedSortedByBeginDateQB(),

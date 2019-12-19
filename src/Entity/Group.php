@@ -14,6 +14,7 @@ use Sonata\UserBundle\Entity\BaseGroup as BaseGroup;
  *
  * @ORM\Entity(repositoryClass="App\Repository\GroupRepository")
  * @ORM\Table(name="admin_group")
+ * ORM\Table(name="base_group")
  */
 class Group extends BaseGroup
 {

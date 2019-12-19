@@ -102,7 +102,7 @@ class NonStandardUsedMaterialAdmin extends AbstractBaseAdmin
                 array(
                     'label' => 'admin.nonstandardusedmaterial.item',
                 ),
-                'choice',
+                ChoiceType::class,
                 array(
                     'expanded' => false,
                     'multiple' => false,
