@@ -8,8 +8,6 @@ use Doctrine\ORM\Mapping as ORM;
  * Name trait.
  *
  * @category Trait
- *
- * @author   Anton Serra <aserratorta@gmail.com>
  */
 trait NameTrait
 {

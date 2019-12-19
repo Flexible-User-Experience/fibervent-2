@@ -23,9 +23,14 @@ services:
         exclude:  '../src/{DependencyInjection,Entity,Migrations,Tests,Kernel.php}'
     App\Controller\:
         resource: '../src/Controller'
-        tags:     ['controller.service_arguments']
+        tags:
+            - 'controller.service_arguments'
     app.auth_customer:
         class: App\Service\AuthCustomerService
         arguments:
-            - "@security.authorization_checker"
-            - "@security.token_storage"
+            - '@security.authorization_checker'
+            - '@security.token_storage'
+    snc_second_level_cache:
+        class: '%snc_redis.doctrine_cache_predis.class%'
+        arguments:
+            - '@snc_redis.doctrine'

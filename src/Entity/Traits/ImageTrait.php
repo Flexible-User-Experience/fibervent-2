@@ -10,8 +10,6 @@ use Doctrine\ORM\Mapping as ORM;
  * Image trait.
  *
  * @category Trait
- *
- * @author   Anton Serra <aserratorta@gmail.com>
  */
 trait ImageTrait
 {
@@ -38,6 +36,7 @@ trait ImageTrait
      * @param File|UploadedFile $imageFile
      *
      * @return $this
+     * @throws \Exception
      */
     public function setImageFile(File $imageFile = null)
     {

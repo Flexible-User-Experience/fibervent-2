@@ -11,10 +11,9 @@ use Gedmo\Mapping\Annotation as Gedmo;
  *
  * @category Entity
  *
- * @author   Anton Serra <aserratorta@gmail.com>
- *
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="App\Repository\AuditWindmillBladeRepository")
+ * @ORM\Cache(usage="NONSTRICT_READ_WRITE")
  * @Gedmo\SoftDeleteable(fieldName="removedAt", timeAware=false)
  */
 class AuditWindmillBlade extends AbstractBase
@@ -23,6 +22,7 @@ class AuditWindmillBlade extends AbstractBase
      * @var Audit
      *
      * @ORM\ManyToOne(targetEntity="Audit", inversedBy="auditWindmillBlades")
+     * @ORM\Cache(usage="NONSTRICT_READ_WRITE")
      */
     private $audit;
 
@@ -30,6 +30,7 @@ class AuditWindmillBlade extends AbstractBase
      * @var WindmillBlade
      *
      * @ORM\ManyToOne(targetEntity="WindmillBlade")
+     * @ORM\Cache(usage="NONSTRICT_READ_WRITE")
      */
     private $windmillBlade;
 
@@ -37,6 +38,7 @@ class AuditWindmillBlade extends AbstractBase
      * @var ArrayCollection
      *
      * @ORM\OneToMany(targetEntity="BladeDamage", mappedBy="auditWindmillBlade", cascade={"persist", "remove"}, orphanRemoval=true))
+     * @ORM\Cache(usage="NONSTRICT_READ_WRITE")
      */
     private $bladeDamages;
 
@@ -44,6 +46,7 @@ class AuditWindmillBlade extends AbstractBase
      * @var ArrayCollection
      *
      * @ORM\OneToMany(targetEntity="Observation", mappedBy="auditWindmillBlade", cascade={"persist", "remove"}, orphanRemoval=true))
+     * @ORM\Cache(usage="NONSTRICT_READ_WRITE")
      */
     private $observations;
 
@@ -51,6 +54,7 @@ class AuditWindmillBlade extends AbstractBase
      * @var ArrayCollection
      *
      * @ORM\OneToMany(targetEntity="BladePhoto", mappedBy="auditWindmillBlade", cascade={"persist", "remove"}, orphanRemoval=true))
+     * @ORM\Cache(usage="NONSTRICT_READ_WRITE")
      */
     private $bladePhotos;
 

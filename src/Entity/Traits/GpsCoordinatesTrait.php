@@ -10,8 +10,6 @@ use Doctrine\ORM\Mapping as ORM;
  * GpsCoordinates trait.
  *
  * @category Trait
- *
- * @author   Anton Serra <aserratorta@gmail.com>
  */
 trait GpsCoordinatesTrait
 {

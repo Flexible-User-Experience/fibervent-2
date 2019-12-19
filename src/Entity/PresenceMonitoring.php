@@ -11,10 +11,9 @@ use Gedmo\Mapping\Annotation as Gedmo;
  *
  * @category Entity
  *
- * @author   Jordi Sort <jordi.sort@mirmit.com>
- *
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="App\Repository\PresenceMonitoringRepository")
+ * @ORM\Cache(usage="NONSTRICT_READ_WRITE")
  * @Gedmo\SoftDeleteable(fieldName="removedAt", timeAware=false)
  */
 class PresenceMonitoring extends AbstractBase
@@ -31,6 +30,7 @@ class PresenceMonitoring extends AbstractBase
      *
      * @ORM\ManyToOne(targetEntity="User")
      * @ORM\JoinColumn(name="admin_user_id", referencedColumnName="id", nullable=false)
+     * @ORM\Cache(usage="NONSTRICT_READ_WRITE")
      */
     private $worker;
 

@@ -17,10 +17,9 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @category Entity
  *
- * @author   Anton Serra <aserratorta@gmail.com>
- *
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="App\Repository\DamageRepository")
+ * @ORM\Cache(usage="NONSTRICT_READ_WRITE")
  * @UniqueEntity("code")
  * @Gedmo\SoftDeleteable(fieldName="removedAt", timeAware=false)
  * @Gedmo\TranslationEntity(class="App\Entity\Translations\DamageTranslation")
@@ -51,6 +50,7 @@ class Damage extends AbstractBase
      *     mappedBy="object",
      *     cascade={"persist", "remove"}
      * )
+     * @ORM\Cache(usage="NONSTRICT_READ_WRITE")
      * @Assert\Valid()
      *
      * @var ArrayCollection

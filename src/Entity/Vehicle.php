@@ -11,10 +11,9 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  *
  * @category Entity
  *
- * @author   Jordi Sort <jordi.sort@mirmit.com>
- *
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="App\Repository\VehicleRepository")
+ * @ORM\Cache(usage="NONSTRICT_READ_WRITE")
  * @UniqueEntity("licensePlate")
  * @Gedmo\SoftDeleteable(fieldName="removedAt", timeAware=false)
  */

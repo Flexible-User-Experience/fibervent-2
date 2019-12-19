@@ -12,10 +12,9 @@ use Gedmo\Mapping\Annotation as Gedmo;
  *
  * @category Entity
  *
- * @author   Jordi Sort <jordi.sort@mirmit.com>
- *
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="App\Repository\DeliveryNoteRepository")
+ * @ORM\Cache(usage="NONSTRICT_READ_WRITE")
  * @Gedmo\SoftDeleteable(fieldName="removedAt", timeAware=false)
  */
 class DeliveryNote extends AbstractBase
@@ -24,6 +23,7 @@ class DeliveryNote extends AbstractBase
      * @var WorkOrder
      *
      * @ORM\ManyToOne(targetEntity="WorkOrder", inversedBy="deliveryNotes", cascade={"persist"})
+     * @ORM\Cache(usage="NONSTRICT_READ_WRITE")
      */
     private $workOrder;
 
@@ -46,6 +46,7 @@ class DeliveryNote extends AbstractBase
      *
      * @ORM\ManyToOne(targetEntity="User")
      * @ORM\JoinColumn(name="admin_user_id", referencedColumnName="id", nullable=false)
+     * @ORM\Cache(usage="NONSTRICT_READ_WRITE")
      */
     private $teamLeader;
 
@@ -54,6 +55,7 @@ class DeliveryNote extends AbstractBase
      *
      * @ORM\ManyToOne(targetEntity="User")
      * @ORM\JoinColumn(name="admin_user_id", referencedColumnName="id", nullable=true)
+     * @ORM\Cache(usage="NONSTRICT_READ_WRITE")
      */
     private $teamTechnician1;
 
@@ -62,6 +64,7 @@ class DeliveryNote extends AbstractBase
      *
      * @ORM\ManyToOne(targetEntity="User")
      * @ORM\JoinColumn(name="admin_user_id", referencedColumnName="id", nullable=true)
+     * @ORM\Cache(usage="NONSTRICT_READ_WRITE")
      */
     private $teamTechnician2;
 
@@ -70,6 +73,7 @@ class DeliveryNote extends AbstractBase
      *
      * @ORM\ManyToOne(targetEntity="User")
      * @ORM\JoinColumn(name="admin_user_id", referencedColumnName="id", nullable=true)
+     * @ORM\Cache(usage="NONSTRICT_READ_WRITE")
      */
     private $teamTechnician3;
 
@@ -78,6 +82,7 @@ class DeliveryNote extends AbstractBase
      *
      * @ORM\ManyToOne(targetEntity="User")
      * @ORM\JoinColumn(name="admin_user_id", referencedColumnName="id", nullable=true)
+     * @ORM\Cache(usage="NONSTRICT_READ_WRITE")
      */
     private $teamTechnician4;
 
@@ -86,6 +91,7 @@ class DeliveryNote extends AbstractBase
      *
      * @ORM\ManyToOne(targetEntity="Vehicle")
      * @ORM\JoinColumn(name="vehicle_id", referencedColumnName="id", nullable=true)
+     * @ORM\Cache(usage="NONSTRICT_READ_WRITE")
      */
     private $vehicle;
 
@@ -121,6 +127,7 @@ class DeliveryNote extends AbstractBase
      * @var DeliveryNoteTimeRegister[]|ArrayCollection
      *
      * @ORM\OneToMany(targetEntity="DeliveryNoteTimeRegister", mappedBy="deliveryNote", cascade={"persist", "remove"}, orphanRemoval=true)
+     * @ORM\Cache(usage="NONSTRICT_READ_WRITE")
      */
     private $timeRegisters;
 
@@ -128,6 +135,7 @@ class DeliveryNote extends AbstractBase
      * @var NonStandardUsedMaterial[]|ArrayCollection
      *
      * @ORM\OneToMany(targetEntity="NonStandardUsedMaterial", mappedBy="deliveryNote", cascade={"persist", "remove"}, orphanRemoval=true)
+     * @ORM\Cache(usage="NONSTRICT_READ_WRITE")
      */
     private $nonStandardUsedMaterials;
 
@@ -135,6 +143,7 @@ class DeliveryNote extends AbstractBase
      * @var WorkOrderTask[]|ArrayCollection
      *
      * @ORM\ManyToMany(targetEntity="WorkOrderTask", mappedBy="deliveryNotes", cascade={"persist"})
+     * @ORM\Cache(usage="NONSTRICT_READ_WRITE")
      */
     private $workOrderTasks;
 

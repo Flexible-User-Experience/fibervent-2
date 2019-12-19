@@ -11,10 +11,9 @@ use Gedmo\Mapping\Annotation as Gedmo;
  *
  * @category Entity
  *
- * @author   Jordi Sort <jordi.sort@mirmit.com>
- *
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="App\Repository\NonStandardUsedMaterialRepository")
+ * @ORM\Cache(usage="NONSTRICT_READ_WRITE")
  * @Gedmo\SoftDeleteable(fieldName="removedAt", timeAware=false)
  */
 class NonStandardUsedMaterial extends AbstractBase
@@ -44,6 +43,7 @@ class NonStandardUsedMaterial extends AbstractBase
      * @var DeliveryNote
      *
      * @ORM\ManyToOne(targetEntity="DeliveryNote", inversedBy="nonStandardUsedMaterials", cascade={"persist"})
+     * @ORM\Cache(usage="NONSTRICT_READ_WRITE")
      */
     private $deliveryNote;
 

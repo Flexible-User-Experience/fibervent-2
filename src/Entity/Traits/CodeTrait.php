@@ -6,8 +6,6 @@ namespace App\Entity\Traits;
  * Code trait.
  *
  * @category Trait
- *
- * @author   Anton Serra <aserratorta@gmail.com>
  */
 trait CodeTrait
 {

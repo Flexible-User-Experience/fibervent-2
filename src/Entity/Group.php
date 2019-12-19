@@ -10,11 +10,9 @@ use Sonata\UserBundle\Entity\BaseGroup as BaseGroup;
  *
  * @category Entity
  *
- * @author   David Romaní <david@flux.cat>
- *
  * @ORM\Entity(repositoryClass="App\Repository\GroupRepository")
  * @ORM\Table(name="admin_group")
- * ORM\Table(name="base_group")
+ * @ORM\Cache(usage="NONSTRICT_READ_WRITE")
  */
 class Group extends BaseGroup
 {

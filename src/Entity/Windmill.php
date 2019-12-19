@@ -13,9 +13,8 @@ use Gedmo\Mapping\Annotation as Gedmo;
  *
  * @category Entity
  *
- * @author   Anton Serra <aserratorta@gmail.com>
- *
  * @ORM\Table(uniqueConstraints={@ORM\UniqueConstraint(name="windfarm_code_unique", columns={"windfarm_id", "code"})})
+ * @ORM\Cache(usage="NONSTRICT_READ_WRITE")
  * @ORM\Entity(repositoryClass="App\Repository\WindmillRepository")
  * @Gedmo\SoftDeleteable(fieldName="removedAt", timeAware=false)
  */
@@ -37,6 +36,7 @@ class Windmill extends AbstractBase
      * @var Windfarm
      *
      * @ORM\ManyToOne(targetEntity="Windfarm", inversedBy="windmills")
+     * @ORM\Cache(usage="NONSTRICT_READ_WRITE")
      */
     private $windfarm;
 
@@ -44,6 +44,7 @@ class Windmill extends AbstractBase
      * @var Turbine
      *
      * @ORM\ManyToOne(targetEntity="Turbine", inversedBy="windmills")
+     * @ORM\Cache(usage="NONSTRICT_READ_WRITE")
      */
     private $turbine;
 
@@ -51,6 +52,7 @@ class Windmill extends AbstractBase
      * @var ArrayCollection
      *
      * @ORM\OneToMany(targetEntity="WindmillBlade", mappedBy="windmill", cascade={"persist"})
+     * @ORM\Cache(usage="NONSTRICT_READ_WRITE")
      */
     private $windmillBlades;
 
@@ -58,6 +60,7 @@ class Windmill extends AbstractBase
      * @var Blade
      *
      * @ORM\ManyToOne(targetEntity="Blade")
+     * @ORM\Cache(usage="NONSTRICT_READ_WRITE")
      */
     private $bladeType;
 
@@ -65,6 +68,7 @@ class Windmill extends AbstractBase
      * @var ArrayCollection
      *
      * @ORM\OneToMany(targetEntity="Audit", mappedBy="windmill")
+     * @ORM\Cache(usage="NONSTRICT_READ_WRITE")
      */
     private $audits;
 

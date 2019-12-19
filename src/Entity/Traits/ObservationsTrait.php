@@ -8,8 +8,6 @@ use Doctrine\ORM\Mapping as ORM;
  * Observations trait.
  *
  * @category Trait
- *
- * @author   David Romaní <david@flux.cat>
  */
 trait ObservationsTrait
 {

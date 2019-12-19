@@ -13,10 +13,9 @@ use Gedmo\Mapping\Annotation as Gedmo;
  *
  * @category Entity
  *
- * @author   Anton Serra <aserratorta@gmail.com>
- *
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="App\Repository\AuditRepository")
+ * @ORM\Cache(usage="NONSTRICT_READ_WRITE")
  * @Gedmo\SoftDeleteable(fieldName="removedAt", timeAware=false)
  */
 class Audit extends AbstractBase
@@ -70,6 +69,7 @@ class Audit extends AbstractBase
      *
      * @ORM\ManyToOne(targetEntity="Windmill", inversedBy="audits")
      * @ORM\JoinColumn(name="windmill_id", referencedColumnName="id")
+     * @ORM\Cache(usage="NONSTRICT_READ_WRITE")
      */
     private $windmill;
 
@@ -77,6 +77,7 @@ class Audit extends AbstractBase
      * @var ArrayCollection
      *
      * @ORM\OneToMany(targetEntity="AuditWindmillBlade", mappedBy="audit", cascade={"persist", "remove"}, orphanRemoval=true)
+     * @ORM\Cache(usage="NONSTRICT_READ_WRITE")
      */
     private $auditWindmillBlades;
 
@@ -86,6 +87,7 @@ class Audit extends AbstractBase
      * @ORM\ManyToMany(targetEntity="User")
      * @ORM\JoinTable(name="audits_users", joinColumns={@ORM\JoinColumn(name="audit_id", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")})
+     * @ORM\Cache(usage="NONSTRICT_READ_WRITE")
      */
     private $operators;
 
@@ -93,6 +95,7 @@ class Audit extends AbstractBase
      * @var Windfarm
      *
      * @ORM\ManyToOne(targetEntity="Windfarm")
+     * @ORM\Cache(usage="NONSTRICT_READ_WRITE")
      */
     private $windfarm;
 
@@ -100,6 +103,7 @@ class Audit extends AbstractBase
      * @var Customer
      *
      * @ORM\ManyToOne(targetEntity="Customer")
+     * @ORM\Cache(usage="NONSTRICT_READ_WRITE")
      */
     private $customer;
 
@@ -114,6 +118,7 @@ class Audit extends AbstractBase
      * @var WorkOrder
      * @ORM\ManyToOne(targetEntity="WorkOrder", inversedBy="audits")
      * @ORM\JoinColumn(name="workorder_id", referencedColumnName="id", nullable=true)
+     * @ORM\Cache(usage="NONSTRICT_READ_WRITE")
      */
     private $workOrder;
 

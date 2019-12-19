@@ -8,8 +8,6 @@ use App\Entity\State;
  * State trait.
  *
  * @category Trait
- *
- * @author   Anton Serra <aserratorta@gmail.com>
  */
 trait StateTrait
 {

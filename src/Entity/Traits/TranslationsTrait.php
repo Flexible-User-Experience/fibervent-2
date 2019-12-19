@@ -8,8 +8,6 @@ use Doctrine\Common\Collections\ArrayCollection;
  * Translations trait.
  *
  * @category Trait
- *
- * @author   David Romaní <david@flux.cat>
  */
 trait TranslationsTrait
 {

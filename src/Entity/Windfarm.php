@@ -20,10 +20,9 @@ use Cocur\Slugify\Slugify;
  *
  * @category Entity
  *
- * @author   Anton Serra <aserratorta@gmail.com>
- *
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="App\Repository\WindfarmRepository")
+ * @ORM\Cache(usage="NONSTRICT_READ_WRITE")
  * @Gedmo\SoftDeleteable(fieldName="removedAt", timeAware=false)
  */
 class Windfarm extends AbstractBase
@@ -69,6 +68,7 @@ class Windfarm extends AbstractBase
      * @var Customer
      *
      * @ORM\ManyToOne(targetEntity="Customer", inversedBy="windfarms")
+     * @ORM\Cache(usage="NONSTRICT_READ_WRITE")
      */
     private $customer;
 
@@ -76,6 +76,7 @@ class Windfarm extends AbstractBase
      * @var User
      *
      * @ORM\ManyToOne(targetEntity="User")
+     * @ORM\Cache(usage="NONSTRICT_READ_WRITE")
      */
     private $manager;
 
@@ -83,6 +84,7 @@ class Windfarm extends AbstractBase
      * @var ArrayCollection
      *
      * @ORM\OneToMany(targetEntity="Windmill", mappedBy="windfarm")
+     * @ORM\Cache(usage="NONSTRICT_READ_WRITE")
      */
     private $windmills;
 

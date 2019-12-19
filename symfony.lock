@@ -202,6 +202,9 @@
     "phpdocumentor/type-resolver": {
         "version": "0.4.0"
     },
+    "predis/predis": {
+        "version": "v1.1.1"
+    },
     "psr/cache": {
         "version": "1.0.1"
     },
@@ -236,6 +239,18 @@
         },
         "files": [
             "config/packages/security_checker.yaml"
+        ]
+    },
+    "snc/redis-bundle": {
+        "version": "2.0",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "master",
+            "version": "2.0",
+            "ref": "85bbdb3d2db531e20874de29bab0587f93604fa8"
+        },
+        "files": [
+            "config/packages/snc_redis.yaml"
         ]
     },
     "sonata-project/admin-bundle": {
