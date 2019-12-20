@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Command;
+namespace App\Command;
 
 use App\Entity\BladePhoto;
 use App\Entity\Photo;

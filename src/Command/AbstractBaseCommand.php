@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Command;
+namespace App\Command;
 
 use Doctrine\ORM\EntityManager;
 use Liip\ImagineBundle\Imagine\Cache\CacheManager;
