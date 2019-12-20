@@ -32,7 +32,7 @@ class UserProfileFormType extends AbstractType
                 array(
                     'label' => 'admin.user.username',
                     'required' => false,
-                    'read_only' => true,
+                    'disabled' => true,
                 )
             )
             ->add(
@@ -41,7 +41,7 @@ class UserProfileFormType extends AbstractType
                 array(
                     'label' => 'admin.user.email',
                     'required' => false,
-                    'read_only' => true,
+                    'disabled' => true,
                 )
             )
             ->add(

@@ -5,7 +5,9 @@ namespace App\Admin;
 use App\Entity\Customer;
 use App\Enum\UserRolesEnum;
 use App\Enum\WindfarmLanguageEnum;
-use Sonata\UserBundle\Admin\Model\UserAdmin as ParentUserAdmin;
+use App\Service\RepositoriesService;
+use Liip\ImagineBundle\Imagine\Cache\CacheManager;
+//use Sonata\UserBundle\Admin\Model\UserAdmin as ParentUserAdmin;
 use Sonata\AdminBundle\Route\RouteCollection;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
@@ -17,13 +19,16 @@ use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+use Symfony\Component\Security\Core\Authorization\AuthorizationChecker;
+use Vich\UploaderBundle\Templating\Helper\UploaderHelper;
 
 /**
  * Class UserAdmin.
  *
  * @category Admin
  */
-class UserAdmin extends ParentUserAdmin
+class UserAdmin extends AbstractBaseAdmin
 {
     /**
      * @var UserManagerInterface
@@ -50,14 +55,19 @@ class UserAdmin extends ParentUserAdmin
     /**
      * UserAdmin constructor.
      *
-     * @param string               $code
-     * @param string               $class
-     * @param string               $baseControllerName
-     * @param UserManagerInterface $userManager
+     * @param string                $code
+     * @param string                $class
+     * @param string                $baseControllerName
+     * @param AuthorizationChecker  $acs
+     * @param TokenStorageInterface $tss
+     * @param RepositoriesService   $rs
+     * @param UploaderHelper        $vus
+     * @param CacheManager          $lis
+     * @param UserManagerInterface  $userManager
      */
-    public function __construct($code, $class, $baseControllerName, UserManagerInterface $userManager)
+    public function __construct($code, $class, $baseControllerName, AuthorizationChecker $acs, TokenStorageInterface $tss, RepositoriesService $rs, UploaderHelper $vus, CacheManager $lis, UserManagerInterface $userManager)
     {
-        parent::__construct($code, $class, $baseControllerName);
+        parent::__construct($code, $class, $baseControllerName, $acs, $tss, $rs, $vus, $lis);
         $this->userManager = $userManager;
     }
 
@@ -361,9 +371,11 @@ class UserAdmin extends ParentUserAdmin
     /**
      * Get image helper form mapper with thumbnail.
      *
+     * @param int $minWidth
+     *
      * @return string
      */
-    private function getImageHelperFormMapperWithThumbnail()
+    protected function getImageHelperFormMapperWithThumbnail($minWidth = 1200)
     {
         $lis = $this->getConfigurationPool()->getContainer()->get('liip_imagine.cache.manager');
         $vus = $this->getConfigurationPool()->getContainer()->get('vich_uploader.templating.helper.uploader_helper');
