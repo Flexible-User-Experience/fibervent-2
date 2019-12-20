@@ -3,14 +3,14 @@ imports:
     - { resource: 'admins.yaml' }
 
 parameters:
-    default_locale:           '%env(resolve:DEFAULT_LOCALE)%'
+    default_locale:           '%env(string:DEFAULT_LOCALE)%'
     database_server_version:  '%env(resolve:DATABASE_SERVER_VERSION)%'
-    project_web_title:        '%env(resolve:PROJECT_WEB_TITLE)%'
-    project_url_base:         '%env(resolve:PROJECT_BASE_URL)%'
-    google_analytics_enabled: '%env(resolve:GOOGLE_ANALYTICS_IS_ENABLED)%'
-    google_analytics_account: '%env(resolve:GOOGLE_ANALYTICS_ACCOUNT)%'
-    google_maps_api_key:      '%env(resolve:GOOGLE_MAPS_API_KEY)%'
-    delivery_dev_address:     '%env(resolve:DEV_DELIVERY_ADDRESS)%'
+    project_web_title:        '%env(string:PROJECT_WEB_TITLE)%'
+    project_url_base:         '%env(string:PROJECT_BASE_URL)%'
+    google_analytics_enabled: '%env(bool:GOOGLE_ANALYTICS_IS_ENABLED)%'
+    google_analytics_account: '%env(string:GOOGLE_ANALYTICS_ACCOUNT)%'
+    google_maps_api_key:      '%env(string:GOOGLE_MAPS_API_KEY)%'
+    delivery_dev_address:     '%env(string:DEV_DELIVERY_ADDRESS)%'
 
 services:
     _defaults:
