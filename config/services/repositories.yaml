@@ -16,6 +16,7 @@ services:
         arguments:
             - App:Blade
     app.blade_damage_repository:
+        public: true
         class: App\Repository\BladeDamageRepository
         factory: [ "@doctrine", getRepository ]
         arguments:

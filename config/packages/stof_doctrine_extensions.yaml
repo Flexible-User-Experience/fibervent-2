@@ -3,8 +3,8 @@ stof_doctrine_extensions:
     orm:
         default:
             timestampable:  true
+            translatable:   true
             softdeleteable: false
             sluggable:      false
-            translatable:   false
             sortable:       false
             tree:           false

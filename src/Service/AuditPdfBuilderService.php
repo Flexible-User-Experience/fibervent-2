@@ -19,12 +19,13 @@ class AuditPdfBuilderService extends AbstractPdfBuilderService
      * @param Audit $audit
      *
      * @return \TCPDF
+     * @throws \Exception
      */
     public function build(Audit $audit)
     {
         $windmill = $audit->getWindmill();
         $windfarm = $windmill->getWindfarm();
-        $this->locale = WindfarmLanguageEnum::getEnumArray()[$windfarm->getLanguage()];
+        $this->locale = WindfarmLanguageEnum::getReversedEnumArray()[$windfarm->getLanguage()];
         $this->ts->setLocale($this->locale);
 
         /** @var CustomTcpdf $pdf */

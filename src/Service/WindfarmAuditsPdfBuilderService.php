@@ -417,7 +417,7 @@ class WindfarmAuditsPdfBuilderService extends AbstractPdfBuilderService
     private function findBestDiagramTypeForAll($audits)
     {
         $defaultResult = AuditDiagramTypeEnum::TYPE_1;
-        $matchesMatrix = AuditDiagramTypeEnum::getInitializedArrayForMatchesCounts();
+        $matchesMatrix = AuditDiagramTypeEnum::getReversedInitializedArrayForMatchesCounts();
         /** @var Audit $audit */
         foreach ($audits as $audit) {
             $matchesMatrix[$audit->getDiagramType()] = $matchesMatrix[$audit->getDiagramType()] + 1;
