@@ -74,7 +74,7 @@ class SetWindmillBladeOrderCommand extends AbstractBaseCommand
         $itemsFound = 0;
         $dtStart = new \DateTime();
 
-        $windmillBlades = $this->em->getRepository('AppBundle:WindmillBlade')->findAll();
+        $windmillBlades = $this->em->getRepository('App:WindmillBlade')->findAll();
         /** @var WindmillBlade $windmillBlade */
         foreach ($windmillBlades as $windmillBlade) {
             $lastChar = substr($windmillBlade->getCode(), -1);

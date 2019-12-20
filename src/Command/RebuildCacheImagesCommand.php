@@ -86,10 +86,10 @@ class RebuildCacheImagesCommand extends AbstractBaseCommand
         $output->writeln('<info>Welcome to Rebuild cache images command</info>');
         $output->writeln('Loading pictures, please wait...');
 
-        $photos = $this->em->getRepository('AppBundle:Photo')->findAll();
+        $photos = $this->em->getRepository('App:Photo')->findAll();
         $this->buildImagesCacheCollection($photos, $output, 'Photo');
 
-        $bladePhotos = $this->em->getRepository('AppBundle:BladePhoto')->findAll();
+        $bladePhotos = $this->em->getRepository('App:BladePhoto')->findAll();
         $this->buildImagesCacheCollection($bladePhotos, $output, 'Blade Photo');
 
         $output->writeln('Total records '.($this->photosFound + $this->photosNotFound + $this->blPhotosFound + $this->blPhotosNotFound));
