@@ -14,16 +14,16 @@ snc_redis:
         metadata_cache:
             client: doctrine
             entity_manager: default
-            namespace: 'dmc:'
+            namespace: 'fib2dmc:'
         result_cache:
             client: doctrine
             entity_manager: default
-            namespace: 'drc:'
+            namespace: 'fib2drc:'
         query_cache:
             client: doctrine
             entity_manager: default
-            namespace: 'dqc:'
+            namespace: 'fib2dqc:'
         second_level_cache:
             client: doctrine
             entity_manager: default
-            namespace: 'dslc:'
+            namespace: 'fib2dslc:'
