@@ -1,6 +1,7 @@
 imports:
-    - { resource: 'repositories.yaml' }
-    - { resource: 'admins.yaml' }
+    - { resource: 'services/pdfs.yaml' }
+    - { resource: 'services/repositories.yaml' }
+    - { resource: 'services/admins.yaml' }
 
 parameters:
     default_locale:           '%env(string:DEFAULT_LOCALE)%'
@@ -27,51 +28,6 @@ services:
         resource: '../src/Controller'
         tags:
             - 'controller.service_arguments'
-    # PDF service builders
-    app.custom_tcpdf:
-        class: App\Pdf\CustomTcpdf
-        arguments:
-            - '@app.smart_assets_helper'
-            - '@translator.default'
-            - AppBundle\Entity\Windfarm
-    app.audit_pdf_builder:
-        class: App\Service\AuditPdfBuilderService
-        arguments:
-            - '@white_october.tcpdf'
-            - '@liip_imagine.cache.manager'
-            - '@vich_uploader.templating.helper.uploader_helper'
-            - '@app.smart_assets_helper'
-            - '@translator.default'
-            - '@app.damage_repository'
-            - '@app.damage_category_repository'
-            - '@app.blade_damage_repository'
-            - '@app.customer_repository'
-            - '@app.audit_model_diagram_bridge'
-            - '@app.windfarm_builder_bridge'
-            - '@app.factory_windfarm_blades_damages_helper'
-            - '@app.manager_observation'
-    app.windfarm_audits_pdf_builder:
-        class: App\Service\WindfarmAuditsPdfBuilderService
-        arguments:
-            - '@white_october.tcpdf'
-            - '@liip_imagine.cache.manager'
-            - '@vich_uploader.templating.helper.uploader_helper'
-            - '@app.smart_assets_helper'
-            - '@translator.default'
-            - '@app.damage_repository'
-            - '@app.damage_category_repository'
-            - '@app.blade_damage_repository'
-            - '@app.customer_repository'
-            - '@app.audit_model_diagram_bridge'
-            - '@app.windfarm_builder_bridge'
-            - '@app.factory_windfarm_blades_damages_helper'
-            - '@app.manager_observation'
-    app.audit_model_diagram_bridge:
-        class: App\Service\AuditModelDiagramBridgeService
-    app.windfarm_builder_bridge:
-        class: App\Service\WindfarmBuilderBridgeService
-        arguments:
-            - '@translator.default'
     # Managers
     app.manager_observation:
         class: App\Manager\ObservationManager
@@ -91,6 +47,7 @@ services:
         arguments:
             - '@app.damage_category_repository'
     app.smart_assets_helper:
+        public: true
         class: App\Service\SmartAssetsHelperService
         arguments:
             - '@kernel'

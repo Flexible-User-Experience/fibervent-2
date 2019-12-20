@@ -1,4 +1,5 @@
 services:
+    # Service repositories
     app.state_repository:
         class: App\Repository\StateRepository
         factory: [ "@doctrine", getRepository ]
@@ -45,6 +46,7 @@ services:
         arguments:
             - App:Damage
     app.damage_category_repository:
+        public: true
         class: App\Repository\DamageCategoryRepository
         factory: [ "@doctrine", getRepository ]
         arguments:

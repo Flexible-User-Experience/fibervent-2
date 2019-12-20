@@ -25,16 +25,17 @@ class WindfarmAuditsPdfBuilderService extends AbstractPdfBuilderService
 
     /**
      * @param Windfarm $windfarm
-     * @param array    $damageCategories
-     * @param array    $audits
-     * @param int      $year
-     * @param array    $dateRanges
+     * @param array $damageCategories
+     * @param array $audits
+     * @param int $year
+     * @param array $dateRanges
      *
      * @return \TCPDF
+     * @throws \Exception
      */
     public function build(Windfarm $windfarm, $damageCategories, $audits, $year, $dateRanges)
     {
-        $this->locale = WindfarmLanguageEnum::getEnumArray()[$windfarm->getLanguage()];
+        $this->locale = WindfarmLanguageEnum::getReversedEnumArray()[$windfarm->getLanguage()];
         $this->ts->setLocale($this->locale);
 
         /** @var CustomTcpdf $pdf */
@@ -152,10 +153,11 @@ class WindfarmAuditsPdfBuilderService extends AbstractPdfBuilderService
 
     /**
      * @param Windfarm $windfarm
-     * @param array    $audits
-     * @param array    $dateRanges
+     * @param array $audits
+     * @param array $dateRanges
      *
      * @return \TCPDF
+     * @throws \Exception
      */
     private function doInitialConfig(Windfarm $windfarm, $audits, $dateRanges)
     {
