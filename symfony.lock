@@ -1,4 +1,7 @@
 {
+    "a2lix/translation-form-bundle": {
+        "version": "3.0.6"
+    },
     "beberlei/doctrineextensions": {
         "version": "v1.2.3"
     },

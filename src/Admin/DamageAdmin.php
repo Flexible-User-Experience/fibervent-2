@@ -2,6 +2,8 @@
 
 namespace App\Admin;
 
+use A2lix\TranslationFormBundle\Form\Type\TranslationsType;
+use App\Entity\Translations\DamageTranslation;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Route\RouteCollection;
@@ -75,14 +77,24 @@ class DamageAdmin extends AbstractBaseAdmin
             )
             ->end()
             ->with('admin.damage.translations', $this->getFormMdSuccessBoxArray(6))
-            ->add('translations', 'a2lix_translations_gedmo', array(
-                'required' => false,
-                'label' => ' ',
-                'translatable_class' => 'App\Entity\Translation\DamageTranslation',
-                'fields' => array(
-                    'description' => array('label' => 'admin.damage.description', 'attr' => array('rows' => 8), 'required' => false),
-                ),
-            ))
+            ->add(
+                'translations',
+                TranslationsType::class,
+                array(
+                    'required' => false,
+                    'label' => ' ',
+                    'translatable_class' => DamageTranslation::class,
+                    'fields' => array(
+                        'description' => array(
+                            'label' => 'admin.damage.description',
+                            'attr' => array(
+                                'rows' => 8,
+                            ),
+                            'required' => false,
+                        ),
+                    ),
+                )
+            )
             ->end()
         ;
     }
