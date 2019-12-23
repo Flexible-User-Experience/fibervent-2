@@ -78,7 +78,7 @@ class SmartAssetsHelperService
         $result = $this->getAbsoluteAssetPathContextIndependent($assetPath);
 
         if ($this->isCliContext()) {
-            $result = $this->kernel->getRootDir().DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'web'.$assetPath;
+            $result = $this->kernel->getRootDir().DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'public'.$assetPath;
         }
 
         return $result;
@@ -110,7 +110,7 @@ class SmartAssetsHelperService
         $result = $this->getRelativeAssetPathContextIndependent($assetPath);
 
         if ($this->isCliContext()) {
-            $result = $this->kernel->getRootDir().DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'web'.$assetPath;
+            $result = $this->kernel->getRootDir().DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'public'.$assetPath;
         }
 
         return $result;
@@ -125,8 +125,6 @@ class SmartAssetsHelperService
      */
     public function getAbsoluteAssetFilePath($assetPath)
     {
-        $result = $this->kernel->getRootDir().DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'web'.$assetPath;
-
-        return $result;
+        return $this->kernel->getRootDir().DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'public'.$assetPath;
     }
 }
