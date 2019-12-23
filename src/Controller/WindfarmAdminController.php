@@ -277,7 +277,7 @@ class WindfarmAdminController extends AbstractBaseAdminController
                 'audits' => $audits,
                 'damage_categories' => $damage_categories,
                 'year' => $year,
-                'locale' => WindfarmLanguageEnum::getEnumArray()[$object->getLanguage()],
+                'locale' => WindfarmLanguageEnum::getReversedEnumArray()[$object->getLanguage()],
             )
         );
 
