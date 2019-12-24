@@ -36,7 +36,7 @@
                 rowIndex: '1',
                 visible: true,
                 xfIndex: 0,
-                zeroHeight:false
+                zeroHeight: false
             }
         },
         sheetState: 'visible',
@@ -60,7 +60,7 @@
             } %}{{ 'pdf.damage_table_header.9_excel_title' | trans({'%name%': windfarm.name | upper}, 'messages', locale) }} {{ year }}{% endxlscell %}
         {% endxlsrow %}
         {% xlsrow 2 %}
-            {% xlscell 0 {
+            {% xlscell 1 {
                 style: {
                     borders: {
                         allborders: {
@@ -87,7 +87,7 @@
                 },
                 merge: 'A3'
             } %}WTG{% endxlscell %}
-            {% xlscell 1 {
+            {% xlscell 2 {
                 style: {
                     borders: {
                         allborders: {
@@ -114,7 +114,7 @@
                 },
                 merge: 'B3'
             } %}{{ 'pdf.damage_table_header.10_blade' | trans({}, 'messages', locale) }}{% endxlscell %}
-            {% xlscell 2 {
+            {% xlscell 3 {
                 style: {
                     borders: {
                         allborders: {
@@ -141,7 +141,7 @@
                 },
                 merge: 'D2'
             } %}{{ 'pdf.damage_table_header.1_damage' | trans({}, 'messages', locale) }}{% endxlscell %}
-            {% xlscell 3 {
+            {% xlscell 4 {
                 style: {
                     borders: {
                         allborders: {
@@ -160,7 +160,7 @@
                 }
             } %}
             {% endxlscell %}
-            {% xlscell 4 {
+            {% xlscell 5 {
                 style: {
                     borders: {
                         top: {
@@ -187,7 +187,7 @@
                 },
                 merge: 'G2'
             } %}{{ 'pdf.damage_table_header.2_position' | trans({}, 'messages', locale) }}{% endxlscell %}
-            {% xlscell 5 {
+            {% xlscell 6 {
                 style: {
                     borders: {
                         top: {
@@ -206,7 +206,7 @@
                 }
             } %}
             {% endxlscell %}
-            {% xlscell 6 {
+            {% xlscell 7 {
                 style: {
                     borders: {
                         allborders: {
@@ -225,7 +225,7 @@
                 }
             } %}
             {% endxlscell %}
-            {% xlscell 7 {
+            {% xlscell 8 {
                 style: {
                     borders: {
                         allborders: {
@@ -252,7 +252,7 @@
                 },
                 merge: 'H3'
             } %}{{ 'pdf.damage_table_header.6_size' | trans({}, 'messages', locale) }}{% endxlscell %}
-            {% xlscell 8 {
+            {% xlscell 9 {
                 style: {
                     borders: {
                         allborders: {
@@ -278,7 +278,7 @@
                 },
                 merge: 'I3'
             } %}{{ 'pdf.damage_table_header.7_description' | trans({}, 'messages', locale) }}{% endxlscell %}
-            {% xlscell 9 {
+            {% xlscell 10 {
                 style: {
                     borders: {
                         allborders: {
@@ -307,25 +307,6 @@
             } %}CAT{% endxlscell %}
         {% endxlsrow %}
         {% xlsrow 3 %}
-            {% xlscell 0 {
-                style: {
-                    borders: {
-                        allborders: {
-                            style: 'thin',
-                            color: {
-                                rgb: '8FABD9'
-                            }
-                        }
-                    },
-                    fill: {
-                        type: 'solid',
-                        color: {
-                            rgb: 'D9E2F2'
-                        }
-                    }
-                }
-            } %}
-            {% endxlscell %}
             {% xlscell 1 {
                 style: {
                     borders: {
@@ -355,14 +336,6 @@
                             }
                         }
                     },
-                    alignment: {
-                        horizontal: 'center',
-                        vertical: 'center'
-                    },
-                    font: {
-                        size: '12',
-                        bold: true
-                    },
                     fill: {
                         type: 'solid',
                         color: {
@@ -370,7 +343,8 @@
                         }
                     }
                 }
-            } %}{{ 'pdf.damage_table_header.3_number' | trans({}, 'messages', locale) }}{% endxlscell %}
+            } %}
+            {% endxlscell %}
             {% xlscell 3 {
                 style: {
                     borders: {
@@ -396,8 +370,34 @@
                         }
                     }
                 }
-            } %}{{ 'pdf.damage_table_header.4_code' | trans({}, 'messages', locale) }}{% endxlscell %}
+            } %}{{ 'pdf.damage_table_header.3_number' | trans({}, 'messages', locale) }}{% endxlscell %}
             {% xlscell 4 {
+                style: {
+                    borders: {
+                        allborders: {
+                            style: 'thin',
+                            color: {
+                                rgb: '8FABD9'
+                            }
+                        }
+                    },
+                    alignment: {
+                        horizontal: 'center',
+                        vertical: 'center'
+                    },
+                    font: {
+                        size: '12',
+                        bold: true
+                    },
+                    fill: {
+                        type: 'solid',
+                        color: {
+                            rgb: 'D9E2F2'
+                        }
+                    }
+                }
+            } %}{{ 'pdf.damage_table_header.4_code' | trans({}, 'messages', locale) }}{% endxlscell %}
+            {% xlscell 5 {
                 style: {
                     borders: {
                         allborders: {
@@ -423,32 +423,6 @@
                     }
                 }
             } %}Pos.{% endxlscell %}
-            {% xlscell 5 {
-                style: {
-                    borders: {
-                        allborders: {
-                            style: 'thin',
-                            color: {
-                                rgb: '8FABD9'
-                            }
-                        }
-                    },
-                    alignment: {
-                        horizontal: 'center',
-                        vertical: 'center'
-                    },
-                    font: {
-                        size: '12',
-                        bold: true
-                    },
-                    fill: {
-                        type: 'solid',
-                        color: {
-                            rgb: 'D9E2F2'
-                        }
-                    }
-                }
-            } %}{{ 'pdf.damage_table_header.5_radius' | trans({}, 'messages', locale) }}{% endxlscell %}
             {% xlscell 6 {
                 style: {
                     borders: {
@@ -474,8 +448,34 @@
                         }
                     }
                 }
-            } %}Dist.{% endxlscell %}
+            } %}{{ 'pdf.damage_table_header.5_radius' | trans({}, 'messages', locale) }}{% endxlscell %}
             {% xlscell 7 {
+                style: {
+                    borders: {
+                        allborders: {
+                            style: 'thin',
+                            color: {
+                                rgb: '8FABD9'
+                            }
+                        }
+                    },
+                    alignment: {
+                        horizontal: 'center',
+                        vertical: 'center'
+                    },
+                    font: {
+                        size: '12',
+                        bold: true
+                    },
+                    fill: {
+                        type: 'solid',
+                        color: {
+                            rgb: 'D9E2F2'
+                        }
+                    }
+                }
+            } %}Dist.{% endxlscell %}
+            {% xlscell 8 {
                 style: {
                     borders: {
                         allborders: {
@@ -493,7 +493,7 @@
                     }
             }
             } %}{% endxlscell %}
-            {% xlscell 8 {
+            {% xlscell 9 {
                 style: {
                     borders: {
                         allborders: {
@@ -511,7 +511,7 @@
                     }
                 }
             } %}{% endxlscell %}
-            {% xlscell 9 {
+            {% xlscell 10 {
                 style: {
                     borders: {
                         allborders: {
@@ -535,22 +535,6 @@
             {% for auditWindmillBlade in audit.auditWindmillBlades %}
                 {% for bladeDamage in auditWindmillBlade.bladeDamages if is_row_available(bladeDamage.damageCategory, damage_categories) %}
                     {% xlsrow %}
-                        {% xlscell 0 {
-                            style: {
-                                borders: {
-                                    allborders: {
-                                        style: 'thin',
-                                        color: {
-                                            rgb: '8FABD9'
-                                        }
-                                    }
-                                },
-                                alignment: {
-                                    horizontal: 'center',
-                                    vertical: 'center'
-                                }
-                            },
-                        }%}{{ audit.windmill.code }}{% endxlscell %}
                         {% xlscell 1 {
                             style: {
                                 borders: {
@@ -566,7 +550,7 @@
                                     vertical: 'center'
                                 }
                             },
-                        }%}{{ auditWindmillBlade.windmillBlade.order }}{% endxlscell %}
+                        }%}{{ audit.windmill.code }}{% endxlscell %}
                         {% xlscell 2 {
                             style: {
                                 borders: {
@@ -582,7 +566,7 @@
                                     vertical: 'center'
                                 }
                             },
-                        }%}{{ loop.index }}{% endxlscell %}
+                        }%}{{ auditWindmillBlade.windmillBlade.order }}{% endxlscell %}
                         {% xlscell 3 {
                             style: {
                                 borders: {
@@ -598,9 +582,7 @@
                                     vertical: 'center'
                                 }
                             },
-                            dataType: 's',
-                            isExplicitValue: true
-                        }%}{{ bladeDamage.damage.code }}{% endxlscell %}
+                        }%}{{ loop.index }}{% endxlscell %}
                         {% xlscell 4 {
                             style: {
                                 borders: {
@@ -616,7 +598,8 @@
                                     vertical: 'center'
                                 }
                             },
-                        }%}{{ bladeDamage.positionStringLocalized | trans({}, 'messages', locale) }}{% endxlscell %}
+                            dataType: 's'
+                        }%}{{ bladeDamage.damage.code }}{% endxlscell %}
                         {% xlscell 5 {
                             style: {
                                 borders: {
@@ -632,7 +615,7 @@
                                     vertical: 'center'
                                 }
                             },
-                        }%}{{ bladeDamage.radius }} m{% endxlscell %}
+                        }%}{{ bladeDamage.positionStringLocalized | trans({}, 'messages', locale) }}{% endxlscell %}
                         {% xlscell 6 {
                             style: {
                                 borders: {
@@ -648,7 +631,7 @@
                                     vertical: 'center'
                                 }
                             },
-                        }%}{{ bladeDamage.localizedDistanceString | trans({'%dist%': bladeDamage.distanceScaled}, 'messages', locale) }}{% endxlscell %}
+                        }%}{{ bladeDamage.radius }} m{% endxlscell %}
                         {% xlscell 7 {
                             style: {
                                 borders: {
@@ -664,8 +647,24 @@
                                     vertical: 'center'
                                 }
                             },
-                        }%}{{ bladeDamage.size }} cm{% endxlscell %}
+                        }%}{{ bladeDamage.localizedDistanceString | trans({'%dist%': bladeDamage.distanceScaled}, 'messages', locale) }}{% endxlscell %}
                         {% xlscell 8 {
+                            style: {
+                                borders: {
+                                    allborders: {
+                                        style: 'thin',
+                                        color: {
+                                            rgb: '8FABD9'
+                                        }
+                                    }
+                                },
+                                alignment: {
+                                    horizontal: 'center',
+                                    vertical: 'center'
+                                }
+                            },
+                        }%}{{ bladeDamage.size }} cm{% endxlscell %}
+                        {% xlscell 9 {
                             style: {
                                 borders: {
                                     allborders: {
@@ -677,7 +676,7 @@
                                 }
                             }
                         }%}{{ get_localized_description(bladeDamage.damage, locale) }}{% endxlscell %}
-                        {% xlscell 9 {
+                        {% xlscell 10 {
                             style: {
                                 borders: {
                                     allborders: {
@@ -702,22 +701,6 @@
                     {% endxlsrow %}
                 {% else %}
                     {% xlsrow %}
-                        {% xlscell 0 {
-                            style: {
-                                borders: {
-                                    allborders: {
-                                        style: 'thin',
-                                        color: {
-                                            rgb: '8FABD9'
-                                        }
-                                    }
-                                },
-                                alignment: {
-                                    horizontal: 'center',
-                                    vertical: 'center'
-                                }
-                            },
-                        }%}{{ audit.windmill.code }}{% endxlscell %}
                         {% xlscell 1 {
                             style: {
                                 borders: {
@@ -733,7 +716,7 @@
                                     vertical: 'center'
                                 }
                             },
-                        }%}{{ auditWindmillBlade.windmillBlade.order }}{% endxlscell %}
+                        }%}{{ audit.windmill.code }}{% endxlscell %}
                         {% xlscell 2 {
                             style: {
                                 borders: {
@@ -749,7 +732,7 @@
                                     vertical: 'center'
                                 }
                             },
-                        }%}-{% endxlscell %}
+                        }%}{{ auditWindmillBlade.windmillBlade.order }}{% endxlscell %}
                         {% xlscell 3 {
                             style: {
                                 borders: {
@@ -765,9 +748,7 @@
                                     vertical: 'center'
                                 }
                             },
-                            dataType: 's',
-                            isExplicitValue: true
-                        }%}0.00{% endxlscell %}
+                        }%}-{% endxlscell %}
                         {% xlscell 4 {
                             style: {
                                 borders: {
@@ -783,7 +764,8 @@
                                     vertical: 'center'
                                 }
                             },
-                        }%}-{% endxlscell %}
+                            dataType: 's'
+                        }%}0.00{% endxlscell %}
                         {% xlscell 5 {
                             style: {
                                 borders: {
@@ -841,10 +823,26 @@
                                             rgb: '8FABD9'
                                         }
                                     }
+                                },
+                                alignment: {
+                                    horizontal: 'center',
+                                    vertical: 'center'
+                                }
+                            },
+                        }%}-{% endxlscell %}
+                        {% xlscell 9 {
+                            style: {
+                                borders: {
+                                    allborders: {
+                                        style: 'thin',
+                                        color: {
+                                            rgb: '8FABD9'
+                                        }
+                                    }
                                 }
                             }
                         }%}{{ 'pdf.damage_table_body.no_damages_found' | trans({}, 'messages', locale) }}{% endxlscell %}
-                        {% xlscell 9 {
+                        {% xlscell 10 {
                             style: {
                                 borders: {
                                     allborders: {

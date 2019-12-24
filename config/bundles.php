@@ -34,4 +34,5 @@ return [
     FOS\CKEditorBundle\FOSCKEditorBundle::class => ['all' => true],
     Snc\RedisBundle\SncRedisBundle::class => ['all' => true],
     Oh\GoogleMapFormTypeBundle\OhGoogleMapFormTypeBundle::class => ['all' => true],
+    MewesK\TwigSpreadsheetBundle\MewesKTwigSpreadsheetBundle::class => ['all' => true],
 ];
