@@ -72,7 +72,7 @@ class WorkOrderTaskAdmin extends AbstractBaseAdmin
                             'btn_add' => false,
                             'required' => false,
                             'property' => 'code',
-                            'read_only' => true,
+                            'disabled' => true,
                         )
                     )
                     ->add('windmillBlade',
@@ -82,7 +82,7 @@ class WorkOrderTaskAdmin extends AbstractBaseAdmin
                             'btn_add' => false,
                             'required' => false,
                             'property' => 'code',
-                            'read_only' => true,
+                            'disabled' => true,
                         )
                     )
                     ->add(
@@ -90,7 +90,7 @@ class WorkOrderTaskAdmin extends AbstractBaseAdmin
                         ModelAutocompleteType::class,
                         array(
                             'label' => 'admin.bladedamage.title',
-                            'read_only' => true,
+                            'disabled' => true,
                             'disabled' => true,
                             //                    'btn_add' => false,
                             //                    'required' => true,
@@ -103,7 +103,7 @@ class WorkOrderTaskAdmin extends AbstractBaseAdmin
                         null,
                         array(
                             'label' => 'admin.bladedamage.position',
-                            'read_only' => true,
+                            'disabled' => true,
                         )
                     )
                     ->add(
@@ -111,7 +111,7 @@ class WorkOrderTaskAdmin extends AbstractBaseAdmin
                         null,
                         array(
                             'label' => 'admin.bladedamage.radius',
-                            'read_only' => true,
+                            'disabled' => true,
                         )
                     )
                     ->add(
@@ -119,7 +119,7 @@ class WorkOrderTaskAdmin extends AbstractBaseAdmin
                         null,
                         array(
                             'label' => 'admin.bladedamage.distance',
-                            'read_only' => true,
+                            'disabled' => true,
                         )
                     )
                     ->add(
@@ -127,7 +127,7 @@ class WorkOrderTaskAdmin extends AbstractBaseAdmin
                         null,
                         array(
                             'label' => 'admin.bladedamage.size',
-                            'read_only' => true,
+                            'disabled' => true,
                         )
                     )
                     ->end();
@@ -157,7 +157,7 @@ class WorkOrderTaskAdmin extends AbstractBaseAdmin
                         ModelAutocompleteType::class,
                         array(
                             'label' => 'admin.bladedamage.title',
-                            'read_only' => true,
+                            'disabled' => true,
                             'disabled' => true,
                             'property' => 'damage.code',
                         )
@@ -219,7 +219,7 @@ class WorkOrderTaskAdmin extends AbstractBaseAdmin
                     ModelAutocompleteType::class,
                     array(
                         'label' => 'admin.bladedamage.title',
-                        'read_only' => true,
+                        'disabled' => true,
                         'disabled' => true,
                         'property' => 'damage.code',
                     )
@@ -272,7 +272,7 @@ class WorkOrderTaskAdmin extends AbstractBaseAdmin
                 null,
                 array(
                     'label' => 'admin.workorder.is_from_audit',
-                    'read_only' => true,
+                    'disabled' => true,
                     'disabled' => true,
                 )
             )

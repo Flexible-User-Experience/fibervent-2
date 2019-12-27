@@ -2,6 +2,7 @@
 
 namespace App\Form\Type;
 
+use App\Entity\User;
 use App\Enum\WindfarmLanguageEnum;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -114,7 +115,7 @@ class UserProfileFormType extends AbstractType
     {
         $resolver->setDefaults(
             array(
-                'data_class' => 'App\Entity\User',
+                'data_class' => User::class,
             )
         );
     }
