@@ -2,6 +2,7 @@
 
 namespace App\Form\Type;
 
+use App\Entity\Audit;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -89,7 +90,7 @@ class AuditEmailSendFormType extends AbstractType
     {
         $resolver->setDefaults(
             array(
-                'data_class' => 'App\Entity\Audit',
+                'data_class' => Audit::class,
                 'default_msg' => null,
                 'to_emails_list' => null,
                 'cc_emails_list' => null,

@@ -166,7 +166,7 @@ class AuditAdmin extends AbstractBaseAdmin
                 ChoiceType::class,
                 array(
                     'label' => 'admin.audit.type',
-                    'choices' => AuditTypeEnum::getReversedEnumArray(),
+                    'choices' => AuditTypeEnum::getEnumArray(),
                     'multiple' => false,
                     'expanded' => false,
                     'required' => true,
