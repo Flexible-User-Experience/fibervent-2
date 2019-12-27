@@ -57,7 +57,7 @@ class WorkOrderAdmin extends AbstractBaseAdmin
                     null,
                     array(
                         'label' => 'admin.workorder.project_number',
-                        'read_only' => true,
+                        'disabled' => true,
                     )
                 )
                 ->add(
@@ -66,7 +66,7 @@ class WorkOrderAdmin extends AbstractBaseAdmin
                     array(
                         'class' => Customer::class,
                         'label' => 'admin.windfarm.customer',
-                        'read_only' => true,
+                        'disabled' => true,
                         'disabled' => true,
                     )
                 )
@@ -74,7 +74,7 @@ class WorkOrderAdmin extends AbstractBaseAdmin
                     null,
                     array(
                         'label' => 'admin.workorder.is_from_audit',
-                        'read_only' => true,
+                        'disabled' => true,
                         'disabled' => true,
                     )
                 )
@@ -85,7 +85,7 @@ class WorkOrderAdmin extends AbstractBaseAdmin
                     array(
                         'class' => Windfarm::class,
                         'label' => 'admin.windfarm.title',
-                        'read_only' => true,
+                        'disabled' => true,
                         'disabled' => true,
                     )
                 )
@@ -174,7 +174,7 @@ class WorkOrderAdmin extends AbstractBaseAdmin
                         ModelAutocompleteType::class,
                         array(
                             'label' => 'admin.audit.title',
-                            'read_only' => 'true',
+                            'disabled' => true,
                             'required' => true,
                             'multiple' => true,
                             'btn_add' => false,
