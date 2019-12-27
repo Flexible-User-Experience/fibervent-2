@@ -4,8 +4,10 @@
 /.env.local.php
 /.env.*.local
 /public/bundles/
-/public/uploads/
-/var/
+/public/uploads/*
+!/public/uploads/.gitkeep
+/var/*
+!/var/.gitkeep
 /vendor/
 !/bin/*
 ###< symfony/framework-bundle ###
