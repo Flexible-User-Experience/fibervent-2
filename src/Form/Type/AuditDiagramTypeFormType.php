@@ -21,7 +21,7 @@ class AuditDiagramTypeFormType extends AbstractType
     {
         $resolver->setDefaults(
             array(
-                'choices' => AuditDiagramTypeEnum::getEnumArray(),
+                'choices' => AuditDiagramTypeEnum::getReversedEnumArray(),
             )
         );
     }

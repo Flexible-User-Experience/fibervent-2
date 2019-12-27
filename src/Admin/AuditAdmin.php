@@ -166,7 +166,7 @@ class AuditAdmin extends AbstractBaseAdmin
                 ChoiceType::class,
                 array(
                     'label' => 'admin.audit.type',
-                    'choices' => AuditTypeEnum::getEnumArray(),
+                    'choices' => AuditTypeEnum::getReversedEnumArray(),
                     'multiple' => false,
                     'expanded' => false,
                     'required' => true,
@@ -177,7 +177,7 @@ class AuditAdmin extends AbstractBaseAdmin
                 ChoiceType::class,
                 array(
                     'label' => 'admin.audit.status',
-                    'choices' => AuditStatusEnum::getEnumArray(),
+                    'choices' => AuditStatusEnum::getReversedEnumArray(),
                     'multiple' => false,
                     'expanded' => false,
                     'required' => true,
@@ -190,7 +190,7 @@ class AuditAdmin extends AbstractBaseAdmin
                 AuditDiagramTypeFormType::class,
                 array(
                     'label' => 'admin.audit.diagramtype',
-                    'choices' => AuditDiagramTypeEnum::getEnumArray(),
+                    'choices' => AuditDiagramTypeEnum::getReversedEnumArray(),
                     'multiple' => false,
                     'expanded' => true,
                     'required' => true,
