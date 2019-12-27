@@ -10,22 +10,30 @@ use Doctrine\ORM\Mapping as ORM;
  * GpsCoordinates trait.
  *
  * @category Trait
- *
- * @author   Anton Serra <aserratorta@gmail.com>
  */
 trait GpsCoordinatesTrait
 {
     /**
      * @var float
      *
-     * @ORM\Column(type="float", precision=20, nullable=true)
+     * @ORM\Column(type="float", precision=20, nullable=true, name="gps_longitude")
+     */
+    private $longitude = 0.716726;
+
+    /**
+     * @var float
+     *
+     * @ORM\Column(type="float", precision=20, nullable=true, name="gps_latitude")
+     */
+    private $latitude = 40.881604;
+
+    /**
+     * @var float
      */
     private $gpsLongitude = 0.716726;
 
     /**
      * @var float
-     *
-     * @ORM\Column(type="float", precision=20, nullable=true)
      */
     private $gpsLatitude = 40.881604;
 
@@ -36,9 +44,49 @@ trait GpsCoordinatesTrait
     /**
      * @return float
      */
+    public function getLongitude()
+    {
+        return $this->longitude;
+    }
+
+    /**
+     * @param float $longitude
+     *
+     * @return $this
+     */
+    public function setLongitude($longitude)
+    {
+        $this->longitude = $longitude;
+
+        return $this;
+    }
+
+    /**
+     * @return float
+     */
+    public function getLatitude()
+    {
+        return $this->latitude;
+    }
+
+    /**
+     * @param float $latitude
+     *
+     * @return $this
+     */
+    public function setLatitude($latitude)
+    {
+        $this->latitude = $latitude;
+
+        return $this;
+    }
+
+    /**
+     * @return float
+     */
     public function getGpsLongitude()
     {
-        return $this->gpsLongitude;
+        return $this->getLongitude();
     }
 
     /**
@@ -48,9 +96,7 @@ trait GpsCoordinatesTrait
      */
     public function setGpsLongitude($gpsLongitude)
     {
-        $this->gpsLongitude = $gpsLongitude;
-
-        return $this;
+        return $this->setLongitude($gpsLongitude);
     }
 
     /**
@@ -58,7 +104,7 @@ trait GpsCoordinatesTrait
      */
     public function getGpsLatitude()
     {
-        return $this->gpsLatitude;
+        return $this->getLatitude();
     }
 
     /**
@@ -68,9 +114,7 @@ trait GpsCoordinatesTrait
      */
     public function setGpsLatitude($gpsLatitude)
     {
-        $this->gpsLatitude = $gpsLatitude;
-
-        return $this;
+        return $this->setLatitude($gpsLatitude);
     }
 
     /**
@@ -84,8 +128,8 @@ trait GpsCoordinatesTrait
     public function getLatLng()
     {
         return array(
-            'lat' => $this->getGpsLatitude(),
-            'lng' => $this->getGpsLongitude(),
+            'latitude' => $this->getGpsLatitude(),
+            'longitude' => $this->getGpsLongitude(),
         );
     }
 
@@ -98,8 +142,8 @@ trait GpsCoordinatesTrait
      */
     public function setLatLng($latlng)
     {
-        $this->setGpsLatitude($latlng['lat']);
-        $this->setGpsLongitude($latlng['lng']);
+        $this->setGpsLatitude($latlng['latitude']);
+        $this->setGpsLongitude($latlng['longitude']);
 
         return $this;
     }

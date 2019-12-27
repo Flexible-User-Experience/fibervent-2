@@ -6,8 +6,6 @@ namespace App\Enum;
  * UserRolesEnum class.
  *
  * @category Enum
- *
- * @author   David Romaní <david@flux.cat>
  */
 class UserRolesEnum
 {
@@ -19,9 +17,21 @@ class UserRolesEnum
     const ROLE_SUPER_ADMIN = 'ROLE_SUPER_ADMIN';
 
     /**
+     * Methods.
+     */
+
+    /**
      * @return array
      */
     public static function getEnumArray()
+    {
+        return array_flip(self::getReversedEnumArray());
+    }
+
+    /**
+     * @return array
+     */
+    public static function getReversedEnumArray()
     {
         return array(
             self::ROLE_USER => 'enum.user_roles.user',

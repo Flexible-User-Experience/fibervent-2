@@ -2,26 +2,72 @@
 
 namespace App\Repository;
 
+use App\Entity\Windmill;
 use App\Entity\WindmillBlade;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry as RegistryInterface;
+use Doctrine\ORM\Query;
+use Doctrine\ORM\QueryBuilder;
 
 /**
  * Class WindmillBladeRepository.
  *
  * @category Repository
- *
- * @author   Anton Serra <aserratorta@gmail.com>
  */
 class WindmillBladeRepository extends ServiceEntityRepository
 {
     /**
-     * EventCategoryRepository constructor.
+     * WindmillBladeRepository constructor.
      *
      * @param RegistryInterface $registry
      */
     public function __construct(RegistryInterface $registry)
     {
         parent::__construct($registry, WindmillBlade::class);
+    }
+
+    /**
+     * @param Windmill $windmill
+     * @param null     $limit
+     * @param string   $order
+     *
+     * @return QueryBuilder
+     */
+    public function findWindmillSortedByCodeAjaxQB(Windmill $windmill, $limit = null, $order = 'ASC')
+    {
+        $query = $this->createQueryBuilder('wb')
+            ->select('wb.id, wb.code, wb.order')
+            ->where('wb.windmill = :windmill')
+            ->setParameter('windmill', $windmill)
+            ->orderBy('wb.order', $order);
+        if (!is_null($limit)) {
+            $query->setMaxResults($limit);
+        }
+
+        return $query;
+    }
+
+    /**
+     * @param Windmill $windmill
+     * @param null     $limit
+     * @param string   $order
+     *
+     * @return Query
+     */
+    public function findWindmillSortedByCodeAjaxQ(Windmill $windmill, $limit = null, $order = 'ASC')
+    {
+        return $this->findWindmillSortedByCodeAjaxQB($windmill, $limit, $order)->getQuery();
+    }
+
+    /**
+     * @param Windmill $windmill
+     * @param null     $limit
+     * @param string   $order
+     *
+     * @return array
+     */
+    public function findWindmillSortedByCodeAjax(Windmill $windmill, $limit = null, $order = 'ASC')
+    {
+        return $this->findWindmillSortedByCodeAjaxQ($windmill, $limit, $order)->getResult();
     }
 }

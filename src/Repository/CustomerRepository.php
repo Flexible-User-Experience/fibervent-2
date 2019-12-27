@@ -12,13 +12,11 @@ use Doctrine\Common\Persistence\ManagerRegistry as RegistryInterface;
  * Class CustomerRepository.
  *
  * @category Repository
- *
- * @author   Anton Serra <aserratorta@gmail.com>
  */
 class CustomerRepository extends ServiceEntityRepository
 {
     /**
-     * EventCategoryRepository constructor.
+     * CustomerRepository constructor.
      *
      * @param RegistryInterface $registry
      */
@@ -35,10 +33,7 @@ class CustomerRepository extends ServiceEntityRepository
      */
     public function findAllSortedByNameQB($limit = null, $order = 'ASC')
     {
-        $query = $this
-            ->createQueryBuilder('c')
-            ->orderBy('c.name', $order);
-
+        $query = $this->createQueryBuilder('c')->orderBy('c.name', $order);
         if (!is_null($limit)) {
             $query->setMaxResults($limit);
         }
@@ -76,11 +71,7 @@ class CustomerRepository extends ServiceEntityRepository
      */
     public function findEnabledSortedByNameQB($limit = null, $order = 'ASC')
     {
-        $query = $this
-            ->findAllSortedByNameQB($limit, $order)
-            ->where('c.enabled = true');
-
-        return $query;
+        return $this->findAllSortedByNameQB($limit, $order)->where('c.enabled = true');
     }
 
     /**

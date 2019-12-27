@@ -3,23 +3,22 @@
 namespace App\Repository;
 
 use App\Entity\Customer;
+use App\Entity\Windfarm;
 use App\Entity\Windmill;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Common\Persistence\ManagerRegistry as RegistryInterface;
 use Doctrine\ORM\Query;
 use Doctrine\ORM\QueryBuilder;
-use Doctrine\Common\Persistence\ManagerRegistry as RegistryInterface;
 
 /**
  * Class WindmillRepository.
  *
  * @category Repository
- *
- * @author   Anton Serra <aserratorta@gmail.com>
  */
 class WindmillRepository extends ServiceEntityRepository
 {
     /**
-     * EventCategoryRepository constructor.
+     * WindmillRepository constructor.
      *
      * @param RegistryInterface $registry
      */
@@ -36,15 +35,13 @@ class WindmillRepository extends ServiceEntityRepository
      */
     public function findAllSortedByCustomerWindfarmAndWindmillCodeQB($limit = null, $order = 'ASC')
     {
-        $query = $this
-            ->createQueryBuilder('windmill')
+        $query = $this->createQueryBuilder('windmill')
             ->select('windmill, windfarm, customer')
             ->join('windmill.windfarm', 'windfarm')
             ->join('windfarm.customer', 'customer')
             ->orderBy('customer.name', $order)
             ->addOrderBy('windfarm.name', $order)
             ->addOrderBy('windmill.code', $order);
-
         if (!is_null($limit)) {
             $query->setMaxResults($limit);
         }
@@ -82,11 +79,7 @@ class WindmillRepository extends ServiceEntityRepository
      */
     public function findEnabledSortedByCustomerWindfarmAndWindmillCodeQB($limit = null, $order = 'ASC')
     {
-        $query = $this
-            ->findAllSortedByCustomerWindfarmAndWindmillCodeQB($limit, $order)
-            ->where('windmill.enabled = true');
-
-        return $query;
+        return $this->findAllSortedByCustomerWindfarmAndWindmillCodeQB($limit, $order)->where('windmill.enabled = true');
     }
 
     /**
@@ -120,10 +113,7 @@ class WindmillRepository extends ServiceEntityRepository
      */
     public function findCustomerSortedByCustomerWindfarmAndWindmillCodeQB(Customer $customer, $limit = null, $order = 'ASC')
     {
-        return $this->findEnabledSortedByCustomerWindfarmAndWindmillCodeQB($limit, $order)
-            ->andWhere('windfarm.customer = :customer')
-            ->setParameter('customer', $customer)
-        ;
+        return $this->findEnabledSortedByCustomerWindfarmAndWindmillCodeQB($limit, $order)->andWhere('windfarm.customer = :customer')->setParameter('customer', $customer);
     }
 
     /**
@@ -148,5 +138,44 @@ class WindmillRepository extends ServiceEntityRepository
     public function findCustomerSortedByCustomerWindfarmAndWindmillCode(Customer $customer, $limit = null, $order = 'ASC')
     {
         return $this->findCustomerSortedByCustomerWindfarmAndWindmillCodeQ($customer, $limit, $order)->getResult();
+    }
+
+    /**
+     * @param Windfarm $windfarm
+     * @param null     $limit
+     * @param string   $order
+     *
+     * @return QueryBuilder
+     */
+    public function findEnabledandWindfarmSortedByCustomerWindfarmAndWindmillCodeQB(Windfarm $windfarm, $limit = null, $order = 'ASC')
+    {
+        return $this->findAllSortedByCustomerWindfarmAndWindmillCodeQB()
+            ->where('windmill.enabled = true')
+            ->andWhere('windmill.windfarm = :windfarm')
+            ->setParameter('windfarm', $windfarm);
+    }
+
+    /**
+     * @param Windfarm $windfarm
+     * @param null     $limit
+     * @param string   $order
+     *
+     * @return Query
+     */
+    public function findEnabledandWindfarmSortedByCustomerWindfarmAndWindmillCodeQ(Windfarm $windfarm, $limit = null, $order = 'ASC')
+    {
+        return $this->findEnabledandWindfarmSortedByCustomerWindfarmAndWindmillCodeQB($windfarm, $limit, $order)->getQuery();
+    }
+
+    /**
+     * @param Windfarm $windfarm
+     * @param null     $limit
+     * @param string   $order
+     *
+     * @return array
+     */
+    public function findEnabledandWindfarmSortedByCustomerWindfarmAndWindmillCode(Windfarm $windfarm, $limit = null, $order = 'ASC')
+    {
+        return $this->findEnabledandWindfarmSortedByCustomerWindfarmAndWindmillCodeQ($windfarm, $limit, $order)->getResult();
     }
 }

@@ -1,0 +1,13 @@
+{% extends 'SonataAdminBundle:CRUD:base_list_field.html.twig' %}
+
+{% block field %}
+    {% spaceless %}
+        <div>
+            {% for role in object.roles %}
+                {% if role != 'ROLE_USER' %}
+                    <span class="label label-{{ object.bsStatusRole }}" style="margin-right:10px">{{ object.roleString | trans }}</span>
+                {% endif %}
+            {% endfor %}
+        </div>
+    {% endspaceless %}
+{% endblock %}

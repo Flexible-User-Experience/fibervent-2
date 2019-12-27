@@ -6,8 +6,6 @@ namespace App\Enum;
  * AuditDiagramTypeEnum class.
  *
  * @category Enum
- *
- * @author   David Romaní <david@flux.cat>
  */
 class AuditDiagramTypeEnum
 {
@@ -19,9 +17,21 @@ class AuditDiagramTypeEnum
     const TYPE_6 = 6;
 
     /**
+     * Methods.
+     */
+
+    /**
      * @return array
      */
     public static function getEnumArray()
+    {
+        return array_flip(self::getReversedEnumArray());
+    }
+
+    /**
+     * @return array
+     */
+    public static function getReversedEnumArray()
     {
         return array(
             self::TYPE_1 => '1',
@@ -37,6 +47,14 @@ class AuditDiagramTypeEnum
      * @return array
      */
     public static function getInitializedArrayForMatchesCounts()
+    {
+        return array_flip(self::getReversedInitializedArrayForMatchesCounts());
+    }
+
+    /**
+     * @return array
+     */
+    public static function getReversedInitializedArrayForMatchesCounts()
     {
         return array(
             self::TYPE_1 => 0,

@@ -13,10 +13,9 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @category Entity
  *
- * @author   Anton Serra <aserratorta@gmail.com>
- *
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="App\Repository\BladeRepository")
+ * @ORM\Cache(usage="NONSTRICT_READ_WRITE")
  * @UniqueEntity("model")
  * @Gedmo\SoftDeleteable(fieldName="removedAt", timeAware=false)
  */

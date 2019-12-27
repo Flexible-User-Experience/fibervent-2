@@ -1,0 +1,438 @@
+pdf:
+  cover:
+    1_inspection: WIND FARM BLADE REPORT
+    2_resume: WIND TURBINE REPORT
+    3_country: COUNTRY/REGION
+    4_windfarm: WIND FARM
+    5_turbine_model: WIND TURBINE MODEL
+    6_turbine_size: TURBINE DIMENSIONS
+    6_turbine_size_value: 'Tower %height%m / Rotor Ø%diameter%m / Blade %length%m'
+    7_blade_type: BLADE MODEL
+    8_total_turbines: 'TOTAL Nr. WTG / WF Capacity'
+    8_total_turbines_value: '%windmills% wind turbines / %power%MW'
+    9_startup_year: Comissioning date (years WF)
+    9_startup_year_value: '%year% (%diff% years)'
+    10_om_regional_manager: O&M REGIONAL MANAGER
+    11_technicians: INSPECTION TECHNICIANS
+    12_audit_type: INSPECTION TYPE
+    12_audit_type_value: GROUND (Telephoto lens FIBERVENT)
+    13_audit_date: DATE OF INSPECTION
+    14_blades_amout: Nr. of WTG / blades inspected
+    14_blades_amout_value: 1 WTG / 3 blades
+  intro:
+    1_title: '1. INTRODUCTION'
+    2_description: 'This report is the result of the visual inspection done by telephoto lens on the ground in the "%windfarm%" Wind Farm. The equipment, property of FIBERVENT, used in this inspection is the following:'
+    3_list: 'CAMERAS<ul><li>Canon Eos 5D MARK II // Canon Eos 70D</li></ul>LENS<ul><li>Canon zoom lens EF 24-105 mm. 1:4 L IS USM</li><li>Canon zoom lens EF 100-400 mm. 1:4.5-5.6 L IS USM</li><li>Canon lens EF 500 mm. F4 L IS USM</li><li>Canon extender EF 1.4x II // EF 2x II</li></ul>TRIPOD<ul><li>Trípode Feisol Tournament Carbon CT-3342</li></ul>'
+  damage_catalog:
+    1_title: '2. DAMAGES CATEGORIZATION'
+    2_subtitle: 'All the damages found have been categorized by the following criteria:'
+    table:
+      1_category: Category
+      2_priority: Priority
+      3_description: Description / Findings
+      4_action: Recommended actions
+  audit_description:
+    1_title: '3. INSPECTION DESCRIPTION'
+    2_description: 'The blade’s number scheme (1, 2, 3) is described in the next picture:'
+  audit_blade_damage:
+    1_title: INDIVIDUAL DAMAGES SUMMARY BLADE
+    2_description: 'The result of the inspection including categorization, descriptions and location of the damages is shown in the following table:'
+  blade_damage_diagram:
+    1_vp_s: 'PRESSURE SIDE'
+    2_vs_s: 'SUCTION SIDE'
+    3_vp_l: 'PS: Pressure Side/Windward Side'
+    4_vs_l: 'SS: Suction Side/Leeward Side'
+    5_ba_l: 'LE: Leading Edge'
+    5_ba_l_short: 'LEADING EDGE'
+    6_bs_l: 'TE: Trailing Edge'
+    6_bs_l_short: 'TRAILING EDGE'
+  observations_table:
+    1_damage: DAMAGE
+    2_observations: OBSERVATIONS
+  blade_damage_images:
+    1_general_blade_views: 1 GENERAL OVERVIEWS BLADE
+    1_general_blade_views_short: GENERAL OVERVIEWS BLADE
+  inspection_description:
+    1_contact: 4. CONTACT
+    2_description: 'You can contact us in the following addresses and phone numbers:'
+    3_offices: 'Fibervent Headquarters:'
+    4_phones_emails: 'Phone numbers and email addresses:'
+    5_gratitude: 'We appreciate the confidence shown in the technical team of FIBERVENT.'
+  damage_table_header:
+    1_damage: DAMAGE
+    2_position: LOCATION
+    3_number: Nr
+    4_code: Code
+    5_radius: Radius
+    6_size: SIZE
+    7_description: DESCRIPTION
+    8_distance: Distance
+    9_excel_title: "BLADE DAMAGE SUMMARY %name% WIND FARM"
+    10_blade: BLADE
+    damage_class: DAMAGE CLASS
+  damage_table_body:
+    none: '-'
+    BA_dist_cm: '%dist%cm LE'
+    BS_dist_cm: '%dist%cm TE'
+    BA_dist_m: '%dist%m LE'
+    BS_dist_m: '%dist%m TE'
+    no_damages_found: No damages found in blade
+  damage_table_footer:
+    total_records_displayed:
+  set_document_information:
+    1_title: 'Auditoria #'
+    2_subject: Inspección palas parque eólico
+  header:
+    1_description: '%name% Wind Farm'
+  footer:
+    1_page: Page
+    2_of: of
+pdf_windfarm:
+  set_document_information:
+    1_title:
+    2_subject:
+  cover:
+    1_inspection: 'BLADE INSPECTION AT "%windfarm%"'
+    2_resume: 'GENERAL WIND FARM REPORT'
+    3_country: 'COUNTRY / REGION'
+    4_windfarm: 'WIND FARM'
+    8_total_turbines: 'TOTAL Nr. WTG / WF Capacity'
+    8_total_turbines_value: '%windmills% wind turbines / %power%MW'
+    9_startup_year: 'Comissioning date (years WF)'
+    9_startup_year_value: '%year% (%diff% years)'
+    10_om_regional_manager: 'O&M REGIONAL MANAGER'
+    14_blades_amout: 'Nr. of WTG / blades inspected'
+    14_blades_amout_value: '%audits_amount% WTG / 3 blades'
+  damage_catalog:
+    1_title: 'DAMAGES CATEGORIZATION'
+  inspection_overview:
+    1_title: 'WIND FARM INSPECTION OVERVIEW'
+    2_table_header:
+      1_number: 'No. WTG'
+      2_blade: 'BLADE'
+      3_damage_class: 'DAMAGE CLASS'
+      4_damages: 'DAMAGES'
+  intro:
+    1_title: 'INTRODUCTION'
+    2_description: 'This report is the result of the visual inspection done by telephoto lens on the ground in the "%windfarm%" Wind Farm on year %year%. The equipment, property of FIBERVENT, used in this inspection is the following:'
+  inspection_description:
+    1_title: 'INSPECTION DESCRIPTION'
+  general_summary:
+    1_title: 'GENERAL SUMMARY OF DAMAGE'
+    2_description: 'The following table shows the results following the blade inspection performed at the Wind Farm and the study analysis of the images obtained.'
+  individual_summary:
+    1_title: 'INDIVIDUAL SUMMARY OF DAMAGE WT Nº/BLADES'
+  contact_section:
+    1_title: 'CONTACT'
+enum:
+  blade_damage_position:
+    1_VP: PS
+    2_VS: SS
+    3_BA: LE
+    4_BS: TE
+  audit_type:
+    ground: GROUND (Telephoto lens FIBERVENT)
+    rope: ROPE ACCESS
+    inside: BLADE INTERIOR
+    platform: PLATFORM
+  audit_status:
+    pending:
+    doing:
+    done:
+    invoiced:
+  user_roles:
+    user:
+    customer:
+    operator:
+    technician:
+    admin:
+    super_admin:
+  repair_access_type:
+    crane:
+    basket_crane:
+    ropes:
+    ground:
+  repair_windmill_section:
+    blade:
+    nacelle:
+    tower:
+  time_register_type:
+    trip:
+    stop:
+    work:
+  time_register_shift:
+    morning:
+    afternoon:
+    night:
+  non_standard_used_material_item:
+    others:
+    receivers:
+    vortex:
+    stall_strip:
+    diverter_s:
+    belt_3m:
+    lep:
+  presence_monitoring_category:
+    workday:
+    dayoff:
+    permits:
+    leave:
+admin:
+  common:
+    general:
+    controls:
+    action:
+    enabled:
+    developed:
+    send_email:
+    here:
+    for_help:
+    details:
+  audit:
+    title: Audit
+    title_list: Audit
+    title_show:
+    title_delete:
+    windmill:
+    observations:
+    year: year
+    dates_range:
+    generate:
+    download_xls:
+    begindate:
+    enddate:
+    operators:
+    type:
+    status:
+    diagramtype_title:
+    diagramtype:
+    auditwindmillblade_title:
+    email:
+      to:
+      cc:
+      subject:
+      subject_placeholder:
+      message:
+      send:
+    create_workorder:
+  auditwindmillblade:
+    title:
+    title_list:
+    audit:
+    windmillblade:
+    damages:
+    actions:
+    damage_position:
+    bladedamages:
+    photos:
+    blade_observations:
+    blade_photos:
+  blade:
+    title:
+    title_list:
+    model:
+    length:
+  bladedamage:
+    title:
+    title_list:
+    number:
+    damage:
+    position:
+    radius:
+    distance:
+    edge:
+    size:
+    damagecategory:
+    damagecategory_long:
+  bladephoto:
+    title:
+    title_list:
+    imagefile:
+  customer:
+    title:
+    title_list:
+    title_show:
+    image:
+    code:
+    name:
+    contact:
+    email:
+    phone:
+    web:
+    postal_data:
+    address:
+    zip:
+    city:
+    state:
+    contacts:
+    windfarms:
+    show_logo_in_pdfs:
+  damage:
+    title:
+    title_list:
+    section:
+    code:
+    description:
+    translations:
+  damagecategory:
+    title:
+    title_list:
+    category:
+    priority:
+    description:
+    recomended_action:
+    colour:
+  observation:
+    title:
+    title_list:
+    position:
+    damage_number:
+  photo:
+    title:
+    title_list:
+    imagename:
+    help:
+  state:
+    title:
+    title_list:
+    country:
+  turbine:
+    title:
+    title_list:
+    height:
+    diameter:
+    power:
+  user:
+    title:
+    title_list:
+    username:
+    username_help:
+    password:
+    firstname:
+    lastname:
+    roles:
+    rol:
+    locked:
+    language:
+    profile_flash:
+    email:
+    phone:
+    update:
+  windfarm:
+    title:
+    title_list:
+    title_show:
+    customer:
+    manager:
+    year:
+    language:
+    geoposition:
+    latlng:
+    pdf_language:
+    no_audits:
+    windmill_amount: Windmill Number
+    map:
+    select: Audits filter
+    download_pdf: Download PDF
+    table:
+      results:
+        found: Audits found
+  windmill:
+     title:
+     title_list:
+     windfarm:
+     code:
+     turbine:
+     bladetype:
+     blades:
+     manager:
+  windmillblade:
+    title:
+    title_list:
+    sn:
+  workorder:
+    title:
+    title_list:
+    project_number:
+    certifying_company_name:
+    certifying_company_contact_person:
+    certifying_company_email:
+    certifying_company_phone:
+    is_from_audit:
+    repair_access_types:
+  workordertask:
+    title:
+    title_list:
+    is_completed:
+    description:
+  vehicle:
+    title:
+    name:
+    licence_plate:
+    active:
+  deliverynote:
+    title:
+    title_list:
+    date:
+    repair_windmill_sections:
+    crane_company:
+    crane_driver:
+    repair_access_types:
+    observations:
+    total_trip_hours:
+    total_work_hours:
+    total_stop_hours:
+    team:
+    team_leader:
+    team_technician_1:
+    team_technician_2:
+    team_technician_3:
+    team_technician_4:
+  deliverynotetimeregister:
+    title:
+    title_list:
+    type:
+    shift:
+    begin:
+    end:
+    total_hours:
+  nonstandardusedmaterial:
+    title:
+    title_list:
+    quantity:
+    item:
+    description:
+  workertimesheet:
+    title:
+    title_list:
+    worker:
+    work_description:
+    total_normal_hours:
+    total_vertical_hours:
+    total_inclement_weather_hours:
+    total_trip_hours:
+  presencemonitoring:
+    title:
+    title_list:
+    worker:
+    morning_hour_begin:
+    morning_hour_end:
+    afternoon_hour_begin:
+    afternoon_hour_end:
+    total_hours:
+    normal_hours:
+    extra_hours:
+    category:
+
+
+gmap:
+  general: general location
+# Admin defaults
+Cliente:
+Usuario:
+Inspección:
+"Tipo Daño":
+"Categoría Daño":
+"Parque Eólico":
+Aerogenerador:
+Turbina:

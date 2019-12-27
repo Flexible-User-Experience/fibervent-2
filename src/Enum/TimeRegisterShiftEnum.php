@@ -2,12 +2,12 @@
 
 namespace App\Enum;
 
+use App\Entity\DeliveryNoteTimeRegister;
+
 /**
  * TimeRegisterShiftEnum class.
  *
  * @category Enum
- *
- * @author   Jordi Sort <jordi.sort@mirmit.com>
  */
 class TimeRegisterShiftEnum
 {
@@ -16,14 +16,36 @@ class TimeRegisterShiftEnum
     const NIGHT = 2;
 
     /**
+     * Methods.
+     */
+
+    /**
      * @return array
      */
     public static function getEnumArray()
     {
+        return array_flip(self::getReversedEnumArray());
+    }
+
+    /**
+     * @return array
+     */
+    public static function getReversedEnumArray()
+    {
         return array(
-            self::MORNING => 'Matí',
-            self::AFTERNOON => 'Tarda',
-            self::NIGHT => 'Nit',
+            self::MORNING => 'enum.time_register_shift.morning',
+            self::AFTERNOON => 'enum.time_register_shift.afternoon',
+            self::NIGHT => 'enum.time_register_shift.night',
         );
+    }
+
+    /**
+     * @param DeliveryNoteTimeRegister $deliveryNoteTimeRegister
+     *
+     * @return string
+     */
+    public static function getStringValue(DeliveryNoteTimeRegister $deliveryNoteTimeRegister)
+    {
+        return self::getReversedEnumArray()[$deliveryNoteTimeRegister->getShift()];
     }
 }

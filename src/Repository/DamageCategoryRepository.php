@@ -13,13 +13,11 @@ use Gedmo\Translatable\TranslatableListener;
  * Class DamageCategoryRepository.
  *
  * @category Repository
- *
- * @author   Anton Serra <aserratorta@gmail.com>
  */
 class DamageCategoryRepository extends ServiceEntityRepository
 {
     /**
-     * EventCategoryRepository constructor.
+     * DamageCategoryRepository constructor.
      *
      * @param RegistryInterface $registry
      */
@@ -36,10 +34,7 @@ class DamageCategoryRepository extends ServiceEntityRepository
      */
     public function findAllSortedByCategoryQB($limit = null, $order = 'ASC')
     {
-        $query = $this
-            ->createQueryBuilder('dc')
-            ->orderBy('dc.category', $order);
-
+        $query = $this->createQueryBuilder('dc')->orderBy('dc.category', $order);
         if (!is_null($limit)) {
             $query->setMaxResults($limit);
         }
@@ -79,8 +74,7 @@ class DamageCategoryRepository extends ServiceEntityRepository
     public function findAllSortedByCategoryLocalizedQ($locale, $limit = null, $order = 'ASC')
     {
         $query = $this->findAllSortedByCategoryQB($limit, $order)->getQuery();
-        $query
-            ->setHint(Query::HINT_CUSTOM_OUTPUT_WALKER, 'Gedmo\\Translatable\\Query\\TreeWalker\\TranslationWalker')
+        $query->setHint(Query::HINT_CUSTOM_OUTPUT_WALKER, 'Gedmo\\Translatable\\Query\\TreeWalker\\TranslationWalker')
             ->setHint(TranslatableListener::HINT_TRANSLATABLE_LOCALE, $locale)
             ->setHint(TranslatableListener::HINT_FALLBACK, 1);
 
@@ -107,11 +101,7 @@ class DamageCategoryRepository extends ServiceEntityRepository
      */
     public function findEnabledSortedByCategoryQB($limit = null, $order = 'ASC')
     {
-        $query = $this
-            ->findAllSortedByCategoryQB($limit, $order)
-            ->where('dc.enabled = true');
-
-        return $query;
+        return $this->findAllSortedByCategoryQB($limit, $order)->where('dc.enabled = true');
     }
 
     /**

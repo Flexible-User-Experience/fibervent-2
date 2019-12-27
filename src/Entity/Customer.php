@@ -21,10 +21,9 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  *
  * @category Entity
  *
- * @author   Anton Serra <aserratorta@gmail.com>
- *
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="App\Repository\CustomerRepository")
+ * @ORM\Cache(usage="NONSTRICT_READ_WRITE")
  * @Gedmo\SoftDeleteable(fieldName="removedAt", timeAware=false)
  * @Vich\Uploadable
  */
@@ -64,7 +63,7 @@ class Customer extends AbstractBase
      * @var string
      *
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Assert\Url(checkDNS=true)
+     * @Assert\Url(checkDNS="ANY")
      */
     private $web;
 
@@ -83,7 +82,8 @@ class Customer extends AbstractBase
     /**
      * @var State
      *
-     * @ORM\ManyToOne(targetEntity="State")
+     * @ORM\ManyToOne(targetEntity="State", inversedBy="customers")
+     * @ORM\Cache(usage="NONSTRICT_READ_WRITE")
      */
     private $state;
 
@@ -91,6 +91,7 @@ class Customer extends AbstractBase
      * @var ArrayCollection
      *
      * @ORM\OneToMany(targetEntity="Windfarm", mappedBy="customer", cascade={"persist", "remove"})
+     * @ORM\Cache(usage="NONSTRICT_READ_WRITE")
      */
     private $windfarms;
 
@@ -98,6 +99,7 @@ class Customer extends AbstractBase
      * @var ArrayCollection
      *
      * @ORM\OneToMany(targetEntity="User", mappedBy="customer", cascade={"persist", "remove"})
+     * @ORM\Cache(usage="NONSTRICT_READ_WRITE")
      */
     private $contacts;
 

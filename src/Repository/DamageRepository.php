@@ -6,6 +6,7 @@ use App\Entity\Damage;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\Query;
 use Doctrine\ORM\QueryBuilder;
+use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\Common\Persistence\ManagerRegistry as RegistryInterface;
 use Gedmo\Translatable\TranslatableListener;
 
@@ -13,13 +14,11 @@ use Gedmo\Translatable\TranslatableListener;
  * Class DamageRepository.
  *
  * @category Repository
- *
- * @author   Anton Serra <aserratorta@gmail.com>
  */
 class DamageRepository extends ServiceEntityRepository
 {
     /**
-     * EventCategoryRepository constructor.
+     * DamageRepository constructor.
      *
      * @param RegistryInterface $registry
      */
@@ -36,12 +35,10 @@ class DamageRepository extends ServiceEntityRepository
      */
     public function findAllEnabledSortedByCodeQB($limit = null, $order = 'ASC')
     {
-        $query = $this
-            ->createQueryBuilder('d')
+        $query = $this->createQueryBuilder('d')
             ->where('d.enabled = :enabled')
             ->setParameter('enabled', true)
             ->orderBy('d.code', $order);
-
         if (!is_null($limit)) {
             $query->setMaxResults($limit);
         }
@@ -78,12 +75,7 @@ class DamageRepository extends ServiceEntityRepository
      */
     public function localizedFindQB($id)
     {
-        $query = $this
-            ->createQueryBuilder('d')
-            ->where('d.id = :id')
-            ->setParameter('id', $id);
-
-        return $query;
+        return $this->createQueryBuilder('d')->where('d.id = :id')->setParameter('id', $id);
     }
 
     /**
@@ -95,8 +87,7 @@ class DamageRepository extends ServiceEntityRepository
     public function localizedFindQ($id, $locale)
     {
         $query = $this->localizedFindQB($id)->getQuery();
-        $query
-            ->setHint(Query::HINT_CUSTOM_OUTPUT_WALKER, 'Gedmo\\Translatable\\Query\\TreeWalker\\TranslationWalker')
+        $query->setHint(Query::HINT_CUSTOM_OUTPUT_WALKER, 'Gedmo\\Translatable\\Query\\TreeWalker\\TranslationWalker')
             ->setHint(TranslatableListener::HINT_TRANSLATABLE_LOCALE, $locale)
             ->setHint(TranslatableListener::HINT_FALLBACK, 1);
 
@@ -104,10 +95,11 @@ class DamageRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param int    $id
+     * @param int $id
      * @param string $locale
      *
      * @return Damage
+     * @throws NonUniqueResultException
      */
     public function localizedFind($id, $locale)
     {
@@ -115,21 +107,19 @@ class DamageRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param int    $id
+     * @param int $id
      * @param string $locale
      *
      * @return string
+     * @throws NonUniqueResultException
      */
     public function getlocalizedDesciption($id, $locale)
     {
-        $queryBuilder = $this
-            ->createQueryBuilder('d')
+        $queryBuilder = $this->createQueryBuilder('d')
             ->select('d.description')
             ->where('d.id = :id')
             ->setParameter('id', $id);
-
-        $query = $queryBuilder
-            ->getQuery()
+        $query = $queryBuilder->getQuery()
             ->setHint(Query::HINT_CUSTOM_OUTPUT_WALKER, 'Gedmo\\Translatable\\Query\\TreeWalker\\TranslationWalker')
             ->setHint(TranslatableListener::HINT_TRANSLATABLE_LOCALE, $locale);
 

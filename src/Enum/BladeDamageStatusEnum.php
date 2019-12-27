@@ -6,8 +6,6 @@ namespace App\Enum;
  * Class BladeDamageStatusEnum.
  *
  * @category Enum
- *
- * @author   David Romaní <david@flux.cat>
  */
 class BladeDamageStatusEnum
 {
@@ -15,9 +13,21 @@ class BladeDamageStatusEnum
     const STATUS_VALIDATED = 1;
 
     /**
+     * Methods.
+     */
+
+    /**
      * @return array
      */
     public static function getEnumArray()
+    {
+        return array_flip(self::getReversedEnumArray());
+    }
+
+    /**
+     * @return array
+     */
+    public static function getReversedEnumArray()
     {
         return array(
             self::STATUS_NOT_VALIDATED => 'No validat',

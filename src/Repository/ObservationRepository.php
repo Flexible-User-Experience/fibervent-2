@@ -5,21 +5,19 @@ namespace App\Repository;
 use App\Entity\AuditWindmillBlade;
 use App\Entity\Observation;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Common\Persistence\ManagerRegistry as RegistryInterface;
 use Doctrine\ORM\Query;
 use Doctrine\ORM\QueryBuilder;
-use Doctrine\Common\Persistence\ManagerRegistry as RegistryInterface;
 
 /**
  * Class ObservationRepository.
  *
  * @category Repository
- *
- * @author   David Romaní <david@flux.cat>
  */
 class ObservationRepository extends ServiceEntityRepository
 {
     /**
-     * EventCategoryRepository constructor.
+     * ObservationRepository constructor.
      *
      * @param RegistryInterface $registry
      */
@@ -35,12 +33,7 @@ class ObservationRepository extends ServiceEntityRepository
      */
     public function getItemsOfAuditWindmillBladeQB(AuditWindmillBlade $auditWindmillBlade)
     {
-        $query = $this
-            ->createQueryBuilder('o')
-            ->where('o.auditWindmillBlade = :awb')
-            ->setParameter('awb', $auditWindmillBlade);
-
-        return $query;
+        return $this->createQueryBuilder('o')->where('o.auditWindmillBlade = :awb')->setParameter('awb', $auditWindmillBlade);
     }
 
     /**
@@ -70,11 +63,7 @@ class ObservationRepository extends ServiceEntityRepository
      */
     public function getItemsOfAuditWindmillBladeSortedByDamageNumberQB(AuditWindmillBlade $auditWindmillBlade)
     {
-        $query = $this
-            ->getItemsOfAuditWindmillBladeQB($auditWindmillBlade)
-            ->orderBy('o.damageNumber', 'ASC');
-
-        return $query;
+        return $this->getItemsOfAuditWindmillBladeQB($auditWindmillBlade)->orderBy('o.damageNumber', 'ASC');
     }
 
     /**

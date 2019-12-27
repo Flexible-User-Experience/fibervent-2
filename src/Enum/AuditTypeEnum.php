@@ -8,8 +8,6 @@ use App\Entity\Audit;
  * Class AuditTypeEnum.
  *
  * @category Enum
- *
- * @author   David Romaní <david@flux.cat>
  */
 class AuditTypeEnum
 {
@@ -27,6 +25,14 @@ class AuditTypeEnum
      */
     public static function getEnumArray()
     {
+        return array_flip(self::getReversedEnumArray());
+    }
+
+    /**
+     * @return array
+     */
+    public static function getReversedEnumArray()
+    {
         return array(
             self::GROUND => 'enum.audit_type.ground',
             self::ROPE => 'enum.audit_type.rope',
@@ -42,7 +48,7 @@ class AuditTypeEnum
      */
     public static function getStringValue(Audit $audit)
     {
-        return self::getEnumArray()[$audit->getType()];
+        return self::getReversedEnumArray()[$audit->getType()];
     }
 
     /**
@@ -52,6 +58,6 @@ class AuditTypeEnum
      */
     public static function getStringLocalizedValue(Audit $audit)
     {
-        return self::getEnumArray()[$audit->getType()];
+        return self::getReversedEnumArray()[$audit->getType()];
     }
 }

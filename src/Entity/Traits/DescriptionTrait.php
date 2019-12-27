@@ -9,8 +9,6 @@ use Doctrine\ORM\Mapping as ORM;
  * Description trait.
  *
  * @category Trait
- *
- * @author   Anton Serra <aserratorta@gmail.com>
  */
 trait DescriptionTrait
 {

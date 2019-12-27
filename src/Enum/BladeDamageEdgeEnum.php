@@ -8,8 +8,6 @@ use App\Entity\BladeDamage;
  * Class BladeDamageEdgeEnum.
  *
  * @category Enum
- *
- * @author   David Romaní <david@flux.cat>
  */
 class BladeDamageEdgeEnum
 {
@@ -18,9 +16,21 @@ class BladeDamageEdgeEnum
     const EDGE_UNDEFINED = 2;
 
     /**
+     * Methods.
+     */
+
+    /**
      * @return array
      */
     public static function getEnumArray()
+    {
+        return array_flip(self::getReversedEnumArray());
+    }
+
+    /**
+     * @return array
+     */
+    public static function getReversedEnumArray()
     {
         return array(
             self::EDGE_IN => 'BA',
@@ -33,6 +43,14 @@ class BladeDamageEdgeEnum
      * @return array
      */
     public static function getLongTextEnumArray()
+    {
+        return array_flip(self::getReversedLongTextEnumArray());
+    }
+
+    /**
+     * @return array
+     */
+    public static function getReversedLongTextEnumArray()
     {
         return array(
             self::EDGE_IN => 'Atac',
@@ -48,6 +66,6 @@ class BladeDamageEdgeEnum
      */
     public static function getStringValue(BladeDamage $bladeDamage)
     {
-        return self::getEnumArray()[$bladeDamage->getEdge()];
+        return self::getReversedEnumArray()[$bladeDamage->getEdge()];
     }
 }

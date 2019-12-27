@@ -1,10 +1,74 @@
 sonata_admin:
-    title: 'Sonata Admin'
+    title:              '%project_web_title%'
+    title_logo:         'build/fibervent_logo_black_landscape.jpg'
+    persist_filters:    true
+    show_mosaic_button: false
+    options:
+        html5_validate: true
+        confirm_exit:   true
+        use_select2:    true
+        pager_links:    10
+    security:
+        handler: sonata.admin.security.handler.role
+    templates:
+        layout: "Admin/layout.html.twig"
+        edit:   "Admin/edit.html.twig"
     dashboard:
+        groups:
+            Client:
+                icon:  "<i class='fa fa-users' aria-hidden='true'></i>"
+                label: "Clientes"
+            Windfarm:
+                icon:  "<i class='fa fa-recycle' aria-hidden='true'></i>"
+                label: "Parques Eólicos"
+            Audit:
+                icon:  "<i class='fa fa-eye' aria-hidden='true'></i>"
+                label: "Inspecciones"
+            WorkOrder:
+                icon:  "<i class='fa fa-list-alt' aria-hidden='true'></i>"
+                label: "Proyectos"
+            PresenceMonitoring:
+                icon:  "<i class='fa fa-clock-o' aria-hidden='true'></i>"
+                label: "Registro horario"
         blocks:
-            - { type: sonata.admin.block.admin_list, position: left }
-
-sonata_block:
-    blocks:
-        sonata.admin.block.admin_list:
-            contexts: [admin]
+            -
+                position: top
+                type: sonata.block.service.text
+                class: "col-md-12"
+                settings:
+                    content: >
+                        <h1 class="text-center" style="margin:0 0 25px 0">%project_web_title%</h1>
+            -
+                position: top
+                type: sonata.admin.block.admin_list
+                class: "col-lg-4 col-md-6 col-sm-12"
+                settings:
+                    groups: [ Client ]
+            -
+                position: top
+                type: sonata.admin.block.admin_list
+                class: "col-lg-4 col-md-6 col-sm-12"
+                settings:
+                    groups: [ Windfarm ]
+            -
+                position: top
+                type: sonata.admin.block.admin_list
+                class: "col-lg-4 col-md-6 col-sm-12"
+                settings:
+                    groups: [ Audit ]
+            -
+                position: top
+                type: sonata.admin.block.admin_list
+                class: "col-lg-4 col-md-6 col-sm-12"
+                settings:
+                    groups: [ WorkOrder ]
+            -
+                position: top
+                type: sonata.admin.block.admin_list
+                class: "col-lg-4 col-md-6 col-sm-12"
+                settings:
+                    groups: [ PresenceMonitoring ]
+            -
+                position: top
+                type: admin.block.audits
+                class: "col-lg-4 col-md-6 col-sm-12"

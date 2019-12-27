@@ -7,16 +7,16 @@ use App\Enum\AuditTypeEnum;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Audit.
  *
  * @category Entity
  *
- * @author   Anton Serra <aserratorta@gmail.com>
- *
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="App\Repository\AuditRepository")
+ * @ORM\Cache(usage="NONSTRICT_READ_WRITE")
  * @Gedmo\SoftDeleteable(fieldName="removedAt", timeAware=false)
  */
 class Audit extends AbstractBase
@@ -69,6 +69,8 @@ class Audit extends AbstractBase
      * @var Windmill
      *
      * @ORM\ManyToOne(targetEntity="Windmill", inversedBy="audits")
+     * @ORM\JoinColumn(name="windmill_id", referencedColumnName="id")
+     * @ORM\Cache(usage="NONSTRICT_READ_WRITE")
      */
     private $windmill;
 
@@ -76,6 +78,8 @@ class Audit extends AbstractBase
      * @var ArrayCollection
      *
      * @ORM\OneToMany(targetEntity="AuditWindmillBlade", mappedBy="audit", cascade={"persist", "remove"}, orphanRemoval=true)
+     * @ORM\Cache(usage="NONSTRICT_READ_WRITE")
+     * @Assert\Valid
      */
     private $auditWindmillBlades;
 
@@ -85,6 +89,7 @@ class Audit extends AbstractBase
      * @ORM\ManyToMany(targetEntity="User")
      * @ORM\JoinTable(name="audits_users", joinColumns={@ORM\JoinColumn(name="audit_id", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")})
+     * @ORM\Cache(usage="NONSTRICT_READ_WRITE")
      */
     private $operators;
 
@@ -92,6 +97,7 @@ class Audit extends AbstractBase
      * @var Windfarm
      *
      * @ORM\ManyToOne(targetEntity="Windfarm")
+     * @ORM\Cache(usage="NONSTRICT_READ_WRITE")
      */
     private $windfarm;
 
@@ -99,6 +105,7 @@ class Audit extends AbstractBase
      * @var Customer
      *
      * @ORM\ManyToOne(targetEntity="Customer")
+     * @ORM\Cache(usage="NONSTRICT_READ_WRITE")
      */
     private $customer;
 
@@ -108,6 +115,21 @@ class Audit extends AbstractBase
      * @ORM\Column(type="integer", options={"default"=0})
      */
     protected $language = 0;
+
+    /**
+     * @var WorkOrder
+     * @ORM\ManyToOne(targetEntity="WorkOrder", inversedBy="audits")
+     * @ORM\JoinColumn(name="workorder_id", referencedColumnName="id", nullable=true)
+     * @ORM\Cache(usage="NONSTRICT_READ_WRITE")
+     */
+    private $workOrder;
+
+    /**
+     * @var bool
+     *
+     * @ORM\Column(type="boolean", options={"default"=false})
+     */
+    private $hasWorkOrder;
 
     /**
      * Methods.
@@ -446,8 +468,56 @@ class Audit extends AbstractBase
     /**
      * @return string
      */
+    public function toStringWithoutJoins()
+    {
+        return $this->id ? $this->getBeginDate()->format('d/m/Y').' · '.$this->getWindfarm()->getCustomer()->getName().' · '.$this->getWindfarm()->getName().' · ' : '---';
+    }
+
+    /**
+     * @return string
+     */
     public function __toString()
     {
         return $this->id ? $this->getBeginDate()->format('d/m/Y').' · '.$this->getWindmill() : '---';
+    }
+
+    /**
+     * @return WorkOrder
+     */
+    public function getWorkOrder(): ?WorkOrder
+    {
+        return $this->workOrder;
+    }
+
+    /**
+     * @param WorkOrder $workOrder
+     *
+     * @return Audit
+     */
+    public function setWorkOrder(WorkOrder $workOrder): Audit
+    {
+        $this->workOrder = $workOrder;
+
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isHasWorkOrder(): bool
+    {
+        return $this->hasWorkOrder;
+    }
+
+    /**
+     * @param bool $hasWorkOrder
+     *
+     * @return Audit
+     */
+    public function setHasWorkOrder(bool $hasWorkOrder): Audit
+    {
+        $this->hasWorkOrder = $hasWorkOrder;
+
+        return $this;
     }
 }

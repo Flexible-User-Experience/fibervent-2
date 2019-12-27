@@ -12,10 +12,9 @@ use Symfony\Component\Intl\Intl;
  *
  * @category Entity
  *
- * @author   Anton Serra <aserratorta@gmail.com>
- *
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="App\Repository\StateRepository")
+ * @ORM\Cache(usage="NONSTRICT_READ_WRITE")
  * @Gedmo\SoftDeleteable(fieldName="removedAt", timeAware=false)
  */
 class State extends AbstractBase
@@ -43,6 +42,7 @@ class State extends AbstractBase
      * @var ArrayCollection
      *
      * @ORM\OneToMany(targetEntity="Customer", mappedBy="state")
+     * @ORM\Cache(usage="NONSTRICT_READ_WRITE")
      */
     private $customers;
 

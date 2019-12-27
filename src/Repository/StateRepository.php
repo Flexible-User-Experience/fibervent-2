@@ -4,21 +4,19 @@ namespace App\Repository;
 
 use App\Entity\State;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Common\Persistence\ManagerRegistry as RegistryInterface;
 use Doctrine\ORM\Query;
 use Doctrine\ORM\QueryBuilder;
-use Doctrine\Common\Persistence\ManagerRegistry as RegistryInterface;
 
 /**
  * Class StateRepository.
  *
  * @category Repository
- *
- * @author   Anton Serra <aserratorta@gmail.com>
  */
 class StateRepository extends ServiceEntityRepository
 {
     /**
-     * EventCategoryRepository constructor.
+     * StateRepository constructor.
      *
      * @param RegistryInterface $registry
      */
@@ -35,11 +33,7 @@ class StateRepository extends ServiceEntityRepository
      */
     public function findAllSortedByNameQB($limit = null, $order = 'ASC')
     {
-        $query = $this
-            ->createQueryBuilder('s')
-            ->orderBy('s.countryCode', $order)
-            ->addOrderBy('s.name', $order);
-
+        $query = $this->createQueryBuilder('s')->orderBy('s.countryCode', $order)->addOrderBy('s.name', $order);
         if (!is_null($limit)) {
             $query->setMaxResults($limit);
         }

@@ -8,8 +8,6 @@ use Doctrine\ORM\Mapping as ORM;
  * Postal code trait.
  *
  * @category Trait
- *
- * @author   David Romaní <david@flux.cat>
  */
 trait PostalCodeTrait
 {

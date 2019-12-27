@@ -3,24 +3,22 @@
 namespace App\Repository;
 
 use App\Entity\Customer;
-use App\Entity\User;
 use App\Enum\UserRolesEnum;
+use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Common\Persistence\ManagerRegistry as RegistryInterface;
 use Doctrine\ORM\Query;
 use Doctrine\ORM\QueryBuilder;
-use Doctrine\Common\Persistence\ManagerRegistry as RegistryInterface;
 
 /**
  * Class UserRepository.
  *
  * @category Repository
- *
- * @author   Anton Serra <aserratorta@gmail.com>
  */
 class UserRepository extends ServiceEntityRepository
 {
     /**
-     * EventCategoryRepository constructor.
+     * UserRepository constructor.
      *
      * @param RegistryInterface $registry
      */
@@ -37,11 +35,7 @@ class UserRepository extends ServiceEntityRepository
      */
     public function findAllSortedByNameQB($limit = null, $order = 'ASC')
     {
-        $query = $this
-            ->createQueryBuilder('u')
-            ->orderBy('u.lastname', $order)
-            ->addOrderBy('u.firstname', $order);
-
+        $query = $this->createQueryBuilder('u')->orderBy('u.lastname', $order)->addOrderBy('u.firstname', $order);
         if (!is_null($limit)) {
             $query->setMaxResults($limit);
         }
@@ -81,8 +75,7 @@ class UserRepository extends ServiceEntityRepository
     public function findOnlyAvailableSortedByNameQB($customer, $limit = null, $order = 'ASC')
     {
         $query = $this->findAllSortedByNameQB($limit, $order);
-        $query
-            ->where('u.customer IS NULL')
+        $query->where('u.customer IS NULL')
             ->orWhere('u.customer = :customer')
             ->setParameter('customer', $customer);
 
@@ -121,8 +114,7 @@ class UserRepository extends ServiceEntityRepository
      */
     public function findAllTechniciansSortedByNameQB($limit = null, $order = 'ASC')
     {
-        return $this
-            ->findAllSortedByNameQB($limit, $order)
+        return $this->findAllSortedByNameQB($limit, $order)
             ->where('u.roles NOT LIKE :role')
             ->andWhere('u.enabled = true')
             ->setParameter('role', '%'.UserRolesEnum::ROLE_CUSTOMER.'%');
@@ -159,13 +151,10 @@ class UserRepository extends ServiceEntityRepository
      */
     public function findEnabledSortedByNameQB($customer, $limit = null, $order = 'ASC')
     {
-        $query = $this
-            ->findAllSortedByNameQB($limit, $order)
+        return $this->findAllSortedByNameQB($limit, $order)
             ->where('u.enabled = true AND u.customer IS NULL')
             ->orWhere('u.enabled = true AND u.customer = :customer')
             ->setParameter('customer', $customer);
-
-        return $query;
     }
 
     /**
@@ -205,8 +194,7 @@ class UserRepository extends ServiceEntityRepository
             ->where('u.customer = :customer')
             ->andWhere('u.roles LIKE :role')
             ->setParameter('customer', $customer)
-            ->setParameter('role', '%'.UserRolesEnum::ROLE_CUSTOMER.'%')
-        ;
+            ->setParameter('role', '%'.UserRolesEnum::ROLE_CUSTOMER.'%');
     }
 
     /**

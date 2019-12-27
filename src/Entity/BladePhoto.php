@@ -15,10 +15,9 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  *
  * @category Entity
  *
- * @author   Anton Serra <aserratorta@gmail.com>
- *
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="App\Repository\BladePhotoRepository")
+ * @ORM\Cache(usage="NONSTRICT_READ_WRITE")
  * @Gedmo\SoftDeleteable(fieldName="removedAt", timeAware=false)
  * @Vich\Uploadable
  */
@@ -43,6 +42,7 @@ class BladePhoto extends AbstractBase
      * @var AuditWindmillBlade
      *
      * @ORM\ManyToOne(targetEntity="AuditWindmillBlade", inversedBy="bladePhotos")
+     * @ORM\Cache(usage="NONSTRICT_READ_WRITE")
      */
     private $auditWindmillBlade;
 
