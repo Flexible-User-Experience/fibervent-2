@@ -25,24 +25,16 @@ class AuditAdminController extends AbstractBaseAdminController
     /**
      * Export Audit in PDF format action.
      *
-     * @param Request $request
-     *
      * @return Response
      *
      * @throws NotFoundHttpException     If the object does not exist
      * @throws AccessDeniedHttpException If access is not granted
      * @throws \Exception
      */
-    public function pdfAction(Request $request = null)
+    public function pdfAction()
     {
-        $request = $this->resolveRequest($request);
-        $id = $request->get($this->admin->getIdParameter());
-
         /** @var Audit $object */
-        $object = $this->admin->getObject($id);
-        if (!$object) {
-            throw $this->createNotFoundException(sprintf('Unable to find audit record with id: %s', $id));
-        }
+        $object = $this->getPersistedObject();
 
         /** @var AuditPdfBuilderService $apbs */
         $apbs = $this->get('app.audit_pdf_builder');
@@ -63,14 +55,8 @@ class AuditAdminController extends AbstractBaseAdminController
      */
     public function showAction($id = null)
     {
-        $request = $this->resolveRequest();
-        $id = $request->get($this->admin->getIdParameter());
-
         /** @var Audit $object */
-        $object = $this->admin->getObject($id);
-        if (!$object) {
-            throw $this->createNotFoundException(sprintf('Unable to find audit record with id: %s', $id));
-        }
+        $object = $this->getPersistedObject();
 
         // Customer filter
         if (!$this->get('app.auth_customer')->isAuditOwnResource($object)) {
@@ -103,21 +89,15 @@ class AuditAdminController extends AbstractBaseAdminController
      */
     public function emailAction(Request $request = null)
     {
-        $request = $this->resolveRequest($request);
-        $id = $request->get($this->admin->getIdParameter());
-
         /** @var Audit $object */
-        $object = $this->admin->getObject($id);
-        if (!$object) {
-            throw $this->createNotFoundException(sprintf('Unable to find audit record with id: %s', $id));
-        }
+        $object = $this->getPersistedObject();
 
         /** @var AuditPdfBuilderService $apbs */
         $apbs = $this->get('app.audit_pdf_builder');
         $pdf = $apbs->build($object);
         $pdf->Output($this->getDestAuditFilePath($object), 'F');
 
-        $form = $this->createForm(new AuditEmailSendFormType(), $object, array(
+        $form = $this->createForm(AuditEmailSendFormType::class, $object, array(
             'default_msg' => 'Adjunto archivo resultado auditoria número '.$object->getId(),
             'to_emails_list' => $this->getToEmailsList($object),
             'cc_emails_list' => $this->getCcEmailsList($object),
@@ -155,14 +135,8 @@ class AuditAdminController extends AbstractBaseAdminController
      */
     public function createWorkOrderAction($id = null)
     {
-        $request = $this->resolveRequest();
-        $id = $request->get($this->admin->getIdParameter());
-
         /** @var Audit $object */
-        $object = $this->admin->getObject($id);
-        if (!$object) {
-            throw $this->createNotFoundException(sprintf('Unable to find audit record with id: %s', $id));
-        }
+        $object = $this->getPersistedObject();
 
         // Customer filter
         if (!$this->get('app.auth_customer')->isAuditOwnResource($object)) {
@@ -292,5 +266,23 @@ class AuditAdminController extends AbstractBaseAdminController
         }
 
         return $availableMails;
+    }
+
+    /**
+     * @return Audit
+     * @throws NotFoundHttpException
+     */
+    private function getPersistedObject()
+    {
+        $request = $this->resolveRequest();
+        $id = $request->get($this->admin->getIdParameter());
+
+        /** @var Audit $object */
+        $object = $this->admin->getObject($id);
+        if (!$object) {
+            throw $this->createNotFoundException(sprintf('Unable to find audit record with id: %s', $id));
+        }
+
+        return $object;
     }
 }
