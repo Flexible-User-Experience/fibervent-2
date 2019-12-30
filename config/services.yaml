@@ -28,19 +28,6 @@ services:
         resource: '../src/Controller'
         tags:
             - 'controller.service_arguments'
-    # Managers
-    app.manager_observation:
-        class: App\Manager\ObservationManager
-        arguments:
-            - '@app.blade_damage_repository'
-    app.manager_customer_ajax_response:
-        class: App\Manager\CustomerAjaxResponseManager
-        arguments:
-            - '@app.audit_repository'
-    app.manager_work_order:
-        class: App\Manager\WorkOrderManager
-        arguments:
-            - '@doctrine.orm.entity_manager'
     # Factories
     app.factory_windfarm_blades_damages_helper:
         class: App\Factory\WindmillBladesDamagesHelperFactory
@@ -63,3 +50,26 @@ services:
         class: '%snc_redis.doctrine_cache_predis.class%'
         arguments:
             - '@snc_redis.doctrine'
+    # Managers
+    app.manager_observation:
+        class: App\Manager\ObservationManager
+        arguments:
+            - '@app.blade_damage_repository'
+    app.manager_customer_ajax_response:
+        class: App\Manager\CustomerAjaxResponseManager
+        arguments:
+            - '@app.audit_repository'
+    app.manager_work_order:
+        class: App\Manager\WorkOrderManager
+        arguments:
+            - '@doctrine.orm.entity_manager'
+    # Messaging
+    app.courier:
+        class: App\Service\CourierService
+        arguments:
+            - '@swiftmailer.mailer'
+    app.notification:
+        public: true
+        class: App\Service\NotificationService
+        arguments:
+            - '@app.courier'

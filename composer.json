@@ -1,10 +1,10 @@
 {
     "name": "flux/fibervent-2",
-    "description": "A Symfony 4 webapp project to manage Fibervent windmill auditting process",
+    "description": "A Symfony 4.4 LTS webapp project to manage Fibervent windmill auditting process",
     "type": "project",
     "license": "proprietary",
     "require": {
-        "php": ">=7.2.0",
+        "php": ">=7.4.0",
         "ext-ctype": "*",
         "ext-iconv": "*",
         "a2lix/translation-form-bundle": "^2.0",

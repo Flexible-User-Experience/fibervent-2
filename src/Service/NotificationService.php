@@ -2,7 +2,7 @@
 
 namespace App\Service;
 
-use Symfony\Component\Form\Form;
+use Symfony\Component\Form\FormInterface;
 
 /**
  * Class NotificationService.
@@ -33,10 +33,10 @@ class NotificationService
     /**
      * Deliver PDF Audit.
      *
-     * @param Form   $form
-     * @param string $attatchmentPath
+     * @param FormInterface $form
+     * @param string        $attatchmentPath
      */
-    public function deliverAuditEmail(Form $form, $attatchmentPath)
+    public function deliverAuditEmail(FormInterface $form, $attatchmentPath)
     {
         $to = $form->get('to')->getData();
         $cc = $form->get('cc')->getData();
