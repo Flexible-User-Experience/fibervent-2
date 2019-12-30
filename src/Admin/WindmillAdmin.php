@@ -11,6 +11,7 @@ use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Form\Type\ModelType;
 use Sonata\AdminBundle\Route\RouteCollection;
 use Sonata\Form\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 
 /**
  * Class WindmillAdmin.
@@ -122,6 +123,7 @@ class WindmillAdmin extends AbstractBaseAdmin
                 GoogleMapType::class,
                 array(
                     'label' => 'admin.windfarm.latlng',
+                    'addr_type' => HiddenType::class,
                     'required' => false,
                 )
             )

@@ -3,9 +3,9 @@
         {% block oh_google_maps_html %}
             <div id="{{ id }}_container">
                 <div class="form-group">
-                    <label for="{{ id }}_inut" class="control-label inline"></label>
+                    <label for="{{ id }}_input" class="control-label inline"></label>
                     <input type="text" class="form-control inline" id="{{ id }}_input" style="width:50%;margin-bottom:5px"/><button id="{{ id }}_search_button" class="btn btn-default" style="margin-top:-3px">Buscar al mapa</button>
-                    <div id="{{ id }}_map_canvas" class="gmap" style="width: 100%; height: 450px"></div>
+                    <div id="{{ id }}_map_canvas" class="gmap" style="width:100%;height:450px"></div>
                     <div id="{{ id }}_error"></div>
                 </div>
             </div>
@@ -20,11 +20,7 @@
             <script type="text/javascript" src="{{ asset('bundles/ohgooglemapformtype/js/jquery.ohgooglemaps.js') }}"></script>
         {% endblock %}
         {% block oh_google_maps_javascript %}
-            {% block oh_google_maps_callback %}
-                <script type="text/javascript">
-                    var oh_google_maps_callback = function(location, gmap) { {#/* your callback function here */#} }
-                </script>
-            {% endblock %}
+            {% block oh_google_maps_callback %}{% endblock %}
             <script type="text/javascript">
                 jQuery(document).ready(function() {
                     jQuery('#{{ id }}_map_canvas').ohGoogleMapType({
@@ -32,15 +28,12 @@
                         'search_action_el'   : $('#{{ id }}_search_button'),
                         'search_error_el'    : $('#{{ id }}_error'),
                         'current_position_el': $('#{{ id }}_current_position'),
-                        'default_lat'        : '{% if value is defined and value.latitude %}{{ value.latitude }}{% else %}40.881604{% endif %}',
-                        'default_lng'        : '{% if value is defined and value.longitude %}{{ value.longitude }}{% else %}0.716726{% endif %}',
-                        'default_zoom'       : {% if value is defined and value.latitude != 40.881604 and value.longitude != 0.716726 %}10{% else %}5{% endif %},
+                        'default_lat'        : '{% if value is defined and value.latitude %}{{ value.latitude }}{% else %}{{ constant('App\\Entity\\Windmill::DEFAULT_GPS_LATITUDE') }}{% endif %}',
+                        'default_lng'        : '{% if value is defined and value.longitude %}{{ value.longitude }}{% else %}{{ constant('App\\Entity\\Windmill::DEFAULT_GPS_LONGITUDE') }}{% endif %}',
+                        'default_zoom'       : {% if value is defined and value.latitude != constant('App\\Entity\\Windmill::DEFAULT_GPS_LATITUDE') and value.longitude != constant('App\\Entity\\Windmill::DEFAULT_GPS_LONGITUDE') %}10{% else %}5{% endif %},
                         'lat_field'          : $('#{{ attribute(form, lat_name).vars.id }}'),
-                        'lng_field'          : $('#{{ attribute(form, lng_name).vars.id }}'),
-                        'callback'           : oh_google_maps_callback
+                        'lng_field'          : $('#{{ attribute(form, lng_name).vars.id }}')
                     });
-                    {#jQuery('#{{ id }}_lat').prop('readonly', true);#}
-                    {#jQuery('#{{ id }}_lng').prop('readonly', true);#}
                 });
             </script>
         {% endblock %}

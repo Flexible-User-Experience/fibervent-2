@@ -127,4 +127,17 @@ class SmartAssetsHelperService
     {
         return $this->kernel->getRootDir().DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'public'.$assetPath;
     }
+
+    /**
+     * Returns absolute file path.
+     *
+     * @param string $assetPath
+     * @param string $liipImagineFilter
+     *
+     * @return string
+     */
+    public function getAbsoluteLiipMediaCacheAssetFilePathByFilter($assetPath, $liipImagineFilter)
+    {
+        return str_replace(DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'public'.DIRECTORY_SEPARATOR, DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'public'.DIRECTORY_SEPARATOR.'media'.DIRECTORY_SEPARATOR.'cache'.DIRECTORY_SEPARATOR.$liipImagineFilter.DIRECTORY_SEPARATOR, $this->getAbsoluteAssetFilePath($assetPath));
+    }
 }

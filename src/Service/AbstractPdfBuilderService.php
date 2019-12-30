@@ -219,13 +219,14 @@ class AbstractPdfBuilderService
         $pdf->Write(0, $this->ts->trans('pdf.audit_description.2_description'), '', false, 'L', true);
         $pdf->Ln(self::SECTION_SPACER_V);
         // Audit description with windmill image schema
-        $pdf->Image($this->sahs->getAbsoluteAssetFilePath('/bundles/app/images/tubrine_diagrams/'.$diagramType.'.jpg'), CustomTcpdf::PDF_MARGIN_LEFT + 50, $pdf->GetY(), null, 40);
+        $pdf->Image($this->sahs->getAbsoluteAssetFilePath('/build/tubrine_diagrams/'.$diagramType.'.jpg'), CustomTcpdf::PDF_MARGIN_LEFT + 50, $pdf->GetY(), null, 40);
     }
 
     /**
      * @param CustomTcpdf $pdf
-     * @param Audit       $audit
-     * @param bool        $showAuditMark
+     * @param Audit $audit
+     * @param bool $showAuditMark
+     * @throws \Doctrine\ORM\NonUniqueResultException
      */
     protected function drawAuditDamage(CustomTcpdf $pdf, Audit $audit, $showAuditMark = false)
     {
@@ -426,7 +427,7 @@ class AbstractPdfBuilderService
                 foreach ($auditWindmillBlade->getBladePhotos() as $photo) {
                     if ($photo->getImageName()) {
                         // Image($file, $x='', $y='', $w=0, $h=0, $type='', $link='', $align='', $resize=false, $dpi=300, $palign='', $ismask=false, $imgmask=false, $border=0, $fitbox=false, $hidden=false, $fitonpage=false)
-                        $pdf->Image($this->cm->getBrowserPath($this->uh->asset($photo, 'imageFile'), '600x960'), CustomTcpdf::PDF_MARGIN_LEFT + (($i % 2) * 76) + 7, $pdf->GetY(), null, 115);
+                        $pdf->Image($this->sahs->getAbsoluteLiipMediaCacheAssetFilePathByFilter($this->uh->asset($photo, 'imageFile'), '600x960'), CustomTcpdf::PDF_MARGIN_LEFT + (($i % 2) * 76) + 7, $pdf->GetY(), null, 115);
                         ++$i;
                         if (0 == $i % 2) {
                             $pdf->Ln(120);
@@ -448,7 +449,7 @@ class AbstractPdfBuilderService
                     /** @var Photo $photo */
                     foreach ($bladeDamage->getPhotos() as $photo) {
                         if ($photo->getImageName()) {
-                            $pdf->Image($this->sahs->getAbsoluteAssetFilePath($this->cm->getBrowserPath($this->uh->asset($photo, 'imageFile'), '960x540')), CustomTcpdf::PDF_MARGIN_LEFT, $pdf->GetY(), $pdf->availablePageWithDimension);
+                            $pdf->Image($this->sahs->getAbsoluteLiipMediaCacheAssetFilePathByFilter($this->uh->asset($photo, 'imageFile'), '960x540'), CustomTcpdf::PDF_MARGIN_LEFT, $pdf->GetY(), $pdf->availablePageWithDimension);
                             $pdf->Ln(100);
                         }
                     }
@@ -569,8 +570,9 @@ class AbstractPdfBuilderService
      * Draw damage table body row.
      *
      * @param CustomTcpdf $pdf
-     * @param int         $key
+     * @param int $key
      * @param BladeDamage $bladeDamage
+     * @throws \Doctrine\ORM\NonUniqueResultException
      */
     private function drawDamageTableBodyRow(CustomTcpdf $pdf, $key, BladeDamage $bladeDamage)
     {

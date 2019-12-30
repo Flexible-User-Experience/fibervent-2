@@ -189,10 +189,10 @@ class WindfarmAuditsPdfBuilderService extends AbstractPdfBuilderService
             if ($pdf->getCustomer()->isShowLogoInPdfs() && $pdf->getCustomer()->getImageName()) {
                 // customer has logo
                 $pdf->Image($this->sahs->getAbsoluteAssetFilePath($this->uh->asset($pdf->getCustomer(), 'imageFile')), CustomTcpdf::PDF_MARGIN_LEFT + 12, 45, 55, 0, '', '', 'T', 2, 300, '', false, false, 0, false, false, false);
-                $pdf->Image($this->sahs->getAbsoluteAssetFilePath('/bundles/app/images/fibervent_logo_white_landscape_hires.jpg'), 100, 45, 78, 0, 'JPEG', '', 'T', false, 300, '', false, false, 0, false, false, false);
+                $pdf->Image($this->sahs->getAbsoluteAssetFilePath('/build/fibervent_logo_white_landscape.jpg'), 100, 45, 78, 0, 'JPEG', '', 'T', false, 300, '', false, false, 0, false, false, false);
             } else {
                 // customer hasn't logo
-                $pdf->Image($this->sahs->getAbsoluteAssetFilePath('/bundles/app/images/fibervent_logo_white_landscape_hires.jpg'), '', 45, 130, '', 'JPEG', '', 'T', false, 300, 'C', false, false, 0, false, false, false);
+                $pdf->Image($this->sahs->getAbsoluteAssetFilePath('/build/fibervent_logo_white_landscape.jpg'), '', 45, 130, '', 'JPEG', '', 'T', false, 300, 'C', false, false, 0, false, false, false);
             }
             // main detail section
             $pdf->SetXY(CustomTcpdf::PDF_MARGIN_LEFT, 100);
