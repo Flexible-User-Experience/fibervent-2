@@ -69,6 +69,7 @@ services:
         arguments:
             - '@swiftmailer.mailer'
     app.notification:
+        public: true
         class: App\Service\NotificationService
         arguments:
             - '@app.courier'

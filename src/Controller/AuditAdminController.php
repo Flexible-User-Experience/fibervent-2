@@ -99,8 +99,8 @@ class AuditAdminController extends AbstractBaseAdminController
 
         $form = $this->createForm(AuditEmailSendFormType::class, $object, array(
             'default_msg' => 'Adjunto archivo resultado auditoria número '.$object->getId(),
-            'to_emails_list' => $this->getToEmailsList($object),
-            'cc_emails_list' => $this->getCcEmailsList($object),
+            'to_emails_list' => $this->getReversedToEmailsList($object),
+            'cc_emails_list' => $this->getReversedCcEmailsList($object),
         ));
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
@@ -230,6 +230,16 @@ class AuditAdminController extends AbstractBaseAdminController
      *
      * @return array
      */
+    private function getReversedToEmailsList(Audit $audit)
+    {
+        return array_flip($this->commonEmailsList($audit));
+    }
+
+    /**
+     * @param Audit $audit
+     *
+     * @return array
+     */
     private function getCcEmailsList(Audit $audit)
     {
         $availableMails = $this->commonEmailsList($audit);
@@ -240,6 +250,16 @@ class AuditAdminController extends AbstractBaseAdminController
         }
 
         return $availableMails;
+    }
+
+    /**
+     * @param Audit $audit
+     *
+     * @return array
+     */
+    private function getReversedCcEmailsList(Audit $audit)
+    {
+        return array_flip($this->getCcEmailsList($audit));
     }
 
     /**
