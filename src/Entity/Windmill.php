@@ -22,6 +22,8 @@ use Symfony\Component\Validator\Constraints as Assert;
 class Windmill extends AbstractBase
 {
     const DEFAULT_SHORT_CODE = 'AG-00';
+    const DEFAULT_GPS_LATITUDE = 40.881604;
+    const DEFAULT_GPS_LONGITUDE = 0.716726;
 
     use GpsCoordinatesTrait;
     use CodeTrait;

@@ -15,6 +15,7 @@ use Sonata\AdminBundle\Route\RouteCollection;
 use Sonata\Form\Type\EqualType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 
 /**
  * Class WindfarmAdmin.
@@ -210,6 +211,7 @@ class WindfarmAdmin extends AbstractBaseAdmin
                 GoogleMapType::class,
                 array(
                     'label' => 'admin.windfarm.latlng',
+                    'addr_type' => HiddenType::class,
                     'required' => false,
                 )
             )
