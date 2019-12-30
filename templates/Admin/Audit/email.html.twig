@@ -19,11 +19,38 @@
                 <div class="box-header with-border">
                     <h4 class="box-title" style="margin-bottom:40px">PDF</h4><br>
                     <div class="box-body table-responsive no-padding">
-                        {# TODO change to webpack #}<iframe id="viewer" src="{{ asset('bundles/app/js/viewer-js/index.html') }}#{{ pdf_short_path }}" width="100%" height="800"></iframe>
+                        <canvas id="pdf-canvas"></canvas>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('build/pdfjs/pdf.js') }}"></script>
+    <script type="text/javascript">
+        var url = '{{ pdf_short_path }}';
+        pdfjsLib.GlobalWorkerOptions.workerSrc = '/build/pdfjs/pdf.worker.js';
+        var loadingTask = pdfjsLib.getDocument(url);
+        loadingTask.promise.then(function(pdf) {
+            var pageNumber = 1;
+            pdf.getPage(pageNumber).then(function(page) {
+                var viewport = page.getViewport({scale: 1.0});
+                var canvas = document.getElementById('pdf-canvas');
+                var context = canvas.getContext('2d');
+                canvas.height = viewport.height;
+                canvas.width = viewport.width;
+                var renderContext = {
+                    canvasContext: context,
+                    viewport: viewport
+                };
+                page.render(renderContext);
+            });
+        }, function (reason) {
+            console.error(reason);
+        });
+    </script>
 {% endblock %}
