@@ -48,9 +48,6 @@
                 canvas = document.getElementById('pdf-canvas'),
                 ctx = canvas.getContext('2d'),
                 loadingTask = pdfjsLib.getDocument(url);
-            /**
-             * Asynchronously downloads PDF.
-             */
             loadingTask.promise.then(function(pdfDoc_) {
                 pdfDoc = pdfDoc_;
                 document.getElementById('page_count').textContent = pdfDoc.numPages;
@@ -83,10 +80,7 @@
                 // Update page counters
                 document.getElementById('page_num').textContent = num;
             }
-            /**
-             * If another page rendering in progress, waits until the rendering is
-             * finised. Otherwise, executes rendering immediately.
-             */
+            // If another page rendering in progress, waits until the rendering if finised. Otherwise, executes rendering immediately.
             function queueRenderPage(num) {
                 if (pageRendering) {
                     pageNumPending = num;
@@ -94,9 +88,6 @@
                     renderPage(num);
                 }
             }
-            /**
-             * Displays previous page.
-             */
             function onPrevPage() {
                 if (pageNum <= 1) {
                     return;
@@ -105,9 +96,6 @@
                 queueRenderPage(pageNum);
             }
             document.getElementById('prev').addEventListener('click', onPrevPage);
-            /**
-             * Displays next page.
-             */
             function onNextPage() {
                 if (pageNum >= pdfDoc.numPages) {
                     return;
