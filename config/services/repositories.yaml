@@ -32,6 +32,7 @@ services:
         arguments:
             - App:Windmill
     app.user_repository:
+        public: true
         class: App\Repository\UserRepository
         factory: [ "@doctrine", getRepository ]
         arguments:

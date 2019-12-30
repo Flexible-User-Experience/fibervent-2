@@ -31,6 +31,7 @@ class AuditAdminController extends AbstractBaseAdminController
      *
      * @throws NotFoundHttpException     If the object does not exist
      * @throws AccessDeniedHttpException If access is not granted
+     * @throws \Exception
      */
     public function pdfAction(Request $request = null)
     {
@@ -82,7 +83,7 @@ class AuditAdminController extends AbstractBaseAdminController
             array_push($sortedBladeDamages, $bdr->getItemsOfAuditWindmillBladeSortedByRadius($auditWindmillBlade));
         }
 
-        return $this->render(
+        return $this->renderWithExtraParams(
             'Admin/Audit/show.html.twig',
             array(
                 'action' => 'show',
@@ -98,6 +99,7 @@ class AuditAdminController extends AbstractBaseAdminController
      * @param Request $request
      *
      * @return Response
+     * @throws \Exception
      */
     public function emailAction(Request $request = null)
     {
@@ -130,7 +132,7 @@ class AuditAdminController extends AbstractBaseAdminController
             return new RedirectResponse($this->admin->generateUrl('list'));
         }
 
-        return $this->render(
+        return $this->renderWithExtraParams(
             'Admin/Audit/email.html.twig',
             array(
                 'action' => 'show',
@@ -167,7 +169,7 @@ class AuditAdminController extends AbstractBaseAdminController
             throw new AccessDeniedHttpException();
         }
 
-        return $this->render(
+        return $this->renderWithExtraParams(
             'Admin/Audit/create_work_order.html.twig',
             array(
                 'action' => 'show',
@@ -224,9 +226,9 @@ class AuditAdminController extends AbstractBaseAdminController
      */
     private function getDestAuditFilePath(Audit $audit)
     {
-        $krd = $this->getParameter('kernel.root_dir');
+        $krd = $this->getParameter('kernel.project_dir');
 
-        return $krd.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'web'.$this->getShortAuditFilePath($audit);
+        return $krd.DIRECTORY_SEPARATOR.'public'.$this->getShortAuditFilePath($audit);
     }
 
     /**
