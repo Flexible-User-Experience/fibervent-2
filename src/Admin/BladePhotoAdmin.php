@@ -4,6 +4,7 @@ namespace App\Admin;
 
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Route\RouteCollection;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 
 /**
  * Class BladePhotoAdmin.
@@ -50,7 +51,7 @@ class BladePhotoAdmin extends AbstractBaseAdmin
             )
             ->add(
                 'imageFile',
-                'file',
+                FileType::class,
                 array(
                     'label' => 'admin.bladephoto.imagefile',
                     'help' => $this->getImageHelperFormMapperWithThumbnail(),

@@ -5,6 +5,7 @@ namespace App\Admin;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Form\FormMapper;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 
 /**
  * Class PhotoAdmin.
@@ -39,7 +40,7 @@ class PhotoAdmin extends AbstractBaseAdmin
             )
             ->add(
                 'imageFile',
-                'file',
+                FileType::class,
                 array(
                     'label' => 'admin.bladephoto.imagefile',
                     'help' => $this->getImageHelperFormMapperWithThumbnail(),
