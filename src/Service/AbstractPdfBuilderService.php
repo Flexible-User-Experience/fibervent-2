@@ -449,7 +449,7 @@ class AbstractPdfBuilderService
                     /** @var Photo $photo */
                     foreach ($bladeDamage->getPhotos() as $photo) {
                         if ($photo->getImageName()) {
-                            $pdf->Image($this->sahs->getAbsoluteAssetFilePath($this->cm->getBrowserPath($this->uh->asset($photo, 'imageFile'), '960x540')), CustomTcpdf::PDF_MARGIN_LEFT, $pdf->GetY(), $pdf->availablePageWithDimension);
+                            $pdf->Image($this->sahs->getAbsoluteLiipMediaCacheAssetFilePathByFilter($this->uh->asset($photo, 'imageFile'), '960x540'), CustomTcpdf::PDF_MARGIN_LEFT, $pdf->GetY(), $pdf->availablePageWithDimension);
                             $pdf->Ln(100);
                         }
                     }
