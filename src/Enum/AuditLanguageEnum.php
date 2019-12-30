@@ -58,11 +58,11 @@ class AuditLanguageEnum
     {
         return array(
             self::SPANISH => 'español',
-            self::ENGLISH => 'english',
-            self::FRENCH => 'français',
-            self::PORTUGUESE => 'portuguès',
-            self::GERMAN     => 'alemany',
-            self::ITALIAN    => 'italià',
+            self::ENGLISH => 'inglés',
+            self::FRENCH => 'francés',
+            self::PORTUGUESE => 'portugués',
+            self::GERMAN     => 'aleman',
+            self::ITALIAN    => 'italiano',
         );
     }
 }
