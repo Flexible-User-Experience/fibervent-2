@@ -87,7 +87,7 @@ class CustomTcpdf extends \TCPDF
     public function header()
     {
         // logo
-        $this->Image($this->sahs->getAbsoluteAssetFilePath('/bundles/app/images/fibervent_logo_white_landscape_hires.jpg'), self::PDF_MARGIN_LEFT, 7, 28);
+        $this->Image($this->sahs->getAbsoluteAssetFilePath('/build/fibervent_logo_white_landscape.jpg'), self::PDF_MARGIN_LEFT, 7, 28);
         $this->SetXY(self::PDF_MARGIN_LEFT, 11);
         $this->setFontStyle(null, 'I', 8);
         $this->setBlueLine();
