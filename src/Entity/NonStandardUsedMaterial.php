@@ -64,7 +64,7 @@ class NonStandardUsedMaterial extends AbstractBase
      *
      * @return NonStandardUsedMaterial
      */
-    public function setQuantity(float $quantity): NonStandardUsedMaterial
+    public function setQuantity($quantity): NonStandardUsedMaterial
     {
         $this->quantity = $quantity;
 
@@ -92,7 +92,7 @@ class NonStandardUsedMaterial extends AbstractBase
      *
      * @return NonStandardUsedMaterial
      */
-    public function setItem(int $item): NonStandardUsedMaterial
+    public function setItem($item): NonStandardUsedMaterial
     {
         $this->item = $item;
 

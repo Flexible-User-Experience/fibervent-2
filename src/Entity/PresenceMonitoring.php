@@ -295,7 +295,7 @@ class PresenceMonitoring extends AbstractBase
      *
      * @return PresenceMonitoring
      */
-    public function setCategory(int $category): PresenceMonitoring
+    public function setCategory($category): PresenceMonitoring
     {
         $this->category = $category;
 

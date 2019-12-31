@@ -1,0 +1,10 @@
+security:
+    firewalls:
+        admin:
+            provider:   testing
+            http_basic: ~
+    providers:
+        testing:
+            memory:
+                users:
+                    test1: { password: '$testpwd1', roles: ['ROLE_SUPER_ADMIN'] }
