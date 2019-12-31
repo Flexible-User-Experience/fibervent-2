@@ -10,7 +10,7 @@ App\Entity\Customer:
     name: <company()> <companySuffix()>
     imageName: <current()>.jpg
     email: <email()>
-    code(unique): <bothify('?#########')>
+    code (unique): <bothify('?#########')>
     phone: <e164PhoneNumber()>
     web: <url()>
     address: <streetAddress()>
@@ -23,9 +23,9 @@ App\Entity\Windfarm:
   windfarm{1..4}:
     name: <catchPhrase()>
     city: <city()>
-    gpsLatitude: <latitude($min = -90, $max = 90)>
-    gpsLongitude: <longitude($min = -180, $max = 180)>
-    power: <numberBetween($min = 10, $max = 5000 )>
+    gpsLatitude: <latitude(-90, 90)>
+    gpsLongitude: <longitude(-180, 180)>
+    power: <numberBetween(10, 5000)>
     year: <year()>
     customer: '@customer<numberBetween(1, 3)>'
     state: '@state<numberBetween(1, 2)>'
@@ -35,9 +35,9 @@ App\Entity\Windfarm:
 # Windmill
 App\Entity\Windmill:
   windmill{1..8}:
-    code(unique): <bothify('???###??')>
-    gpsLatitude: <latitude($min = -90, $max = 90)>
-    gpsLongitude: <longitude($min = -180, $max = 180)>
+    code (unique): <bothify('???###??')>
+    gpsLatitude: <latitude(-90, 90)>
+    gpsLongitude: <longitude(-180, 180)>
     windfarm: '@windfarm<numberBetween(1, 4)>'
     turbine: '@turbine<numberBetween(1, 2)>'
     bladetype: '@bladetype<numberBetween(1, 2)>'
@@ -45,36 +45,36 @@ App\Entity\Windmill:
 # Turbine
 App\Entity\Turbine:
   turbine{1..2}:
-    model(unique): <bothify('?####?')>
-    towerHeight: <numberBetween($min = 30, $max = 100)>
-    rotorDiameter: <numberBetween($min = 20, $max = 140)>
-    power: <numberBetween($min = 1, $max = 7)>
+    model (unique): <bothify('?####?')>
+    towerHeight: <numberBetween(30, 100)>
+    rotorDiameter: <numberBetween(20, 140)>
+    power: <numberBetween(1, 7)>
 
 # Blade
 App\Entity\Blade:
   bladetype{1..2}:
-    model(unique): <bothify('####???')>
-    length: <numberBetween($min = 10, $max = 50)>
+    model (unique): <bothify('####???')>
+    length: <numberBetween(10, 50)>
 
 # Windmill Blade
 App\Entity\WindmillBlade:
   windmillblade{1..3}:
-    code(unique): <bothify('?###??')>
+    code (unique): <bothify('?###??')>
     order: 1
     windmill: '@windmill<numberBetween(1, 8)>'
 
 # Audit
 App\Entity\Audit:
   audit{1..2}:
-    beginDate: <dateTimeThisMonth($max = 'now')>
-    endDate: <dateTimeThisMonth($max = 'now')>
+    beginDate: <dateTimeThisMonth('now')>
+    endDate: <dateTimeThisMonth('now')>
     status: <numberBetween(0, 3)>
     diagramType: <numberBetween(1, 6)>
     type: <numberBetween(1, 5)>
     tools: <sentence()>
     observations: <sentence()>
     windmill: '@windmill<numberBetween(1, 8)>'
-    operators: [ '@admin' ]
+    operators: ['@admin']
 
 # AuditWindmillBlade
 App\Entity\AuditWindmillBlade:
@@ -142,28 +142,28 @@ App\Entity\DamageCategory:
 App\Entity\Photo:
   photo{1..5}:
     imageName: <current()>.jpg
-    gpsLatitude: <latitude($min = -90, $max = 90)>
-    gpsLongitude: <longitude($min = -180, $max = 180)>
+    gpsLatitude: <latitude(-90, 90)>
+    gpsLongitude: <longitude(-180, 180)>
     bladeDamage: '@bladeDamage<numberBetween(1, 5)>'
 
 # BladePhoto
 App\Entity\BladePhoto:
   bladePhoto{1..5}:
     imageName: <current()>.jpg
-    gpsLatitude: <latitude($min = -90, $max = 90)>
-    gpsLongitude: <longitude($min = -180, $max = 180)>
+    gpsLatitude: <latitude(-90, 90)>
+    gpsLongitude: <longitude(-180, 180)>
     auditWindmillBlade: '@auditwindmillblade<numberBetween(1, 3)>'
 
 # BladeDamage
 App\Entity\BladeDamage:
   bladeDamage{1..5}:
-    position: <numberBetween($min = 0, $max = 3)>
-    radius: <numberBetween($min = 1, $max = 7)>
-    edge: <numberBetween($min = 0, $max = 1)>
-    distance: <numberBetween($min = 1, $max = 7)>
-    size: <numberBetween($min = 1, $max = 7)>
-    status: <numberBetween($min = 1, $max = 7)>
-    number: <numberBetween($min = 1, $max = 7)>
+    position: <numberBetween(0, 3)>
+    radius: <numberBetween(1, 7)>
+    edge: <numberBetween(0, 1)>
+    distance: <numberBetween(1, 7)>
+    size: <numberBetween(1, 7)>
+    status: <numberBetween(1, 7)>
+    number: <numberBetween(1, 7)>
     damage: '@damage<numberBetween(1, 5)>'
     damageCategory: '@damageCategory<numberBetween(1, 5)>'
     auditWindmillBlade: '@auditwindmillblade<numberBetween(1, 3)>'
@@ -171,23 +171,34 @@ App\Entity\BladeDamage:
 # Observation
 App\Entity\Observation:
   observation{1..5}:
-    position: <numberBetween($min = 1, $max = 5)>
-    damageNumber: <numberBetween($min = 1, $max = 5)>
+    position: <numberBetween(1, 5)>
+    damageNumber: <numberBetween(1, 5)>
     auditWindmillBlade: '@auditwindmillblade<numberBetween(1, 3)>'
 
 ## Users
 App\Entity\User:
-    admin:
-        username: <{private_admin_test_user}>
-        plainPassword: <{private_admin_test_pass}>
-        phone: <e164PhoneNumber()>
-        email: <{private_admin_test_email}>
-        firstname: <{private_admin_test_name}>
-        lastname: <{private_admin_test_surname}>
-        enabled: true
-        language: 0
-        roles:
-            - ROLE_SUPER_ADMIN
+  superadmin:
+    username: <username()>
+    plainPassword: <password()>
+    phone: <e164PhoneNumber()>
+    email: <safeEmail()>
+    firstname: <name()>
+    lastname: <lastname()>
+    enabled: true
+    language: 0
+    roles:
+      - ROLE_SUPER_ADMIN
+  admin:
+    username: <username()>
+    plainPassword: <password()>
+    phone: <e164PhoneNumber()>
+    email: <safeEmail()>
+    firstname: <name()>
+    lastname: <lastname()>
+    enabled: true
+    language: 0
+    roles:
+      - ROLE_ADMIN
 
 ## WorkOrders
 App\Entity\WorkOrder:
@@ -201,21 +212,21 @@ App\Entity\WorkOrder:
     certifyingCompanyContactPerson: <name()>
     certifyingCompanyPhone: <phoneNumber()>
     certifyingCompanyEmail: <safeEmail()>
-    repairAccessTypes: <randomElements( array (0, 1, 2, 3))>
+    repairAccessTypes: <randomElements(array (0, 1, 2, 3))>
 
 ## WorkOrderTasks
 App\Entity\WorkOrderTask:
   workordertask{1..3}:
     workOrder: '@workorder<numberBetween(1, 2)>'
     isFromAudit: <boolean()>
-    bladeDamage: '@bladeDamage<numberBetween(1,5)>'
+    bladeDamage: '@bladeDamage<numberBetween(1, 5)>'
     windmillBlade: '@windmillblade<numberBetween(1, 3)>'
     windmill: '@windmill<numberBetween(1, 8)>'
-    position: <numberBetween($min = 1, $max = 7)>
-    radius: <numberBetween($min = 1, $max = 7)>
-    edge: <numberBetween($min = 0, $max = 1)>
-    distance: <numberBetween($min = 1, $max = 7)>
-    size: <numberBetween($min = 1, $max = 7)>
+    position: <numberBetween(1, 7)>
+    radius: <numberBetween(1, 7)>
+    edge: <numberBetween(0, 1)>
+    distance: <numberBetween(1, 7)>
+    size: <numberBetween(1, 7)>
     isCompleted: <boolean()>
     description: <sentence()>
 
@@ -230,8 +241,8 @@ App\Entity\Vehicle:
 App\Entity\DeliveryNote:
   deliverynote{1..3}:
     workOrder: '@workorder<numberBetween(1, 2)>'
-    date: <dateTimeThisYear($max = 'now')>
-    repairWindmillSections: <randomElements( array (0, 1, 2))>
+    date: <dateTimeThisYear('now')>
+    repairWindmillSections: <randomElements(array(0, 1, 2))>
     teamLeader: '@admin'
     teamTechnician1: '@admin'
     teamTechnician2: '@admin'
@@ -240,28 +251,28 @@ App\Entity\DeliveryNote:
     vehicle: '@vehicle<numberBetween(1, 5)>'
     craneCompany: <company()>
     craneDriver: <name()>
-    repairAccessTypes: <randomElements( array (0, 1, 2, 3))>
+    repairAccessTypes: <randomElements(array(0, 1, 2, 3))>
     observations: <sentence()>
-    totalTripHours: <randomFloat(2,0,8)>
-    totalWorkHours: <randomFloat(2,0,8)>
-    totalStopHours: <randomFloat(2,0,8)>
+    totalTripHours: <randomFloat(2, 0, 8)>
+    totalWorkHours: <randomFloat(2, 0, 8)>
+    totalStopHours: <randomFloat(2, 0, 8)>
 
 ## NonStandardUsedMaterial
 App\Entity\NonStandardUsedMaterial:
   nonstandardusedmaterial{1..3}:
     quantity: <numberBetween(1, 10)>
-    item: <randomElement( array (0, 1, 2, 3, 4, 5, 6))>
+    item: <randomElement(array(0, 1, 2, 3, 4, 5, 6))>
     description: <word()>
     deliveryNote: '@deliverynote<numberBetween(1, 3)>'
 
 ## DeliveryNoteTimeRegister
 App\Entity\DeliveryNoteTimeRegister:
   deliverynotetimeregister{1..10}:
-    type: <randomElement( array (0, 1, 2))>
-    shift: <randomElement( array (0, 1, 2))>
-    begin: <time($max = 'now')>
-    end: <time($max = 'now')>
-    totalHours: <randomFloat(2,0,8)>
+    type: <randomElement(array(0, 1, 2))>
+    shift: <randomElement(array(0, 1, 2))>
+    begin: <time('now')>
+    end: <time('now')>
+    totalHours: <randomFloat(2, 0, 8)>
     deliveryNote: '@deliverynote<numberBetween(1, 3)>'
 
 ## WorkerTimesheet
@@ -278,13 +289,13 @@ App\Entity\WorkerTimesheet:
 ## PresenceMonitoring
 App\Entity\PresenceMonitoring:
   presencemonitoring{1..10}:
-    date: <dateTimeThisYear($max = 'now')>
+    date: <dateTimeThisYear('now')>
     worker: '@admin'
-    category: <randomElement( array (0, 1, 2, 3))>
-    morningHourBegin: <time($max = 'now')>
-    morningHourEnd: <time($max = 'now')>
-    afternoonHourBegin: <time($max = 'now')>
-    afternoonHourEnd: <time($max = 'now')>
-    totalHours: <randomFloat(2,0,9)>
-    normalHours: <randomFloat(2,0,7)>
-    extraHours: <randomFloat(2,0,2)>
+    category: <randomElement(array(0, 1, 2, 3))>
+    morningHourBegin: <time('now')>
+    morningHourEnd: <time('now')>
+    afternoonHourBegin: <time('now')>
+    afternoonHourEnd: <time('now')>
+    totalHours: <randomFloat(2, 0, 9)>
+    normalHours: <randomFloat(2, 0, 7)>
+    extraHours: <randomFloat(2, 0, 2)>
