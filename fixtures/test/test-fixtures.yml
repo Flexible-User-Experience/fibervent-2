@@ -75,6 +75,7 @@ App\Entity\Audit:
     observations: <sentence()>
     windmill: '@windmill<numberBetween(1, 8)>'
     operators: ['@admin']
+    hasWorkOrder: <boolean()>
 
 # AuditWindmillBlade
 App\Entity\AuditWindmillBlade:
