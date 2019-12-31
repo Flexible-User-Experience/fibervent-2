@@ -89,7 +89,7 @@ class DeliveryNoteTimeRegister extends AbstractBase
      *
      * @return DeliveryNoteTimeRegister
      */
-    public function setType(int $type): DeliveryNoteTimeRegister
+    public function setType($type): DeliveryNoteTimeRegister
     {
         $this->type = $type;
 
@@ -117,7 +117,7 @@ class DeliveryNoteTimeRegister extends AbstractBase
      *
      * @return DeliveryNoteTimeRegister
      */
-    public function setShift(int $shift): DeliveryNoteTimeRegister
+    public function setShift($shift): DeliveryNoteTimeRegister
     {
         $this->shift = $shift;
 

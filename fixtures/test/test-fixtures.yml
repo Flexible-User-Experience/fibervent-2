@@ -203,16 +203,16 @@ App\Entity\User:
 ## WorkOrders
 App\Entity\WorkOrder:
   workorder{1..2}:
-    projectNumber: EO-<numberBetween(1, 40)>
+    projectNumber: 'EO-<numberBetween(1, 40)>'
     isFromAudit: <boolean()>
     customer: '@customer<numberBetween(1, 3)>'
     windfarm: '@windfarm<numberBetween(1, 4)>'
-    audit: '@audit<numberBetween(1, 2)>'
+    audits: ['@audit<numberBetween(1, 2)>']
     certifyingCompanyName: <company()>
     certifyingCompanyContactPerson: <name()>
     certifyingCompanyPhone: <phoneNumber()>
     certifyingCompanyEmail: <safeEmail()>
-    repairAccessTypes: <randomElements(array (0, 1, 2, 3))>
+    repairAccessTypes: ['<numberBetween(0, 3)>']
 
 ## WorkOrderTasks
 App\Entity\WorkOrderTask:
@@ -242,7 +242,7 @@ App\Entity\DeliveryNote:
   deliverynote{1..3}:
     workOrder: '@workorder<numberBetween(1, 2)>'
     date: <dateTimeThisYear('now')>
-    repairWindmillSections: <randomElements(array(0, 1, 2))>
+    repairWindmillSections: ['<numberBetween(0, 2)>']
     teamLeader: '@admin'
     teamTechnician1: '@admin'
     teamTechnician2: '@admin'
@@ -251,7 +251,7 @@ App\Entity\DeliveryNote:
     vehicle: '@vehicle<numberBetween(1, 5)>'
     craneCompany: <company()>
     craneDriver: <name()>
-    repairAccessTypes: <randomElements(array(0, 1, 2, 3))>
+    repairAccessTypes: ['<numberBetween(0, 3)>']
     observations: <sentence()>
     totalTripHours: <randomFloat(2, 0, 8)>
     totalWorkHours: <randomFloat(2, 0, 8)>
@@ -261,17 +261,17 @@ App\Entity\DeliveryNote:
 App\Entity\NonStandardUsedMaterial:
   nonstandardusedmaterial{1..3}:
     quantity: <numberBetween(1, 10)>
-    item: <randomElement(array(0, 1, 2, 3, 4, 5, 6))>
+    item: ['<numberBetween(0, 6)>']
     description: <word()>
     deliveryNote: '@deliverynote<numberBetween(1, 3)>'
 
 ## DeliveryNoteTimeRegister
 App\Entity\DeliveryNoteTimeRegister:
   deliverynotetimeregister{1..10}:
-    type: <randomElement(array(0, 1, 2))>
-    shift: <randomElement(array(0, 1, 2))>
-    begin: <time('now')>
-    end: <time('now')>
+    type: ['<numberBetween(0, 2)>']
+    shift: ['<numberBetween(0, 2)>']
+    begin: <dateTimeThisMonth()>
+    end: <dateTimeThisMonth()>
     totalHours: <randomFloat(2, 0, 8)>
     deliveryNote: '@deliverynote<numberBetween(1, 3)>'
 
@@ -291,11 +291,11 @@ App\Entity\PresenceMonitoring:
   presencemonitoring{1..10}:
     date: <dateTimeThisYear('now')>
     worker: '@admin'
-    category: <randomElement(array(0, 1, 2, 3))>
-    morningHourBegin: <time('now')>
-    morningHourEnd: <time('now')>
-    afternoonHourBegin: <time('now')>
-    afternoonHourEnd: <time('now')>
+    category: ['<numberBetween(0, 3)>']
+    morningHourBegin: <dateTimeThisMonth()>
+    morningHourEnd: <dateTimeThisMonth()>
+    afternoonHourBegin: <dateTimeThisMonth()>
+    afternoonHourEnd: <dateTimeThisMonth()>
     totalHours: <randomFloat(2, 0, 9)>
     normalHours: <randomFloat(2, 0, 7)>
     extraHours: <randomFloat(2, 0, 2)>
