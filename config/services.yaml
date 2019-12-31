@@ -61,6 +61,7 @@ services:
             - '@app.audit_repository'
     app.manager_work_order:
         class: App\Manager\WorkOrderManager
+        public: true
         arguments:
             - '@doctrine.orm.entity_manager'
     # Messaging
