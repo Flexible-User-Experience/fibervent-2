@@ -60,6 +60,11 @@ services:
         arguments: [ ~, App\Entity\DamageCategory, ~, '@security.authorization_checker', '@security.token_storage', '@app.repositories_service', '@vich_uploader.templating.helper.uploader_helper', '@liip_imagine.cache.manager' ]
         tags:
             - { name: sonata.admin, manager_type: orm, label: 'Categoría Daño', group: 'Audit', label_translator_strategy: 'sonata.admin.label.strategy.noop' }
+    admin.damage_category_translation:
+        class: App\Admin\DamageCategoryTranslationAdmin
+        arguments: [ ~, App\Entity\Translations\DamageCategoryTranslation, ~, '@security.authorization_checker', '@security.token_storage', '@app.repositories_service', '@vich_uploader.templating.helper.uploader_helper', '@liip_imagine.cache.manager' ]
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: 'Traducción Categoría Daño', group: 'Audit', label_translator_strategy: 'sonata.admin.label.strategy.noop' }
     admin.photo:
         class: App\Admin\PhotoAdmin
         arguments: [ ~, App\Entity\Photo, ~, '@security.authorization_checker', '@security.token_storage', '@app.repositories_service', '@vich_uploader.templating.helper.uploader_helper', '@liip_imagine.cache.manager' ]

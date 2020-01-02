@@ -26,4 +26,12 @@ class DamageCategoryTranslation extends AbstractPersonalTranslation
      * @ORM\Cache(usage="NONSTRICT_READ_WRITE")
      */
     protected $object;
+
+    /**
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->id ? (string) $this->getId() : '---';
+    }
 }

@@ -290,6 +290,14 @@ admin:
     description: Descripción
     recomended_action: Acción Recomendada
     colour: Color
+  damagecategorytranslation:
+    title: Traducción Categoría Daño
+    title_list: Traducción Categoría Daño
+    title_create: Crear
+    object: Categoría Daño
+    locale: Idioma
+    field: Campo
+    content: Contenido
   observation:
     title: Observaciones Daños Pala
     title_list: Observaciones Daños Pala
