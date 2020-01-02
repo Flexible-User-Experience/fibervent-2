@@ -13,7 +13,6 @@ services:
     admin.user:
         class: App\Admin\UserAdmin
         arguments: [ ~, App\Entity\User, App\Controller\UserAdminController ]
-#        arguments: [ ~, App\Entity\User, App\Controller\UserAdminController, '@security.authorization_checker', '@security.token_storage', '@app.repositories_service', '@vich_uploader.templating.helper.uploader_helper', '@liip_imagine.cache.manager', '@fos_user.user_manager' ]
         tags:
             - { name: sonata.admin, manager_type: orm, label: 'Usuario', group: 'Client', label_translator_strategy: 'sonata.admin.label.strategy.noop' }
     admin.windfarm:

@@ -1,4 +1,6 @@
 doctrine:
+    dbal:
+        driver: 'pdo_sqlite'
     orm:
         dql:
             datetime_functions:
