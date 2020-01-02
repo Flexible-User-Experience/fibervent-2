@@ -55,11 +55,21 @@ services:
         arguments: [ ~, App\Entity\Damage, ~, '@security.authorization_checker', '@security.token_storage', '@app.repositories_service', '@vich_uploader.templating.helper.uploader_helper', '@liip_imagine.cache.manager' ]
         tags:
             - { name: sonata.admin, manager_type: orm, label: 'Tipo Daño', group: 'Audit', label_translator_strategy: 'sonata.admin.label.strategy.noop' }
+    admin.damage_translation:
+        class: App\Admin\DamageTranslationAdmin
+        arguments: [ ~, App\Entity\Translations\DamageTranslation, ~, '@security.authorization_checker', '@security.token_storage', '@app.repositories_service', '@vich_uploader.templating.helper.uploader_helper', '@liip_imagine.cache.manager' ]
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: 'Traducción Daño', group: 'Audit', label_translator_strategy: 'sonata.admin.label.strategy.noop' }
     admin.damage_category:
         class: App\Admin\DamageCategoryAdmin
         arguments: [ ~, App\Entity\DamageCategory, ~, '@security.authorization_checker', '@security.token_storage', '@app.repositories_service', '@vich_uploader.templating.helper.uploader_helper', '@liip_imagine.cache.manager' ]
         tags:
             - { name: sonata.admin, manager_type: orm, label: 'Categoría Daño', group: 'Audit', label_translator_strategy: 'sonata.admin.label.strategy.noop' }
+    admin.damage_category_translation:
+        class: App\Admin\DamageCategoryTranslationAdmin
+        arguments: [ ~, App\Entity\Translations\DamageCategoryTranslation, ~, '@security.authorization_checker', '@security.token_storage', '@app.repositories_service', '@vich_uploader.templating.helper.uploader_helper', '@liip_imagine.cache.manager' ]
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: 'Traducción Categoría Daño', group: 'Audit', label_translator_strategy: 'sonata.admin.label.strategy.noop' }
     admin.photo:
         class: App\Admin\PhotoAdmin
         arguments: [ ~, App\Entity\Photo, ~, '@security.authorization_checker', '@security.token_storage', '@app.repositories_service', '@vich_uploader.templating.helper.uploader_helper', '@liip_imagine.cache.manager' ]

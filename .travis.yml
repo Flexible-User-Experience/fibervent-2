@@ -1,0 +1,50 @@
+language: php
+sudo: false
+
+cache:
+  directories:
+    - $HOME/.composer/cache/files
+    - ./bin/.phpunit
+
+env:
+  global:
+    - SYMFONY_PHPUNIT_DIR=./bin/.phpunit
+    - SYMFONY_DEPRECATIONS_HELPER=29
+
+matrix:
+  fast_finish: true
+  include:
+    - php: 7.4
+
+before_install:
+  - composer self-update
+  - cp var/.env.test.local .env
+
+install:
+  - composer install
+  - ./bin/phpunit install
+
+before_script:
+  - mysql -e 'create database IF NOT EXISTS symfony;'
+
+script:
+  - ./bin/console doctrine:databa:create --no-interaction --env=test
+  - ./bin/console doctrine:schema:update --force --env=test
+  - ./bin/console hautelook:fixtures:load --no-interaction --env=test
+  # this checks that the YAML config files contain no syntax errors
+  - ./bin/console lint:yaml config --env=test
+  # this checks that the Twig template files contain no syntax errors
+  - ./bin/console lint:twig templates --env=test
+  # this checks that the XLIFF translations contain no syntax errors
+  - ./bin/console lint:xliff translations --env=test
+  # this checks that the application doesn't use dependencies with known security vulnerabilities
+  - ./bin/console security:check --env=test
+  # this checks that Doctrine's mapping configurations are valid
+  # - ./bin/console doctrine:schema:validate --skip-sync -vvv --no-interaction --env=test
+  # testing
+  - ./bin/phpunit --no-coverage
+
+branches:
+  only:
+    - master
+    - devel

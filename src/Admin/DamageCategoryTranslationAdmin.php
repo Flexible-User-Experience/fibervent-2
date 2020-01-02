@@ -2,23 +2,23 @@
 
 namespace App\Admin;
 
+use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Route\RouteCollection;
-use Sonata\Form\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 /**
- * Class DamageAdmin.
+ * Class DamageCategoryTranslationAdmin.
  *
  * @category Admin
  */
-class DamageAdmin extends AbstractBaseAdmin
+class DamageCategoryTranslationAdmin extends AbstractBaseAdmin
 {
-    protected $maxPerPage = 50;
-    protected $classnameLabel = 'admin.damage.title';
-    protected $baseRoutePattern = 'audits/damage';
+    protected $classnameLabel = 'admin.damagecategorytranslation.title';
+    protected $baseRoutePattern = 'audits/damage-category-translation';
     protected $datagridValues = array(
-        '_sort_by' => 'code',
+        '_sort_by' => 'id',
         '_sort_order' => 'asc',
     );
 
@@ -41,62 +41,75 @@ class DamageAdmin extends AbstractBaseAdmin
         $formMapper
             ->with('admin.common.general', $this->getFormMdSuccessBoxArray(6))
             ->add(
-                'section',
+                'object',
                 null,
                 array(
-                    'label' => 'admin.damage.section',
+                    'label' => 'admin.damagecategorytranslation.object',
                     'required' => true,
                 )
             )
             ->add(
-                'code',
+                'locale',
                 null,
                 array(
-                    'label' => 'admin.damage.code',
+                    'label' => 'admin.damagecategorytranslation.locale',
                     'required' => true,
                 )
             )
             ->add(
-                'description',
+                'field',
                 null,
                 array(
-                    'label' => 'admin.damage.description',
+                    'label' => 'admin.damagecategorytranslation.field',
                     'required' => true,
                 )
             )
-            ->end()
-            ->with('admin.common.controls', $this->getFormMdSuccessBoxArray(3))
             ->add(
-                'enabled',
-                null,
+                'content',
+                TextType::class,
                 array(
-                    'label' => 'admin.common.enabled',
-                    'required' => false,
+                    'label' => 'admin.damagecategorytranslation.content',
+                    'required' => true,
                 )
             )
-            ->end()
-            ->with('admin.damage.translations', $this->getFormMdSuccessBoxArray(12))
-            ->add(
-                'translations',
-                CollectionType::class,
-                array(
-                    'label' => ' ',
-                    'required' => false,
-                    'btn_add' => true,
-                    'error_bubbling' => true,
-                    'type_options' => array(
-                        'delete' => false,
-                    ),
-                ),
-                array(
-                    'edit' => 'inline',
-                    'inline' => 'table',
-                )
-            )
-            ->end()
-        ;
+            ->end();
     }
 
+    /**
+     * @param DatagridMapper $datagridMapper
+     */
+    protected function configureDatagridFilters(DatagridMapper $datagridMapper)
+    {
+        $datagridMapper
+            ->add(
+                'object',
+                null,
+                array(
+                    'label' => 'admin.damagecategorytranslation.object',
+                )
+            )
+            ->add(
+                'locale',
+                null,
+                array(
+                    'label' => 'admin.damagecategorytranslation.locale',
+                )
+            )
+            ->add(
+                'field',
+                null,
+                array(
+                    'label' => 'admin.damagecategorytranslation.field',
+                )
+            )
+            ->add(
+                'content',
+                null,
+                array(
+                    'label' => 'admin.damagecategorytranslation.content',
+                )
+            );
+    }
     /**
      * @param ListMapper $listMapper
      */
@@ -104,34 +117,35 @@ class DamageAdmin extends AbstractBaseAdmin
     {
         $listMapper
             ->add(
-                'section',
+                'object',
                 null,
                 array(
-                    'label' => 'admin.damage.section',
+                    'label' => 'admin.damagecategorytranslation.object',
+                    'associated_property' => 'extendedToString',
                     'editable' => true,
                 )
             )
             ->add(
-                'code',
+                'locale',
                 null,
                 array(
-                    'label' => 'admin.damage.code',
+                    'label' => 'admin.damagecategorytranslation.locale',
                     'editable' => true,
                 )
             )
             ->add(
-                'description',
+                'field',
                 null,
                 array(
-                    'label' => 'admin.damage.description',
+                    'label' => 'admin.damagecategorytranslation.field',
                     'editable' => true,
                 )
             )
             ->add(
-                'enabled',
+                'content',
                 null,
                 array(
-                    'label' => 'admin.common.enabled',
+                    'label' => 'admin.damagecategorytranslation.content',
                     'editable' => true,
                 )
             )

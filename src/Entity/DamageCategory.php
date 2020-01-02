@@ -199,6 +199,14 @@ class DamageCategory extends AbstractBase
     /**
      * @return string
      */
+    public function extendedToString()
+    {
+        return $this->getCategory() ? $this->getCategory().' · '.$this->getPriority().' · '.$this->getRecommendedAction() : '---';
+    }
+
+    /**
+     * @return string
+     */
     public function __toString()
     {
         return $this->getCategory() ? (string) $this->getCategory() : '---';

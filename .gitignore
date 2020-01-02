@@ -12,6 +12,7 @@
 !/var/.gitkeep
 /vendor/
 !/bin/*
+!.travis.yml
 ###< symfony/framework-bundle ###
 
 ###> symfony/phpunit-bridge ###
