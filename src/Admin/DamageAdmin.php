@@ -2,11 +2,10 @@
 
 namespace App\Admin;
 
-use A2lix\TranslationFormBundle\Form\Type\TranslationsType;
-use App\Entity\Translations\DamageTranslation;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Route\RouteCollection;
+use Sonata\Form\Type\CollectionType;
 
 /**
  * Class DamageAdmin.
@@ -66,7 +65,7 @@ class DamageAdmin extends AbstractBaseAdmin
                 )
             )
             ->end()
-            ->with('admin.common.controls', $this->getFormMdSuccessBoxArray(6))
+            ->with('admin.common.controls', $this->getFormMdSuccessBoxArray(3))
             ->add(
                 'enabled',
                 null,
@@ -76,23 +75,22 @@ class DamageAdmin extends AbstractBaseAdmin
                 )
             )
             ->end()
-            ->with('admin.damage.translations', $this->getFormMdSuccessBoxArray(6))
+            ->with('admin.damage.translations', $this->getFormMdSuccessBoxArray(12))
             ->add(
                 'translations',
-                TranslationsType::class,
+                CollectionType::class,
                 array(
-                    'required' => false,
                     'label' => ' ',
-                    'translatable_class' => DamageTranslation::class,
-                    'fields' => array(
-                        'description' => array(
-                            'label' => 'admin.damage.description',
-                            'attr' => array(
-                                'rows' => 8,
-                            ),
-                            'required' => false,
-                        ),
+                    'required' => false,
+                    'btn_add' => true,
+                    'error_bubbling' => true,
+                    'type_options' => array(
+                        'delete' => false,
                     ),
+                ),
+                array(
+                    'edit' => 'inline',
+                    'inline' => 'table',
                 )
             )
             ->end()

@@ -298,6 +298,14 @@ admin:
     locale: Idioma
     field: Campo
     content: Contenido
+  damagetranslation:
+    title: Traducción Daño
+    title_list: Traducción Daño
+    title_create: Crear
+    object: Daño
+    locale: Idioma
+    field: Campo
+    content: Contenido
   observation:
     title: Observaciones Daños Pala
     title_list: Observaciones Daños Pala

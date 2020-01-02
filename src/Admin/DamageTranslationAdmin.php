@@ -9,14 +9,14 @@ use Sonata\AdminBundle\Route\RouteCollection;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 /**
- * Class DamageCategoryTranslationAdmin.
+ * Class DamageTranslationAdmin.
  *
  * @category Admin
  */
-class DamageCategoryTranslationAdmin extends AbstractBaseAdmin
+class DamageTranslationAdmin extends AbstractBaseAdmin
 {
-    protected $classnameLabel = 'admin.damagecategorytranslation.title';
-    protected $baseRoutePattern = 'audits/damage-category-translation';
+    protected $classnameLabel = 'admin.damagetranslation.title';
+    protected $baseRoutePattern = 'audits/damage-translation';
     protected $datagridValues = array(
         '_sort_by' => 'id',
         '_sort_order' => 'asc',
@@ -44,7 +44,7 @@ class DamageCategoryTranslationAdmin extends AbstractBaseAdmin
                 'object',
                 null,
                 array(
-                    'label' => 'admin.damagecategorytranslation.object',
+                    'label' => 'admin.damagetranslation.object',
                     'required' => true,
                 )
             )
@@ -52,7 +52,7 @@ class DamageCategoryTranslationAdmin extends AbstractBaseAdmin
                 'locale',
                 null,
                 array(
-                    'label' => 'admin.damagecategorytranslation.locale',
+                    'label' => 'admin.damagetranslation.locale',
                     'required' => true,
                 )
             )
@@ -60,7 +60,7 @@ class DamageCategoryTranslationAdmin extends AbstractBaseAdmin
                 'field',
                 null,
                 array(
-                    'label' => 'admin.damagecategorytranslation.field',
+                    'label' => 'admin.damagetranslation.field',
                     'required' => true,
                 )
             )
@@ -68,7 +68,7 @@ class DamageCategoryTranslationAdmin extends AbstractBaseAdmin
                 'content',
                 TextType::class,
                 array(
-                    'label' => 'admin.damagecategorytranslation.content',
+                    'label' => 'admin.damagetranslation.content',
                     'required' => true,
                 )
             )
@@ -85,28 +85,28 @@ class DamageCategoryTranslationAdmin extends AbstractBaseAdmin
                 'object',
                 null,
                 array(
-                    'label' => 'admin.damagecategorytranslation.object',
+                    'label' => 'admin.damagetranslation.object',
                 )
             )
             ->add(
                 'locale',
                 null,
                 array(
-                    'label' => 'admin.damagecategorytranslation.locale',
+                    'label' => 'admin.damagetranslation.locale',
                 )
             )
             ->add(
                 'field',
                 null,
                 array(
-                    'label' => 'admin.damagecategorytranslation.field',
+                    'label' => 'admin.damagetranslation.field',
                 )
             )
             ->add(
                 'content',
                 null,
                 array(
-                    'label' => 'admin.damagecategorytranslation.content',
+                    'label' => 'admin.damagetranslation.content',
                 )
             );
     }
@@ -120,7 +120,7 @@ class DamageCategoryTranslationAdmin extends AbstractBaseAdmin
                 'object',
                 null,
                 array(
-                    'label' => 'admin.damagecategorytranslation.object',
+                    'label' => 'admin.damagetranslation.object',
                     'associated_property' => 'extendedToString',
                     'editable' => true,
                 )
@@ -129,7 +129,7 @@ class DamageCategoryTranslationAdmin extends AbstractBaseAdmin
                 'locale',
                 null,
                 array(
-                    'label' => 'admin.damagecategorytranslation.locale',
+                    'label' => 'admin.damagetranslation.locale',
                     'editable' => true,
                 )
             )
@@ -137,7 +137,7 @@ class DamageCategoryTranslationAdmin extends AbstractBaseAdmin
                 'field',
                 null,
                 array(
-                    'label' => 'admin.damagecategorytranslation.field',
+                    'label' => 'admin.damagetranslation.field',
                     'editable' => true,
                 )
             )
@@ -145,7 +145,7 @@ class DamageCategoryTranslationAdmin extends AbstractBaseAdmin
                 'content',
                 null,
                 array(
-                    'label' => 'admin.damagecategorytranslation.content',
+                    'label' => 'admin.damagetranslation.content',
                     'editable' => true,
                 )
             )

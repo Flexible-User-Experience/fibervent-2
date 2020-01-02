@@ -139,6 +139,14 @@ class Damage extends AbstractBase
     /**
      * @return string
      */
+    public function extendedToString()
+    {
+        return $this->getCode() ? $this->getSection().' · '.$this->getCode().' · '.$this->getDescription() : '---';
+    }
+
+    /**
+     * @return string
+     */
     public function __toString()
     {
         return $this->getCode() ? $this->getCode().' · '.$this->getDescription() : '---';
