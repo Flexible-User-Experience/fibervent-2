@@ -5,36 +5,25 @@ namespace App\Admin;
 use App\Entity\Customer;
 use App\Enum\UserRolesEnum;
 use App\Enum\WindfarmLanguageEnum;
-use App\Service\RepositoriesService;
-use Liip\ImagineBundle\Imagine\Cache\CacheManager;
-//use Sonata\UserBundle\Admin\Model\UserAdmin as ParentUserAdmin;
+use Sonata\UserBundle\Admin\Model\UserAdmin as ParentUserAdmin;
 use Sonata\AdminBundle\Route\RouteCollection;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Form\FormMapper;
-use FOS\UserBundle\Model\UserManagerInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
-use Symfony\Component\Security\Core\Authorization\AuthorizationChecker;
-use Vich\UploaderBundle\Templating\Helper\UploaderHelper;
 
 /**
  * Class UserAdmin.
  *
  * @category Admin
  */
-class UserAdmin extends AbstractBaseAdmin
+class UserAdmin extends ParentUserAdmin
 {
-    /**
-     * @var UserManagerInterface
-     */
-    protected $userManager;
-
     /**
      * @var array
      */
@@ -46,30 +35,11 @@ class UserAdmin extends AbstractBaseAdmin
     protected $maxPerPage = 25;
 
     protected $classnameLabel = 'admin.user.title';
-    protected $baseRoutePattern = 'users';
+    protected $baseRoutePattern = 'customers/user';
     protected $datagridValues = array(
         '_sort_by' => 'lastname',
         '_sort_order' => 'asc',
     );
-
-    /**
-     * UserAdmin constructor.
-     *
-     * @param string                $code
-     * @param string                $class
-     * @param string                $baseControllerName
-     * @param AuthorizationChecker  $acs
-     * @param TokenStorageInterface $tss
-     * @param RepositoriesService   $rs
-     * @param UploaderHelper        $vus
-     * @param CacheManager          $lis
-     * @param UserManagerInterface  $userManager
-     */
-    public function __construct($code, $class, $baseControllerName, AuthorizationChecker $acs, TokenStorageInterface $tss, RepositoriesService $rs, UploaderHelper $vus, CacheManager $lis, UserManagerInterface $userManager)
-    {
-        parent::__construct($code, $class, $baseControllerName, $acs, $tss, $rs, $vus, $lis);
-        $this->userManager = $userManager;
-    }
 
     /**
      * Available routes.
@@ -78,12 +48,13 @@ class UserAdmin extends AbstractBaseAdmin
      */
     protected function configureRoutes(RouteCollection $collection)
     {
+        parent::configureRoutes($collection);
         $collection
             ->add('profile')
+            ->remove('show')
             ->remove('batch')
             ->remove('delete')
             ->remove('export')
-            ->remove('show')
         ;
     }
 
@@ -200,14 +171,6 @@ class UserAdmin extends AbstractBaseAdmin
                 )
             )
             ->add(
-                'locked',
-                CheckboxType::class,
-                array(
-                    'label' => 'admin.user.locked',
-                    'required' => false,
-                )
-            )
-            ->add(
                 'enabled',
                 CheckboxType::class,
                 array(
@@ -264,17 +227,10 @@ class UserAdmin extends AbstractBaseAdmin
                 'doctrine_orm_choice',
                 array(
                     'label' => 'admin.user.roles',
-                    'field_type' => 'choice',
+                    'field_type' => ChoiceType::class,
                     'field_options' => array(
-                        'choices' => UserRolesEnum::getEnumArray(),
+                        'choices' => UserRolesEnum::getReversedEnumArray(),
                     ),
-                )
-            )
-            ->add(
-                'locked',
-                null,
-                array(
-                    'label' => 'admin.user.locked',
                 )
             )
             ->add(
@@ -341,14 +297,6 @@ class UserAdmin extends AbstractBaseAdmin
                 )
             )
             ->add(
-                'locked',
-                null,
-                array(
-                    'label' => 'admin.user.locked',
-                    'editable' => true,
-                )
-            )
-            ->add(
                 'enabled',
                 null,
                 array(
@@ -383,6 +331,6 @@ class UserAdmin extends AbstractBaseAdmin
         return ($this->getSubject() ? $this->getSubject()->getImageName() ? '<img src="'.$lis->getBrowserPath(
                 $vus->asset($this->getSubject(), 'imageFile'),
                 '480xY'
-            ).'" class="admin-preview img-responsive" alt="thumbnail"/>' : '' : '').'<span style="width:100%;display:block;">'.$this->trans('admin.photo.help', ['width' => 320]).'</span>';
+            ).'" class="admin-preview img-responsive" alt="thumbnail"/>' : '' : '').'<span style="width:100%;display:block;">'.$this->trans('admin.photo.help', ['%width%' => 320]).'</span>';
     }
 }

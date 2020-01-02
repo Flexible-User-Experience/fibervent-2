@@ -156,17 +156,17 @@ class User extends BaseUser
      */
     public function getRoleString()
     {
-        $role = UserRolesEnum::getEnumArray()[UserRolesEnum::ROLE_CUSTOMER];
+        $role = UserRolesEnum::getReversedEnumArray()[UserRolesEnum::ROLE_CUSTOMER];
         if ($this->hasRole(UserRolesEnum::ROLE_CUSTOMER)) {
-            $role = UserRolesEnum::getEnumArray()[UserRolesEnum::ROLE_CUSTOMER];
+            $role = UserRolesEnum::getReversedEnumArray()[UserRolesEnum::ROLE_CUSTOMER];
         } elseif ($this->hasRole(UserRolesEnum::ROLE_OPERATOR)) {
-            $role = UserRolesEnum::getEnumArray()[UserRolesEnum::ROLE_OPERATOR];
+            $role = UserRolesEnum::getReversedEnumArray()[UserRolesEnum::ROLE_OPERATOR];
         } elseif ($this->hasRole(UserRolesEnum::ROLE_TECHNICIAN)) {
-            $role = UserRolesEnum::getEnumArray()[UserRolesEnum::ROLE_TECHNICIAN];
+            $role = UserRolesEnum::getReversedEnumArray()[UserRolesEnum::ROLE_TECHNICIAN];
         } elseif ($this->hasRole(UserRolesEnum::ROLE_ADMIN)) {
-            $role = UserRolesEnum::getEnumArray()[UserRolesEnum::ROLE_ADMIN];
+            $role = UserRolesEnum::getReversedEnumArray()[UserRolesEnum::ROLE_ADMIN];
         } elseif ($this->hasRole(UserRolesEnum::ROLE_SUPER_ADMIN)) {
-            $role = UserRolesEnum::getEnumArray()[UserRolesEnum::ROLE_SUPER_ADMIN];
+            $role = UserRolesEnum::getReversedEnumArray()[UserRolesEnum::ROLE_SUPER_ADMIN];
         }
 
         return $role;

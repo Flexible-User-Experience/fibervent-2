@@ -290,6 +290,22 @@ admin:
     description: Descripción
     recomended_action: Acción Recomendada
     colour: Color
+  damagecategorytranslation:
+    title: Traducción Categoría Daño
+    title_list: Traducción Categoría Daño
+    title_create: Crear
+    object: Categoría Daño
+    locale: Idioma
+    field: Campo
+    content: Contenido
+  damagetranslation:
+    title: Traducción Daño
+    title_list: Traducción Daño
+    title_create: Crear
+    object: Daño
+    locale: Idioma
+    field: Campo
+    content: Contenido
   observation:
     title: Observaciones Daños Pala
     title_list: Observaciones Daños Pala
@@ -468,3 +484,6 @@ Turbina: Turbina
 "Partes de trabajo": Partes de trabajo
 "Registro horario": Registro horario
 Registros: Registros
+breadcrumb:
+  link_admin_user_title_list: Usuario
+  link_admin_user_title_create: Crear

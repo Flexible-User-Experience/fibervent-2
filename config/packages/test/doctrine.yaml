@@ -1,0 +1,8 @@
+doctrine:
+    dbal:
+        driver: 'pdo_sqlite'
+    orm:
+        dql:
+            datetime_functions:
+                year:        DoctrineExtensions\Query\Sqlite\Year
+                date_format: DoctrineExtensions\Query\Sqlite\DateFormat

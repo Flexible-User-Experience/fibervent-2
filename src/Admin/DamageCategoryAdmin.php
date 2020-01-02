@@ -2,11 +2,11 @@
 
 namespace App\Admin;
 
-use A2lix\TranslationFormBundle\Form\Type\TranslationsType;
-use App\Entity\Translations\DamageTranslation;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Route\RouteCollection;
+use Sonata\Form\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\ColorType;
 
 /**
  * Class DamageCategoryAdmin.
@@ -73,52 +73,13 @@ class DamageCategoryAdmin extends AbstractBaseAdmin
                 )
             )
             ->end()
-            ->with('admin.damage.translations', $this->getFormMdSuccessBoxArray(6))
-            ->add(
-                'translations',
-                TranslationsType::class,
-                array(
-                    'required' => false,
-                    'label' => ' ',
-                    'translatable_class' => DamageTranslation::class,
-                    'fields' => array(
-                        'priority' => array(
-                            'label' => 'admin.damagecategory.priority',
-                            'required' => false,
-                        ),
-                        'description' => array(
-                            'label' => 'admin.damagecategory.description',
-                            'attr' => array(
-                                'rows' => 8,
-                            ),
-                            'required' => false,
-                        ),
-                        'recommendedAction' => array('label' => 'admin.damagecategory.recomended_action', 'required' => false),
-                    ),
-                )
-            )
-            ->end()
-            ->with('admin.common.controls', $this->getFormMdSuccessBoxArray(6))
+            ->with('admin.common.controls', $this->getFormMdSuccessBoxArray(3))
             ->add(
                 'colour',
-                'color_picker',
+                ColorType::class,
                 array(
                     'label' => 'admin.damagecategory.colour',
                     'required' => true,
-                    'picker_options' => array(
-                        'color' => false,
-                        'mode' => 'hsl',
-                        'hide' => false,
-                        'border' => true,
-                        'target' => false,
-                        'width' => 200,
-                        'palettes' => true,
-                        'controls' => array(
-                            'horiz' => 's',
-                            'vert' => 'l',
-                            'strip' => 'h',
-                        ),
-                    ),
                 )
             )
             ->add(
@@ -127,6 +88,25 @@ class DamageCategoryAdmin extends AbstractBaseAdmin
                 array(
                     'label' => 'admin.common.enabled',
                     'required' => false,
+                )
+            )
+            ->end()
+            ->with('admin.damage.translations', $this->getFormMdSuccessBoxArray(12))
+            ->add(
+                'translations',
+                CollectionType::class,
+                array(
+                    'label' => ' ',
+                    'required' => false,
+                    'btn_add' => true,
+                    'error_bubbling' => true,
+                    'type_options' => array(
+                        'delete' => false,
+                    ),
+                ),
+                array(
+                    'edit' => 'inline',
+                    'inline' => 'table',
                 )
             )
             ->end()
