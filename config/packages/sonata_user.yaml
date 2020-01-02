@@ -6,10 +6,10 @@ sonata_user:
         group: App\Entity\Group
     admin:
         user:
-            class:          Sonata\UserBundle\Admin\Entity\UserAdmin
-            controller:     SonataAdminBundle:CRUD
-            translation:    SonataUserBundle
+            class:       App\Admin\UserAdmin
+            controller:  App\Controller\UserAdminController
+            translation: messages
         group:
-            class:          Sonata\UserBundle\Admin\Entity\GroupAdmin
-            controller:     SonataAdminBundle:CRUD
-            translation:    SonataUserBundle
+            class:       Sonata\UserBundle\Admin\Entity\GroupAdmin
+            controller:  SonataAdminBundle:CRUD
+            translation: messages

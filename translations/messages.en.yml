@@ -436,3 +436,6 @@ Inspección:
 "Parque Eólico":
 Aerogenerador:
 Turbina:
+breadcrumb:
+  link_admin_user_title_list: Usuario
+  link_admin_user_title_create: Crear

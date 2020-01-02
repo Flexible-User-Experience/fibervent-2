@@ -468,3 +468,6 @@ Turbina: Turbina
 "Partes de trabajo": Partes de trabajo
 "Registro horario": Registro horario
 Registros: Registros
+breadcrumb:
+  link_admin_user_title_list: Usuario
+  link_admin_user_title_create: Crear
