@@ -31,7 +31,7 @@ class BackendControllerTest extends WebTestCase
     {
         $client = static::createClient([], [     // authenticated user
             'PHP_AUTH_USER' => 'test1',
-            'PHP_AUTH_PW'   => '$testpwd1',
+            'PHP_AUTH_PW'   => 'testpwd1',
         ]);
         $client->request('GET', $url);
 
@@ -145,7 +145,7 @@ class BackendControllerTest extends WebTestCase
     {
         $client = static::createClient([], [     // authenticated user
             'PHP_AUTH_USER' => 'test1',
-            'PHP_AUTH_PW'   => '$testpwd1',
+            'PHP_AUTH_PW'   => 'testpwd1',
         ]);
         $client->request('GET', $url);
 
