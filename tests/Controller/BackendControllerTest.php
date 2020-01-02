@@ -31,7 +31,7 @@ class BackendControllerTest extends WebTestCase
     {
         $client = static::createClient([], [     // authenticated user
             'PHP_AUTH_USER' => 'test1',
-            'PHP_AUTH_PW'   => '$testpwd1',
+            'PHP_AUTH_PW'   => 'testpwd1',
         ]);
         $client->request('GET', $url);
 
@@ -55,6 +55,10 @@ class BackendControllerTest extends WebTestCase
             array('/admin/customers/state/create'),
             array('/admin/customers/state/1/delete'),
             array('/admin/customers/state/1/edit'),
+            array('/admin/customers/user/list'),
+            array('/admin/customers/user/create'),
+            array('/admin/customers/user/1/edit'),
+            array('/admin/customers/user/profile'),
             array('/admin/windfarms/windfarm/list'),
             array('/admin/windfarms/windfarm/create'),
             array('/admin/windfarms/windfarm/1/edit'),
@@ -103,10 +107,6 @@ class BackendControllerTest extends WebTestCase
             array('/admin/audits/audit-windmill-blade/list'),
             array('/admin/audits/audit-windmill-blade/create'),
             array('/admin/audits/audit-windmill-blade/1/edit'),
-            array('/admin/users/list'),
-            array('/admin/users/create'),
-            array('/admin/users/1/edit'),
-            array('/admin/users/profile'),
             array('/admin/workorders/workorder/list'),
             array('/admin/workorders/workorder/create'),
             array('/admin/workorders/workorder/1/edit'),
@@ -145,7 +145,7 @@ class BackendControllerTest extends WebTestCase
     {
         $client = static::createClient([], [     // authenticated user
             'PHP_AUTH_USER' => 'test1',
-            'PHP_AUTH_PW'   => '$testpwd1',
+            'PHP_AUTH_PW'   => 'testpwd1',
         ]);
         $client->request('GET', $url);
 
@@ -164,6 +164,9 @@ class BackendControllerTest extends WebTestCase
             array('/admin/customers/customer/1/delete'),
             array('/admin/customers/country/batch'),
             array('/admin/customers/state/batch'),
+            array('/admin/customers/user/1/show'),
+            array('/admin/customers/user/1/delete'),
+            array('/admin/customers/user/batch'),
             array('/admin/windfarms/windfarm/batch'),
             array('/admin/windfarms/windfarm/1/delete'),
             array('/admin/windfarms/windmill/batch'),
@@ -176,9 +179,6 @@ class BackendControllerTest extends WebTestCase
             array('/admin/audits/observation/1/delete'),
             array('/admin/audits/audit-windmill-blade/1/delete'),
             array('/admin/audits/damage-category/1/delete'),
-            array('/admin/users/show'),
-            array('/admin/users/1/delete'),
-            array('/admin/users/batch'),
         );
     }
 }

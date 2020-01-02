@@ -91,10 +91,6 @@ class WorkOrderTaskAdmin extends AbstractBaseAdmin
                         array(
                             'label' => 'admin.bladedamage.title',
                             'disabled' => true,
-                            'disabled' => true,
-                            //                    'btn_add' => false,
-                            //                    'required' => true,
-                            //                    // 'query' => $this->bdr->findAll(),
                             'property' => 'damage.code',
                         )
                     )
@@ -158,7 +154,6 @@ class WorkOrderTaskAdmin extends AbstractBaseAdmin
                         array(
                             'label' => 'admin.bladedamage.title',
                             'disabled' => true,
-                            'disabled' => true,
                             'property' => 'damage.code',
                         )
                     )
@@ -203,7 +198,7 @@ class WorkOrderTaskAdmin extends AbstractBaseAdmin
                         'btn_add' => false,
                         'required' => false,
                         'property' => 'code',
-                        'query' => $this->wmr->findEnabledandWindfarmSortedByCustomerWindfarmAndWindmillCodeQB($windfarm),
+                        'query' => $this->wmr->findEnabledSortedByCustomerWindfarmAndWindmillCodeQB(),
                     )
                 )
                 ->add('windmillBlade',
@@ -219,7 +214,6 @@ class WorkOrderTaskAdmin extends AbstractBaseAdmin
                     ModelAutocompleteType::class,
                     array(
                         'label' => 'admin.bladedamage.title',
-                        'disabled' => true,
                         'disabled' => true,
                         'property' => 'damage.code',
                     )
@@ -272,7 +266,6 @@ class WorkOrderTaskAdmin extends AbstractBaseAdmin
                 null,
                 array(
                     'label' => 'admin.workorder.is_from_audit',
-                    'disabled' => true,
                     'disabled' => true,
                 )
             )

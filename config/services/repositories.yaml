@@ -38,6 +38,7 @@ services:
         arguments:
             - App:User
     app.customer_repository:
+        public: true
         class: App\Repository\CustomerRepository
         factory: [ "@doctrine", getRepository ]
         arguments:
