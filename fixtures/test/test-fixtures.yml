@@ -109,6 +109,14 @@ App\Entity\Damage:
     code: '1.5'
     description: 'Desconche afectando a la capa de gel coat'
 
+# DamageTranslation
+App\Entity\Translations\DamageTranslation:
+  damagetranslation1:
+    object: '@damage1'
+    locale: 'en'
+    field: 'description'
+    content: 'English translation 1'
+
 # DamageCategory
 App\Entity\DamageCategory:
   damageCategory1:
@@ -141,6 +149,14 @@ App\Entity\DamageCategory:
     description: 'La pala ha fallado o debe ser sacada de operación para prevenir daños mayores'
     recommendedAction: 'Parar la turbina y reparar o reemplazar antes de estar nuevamente operativa'
     colour: '#dd3333'
+
+# DamageCategoryTranslation
+App\Entity\Translations\DamageCategoryTranslation:
+  damagecategorytranslation1:
+    object: '@damageCategory1'
+    locale: 'en'
+    field: 'description'
+    content: 'English translation 1'
 
 # Photo
 App\Entity\Photo:

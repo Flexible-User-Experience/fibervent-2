@@ -423,8 +423,6 @@ admin:
     normal_hours:
     extra_hours:
     category:
-
-
 gmap:
   general: general location
 # Admin defaults
