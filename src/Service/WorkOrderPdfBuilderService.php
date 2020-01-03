@@ -40,6 +40,7 @@ class WorkOrderPdfBuilderService
      * WorkOrderPdfBuilderService constructor.
      *
      * @param Translator $ts
+     * @param SmartAssetsHelperService $sahs
      */
     public function __construct(Translator $ts, SmartAssetsHelperService $sahs)
     {
@@ -60,7 +61,6 @@ class WorkOrderPdfBuilderService
         $this->tcpdf->setPrintFooter(false);
         $this->tcpdf->AddPage('L', 'A4', true, true);
         $this->tcpdf->Image($this->sahs->getAbsoluteAssetFilePath('/build/fibervent_logo_white_landscape.jpg'), 15, 15, 60, 0, 'JPEG', '', 'T', false, 300, '', false, false, 0, false, false, false);
-
         // Colors, line width and bold font
         $this->tcpdf->SetFillColor(179, 204, 255);
         $this->tcpdf->SetTextColor(0);
