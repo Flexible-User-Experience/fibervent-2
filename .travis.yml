@@ -34,15 +34,10 @@ script:
   - ./bin/console doctrine:databa:create --no-interaction --env=test
   - ./bin/console doctrine:schema:update --force --env=test
   - ./bin/console hautelook:fixtures:load --no-interaction --env=test
-  # this checks that the YAML config files contain no syntax errors
   - ./bin/console lint:yaml config --env=test
-  # this checks that the Twig template files contain no syntax errors
   - ./bin/console lint:twig templates --env=test
-  # this checks that the XLIFF translations contain no syntax errors
   - ./bin/console lint:xliff translations --env=test
-  # this checks that the application doesn't use dependencies with known security vulnerabilities
   - ./bin/console security:check --env=test
-  # this checks that Doctrine's mapping configurations are valid
   - ./bin/console doctrine:schema:validate --skip-sync -vvv --no-interaction --env=test
   # testing
   - ./bin/phpunit --no-coverage
