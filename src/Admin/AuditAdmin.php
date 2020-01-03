@@ -232,6 +232,12 @@ class AuditAdmin extends AbstractBaseAdmin
                 array(
                     'label' => 'admin.audit.begindate',
                     'field_type' => DatePickerType::class,
+                    'format' => 'd/m/Y',
+                ),
+                null,
+                array(
+                    'widget' => 'single_text',
+                    'format' => 'dd/MM/yyyy',
                 )
             )
             ->add(
@@ -240,6 +246,12 @@ class AuditAdmin extends AbstractBaseAdmin
                 array(
                     'label' => 'admin.audit.enddate',
                     'field_type' => DatePickerType::class,
+                    'format' => 'd/m/Y',
+                ),
+                null,
+                array(
+                    'widget' => 'single_text',
+                    'format' => 'dd/MM/yyyy',
                 )
             );
         if ($this->acs->isGranted(UserRolesEnum::ROLE_OPERATOR)) {
