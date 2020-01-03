@@ -1,4 +1,5 @@
 language: php
+
 sudo: false
 
 cache:
@@ -15,6 +16,9 @@ matrix:
   fast_finish: true
   include:
     - php: 7.4
+
+services:
+  - redis-server
 
 before_install:
   - composer self-update
@@ -40,7 +44,7 @@ script:
   # this checks that the application doesn't use dependencies with known security vulnerabilities
   - ./bin/console security:check --env=test
   # this checks that Doctrine's mapping configurations are valid
-  # - ./bin/console doctrine:schema:validate --skip-sync -vvv --no-interaction --env=test
+  - ./bin/console doctrine:schema:validate --skip-sync -vvv --no-interaction --env=test
   # testing
   - ./bin/phpunit --no-coverage
 
