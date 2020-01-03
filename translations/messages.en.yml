@@ -129,6 +129,8 @@ pdf_workorder:
     customer_data:
     windmill_data:
     certifying_company_data:
+    sumary_external_damages_to_repair:
+    repair:
   table_header:
     serial_number:
     team:
