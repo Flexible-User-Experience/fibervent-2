@@ -42,6 +42,7 @@ class WorkOrderAdmin extends AbstractBaseAdmin
             ->remove('batch')
             ->add('getWindfarmsFromCustomerId', $this->getRouterIdParameter().'/get-windfarms-from-customer-id')
             ->add('getWindmillbladesFromWindmillId', $this->getRouterIdParameter().'/get-windmillblades-from-windmill-id')
+            ->add('pdf', $this->getRouterIdParameter().'/pdf')
         ;
     }
 
@@ -423,6 +424,7 @@ class WorkOrderAdmin extends AbstractBaseAdmin
                     'actions' => array(
                         'edit' => array('template' => 'Admin/Buttons/list__action_edit_button.html.twig'),
                         'show' => array('template' => 'Admin/Buttons/list__action_show_button.html.twig'),
+                        'pdf' => array('template' => 'Admin/Buttons/list__action_pdf_button.html.twig'),
                     ),
                 )
             )
