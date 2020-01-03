@@ -23,6 +23,7 @@ services:
 before_install:
   - composer self-update
   - cp env.travis .env
+  - cp env.travis .env.test
 
 install:
   - composer install

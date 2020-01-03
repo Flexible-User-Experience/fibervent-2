@@ -60,6 +60,7 @@ class BackendControllerTest extends WebTestCase
             array('/admin/windfarms/windfarm/1/edit'),
             array('/admin/windfarms/windfarm/1/show'),
             array('/admin/windfarms/windfarm/1/map'),
+// TODO fix YEAR function with SQLITE Beberlei Doctrine extension
 //            array('/admin/windfarms/windfarm/1/excel'),
 //            array('/admin/windfarms/windfarm/1/pdf'),
             array('/admin/windfarms/windmill/list'),
