@@ -6,11 +6,15 @@ use App\Entity\Customer;
 use App\Entity\Windfarm;
 use App\Entity\Windmill;
 use App\Entity\WindmillBlade;
+use App\Entity\WorkOrder;
 use App\Model\AjaxResponse;
 use App\Repository\WindfarmRepository;
 use App\Repository\WindmillBladeRepository;
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * Class WorkOrderAdminController.
@@ -66,5 +70,44 @@ class WorkOrderAdminController extends AbstractBaseAdminController
         $jsonEncodedResult = $ajaxResponse->getJsonEncodedResult();
 
         return new JsonResponse($jsonEncodedResult);
+    }
+
+    /**
+     * Export WorkOrder in PDF format action.
+     *
+     * @return Response
+     *
+     * @throws NotFoundHttpException     If the object does not exist
+     * @throws AccessDeniedHttpException If access is not granted
+     * @throws \Exception
+     */
+    public function pdfAction()
+    {
+        /** @var WorkOrder $object */
+        $object = $this->getPersistedObject();
+
+        /** @var WorkOrderPdfBuilderService $apbs */
+        $apbs = $this->get('app.workorder_pdf_builder');
+        $pdf = $apbs->build($object);
+
+        return new Response($pdf->Output('informe_proyecto_'.$object->getId().'.pdf', 'I'), 200, array('Content-type' => 'application/pdf'));
+    }
+
+    /**
+     * @return WorkOrder
+     * @throws NotFoundHttpException
+     */
+    private function getPersistedObject()
+    {
+        $request = $this->resolveRequest();
+        $id = $request->get($this->admin->getIdParameter());
+
+        /** @var WorkOrder $object */
+        $object = $this->admin->getObject($id);
+        if (!$object) {
+            throw $this->createNotFoundException(sprintf('Unable to find audit record with id: %s', $id));
+        }
+
+        return $object;
     }
 }
