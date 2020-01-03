@@ -71,7 +71,14 @@ class WorkOrderPdfBuilderService
         $this->tcpdf->MultiCell(30, 5, $this->ts->trans('admin.workorder.project_number'), 1, 'C', 0, 0, '', '', true, 0, false, true, 5, 'M');
         $this->tcpdf->MultiCell(15, 5, $workOrder->getId(), 1, 'C', 0, 0, '', '', true, 0, false, true, 5, 'M');
 
+        $this->tcpdf->SetAbsXY(100,50);
+        $this->tcpdf->SetFont('', 'B', 10);
+        $this->tcpdf->MultiCell(100, 5, $this->ts->trans('pdf_workorder.header.sumary_external_damages_to_repair').' '.$workOrder->getWindfarm()->getName(), 0, 'C', 0, 0, '', '', true, 0, false, true, 5, 'M');
+
+
         $this->tcpdf->SetAbsXY(110,10);
+
+        $this->tcpdf->SetFont('', 'B', 7);
         $this->tcpdf->Cell(55, 7,  $this->ts->trans('pdf_workorder.header.customer_data'), 1, 0, 'C', 1);
         $this->tcpdf->Cell(55, 7, $this->ts->trans('pdf_workorder.header.windmill_data'), 1, 0, 'C', 1);
         $this->tcpdf->Cell(65, 7, $this->ts->trans('pdf_workorder.header.certifying_company_data'), 1, 0, 'C', 1);
@@ -179,6 +186,19 @@ class WorkOrderPdfBuilderService
             $this->tcpdf->Cell(20, 5, $workOrderTask->isCompleted()?'SI':'NO', 1, 0, 'C', $fillBlade);
             $this->tcpdf->Cell(20, 5, '-', 1, 0, 'C', $fillBlade);
             $this->tcpdf->Ln();
+        }
+        $this->tcpdf->Ln();
+        if ($workOrder->getRepairAccessTypesString()) {
+            $repairAccessTypeString = '';
+            foreach ($workOrder->getRepairAccessTypesString() as $repairAccessType) {
+                $repairAccessTypeString = $this->ts->trans($repairAccessType) . ', ' . $repairAccessTypeString;
+            }
+            $this->tcpdf->SetAbsX(15);
+            $this->tcpdf->SetFillColor(255, 204, 102);
+            $this->tcpdf->SetTextColor(0);
+            $this->tcpdf->SetLineWidth(0.3);
+            $this->tcpdf->SetFont('', 'B', 7);
+            $this->tcpdf->Cell(270, 5, $this->ts->trans('pdf_workorder.header.repair') . ' ' . $repairAccessTypeString, 0, 0, 'C', 1);
         }
 
         return $this->tcpdf;

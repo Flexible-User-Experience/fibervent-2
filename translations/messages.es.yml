@@ -129,6 +129,8 @@ pdf_workorder:
     customer_data: 'DATOS CLIENTE'
     windmill_data: 'DATOS AEROS'
     certifying_company_data: 'DATOS CERTIFICADORA'
+    sumary_external_damages_to_repair: 'Resumen de daños a reparar en'
+    repair: 'Reparación con'
   table_header:
     serial_number: 'Nº de serie'
     team: 'Equipo'
