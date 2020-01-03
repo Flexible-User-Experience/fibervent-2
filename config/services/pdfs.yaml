@@ -49,3 +49,6 @@ services:
         class: App\Service\WindfarmBuilderBridgeService
         arguments:
             - '@translator.default'
+    app.workorder_pdf_builder:
+        public: true
+        class: App\Service\WorkOrderPdfBuilderService
