@@ -54,3 +54,4 @@ services:
         class: App\Service\WorkOrderPdfBuilderService
         arguments:
             - '@translator.default'
+            - '@app.smart_assets_helper'

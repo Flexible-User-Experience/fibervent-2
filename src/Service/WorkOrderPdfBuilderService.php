@@ -32,14 +32,20 @@ class WorkOrderPdfBuilderService
     protected $locale;
 
     /**
+     * @var SmartAssetsHelperService
+     */
+    protected $sahs;
+
+    /**
      * WorkOrderPdfBuilderService constructor.
      *
      * @param Translator $ts
      */
-    public function __construct(Translator $ts)
+    public function __construct(Translator $ts, SmartAssetsHelperService $sahs)
     {
         $this->tcpdf = new \TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
         $this->ts = $ts;
+        $this->sahs = $sahs;
     }
 
     /**
@@ -53,6 +59,7 @@ class WorkOrderPdfBuilderService
         $this->tcpdf->setPrintHeader(false);
         $this->tcpdf->setPrintFooter(false);
         $this->tcpdf->AddPage('L', 'A4', true, true);
+        $this->tcpdf->Image($this->sahs->getAbsoluteAssetFilePath('/build/fibervent_logo_white_landscape.jpg'), 15, 15, 60, 0, 'JPEG', '', 'T', false, 300, '', false, false, 0, false, false, false);
 
         // Colors, line width and bold font
         $this->tcpdf->SetFillColor(179, 204, 255);
@@ -60,7 +67,7 @@ class WorkOrderPdfBuilderService
         $this->tcpdf->SetLineWidth(0.3);
         $this->tcpdf->SetFont('', 'B', 7);
 
-        $this->tcpdf->SetAbsXY(10,45);
+        $this->tcpdf->SetAbsXY(15,45);
         $this->tcpdf->MultiCell(30, 5, $this->ts->trans('admin.workorder.project_number'), 1, 'C', 0, 0, '', '', true, 0, false, true, 5, 'M');
         $this->tcpdf->MultiCell(15, 5, $workOrder->getId(), 1, 'C', 0, 0, '', '', true, 0, false, true, 5, 'M');
 
@@ -114,7 +121,7 @@ class WorkOrderPdfBuilderService
         $this->tcpdf->Cell(30, 5, '', 1, 0, 'C', 0);
         $this->tcpdf->Cell(35, 5, '', 1, 0, 'C', 0);
 
-        $this->tcpdf->SetAbsXY(10,60);
+        $this->tcpdf->SetAbsXY(15,60);
         $this->tcpdf->SetFillColor(179, 204, 255);
         $this->tcpdf->SetTextColor(0);
         $this->tcpdf->SetLineWidth(0.3);
@@ -129,7 +136,7 @@ class WorkOrderPdfBuilderService
         $this->tcpdf->Cell(20, 7, $this->ts->trans('admin.bladedamage.distance'), 1, 0, 'C', 1);
         $this->tcpdf->Cell(20, 7, $this->ts->trans('admin.bladedamage.size'), 1, 0, 'C', 1);
         $this->tcpdf->Cell(50, 7, $this->ts->trans('admin.workordertask.description'), 1, 0, 'C', 1);
-        $this->tcpdf->Cell(40, 7, $this->ts->trans('pdf_workorder.table_header.team'), 1, 0, 'C', 1);
+        $this->tcpdf->Cell(35, 7, $this->ts->trans('pdf_workorder.table_header.team'), 1, 0, 'C', 1);
         $this->tcpdf->Cell(20, 7, $this->ts->trans('admin.workordertask.is_completed'), 1, 0, 'C', 1);
         $this->tcpdf->Cell(20, 7, $this->ts->trans('admin.auditwindmillblade.photos'), 1, 0, 'C', 1);
         $this->tcpdf->Ln();
@@ -137,6 +144,7 @@ class WorkOrderPdfBuilderService
         $this->tcpdf->SetFillColor(224, 235, 255);
         $this->tcpdf->SetTextColor(0);
         $this->tcpdf->SetFont('');
+        $this->tcpdf->SetAbsXY(15,67);
         // Data
         $fillWindmill = 1;
         $fillBlade = 1;
@@ -144,6 +152,7 @@ class WorkOrderPdfBuilderService
         $windmillBlade = 0;
         /** @var WorkOrderTask $workOrderTask */
         foreach($workOrder->getWorkOrderTasks() as $workOrderTask) {
+            $this->tcpdf->SetAbsX(15);
             if ($windmill != $workOrderTask->getWindmill()->getId()) {
                 $fillWindmill = !$fillWindmill;
                 $fillBlade = !$fillBlade;
@@ -166,7 +175,7 @@ class WorkOrderPdfBuilderService
             $this->tcpdf->Cell(20, 5, $workOrderTask->getDistance(), 1, 0, 'C', $fillBlade);
             $this->tcpdf->Cell(20, 5, $workOrderTask->getSize(), 1, 0, 'C', $fillBlade);
             $this->tcpdf->Cell(50, 5, $workOrderTask->getDescription(), 1, 0, 'C', $fillBlade);
-            $this->tcpdf->Cell(40, 5, '-', 1, 0, 'C', $fillBlade);
+            $this->tcpdf->Cell(35, 5, '-', 1, 0, 'C', $fillBlade);
             $this->tcpdf->Cell(20, 5, $workOrderTask->isCompleted()?'SI':'NO', 1, 0, 'C', $fillBlade);
             $this->tcpdf->Cell(20, 5, '-', 1, 0, 'C', $fillBlade);
             $this->tcpdf->Ln();
