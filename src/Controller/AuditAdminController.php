@@ -124,35 +124,6 @@ class AuditAdminController extends AbstractBaseAdminController
     }
 
     /**
-     * Custom show action redirect to public frontend view.
-     *
-     * @param null $id
-     *
-     * @return Response
-     *
-     * @throws NotFoundHttpException     If the object does not exist
-     * @throws AccessDeniedHttpException If access is not granted
-     */
-    public function createWorkOrderAction($id = null)
-    {
-        /** @var Audit $object */
-        $object = $this->getPersistedObject();
-
-        // Customer filter
-        if (!$this->get('app.auth_customer')->isAuditOwnResource($object)) {
-            throw new AccessDeniedHttpException();
-        }
-
-        return $this->renderWithExtraParams(
-            'Admin/Audit/create_work_order.html.twig',
-            array(
-                'action' => 'show',
-                'object' => $object,
-            )
-        );
-    }
-
-    /**
      * @param ProxyQueryInterface $selectedModelQuery
      *
      * @return Response|RedirectResponse
