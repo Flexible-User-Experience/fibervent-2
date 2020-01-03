@@ -28,9 +28,6 @@ install:
   - composer install
   - ./bin/phpunit install
 
-before_script:
-  - mysql -e 'create database IF NOT EXISTS symfony;'
-
 script:
   - ./bin/console doctrine:databa:create --no-interaction --env=test
   - ./bin/console doctrine:schema:update --force --env=test
