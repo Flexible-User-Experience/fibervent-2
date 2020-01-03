@@ -405,6 +405,9 @@ admin:
     description: Descripción
     wtg: WTG
     blade: Pala
+    blade_code: 'Nº Serie'
+    damage: Daño
+    radius: Radio
   vehicle:
     title: Vehículo
     title_list: Vehículos

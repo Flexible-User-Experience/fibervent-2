@@ -3,6 +3,7 @@
 namespace App\Enum;
 
 use App\Entity\BladeDamage;
+use App\Entity\WorkOrderTask;
 
 /**
  * Class BladeDamagePositionEnum.
@@ -84,21 +85,21 @@ class BladeDamagePositionEnum
     }
 
     /**
-     * @param BladeDamage $bladeDamage
+     * @param BladeDamage|WorkOrderTask $bladeDamage
      *
      * @return string
      */
-    public static function getStringValue(BladeDamage $bladeDamage)
+    public static function getStringValue($bladeDamage)
     {
         return self::getReversedEnumArray()[$bladeDamage->getPosition()];
     }
 
     /**
-     * @param BladeDamage $bladeDamage
+     * @param BladeDamage|WorkOrderTask $bladeDamage
      *
      * @return string
      */
-    public static function getStringLocalizedValue(BladeDamage $bladeDamage)
+    public static function getStringLocalizedValue($bladeDamage)
     {
         return self::getReversedLocalizedEnumArray()[$bladeDamage->getPosition()];
     }

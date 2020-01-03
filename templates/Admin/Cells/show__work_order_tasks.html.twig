@@ -3,11 +3,12 @@
         <tr>
             <th>{{ 'admin.workordertask.wtg' | trans }}</th>
             <th>{{ 'admin.workordertask.blade' | trans }}</th>
+            <th>{{ 'admin.workordertask.blade_code' | trans }}</th>
+            <th>{{ 'admin.workordertask.damage' | trans }}</th>
+            <th>{{ 'admin.bladedamage.position' | trans }}</th>
+            <th>{{ 'admin.workordertask.radius' | trans }}</th>
             <th>{{ 'admin.workordertask.description' | trans }}</th>
             <th>{{ 'admin.workorder.is_from_audit' | trans }}</th>
-            <th>{{ 'admin.bladedamage.title' | trans }}</th>
-            <th>{{ 'admin.bladedamage.position' | trans }}</th>
-            <th>{{ 'admin.bladedamage.radius' | trans }}</th>
             <th>{{ 'admin.bladedamage.distance' | trans }}</th>
             <th>{{ 'admin.bladedamage.size' | trans }}</th>
             <th>{{ 'admin.bladedamage.edge' | trans }}</th>
@@ -19,6 +20,10 @@
         <tr>
             <td>{{ workOrderTask.windmill.code }}</td>
             <td>{{ workOrderTask.windmillBlade }}</td>
+            <td>{{ workOrderTask.windmillBlade.code }}</td>
+            <td>{{ workOrderTask.bladeDamage }}</td>
+            <td>{{ workOrderTask.positionString }}</td>
+            <td class="text-right">{{ workOrderTask.radius }}m</td>
             <td>{{ workOrderTask.description }}</td>
             <td>
                 {% if workOrderTask.isFromAudit %}
@@ -27,9 +32,6 @@
                     <span class="label label-danger">No</span>
                 {% endif %}
             </td>
-            <td>{{ workOrderTask.bladeDamage }}</td>
-            <td>{{ workOrderTask.position }}</td>
-            <td>{{ workOrderTask.radius }}</td>
             <td>{{ workOrderTask.distance }}</td>
             <td>{{ workOrderTask.size }}</td>
             <td>{{ workOrderTask.edgeString }}</td>
