@@ -1,0 +1,46 @@
+<table class="table">
+    <thead>
+        <tr>
+            <th>{{ 'admin.workordertask.wtg' | trans }}</th>
+            <th>{{ 'admin.workordertask.blade' | trans }}</th>
+            <th>{{ 'admin.workordertask.description' | trans }}</th>
+            <th>{{ 'admin.workorder.is_from_audit' | trans }}</th>
+            <th>{{ 'admin.bladedamage.title' | trans }}</th>
+            <th>{{ 'admin.bladedamage.position' | trans }}</th>
+            <th>{{ 'admin.bladedamage.radius' | trans }}</th>
+            <th>{{ 'admin.bladedamage.distance' | trans }}</th>
+            <th>{{ 'admin.bladedamage.size' | trans }}</th>
+            <th>{{ 'admin.bladedamage.edge' | trans }}</th>
+            <th>{{ 'admin.workordertask.is_completed' | trans }}</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for workOrderTask in object.workOrderTasks %}
+        <tr>
+            <td>{{ workOrderTask.windmill.code }}</td>
+            <td>{{ workOrderTask.windmillBlade }}</td>
+            <td>{{ workOrderTask.description }}</td>
+            <td>
+                {% if workOrderTask.isFromAudit %}
+                    <span class="label label-success">Si</span>
+                {% else %}
+                    <span class="label label-danger">No</span>
+                {% endif %}
+            </td>
+            <td>{{ workOrderTask.bladeDamage }}</td>
+            <td>{{ workOrderTask.position }}</td>
+            <td>{{ workOrderTask.radius }}</td>
+            <td>{{ workOrderTask.distance }}</td>
+            <td>{{ workOrderTask.size }}</td>
+            <td>{{ workOrderTask.edgeString }}</td>
+            <td>
+                {% if workOrderTask.isCompleted %}
+                    <span class="label label-success">Si</span>
+                {% else %}
+                    <span class="label label-danger">No</span>
+                {% endif %}
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>

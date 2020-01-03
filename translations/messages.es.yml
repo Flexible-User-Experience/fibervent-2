@@ -403,6 +403,8 @@ admin:
     title_create: Crear
     is_completed: Completada
     description: Descripción
+    wtg: WTG
+    blade: Pala
   vehicle:
     title: Vehículo
     title_list: Vehículos

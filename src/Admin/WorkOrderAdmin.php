@@ -497,7 +497,7 @@ class WorkOrderAdmin extends AbstractBaseAdmin
                 null,
                 array(
                     'label' => 'admin.workorder.repair_access_types',
-                    'template' => 'Admin/Cells/list__repair_access_type.html.twig',
+                    'template' => 'Admin/Cells/show__repair_access_type.html.twig',
                 )
             )
             ->end()
@@ -537,7 +537,7 @@ class WorkOrderAdmin extends AbstractBaseAdmin
                 null,
                 array(
                     'label' => 'admin.workordertasks.title',
-                    'template' => 'Admin/Cells/list__work_order_tasks.html.twig',
+                    'template' => 'Admin/Cells/show__work_order_tasks.html.twig',
                 )
             )
             ->end()

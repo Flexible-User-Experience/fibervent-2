@@ -1,0 +1,10 @@
+<th>
+    {{ 'admin.workorder.repair_access_types' | trans }}
+</th>
+<td>
+    <ul class="sonata-ba-show-one-to-many no-margin">
+        {% for repairAccessType in object.repairAccessTypesString %}
+            <li>{{ repairAccessType | trans }}</li>
+        {% endfor %}
+    </ul>
+</td>
