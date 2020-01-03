@@ -52,3 +52,5 @@ services:
     app.workorder_pdf_builder:
         public: true
         class: App\Service\WorkOrderPdfBuilderService
+        arguments:
+            - '@translator.default'

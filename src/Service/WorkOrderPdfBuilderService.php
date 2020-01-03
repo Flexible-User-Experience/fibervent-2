@@ -5,6 +5,7 @@ namespace App\Service;
 use App\Entity\WorkOrder;
 use App\Entity\WorkOrderTask;
 use App\Pdf\CustomTcpdf;
+use Symfony\Bundle\FrameworkBundle\Translation\Translator;
 use WhiteOctober\TCPDFBundle\Controller\TCPDFController;
 
 /**
@@ -20,11 +21,19 @@ class WorkOrderPdfBuilderService
     private $tcpdf;
 
     /**
-     * WorkOrderPdfBuilderService constructor.
+     * @var Translator
      */
-    public function __construct()
+    protected $ts;
+
+    /**
+     * WorkOrderPdfBuilderService constructor.
+     *
+     * @param Translator $ts
+     */
+    public function __construct(Translator $ts)
     {
         $this->tcpdf = new \TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
+        $this->ts = $ts;
     }
 
     /**
@@ -58,7 +67,7 @@ class WorkOrderPdfBuilderService
         $this->tcpdf->SetFont('');
 
         $this->tcpdf->SetAbsXY(120,17);
-        $this->tcpdf->Cell(20, 5, 'Cliente:', 1, 0, 'C', 0);
+        $this->tcpdf->Cell(20, 5, $this->ts->trans('admin.customer.title'), 1, 0, 'C', 0);
         $this->tcpdf->Cell(35, 5, $workOrder->getCustomer()->getName(), 1, 0, 'C', 0);
         $this->tcpdf->Cell(20, 5, 'Fabricante:', 1, 0, 'C', 0);
         $this->tcpdf->Cell(35, 5, '-', 1, 0, 'C', 0);
