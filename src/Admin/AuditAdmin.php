@@ -453,6 +453,10 @@ class AuditAdmin extends AbstractBaseAdmin
                 null,
                 array(
                     'label' => 'admin.workorder.title',
+                    'associated_property' => 'id',
+                    'sortable' => true,
+                    'sort_field_mapping' => array('fieldName' => 'id'),
+                    'sort_parent_association_mappings' => array(array('fieldName' => 'workOrder')),
                 )
             )
             ->add(

@@ -27,7 +27,7 @@ class WorkOrderAdmin extends AbstractBaseAdmin
     protected $classnameLabel = 'admin.workorder.title';
     protected $baseRoutePattern = 'workorders/workorder';
     protected $datagridValues = array(
-        '_sort_by' => 'projectNumber',
+        '_sort_by' => 'createdAt',
         '_sort_order' => 'desc',
     );
 
@@ -68,14 +68,12 @@ class WorkOrderAdmin extends AbstractBaseAdmin
                         'class' => Customer::class,
                         'label' => 'admin.windfarm.customer',
                         'disabled' => true,
-                        'disabled' => true,
                     )
                 )
                 ->add('isFromAudit',
                     null,
                     array(
                         'label' => 'admin.workorder.is_from_audit',
-                        'disabled' => true,
                         'disabled' => true,
                     )
                 )
@@ -86,7 +84,6 @@ class WorkOrderAdmin extends AbstractBaseAdmin
                     array(
                         'class' => Windfarm::class,
                         'label' => 'admin.windfarm.title',
-                        'disabled' => true,
                         'disabled' => true,
                     )
                 )
@@ -183,7 +180,7 @@ class WorkOrderAdmin extends AbstractBaseAdmin
                         )
                     )
                     ->end()
-                    ;
+                ;
             }
         } else { // is in create mode
             $formMapper
@@ -345,6 +342,13 @@ class WorkOrderAdmin extends AbstractBaseAdmin
     protected function configureListFields(ListMapper $listMapper)
     {
         $listMapper
+            ->add('createdAt',
+                null,
+                array(
+                    'label' => 'admin.workorder.date',
+                    'format' => 'd/m/Y',
+                )
+            )
             ->add('projectNumber',
                 null,
                 array(
@@ -383,30 +387,6 @@ class WorkOrderAdmin extends AbstractBaseAdmin
                     'sortable' => true,
                     'sort_field_mapping' => array('fieldName' => 'name'),
                     'sort_parent_association_mappings' => array(array('fieldName' => 'audits')),
-                )
-            )
-            ->add('certifyingCompanyName',
-                null,
-                array(
-                    'label' => 'admin.workorder.certifying_company_name',
-                )
-            )
-            ->add('certifyingCompanyContactPerson',
-                null,
-                array(
-                    'label' => 'admin.workorder.certifying_company_contact_person',
-                )
-            )
-            ->add('certifyingCompanyPhone',
-                null,
-                array(
-                    'label' => 'admin.workorder.certifying_company_phone',
-                )
-            )
-            ->add('certifyingCompanyEmail',
-                null,
-                array(
-                    'label' => 'admin.workorder.certifying_company_email',
                 )
             )
             ->add('repairAccessTypes',
