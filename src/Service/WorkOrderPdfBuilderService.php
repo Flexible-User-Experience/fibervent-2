@@ -208,11 +208,11 @@ class WorkOrderPdfBuilderService
             $this->tcpdf->Cell(10, 5, $workOrderTask->getWindmillBlade()->getOrder(), 1, 0, 'C', $fillBlade);
             $this->tcpdf->Cell(25, 5,  $workOrderTask->getWindmill()->getBladeType()->getModel(), 1, 0, 'C', $fillBlade);
             if ($workOrderTask->getBladeDamage()) {
-                $this->tcpdf->Cell(10, 5, $workOrderTask->getBladeDamage()->getDamageCategory()->getCategory(), 1, 0, 'C', $fillBlade);
+                $this->tcpdf->Cell(10, 5, $workOrderTask->getBladeDamage()->getDamage()->getCode(), 1, 0, 'C', $fillBlade);
             } else {
                 $this->tcpdf->Cell(10, 5, '-', 1, 0, 'C', $fillBlade);
             }
-            $this->tcpdf->Cell(15, 5, $workOrderTask->getPosition(), 1, 0, 'C', $fillBlade);
+            $this->tcpdf->Cell(15, 5, $workOrderTask->getPositionString(), 1, 0, 'C', $fillBlade);
             $this->tcpdf->Cell(13, 5, $workOrderTask->getRadius().' m', 1, 0, 'C', $fillBlade);
             $this->tcpdf->Cell(18, 5, $workOrderTask->getDistance().' cm', 1, 0, 'C', $fillBlade);
             $this->tcpdf->Cell(18, 5, $workOrderTask->getSize().' cm', 1, 0, 'C', $fillBlade);
