@@ -124,6 +124,16 @@ pdf_windfarm:
     1_title: 'INDIVIDUAL SUMMARY OF DAMAGE WT Nº/BLADES'
   contact_section:
     1_title: 'CONTACT'
+pdf_workorder:
+  header:
+    customer_data:
+    windmill_data:
+    certifying_company_data:
+    sumary_external_damages_to_repair:
+    repair:
+  table_header:
+    serial_number:
+    team:
 enum:
   blade_damage_position:
     1_VP: PS

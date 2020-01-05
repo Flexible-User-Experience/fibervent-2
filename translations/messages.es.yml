@@ -124,6 +124,16 @@ pdf_windfarm:
     1_title: 'RESUMEN INDIVIDUAL DE DAÑOS'
   contact_section:
     1_title: 'CONTACTO'
+pdf_workorder:
+  header:
+    customer_data: 'DATOS CLIENTE'
+    windmill_data: 'DATOS AEROS'
+    certifying_company_data: 'DATOS CERTIFICADORA'
+    sumary_external_damages_to_repair: 'Resumen de daños a reparar en'
+    repair: 'Reparación con'
+  table_header:
+    serial_number: 'Nº de serie'
+    team: 'Equipo'
 enum:
   blade_damage_position:
     1_VP: VP
