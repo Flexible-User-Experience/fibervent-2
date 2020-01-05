@@ -68,8 +68,14 @@ class WorkOrderPdfBuilderService
         $this->tcpdf->SetFont('', 'B', 7);
 
         $this->tcpdf->SetAbsXY(15,45);
-        $this->tcpdf->MultiCell(30, 5, $this->ts->trans('admin.workorder.project_number'), 1, 'C', 0, 0, '', '', true, 0, false, true, 5, 'M');
+        $this->tcpdf->MultiCell(30, 5, $this->ts->trans('admin.workorder.project_number'), 1, 'L', 0, 0, '', '', true, 0, false, true, 5, 'M');
+        $this->tcpdf->SetFont('');
         $this->tcpdf->MultiCell(15, 5, $workOrder->getId(), 1, 'C', 0, 0, '', '', true, 0, false, true, 5, 'M');
+        $this->tcpdf->SetAbsXY(15,50);
+        $this->tcpdf->SetFont('', 'B', 7);
+        $this->tcpdf->MultiCell(30, 5, $this->ts->trans('admin.workorder.date'), 1, 'L', 0, 0, '', '', true, 0, false, true, 5, 'M');
+        $this->tcpdf->SetFont('');
+        $this->tcpdf->MultiCell(15, 5, $workOrder->getCreatedAt()->format('d/m/Y'), 1, 'C', 0, 0, '', '', true, 0, false, true, 5, 'M');
 
         $this->tcpdf->SetAbsXY(100,50);
         $this->tcpdf->SetFont('', 'B', 10);
