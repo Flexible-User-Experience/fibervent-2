@@ -139,13 +139,12 @@ class WorkOrderPdfBuilderService
         $this->tcpdf->Cell(25, 7, $this->ts->trans('pdf_workorder.table_header.serial_number'), 1, 0, 'C', 1);
         $this->tcpdf->Cell(10, 7,  $this->ts->trans('admin.damagetranslation.object'), 1, 0, 'C', 1);
         $this->tcpdf->Cell(15, 7, $this->ts->trans('admin.bladedamage.position'), 1, 0, 'C', 1);
-        $this->tcpdf->Cell(15, 7, $this->ts->trans('admin.bladedamage.radius'), 1, 0, 'C', 1);
-        $this->tcpdf->Cell(20, 7, $this->ts->trans('admin.bladedamage.distance'), 1, 0, 'C', 1);
-        $this->tcpdf->Cell(20, 7, $this->ts->trans('admin.bladedamage.size'), 1, 0, 'C', 1);
-        $this->tcpdf->Cell(50, 7, $this->ts->trans('admin.workordertask.description'), 1, 0, 'C', 1);
+        $this->tcpdf->Cell(13, 7, $this->ts->trans('pdf_workorder.table_header.bladedamage_radius'), 1, 0, 'C', 1);
+        $this->tcpdf->Cell(18, 7, $this->ts->trans('pdf_workorder.table_header.bladedamage_distance'), 1, 0, 'C', 1);
+        $this->tcpdf->Cell(18, 7, $this->ts->trans('pdf_workorder.table_header.bladedamage_size'), 1, 0, 'C', 1);
+        $this->tcpdf->Cell(76, 7, $this->ts->trans('admin.workordertask.description'), 1, 0, 'C', 1);
         $this->tcpdf->Cell(35, 7, $this->ts->trans('pdf_workorder.table_header.team'), 1, 0, 'C', 1);
         $this->tcpdf->Cell(20, 7, $this->ts->trans('admin.workordertask.is_completed'), 1, 0, 'C', 1);
-        $this->tcpdf->Cell(20, 7, $this->ts->trans('admin.auditwindmillblade.photos'), 1, 0, 'C', 1);
         $this->tcpdf->Ln();
         // Color and font restoration
         $this->tcpdf->SetFillColor(224, 235, 255);
@@ -178,13 +177,12 @@ class WorkOrderPdfBuilderService
                 $this->tcpdf->Cell(10, 5, '-', 1, 0, 'C', $fillBlade);
             }
             $this->tcpdf->Cell(15, 5, $workOrderTask->getPosition(), 1, 0, 'C', $fillBlade);
-            $this->tcpdf->Cell(15, 5, $workOrderTask->getRadius(), 1, 0, 'C', $fillBlade);
-            $this->tcpdf->Cell(20, 5, $workOrderTask->getDistance(), 1, 0, 'C', $fillBlade);
-            $this->tcpdf->Cell(20, 5, $workOrderTask->getSize(), 1, 0, 'C', $fillBlade);
-            $this->tcpdf->Cell(50, 5, $workOrderTask->getDescription(), 1, 0, 'C', $fillBlade);
+            $this->tcpdf->Cell(13, 5, $workOrderTask->getRadius().' m', 1, 0, 'C', $fillBlade);
+            $this->tcpdf->Cell(18, 5, $workOrderTask->getDistance().' cm', 1, 0, 'C', $fillBlade);
+            $this->tcpdf->Cell(18, 5, $workOrderTask->getSize().' cm', 1, 0, 'C', $fillBlade);
+            $this->tcpdf->Cell(76, 5, $workOrderTask->getDescription(), 1, 0, 'C', $fillBlade);
             $this->tcpdf->Cell(35, 5, '-', 1, 0, 'C', $fillBlade);
             $this->tcpdf->Cell(20, 5, $workOrderTask->isCompleted()?'SI':'NO', 1, 0, 'C', $fillBlade);
-            $this->tcpdf->Cell(20, 5, '-', 1, 0, 'C', $fillBlade);
             $this->tcpdf->Ln();
         }
         $this->tcpdf->Ln();
