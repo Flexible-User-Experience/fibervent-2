@@ -55,3 +55,9 @@ services:
         arguments:
             - '@translator.default'
             - '@app.smart_assets_helper'
+    app.presence_monitoring_pdf_builder:
+        public: true
+        class: App\Service\PresenceMonitoringPdfBuilderService
+        arguments:
+            - '@translator.default'
+            - '@app.smart_assets_helper'

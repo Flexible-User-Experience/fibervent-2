@@ -32,5 +32,4 @@ class YearsEnum
 
         return $result;
     }
-
 }
