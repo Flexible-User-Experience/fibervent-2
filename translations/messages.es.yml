@@ -199,6 +199,7 @@ admin:
     for_help: para recibir ayuda
     details: Detalle
     totals: Totales
+    print: Imprimir
   audit:
     title: Inspección
     title_list: Inspección
