@@ -2,6 +2,7 @@
 
 namespace App\Admin;
 
+use App\Enum\MinutesEnum;
 use App\Enum\PresenceMonitoringCategoryEnum;
 use App\Entity\User;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
@@ -10,6 +11,7 @@ use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\Form\Type\DatePickerType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\TimeType;
 
 /**
  * Class WorkOrderTaskAdmin.
@@ -65,30 +67,38 @@ class PresenceMonitoringAdmin extends AbstractBaseAdmin
             ->with('admin.common.details', $this->getFormMdSuccessBoxArray(4))
             ->add(
                 'morningHourBegin',
-                null,
+                TimeType::class,
                 array(
                     'label' => 'admin.presencemonitoring.morning_hour_begin',
+                    'minutes' => MinutesEnum::getQuartersEnumArray(),
+                    'required' => false,
                 )
             )
             ->add(
                 'morningHourEnd',
-                null,
+                TimeType::class,
                 array(
                     'label' => 'admin.presencemonitoring.morning_hour_end',
+                    'minutes' => MinutesEnum::getQuartersEnumArray(),
+                    'required' => false,
                 )
             )
             ->add(
                 'afternoonHourBegin',
-                null,
+                TimeType::class,
                 array(
                     'label' => 'admin.presencemonitoring.afternoon_hour_begin',
+                    'minutes' => MinutesEnum::getQuartersEnumArray(),
+                    'required' => false,
                 )
             )
             ->add(
                 'afternoonHourEnd',
-                null,
+                TimeType::class,
                 array(
                     'label' => 'admin.presencemonitoring.afternoon_hour_end',
+                    'minutes' => MinutesEnum::getQuartersEnumArray(),
+                    'required' => false,
                 )
             )
             ->end()

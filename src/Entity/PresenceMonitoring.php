@@ -40,6 +40,7 @@ class PresenceMonitoring extends AbstractBase
      * @var \DateTime
      *
      * @ORM\Column(type="time", nullable=true)
+     * @Assert\Time
      */
     private $morningHourBegin;
 
@@ -47,6 +48,7 @@ class PresenceMonitoring extends AbstractBase
      * @var \DateTime
      *
      * @ORM\Column(type="time", nullable=true)
+     * @Assert\Time
      */
     private $morningHourEnd;
 
@@ -54,6 +56,7 @@ class PresenceMonitoring extends AbstractBase
      * @var \DateTime
      *
      * @ORM\Column(type="time", nullable=true)
+     * @Assert\Time
      */
     private $afternoonHourBegin;
 
@@ -61,6 +64,7 @@ class PresenceMonitoring extends AbstractBase
      * @var \DateTime
      *
      * @ORM\Column(type="time", nullable=true)
+     * @Assert\Time
      */
     private $afternoonHourEnd;
 
@@ -320,6 +324,16 @@ class PresenceMonitoring extends AbstractBase
         if ($this->getMorningHourBegin() && $this->getMorningHourEnd() && $this->getMorningHourBegin()->format('H:i:s') >= $this->getMorningHourEnd()->format('H:i:s')) {
             $context->buildViolation('La hora de salida mañana no puede ser menor o igual que la hora de entrada!')
                 ->atPath('morningHourEnd')
+                ->addViolation();
+        }
+        if ($this->getAfternoonHourBegin() && !$this->getAfternoonHourEnd()) {
+            $context->buildViolation('Falta hora de salida tarde!')
+                ->atPath('afternoonHourEnd')
+                ->addViolation();
+        }
+        if ($this->getAfternoonHourBegin() && $this->getAfternoonHourEnd() && $this->getAfternoonHourBegin()->format('H:i:s') >= $this->getAfternoonHourEnd()->format('H:i:s')) {
+            $context->buildViolation('La hora de salida tarde no puede ser menor o igual que la hora de entrada!')
+                ->atPath('afternoonHourEnd')
                 ->addViolation();
         }
     }

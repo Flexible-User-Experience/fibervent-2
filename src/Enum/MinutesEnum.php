@@ -29,4 +29,17 @@ class MinutesEnum
             55,
         );
     }
+
+    /**
+     * @return array
+     */
+    public static function getQuartersEnumArray()
+    {
+        return array(
+            0,
+            15,
+            30,
+            45,
+        );
+    }
 }
