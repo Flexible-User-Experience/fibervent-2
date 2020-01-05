@@ -109,6 +109,14 @@ class PresenceMonitoring extends AbstractBase
     }
 
     /**
+     * @return string
+     */
+    public function getDateString()
+    {
+        return $this->getDate()->format('d/m/Y');
+    }
+
+    /**
      * @param \DateTime $date
      *
      * @return PresenceMonitoring
@@ -336,5 +344,18 @@ class PresenceMonitoring extends AbstractBase
                 ->atPath('afternoonHourEnd')
                 ->addViolation();
         }
+        if ($this->getMorningHourBegin() && $this->getMorningHourEnd() && $this->getMorningHourBegin()->format('H:i:s') < $this->getMorningHourEnd()->format('H:i:s') && $this->getAfternoonHourBegin() && $this->getAfternoonHourEnd() && $this->getAfternoonHourBegin()->format('H:i:s') < $this->getAfternoonHourEnd()->format('H:i:s') && $this->getMorningHourBegin()->format('H:i:s') >= $this->getAfternoonHourBegin()->format('H:i:s')) {
+            $context->buildViolation('La hora de entrada tarde no puede ser menor o igual que la hora de entrada mañana!')
+                ->atPath('afternoonHourBegin')
+                ->addViolation();
+        }
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->id ? $this->getDateString().' · '.$this->getWorker()->getFullnameCanonical() : '---';
     }
 }
