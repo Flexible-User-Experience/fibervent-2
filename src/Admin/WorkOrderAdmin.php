@@ -14,6 +14,7 @@ use Sonata\AdminBundle\Form\Type\ModelType;
 use Sonata\AdminBundle\Route\RouteCollection;
 use Sonata\AdminBundle\Show\ShowMapper;
 use Sonata\Form\Type\CollectionType;
+use Sonata\Form\Type\DatePickerType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
@@ -27,7 +28,7 @@ class WorkOrderAdmin extends AbstractBaseAdmin
     protected $classnameLabel = 'admin.workorder.title';
     protected $baseRoutePattern = 'workorders/workorder';
     protected $datagridValues = array(
-        '_sort_by' => 'projectNumber',
+        '_sort_by' => 'createdAt',
         '_sort_order' => 'desc',
     );
 
@@ -54,7 +55,8 @@ class WorkOrderAdmin extends AbstractBaseAdmin
         if ($this->id($this->getSubject())) { // is edit mode, disable on new subjects
             $formMapper
                 ->with('admin.common.general', $this->getFormMdSuccessBoxArray(4))
-                ->add('projectNumber',
+                ->add(
+                    'projectNumber',
                     null,
                     array(
                         'label' => 'admin.workorder.project_number',
@@ -68,25 +70,24 @@ class WorkOrderAdmin extends AbstractBaseAdmin
                         'class' => Customer::class,
                         'label' => 'admin.windfarm.customer',
                         'disabled' => true,
-                        'disabled' => true,
                     )
                 )
-                ->add('isFromAudit',
+                ->add(
+                    'isFromAudit',
                     null,
                     array(
                         'label' => 'admin.workorder.is_from_audit',
-                        'disabled' => true,
                         'disabled' => true,
                     )
                 )
                 ->end()
                 ->with('admin.windfarm.title', $this->getFormMdSuccessBoxArray(4))
-                ->add('windfarm',
+                ->add(
+                    'windfarm',
                     EntityType::class,
                     array(
                         'class' => Windfarm::class,
                         'label' => 'admin.windfarm.title',
-                        'disabled' => true,
                         'disabled' => true,
                     )
                 )
@@ -103,28 +104,32 @@ class WorkOrderAdmin extends AbstractBaseAdmin
                 )
                 ->end()
                 ->with('admin.workorder.certifying_company_name', $this->getFormMdSuccessBoxArray(4))
-                ->add('certifyingCompanyName',
+                ->add(
+                    'certifyingCompanyName',
                     null,
                     array(
                         'label' => 'admin.workorder.certifying_company_name',
                     )
                 )
-                ->add('certifyingCompanyContactPerson',
+                ->add(
+                    'certifyingCompanyContactPerson',
                     null,
                     array(
-                        'label' => 'admin.workorder.certifying_company_contact_person',
+                        'label' => 'admin.workorder.certifying_company_contact_person_short',
                     )
                 )
-                ->add('certifyingCompanyPhone',
+                ->add(
+                    'certifyingCompanyPhone',
                     null,
                     array(
-                        'label' => 'admin.workorder.certifying_company_phone',
+                        'label' => 'admin.workorder.certifying_company_phone_short',
                     )
                 )
-                ->add('certifyingCompanyEmail',
+                ->add(
+                    'certifyingCompanyEmail',
                     null,
                     array(
-                        'label' => 'admin.workorder.certifying_company_email',
+                        'label' => 'admin.workorder.certifying_company_email_short',
                     )
                 )
                 ->end()
@@ -183,7 +188,7 @@ class WorkOrderAdmin extends AbstractBaseAdmin
                         )
                     )
                     ->end()
-                    ;
+                ;
             }
         } else { // is in create mode
             $formMapper
@@ -259,7 +264,22 @@ class WorkOrderAdmin extends AbstractBaseAdmin
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
         $datagridMapper
-            ->add('projectNumber',
+            ->add(
+                'createdAt',
+                'doctrine_orm_date',
+                array(
+                    'label' => 'admin.workorder.date',
+                    'field_type' => DatePickerType::class,
+                    'format' => 'd/m/Y',
+                ),
+                null,
+                array(
+                    'widget' => 'single_text',
+                    'format' => 'dd/MM/yyyy',
+                )
+            )
+            ->add(
+                'projectNumber',
                 null,
                 array(
                     'label' => 'admin.workorder.project_number',
@@ -277,13 +297,15 @@ class WorkOrderAdmin extends AbstractBaseAdmin
                     'query_builder' => $this->cr->findAllSortedByNameQB(),
                 )
             )
-            ->add('isFromAudit',
+            ->add(
+                'isFromAudit',
                 null,
                 array(
                     'label' => 'admin.workorder.is_from_audit',
                 )
             )
-            ->add('windfarm',
+            ->add(
+                'windfarm',
                 null,
                 array(
                     'label' => 'admin.windfarm.title',
@@ -294,7 +316,8 @@ class WorkOrderAdmin extends AbstractBaseAdmin
                     'query_builder' => $this->wfr->findAllSortedByNameQB(),
                 )
             )
-            ->add('audits',
+            ->add(
+                'audits',
                 null,
                 array(
                     'label' => 'admin.audit.title',
@@ -306,31 +329,36 @@ class WorkOrderAdmin extends AbstractBaseAdmin
                     'choice_label' => 'toStringWithoutJoins',
                 )
             )
-            ->add('certifyingCompanyName',
+            ->add(
+                'certifyingCompanyName',
                 null,
                 array(
                     'label' => 'admin.workorder.certifying_company_name',
                 )
             )
-            ->add('certifyingCompanyContactPerson',
+            ->add(
+                'certifyingCompanyContactPerson',
                 null,
                 array(
                     'label' => 'admin.workorder.certifying_company_contact_person',
                 )
             )
-            ->add('certifyingCompanyPhone',
+            ->add(
+                'certifyingCompanyPhone',
                 null,
                 array(
                     'label' => 'admin.workorder.certifying_company_phone',
                 )
             )
-            ->add('certifyingCompanyEmail',
+            ->add(
+                'certifyingCompanyEmail',
                 null,
                 array(
                     'label' => 'admin.workorder.certifying_company_email',
                 )
             )
-            ->add('repairAccessTypes',
+            ->add(
+                'repairAccessTypes',
                 null,
                 array(
                     'label' => 'admin.workorder.repair_access_types',
@@ -345,7 +373,16 @@ class WorkOrderAdmin extends AbstractBaseAdmin
     protected function configureListFields(ListMapper $listMapper)
     {
         $listMapper
-            ->add('projectNumber',
+            ->add(
+                'createdAt',
+                null,
+                array(
+                    'label' => 'admin.workorder.date',
+                    'format' => 'd/m/Y',
+                )
+            )
+            ->add(
+                'projectNumber',
                 null,
                 array(
                     'label' => 'admin.workorder.project_number',
@@ -361,13 +398,15 @@ class WorkOrderAdmin extends AbstractBaseAdmin
                     'sort_parent_association_mappings' => array(array('fieldName' => 'customer')),
                 )
             )
-            ->add('isFromAudit',
+            ->add(
+                'isFromAudit',
                 null,
                 array(
                     'label' => 'admin.workorder.is_from_audit',
                 )
             )
-            ->add('windfarm',
+            ->add(
+                'windfarm',
                 null,
                 array(
                     'label' => 'admin.windfarm.title',
@@ -376,7 +415,8 @@ class WorkOrderAdmin extends AbstractBaseAdmin
                     'sort_parent_association_mappings' => array(array('fieldName' => 'windfarm')),
                 )
             )
-            ->add('audits',
+            ->add(
+                'audits',
                 null,
                 array(
                     'label' => 'admin.audit.title',
@@ -385,31 +425,8 @@ class WorkOrderAdmin extends AbstractBaseAdmin
                     'sort_parent_association_mappings' => array(array('fieldName' => 'audits')),
                 )
             )
-            ->add('certifyingCompanyName',
-                null,
-                array(
-                    'label' => 'admin.workorder.certifying_company_name',
-                )
-            )
-            ->add('certifyingCompanyContactPerson',
-                null,
-                array(
-                    'label' => 'admin.workorder.certifying_company_contact_person',
-                )
-            )
-            ->add('certifyingCompanyPhone',
-                null,
-                array(
-                    'label' => 'admin.workorder.certifying_company_phone',
-                )
-            )
-            ->add('certifyingCompanyEmail',
-                null,
-                array(
-                    'label' => 'admin.workorder.certifying_company_email',
-                )
-            )
-            ->add('repairAccessTypes',
+            ->add(
+                'repairAccessTypes',
                 null,
                 array(
                     'label' => 'admin.workorder.repair_access_types',
@@ -438,7 +455,8 @@ class WorkOrderAdmin extends AbstractBaseAdmin
     {
         $showMapper
             ->with('admin.common.general', $this->getFormMdSuccessBoxArray(4))
-            ->add('projectNumber',
+            ->add(
+                'projectNumber',
                 null,
                 array(
                     'label' => 'admin.workorder.project_number',
@@ -451,13 +469,15 @@ class WorkOrderAdmin extends AbstractBaseAdmin
                     'label' => 'admin.windfarm.customer',
                 )
             )
-            ->add('isFromAudit',
+            ->add(
+                'isFromAudit',
                 null,
                 array(
                     'label' => 'admin.workorder.is_from_audit',
                 )
             )
-            ->add('audits',
+            ->add(
+                'audits',
                 null,
                 array(
                     'label' => 'admin.audit.title',
@@ -465,7 +485,8 @@ class WorkOrderAdmin extends AbstractBaseAdmin
             )
             ->end()
             ->with('admin.windfarm.title', $this->getFormMdSuccessBoxArray(4))
-            ->add('windfarm',
+            ->add(
+                'windfarm',
                 null,
                 array(
                     'label' => 'admin.windfarm.title',
@@ -476,33 +497,37 @@ class WorkOrderAdmin extends AbstractBaseAdmin
                 null,
                 array(
                     'label' => 'admin.workorder.repair_access_types',
-                    'template' => 'Admin/Cells/list__repair_access_type.html.twig',
+                    'template' => 'Admin/Cells/show__repair_access_type.html.twig',
                 )
             )
             ->end()
             ->with('admin.workorder.certifying_company_name', $this->getFormMdSuccessBoxArray(4))
-            ->add('certifyingCompanyName',
+            ->add(
+                'certifyingCompanyName',
                 null,
                 array(
                     'label' => 'admin.workorder.certifying_company_name',
                 )
             )
-            ->add('certifyingCompanyContactPerson',
+            ->add(
+                'certifyingCompanyContactPerson',
                 null,
                 array(
-                    'label' => 'admin.workorder.certifying_company_contact_person',
+                    'label' => 'admin.workorder.certifying_company_contact_person_short',
                 )
             )
-            ->add('certifyingCompanyPhone',
+            ->add(
+                'certifyingCompanyPhone',
                 null,
                 array(
-                    'label' => 'admin.workorder.certifying_company_phone',
+                    'label' => 'admin.workorder.certifying_company_phone_short',
                 )
             )
-            ->add('certifyingCompanyEmail',
+            ->add(
+                'certifyingCompanyEmail',
                 null,
                 array(
-                    'label' => 'admin.workorder.certifying_company_email',
+                    'label' => 'admin.workorder.certifying_company_email_short',
                 )
             )
             ->end()
@@ -512,7 +537,7 @@ class WorkOrderAdmin extends AbstractBaseAdmin
                 null,
                 array(
                     'label' => 'admin.workordertasks.title',
-                    'template' => 'Admin/Cells/list__work_order_tasks.html.twig',
+                    'template' => 'Admin/Cells/show__work_order_tasks.html.twig',
                 )
             )
             ->end()

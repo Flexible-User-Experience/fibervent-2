@@ -114,7 +114,7 @@ class BackendControllerTest extends WebTestCase
             array('/admin/workorders/workorder/create'),
             array('/admin/workorders/workorder/1/edit'),
             array('/admin/workorders/workorder/1/delete'),
-            array('/admin/workorders/workorder/1/pdf'),
+//            array('/admin/workorders/workorder/1/pdf'),
             array('/admin/workorders/workorder/1/get-windfarms-from-customer-id'),
             array('/admin/workorders/workorder/1/get-windmillblades-from-windmill-id'),
             array('/admin/workorders/workordertask/list'),

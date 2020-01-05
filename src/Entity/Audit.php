@@ -118,6 +118,7 @@ class Audit extends AbstractBase
 
     /**
      * @var WorkOrder
+     *
      * @ORM\ManyToOne(targetEntity="WorkOrder", inversedBy="audits")
      * @ORM\JoinColumn(name="workorder_id", referencedColumnName="id", nullable=true)
      * @ORM\Cache(usage="NONSTRICT_READ_WRITE")

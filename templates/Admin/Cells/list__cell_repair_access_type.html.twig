@@ -2,10 +2,8 @@
 
 {% block field %}
     {% spaceless %}
-        <div>
-            {% for repairAccessType in object.repairAccessTypesString %}
-                <span class="label label-default">{{ repairAccessType | trans }}</span>
-            {% endfor %}
-        </div>
+        {% for repairAccessType in object.repairAccessTypesString %}
+            <span class="label label-default"{% if loop.index > 1%} style="margin-left:5px"{% endif %}>{{ repairAccessType | trans }}</span>
+        {% endfor %}
     {% endspaceless %}
 {% endblock %}

@@ -124,6 +124,16 @@ pdf_windfarm:
     1_title: 'RESUMEN INDIVIDUAL DE DAÑOS'
   contact_section:
     1_title: 'CONTACTO'
+pdf_workorder:
+  header:
+    customer_data: 'DATOS CLIENTE'
+    windmill_data: 'DATOS AEROS'
+    certifying_company_data: 'DATOS CERTIFICADORA'
+    sumary_external_damages_to_repair: 'Resumen de daños a reparar en'
+    repair: 'Reparación con'
+  table_header:
+    serial_number: 'Nº de serie'
+    team: 'Equipo'
 enum:
   blade_damage_position:
     1_VP: VP
@@ -386,11 +396,15 @@ admin:
     title: Proyecto
     title_list: Proyecto
     title_create: Crear
+    date: Fecha
     project_number: Número de proyecto
     certifying_company_name: Compañía certificadora
     certifying_company_contact_person: Persona de contacto (certificadora)
+    certifying_company_contact_person_short: Persona de contacto
     certifying_company_email: Email (certificadora)
+    certifying_company_email_short: Email
     certifying_company_phone: Teléfono (certificadora)
+    certifying_company_phone_short: Teléfono
     is_from_audit: Proviene de auditoría
     repair_access_types: Tipos de acceso
   workordertask:
@@ -399,6 +413,15 @@ admin:
     title_create: Crear
     is_completed: Completada
     description: Descripción
+    wtg: WTG
+    blade: Pala
+    blade_code: 'Nº Serie'
+    damage: Daño
+    radius: Radio
+    distance: Distancia
+    size: Dimensión
+    team: Equipo
+    is_from_audit: Inspección
   vehicle:
     title: Vehículo
     title_list: Vehículos
@@ -487,3 +510,4 @@ Registros: Registros
 breadcrumb:
   link_admin_user_title_list: Usuario
   link_admin_user_title_create: Crear
+  link_admin_user_title_show: Mostrar
