@@ -81,7 +81,7 @@ class UserAdminController extends AbstractBaseAdminController
             /** @var PresenceMonitoringPdfBuilderService $pmbs */
             $pmbs = $this->get('app.presence_monitoring_pdf_builder');
             $pdf = $pmbs->build($operator);
-            $pdf->Output($this->getDestAuditFilePath($operator), 'F');
+            $pdf->Output($this->getDestPdfFilePath($operator), 'F');
             $showPdfPreview = true;
         }
 
@@ -93,6 +93,7 @@ class UserAdminController extends AbstractBaseAdminController
                 'form' => $form->createView(),
                 'elements' => $this->admin->getShow(),
                 'show_pdf_preview' => $showPdfPreview,
+                'pdf_short_path' => $this->getShortPdfFilePath($operator),
             )
         );
     }
@@ -102,11 +103,11 @@ class UserAdminController extends AbstractBaseAdminController
      *
      * @return string
      */
-    private function getDestAuditFilePath(User $user)
+    private function getDestPdfFilePath(User $user)
     {
         $krd = $this->getParameter('kernel.project_dir');
 
-        return $krd.DIRECTORY_SEPARATOR.'public'.$this->getShortAuditFilePath($user);
+        return $krd.DIRECTORY_SEPARATOR.'public'.$this->getShortPdfFilePath($user);
     }
 
     /**
@@ -114,7 +115,7 @@ class UserAdminController extends AbstractBaseAdminController
      *
      * @return string
      */
-    private function getShortAuditFilePath(User $user)
+    private function getShortPdfFilePath(User $user)
     {
         return DIRECTORY_SEPARATOR.'pdfs'.DIRECTORY_SEPARATOR.'Registro---'.$user->getId().'.pdf';
     }
