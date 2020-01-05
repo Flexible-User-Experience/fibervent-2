@@ -6,7 +6,7 @@ use App\Enum\AuditStatusEnum;
 use App\Repository\AuditRepository;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
-use Sonata\CoreBundle\Form\Type\DateRangePickerType;
+use Sonata\Form\Type\DateRangePickerType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;

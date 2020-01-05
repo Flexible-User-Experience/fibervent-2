@@ -134,6 +134,9 @@ pdf_workorder:
   table_header:
     serial_number:
     team:
+    bladedamage_size:
+    bladedamage_radius:
+    bladedamage_distance:
 enum:
   blade_damage_position:
     1_VP: SP
