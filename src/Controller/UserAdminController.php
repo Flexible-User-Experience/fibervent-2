@@ -57,4 +57,27 @@ class UserAdminController extends AbstractBaseAdminController
             )
         );
     }
+
+    /**
+     * @param int $id
+     *
+     * @return Response
+     */
+    public function buildPresenceMonitoringAction($id)
+    {
+        $operator = $this->admin->getObject($id);
+        if (!$operator) {
+            throw $this->createAccessDeniedException('This operator does not exisits.');
+        }
+
+        return $this->renderWithExtraParams(
+            'Admin/User/build_presence_monitoring.html.twig',
+            array(
+                'action' => 'show',
+                'object' => $operator,
+//                'form' => $form->createView(),
+                'elements' => $this->admin->getShow(),
+            )
+        );
+    }
 }

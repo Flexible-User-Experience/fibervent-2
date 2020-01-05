@@ -1,0 +1,8 @@
+{% extends 'SonataAdminBundle:CRUD:base_show.html.twig' %}
+
+{% block navbar_title %}{{ 'admin.common.print' | trans({}, 'messages') }} {{ 'admin.presencemonitoring.title' | trans({}, 'messages') | lower }} {{ object.fullname }}{% endblock %}
+
+{% block sonata_admin_content %}
+    <div class="sonata-ba-form">
+    </div>
+{% endblock %}
