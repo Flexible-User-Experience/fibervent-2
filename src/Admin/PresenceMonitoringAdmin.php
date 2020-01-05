@@ -149,6 +149,20 @@ class PresenceMonitoringAdmin extends AbstractBaseAdmin
                     'choice_label' => 'fullnameCanonical',
                 )
             )
+            ->add(
+                'category',
+                null,
+                array(
+                    'label' => 'admin.presencemonitoring.category',
+                ),
+                ChoiceType::class,
+                array(
+                    'choices' => PresenceMonitoringCategoryEnum::getEnumArray(),
+                    'multiple' => false,
+                    'expanded' => false,
+                    'required' => false,
+                )
+            )
         ;
     }
 
