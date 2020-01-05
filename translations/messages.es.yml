@@ -418,6 +418,10 @@ admin:
     blade_code: 'Nº Serie'
     damage: Daño
     radius: Radio
+    distance: Distancia
+    size: Dimensión
+    team: Equipo
+    is_from_audit: Inspección
   vehicle:
     title: Vehículo
     title_list: Vehículos
