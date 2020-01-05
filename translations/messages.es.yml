@@ -489,6 +489,23 @@ admin:
     normal_hours: Total horas ordinarias
     extra_hours: Total horas extra
     category: Categoría
+    form:
+      year: Año
+      month: Mes
+      send: Generar PDF
+month:
+  january: Enero
+  febraury: Febrero
+  march: Marzo
+  april: Abril
+  may: Mayo
+  june: Junio
+  july: Julio
+  august: Agosto
+  september: Septiembre
+  october: Octubre
+  november: Novimebre
+  december: Diciembre
 gmap:
   general: ubicación general
 # Admin defaults

@@ -4,5 +4,20 @@
 
 {% block sonata_admin_content %}
     <div class="sonata-ba-form">
+        <div class="sonata-ba-show">
+            <div class="sonata-ba-view row">
+                <div class="col-xs-3">
+                    <div class="box box-primary">
+                        <div class="box-header with-border">
+                            <div class="box-body table-responsive no-padding">
+                                <div class="col-xs-12">
+                                    {{ form(form) }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 {% endblock %}

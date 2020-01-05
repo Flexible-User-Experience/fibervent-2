@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Form\Type\UserOperatorChooseYearAndMonthPresenceMonitoring;
 use App\Form\Type\UserProfileFormType;
 use FOS\UserBundle\Model\UserInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -69,13 +70,14 @@ class UserAdminController extends AbstractBaseAdminController
         if (!$operator) {
             throw $this->createAccessDeniedException('This operator does not exisits.');
         }
+        $form = $this->createForm(UserOperatorChooseYearAndMonthPresenceMonitoring::class, $operator);
 
         return $this->renderWithExtraParams(
             'Admin/User/build_presence_monitoring.html.twig',
             array(
                 'action' => 'show',
                 'object' => $operator,
-//                'form' => $form->createView(),
+                'form' => $form->createView(),
                 'elements' => $this->admin->getShow(),
             )
         );
