@@ -5,6 +5,8 @@ namespace App\Entity;
 use App\Enum\PresenceMonitoringCategoryEnum;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 /**
  * PresenceMonitoring.
@@ -38,6 +40,7 @@ class PresenceMonitoring extends AbstractBase
      * @var \DateTime
      *
      * @ORM\Column(type="time", nullable=true)
+     * @Assert\Time
      */
     private $morningHourBegin;
 
@@ -45,6 +48,7 @@ class PresenceMonitoring extends AbstractBase
      * @var \DateTime
      *
      * @ORM\Column(type="time", nullable=true)
+     * @Assert\Time
      */
     private $morningHourEnd;
 
@@ -52,6 +56,7 @@ class PresenceMonitoring extends AbstractBase
      * @var \DateTime
      *
      * @ORM\Column(type="time", nullable=true)
+     * @Assert\Time
      */
     private $afternoonHourBegin;
 
@@ -59,6 +64,7 @@ class PresenceMonitoring extends AbstractBase
      * @var \DateTime
      *
      * @ORM\Column(type="time", nullable=true)
+     * @Assert\Time
      */
     private $afternoonHourEnd;
 
@@ -100,6 +106,14 @@ class PresenceMonitoring extends AbstractBase
     public function getDate()
     {
         return $this->date;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDateString()
+    {
+        return $this->getDate()->format('d/m/Y');
     }
 
     /**
@@ -300,5 +314,48 @@ class PresenceMonitoring extends AbstractBase
         $this->category = $category;
 
         return $this;
+    }
+
+    /**
+     * @param ExecutionContextInterface $context
+     * @param mixed                     $payload
+     *
+     * @Assert\Callback
+     */
+    public function validate(ExecutionContextInterface $context, $payload)
+    {
+        if ($this->getMorningHourBegin() && !$this->getMorningHourEnd()) {
+            $context->buildViolation('Falta hora de salida mañana!')
+                ->atPath('morningHourEnd')
+                ->addViolation();
+        }
+        if ($this->getMorningHourBegin() && $this->getMorningHourEnd() && $this->getMorningHourBegin()->format('H:i:s') >= $this->getMorningHourEnd()->format('H:i:s')) {
+            $context->buildViolation('La hora de salida mañana no puede ser menor o igual que la hora de entrada!')
+                ->atPath('morningHourEnd')
+                ->addViolation();
+        }
+        if ($this->getAfternoonHourBegin() && !$this->getAfternoonHourEnd()) {
+            $context->buildViolation('Falta hora de salida tarde!')
+                ->atPath('afternoonHourEnd')
+                ->addViolation();
+        }
+        if ($this->getAfternoonHourBegin() && $this->getAfternoonHourEnd() && $this->getAfternoonHourBegin()->format('H:i:s') >= $this->getAfternoonHourEnd()->format('H:i:s')) {
+            $context->buildViolation('La hora de salida tarde no puede ser menor o igual que la hora de entrada!')
+                ->atPath('afternoonHourEnd')
+                ->addViolation();
+        }
+        if ($this->getMorningHourBegin() && $this->getMorningHourEnd() && $this->getMorningHourBegin()->format('H:i:s') < $this->getMorningHourEnd()->format('H:i:s') && $this->getAfternoonHourBegin() && $this->getAfternoonHourEnd() && $this->getAfternoonHourBegin()->format('H:i:s') < $this->getAfternoonHourEnd()->format('H:i:s') && $this->getMorningHourBegin()->format('H:i:s') >= $this->getAfternoonHourBegin()->format('H:i:s')) {
+            $context->buildViolation('La hora de entrada tarde no puede ser menor o igual que la hora de entrada mañana!')
+                ->atPath('afternoonHourBegin')
+                ->addViolation();
+        }
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->id ? $this->getDateString().' · '.$this->getWorker()->getFullnameCanonical() : '---';
     }
 }

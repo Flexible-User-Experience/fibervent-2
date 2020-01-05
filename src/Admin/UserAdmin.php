@@ -51,6 +51,7 @@ class UserAdmin extends ParentUserAdmin
         parent::configureRoutes($collection);
         $collection
             ->add('profile')
+            ->add('buildPresenceMonitoring', $this->getRouterIdParameter().'/build-presence-monitoring')
             ->remove('show')
             ->remove('batch')
             ->remove('delete')
@@ -311,6 +312,7 @@ class UserAdmin extends ParentUserAdmin
                     'label' => 'admin.common.action',
                     'actions' => array(
                         'edit' => array('template' => 'Admin/Buttons/list__action_edit_button.html.twig'),
+                        'buildPresenceMonitoring' => array('template' => 'Admin/Buttons/list__action_build_presence_monitoring_button.html.twig'),
                     ),
                 )
             );

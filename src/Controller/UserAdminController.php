@@ -2,7 +2,10 @@
 
 namespace App\Controller;
 
+use App\Entity\User;
+use App\Form\Type\UserOperatorChooseYearAndMonthPresenceMonitoring;
 use App\Form\Type\UserProfileFormType;
+use App\Service\PresenceMonitoringPdfBuilderService;
 use FOS\UserBundle\Model\UserInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -56,5 +59,64 @@ class UserAdminController extends AbstractBaseAdminController
                 'elements' => $this->admin->getShow(),
             )
         );
+    }
+
+    /**
+     * @param Request $request
+     * @param int     $id
+     *
+     * @return Response
+     */
+    public function buildPresenceMonitoringAction(Request $request, $id)
+    {
+        $showPdfPreview = false;
+        /** @var User $operator */
+        $operator = $this->admin->getObject($id);
+        if (!$operator) {
+            throw $this->createAccessDeniedException('This operator does not exisits.');
+        }
+        $form = $this->createForm(UserOperatorChooseYearAndMonthPresenceMonitoring::class, $operator);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            /** @var PresenceMonitoringPdfBuilderService $pmbs */
+            $pmbs = $this->get('app.presence_monitoring_pdf_builder');
+            $pdf = $pmbs->build($operator);
+            $pdf->Output($this->getDestPdfFilePath($operator), 'F');
+            $showPdfPreview = true;
+        }
+
+        return $this->renderWithExtraParams(
+            'Admin/User/build_presence_monitoring.html.twig',
+            array(
+                'action' => 'show',
+                'object' => $operator,
+                'form' => $form->createView(),
+                'elements' => $this->admin->getShow(),
+                'show_pdf_preview' => $showPdfPreview,
+                'pdf_short_path' => $this->getShortPdfFilePath($operator),
+            )
+        );
+    }
+
+    /**
+     * @param User $user
+     *
+     * @return string
+     */
+    private function getDestPdfFilePath(User $user)
+    {
+        $krd = $this->getParameter('kernel.project_dir');
+
+        return $krd.DIRECTORY_SEPARATOR.'public'.$this->getShortPdfFilePath($user);
+    }
+
+    /**
+     * @param User $user
+     *
+     * @return string
+     */
+    private function getShortPdfFilePath(User $user)
+    {
+        return DIRECTORY_SEPARATOR.'pdfs'.DIRECTORY_SEPARATOR.'Registro---'.$user->getId().'.pdf';
     }
 }
