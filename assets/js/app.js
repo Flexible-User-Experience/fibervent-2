@@ -11,4 +11,7 @@ require('../css/customs_sonata.css');
 // Need jQuery? Install it with "yarn add jquery", then uncomment to require it.
 // const $ = require('jquery');
 
+const routes = require('../../public/js/fos_js_routes.json');
+import Routing from '../../vendor/friendsofsymfony/jsrouting-bundle/Resources/public/js/router.min.js';
+
 // console.log('Hello Webpack Encore! Edit me in assets/js/app.js');

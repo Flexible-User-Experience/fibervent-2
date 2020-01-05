@@ -433,8 +433,6 @@ admin:
     normal_hours:
     extra_hours:
     category:
-
-
 gmap:
   general: general location
 # Admin defaults
@@ -449,3 +447,4 @@ Turbina:
 breadcrumb:
   link_admin_user_title_list: Usuario
   link_admin_user_title_create: Crear
+  link_admin_user_title_show: Mostrar

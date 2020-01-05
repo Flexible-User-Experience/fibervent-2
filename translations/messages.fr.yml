@@ -447,3 +447,4 @@ Turbina:
 breadcrumb:
   link_admin_user_title_list: Usuario
   link_admin_user_title_create: Crear
+  link_admin_user_title_show: Mostrar
