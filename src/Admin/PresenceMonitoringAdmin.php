@@ -21,7 +21,7 @@ class PresenceMonitoringAdmin extends AbstractBaseAdmin
     protected $classnameLabel = 'admin.presencemonitoring.title';
     protected $baseRoutePattern = 'presencemonitoring';
     protected $datagridValues = array(
-        '_sort_by' => 'id',
+        '_sort_by' => 'date',
         '_sort_order' => 'desc',
     );
 
@@ -91,6 +91,8 @@ class PresenceMonitoringAdmin extends AbstractBaseAdmin
                     'label' => 'admin.presencemonitoring.afternoon_hour_end',
                 )
             )
+            ->end()
+            ->with('admin.common.totals', $this->getFormMdSuccessBoxArray(4))
             ->add(
                 'totalHours',
                 null,

@@ -198,6 +198,7 @@ admin:
     here: aquí
     for_help: para recibir ayuda
     details: Detalle
+    totals: Totales
   audit:
     title: Inspección
     title_list: Inspección

@@ -5,6 +5,8 @@ namespace App\Entity;
 use App\Enum\PresenceMonitoringCategoryEnum;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 /**
  * PresenceMonitoring.
@@ -300,5 +302,25 @@ class PresenceMonitoring extends AbstractBase
         $this->category = $category;
 
         return $this;
+    }
+
+    /**
+     * @param ExecutionContextInterface $context
+     * @param mixed                     $payload
+     *
+     * @Assert\Callback
+     */
+    public function validate(ExecutionContextInterface $context, $payload)
+    {
+        if ($this->getMorningHourBegin() && !$this->getMorningHourEnd()) {
+            $context->buildViolation('Falta hora de salida mañana!')
+                ->atPath('morningHourEnd')
+                ->addViolation();
+        }
+        if ($this->getMorningHourBegin() && $this->getMorningHourEnd() && $this->getMorningHourBegin()->format('H:i:s') >= $this->getMorningHourEnd()->format('H:i:s')) {
+            $context->buildViolation('La hora de salida mañana no puede ser menor o igual que la hora de entrada!')
+                ->atPath('morningHourEnd')
+                ->addViolation();
+        }
     }
 }
