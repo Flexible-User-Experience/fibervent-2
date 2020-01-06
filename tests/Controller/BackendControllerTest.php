@@ -54,6 +54,7 @@ class BackendControllerTest extends WebTestCase
             array('/admin/customers/user/list'),
             array('/admin/customers/user/create'),
             array('/admin/customers/user/1/edit'),
+            array('/admin/customers/user/1/build-presence-monitoring'),
             array('/admin/customers/user/profile'),
             array('/admin/windfarms/windfarm/list'),
             array('/admin/windfarms/windfarm/create'),

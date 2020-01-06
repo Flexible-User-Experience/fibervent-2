@@ -1,0 +1,49 @@
+{% extends 'SonataAdminBundle:CRUD:base_show.html.twig' %}
+
+{% block navbar_title %}{{ 'admin.common.print' | trans({}, 'messages') }} {{ 'admin.presencemonitoring.title' | trans({}, 'messages') | lower }} {{ object.fullname }}{% endblock %}
+
+{% block sonata_admin_content %}
+    <div class="sonata-ba-form">
+        <div class="sonata-ba-show">
+            <div class="sonata-ba-view row">
+                <div class="col-xs-3">
+                    <div class="box box-primary">
+                        <div class="box-header with-border">
+                            <div class="box-body table-responsive no-padding">
+                                <div class="col-xs-12">
+                                    {{ form(form) }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% if show_pdf_preview %}
+                    <div class="col-xs-9">
+                        <div class="box box-primary">
+                            <div class="box-header with-border">
+                                <div class="box-body table-responsive no-padding">
+                                    <div style="display:block;margin-bottom:10px">
+                                        <a download href="{{ pdf_short_path }}" class="btn btn-xs btn-success"><i class="fa fa-cloud-download"></i> {{ 'admin.windfarm.download_pdf' | trans }}</a>
+                                        <div class="btn-group btn-group-xs" role="group" aria-label="pager">
+                                            <button id="prev" class="btn btn-info"><i class="fa fa-chevron-left"></i></button>
+                                            <button id="next" class="btn btn-info"><i class="fa fa-chevron-right"></i></button>
+                                        </div>
+                                        <span class="label label-default pull-right">{{ 'pdf.footer.1_page' | trans | lower }} <span id="page_num"></span> / <span id="page_count"></span></span>
+                                    </div>
+                                    <canvas id="pdf-canvas" style="border: solid 1px #EEE"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {% if show_pdf_preview %}
+        {% include 'Includes/pdf_js_rendering.html.twig' %}
+    {% endif %}
+{% endblock %}

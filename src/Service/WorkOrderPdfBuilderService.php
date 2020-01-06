@@ -5,9 +5,7 @@ namespace App\Service;
 use App\Entity\WorkOrder;
 use App\Entity\WorkOrderTask;
 use App\Enum\WindfarmLanguageEnum;
-use App\Pdf\CustomTcpdf;
 use Symfony\Bundle\FrameworkBundle\Translation\Translator;
-use WhiteOctober\TCPDFBundle\Controller\TCPDFController;
 
 /**
  * Class WorkOrder Pdf Builder Service.
@@ -24,17 +22,21 @@ class WorkOrderPdfBuilderService
     /**
      * @var Translator
      */
-    protected $ts;
+    private $ts;
 
     /**
      * @var string
      */
-    protected $locale;
+    private $locale;
 
     /**
      * @var SmartAssetsHelperService
      */
-    protected $sahs;
+    private $sahs;
+
+    /**
+     * Methods.
+     */
 
     /**
      * WorkOrderPdfBuilderService constructor.

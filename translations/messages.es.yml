@@ -204,6 +204,8 @@ admin:
     here: aquí
     for_help: para recibir ayuda
     details: Detalle
+    totals: Totales
+    print: Imprimir
   audit:
     title: Inspección
     title_list: Inspección
@@ -424,6 +426,10 @@ admin:
     blade_code: 'Nº Serie'
     damage: Daño
     radius: Radio
+    distance: Distancia
+    size: Dimensión
+    team: Equipo
+    is_from_audit: Inspección
   vehicle:
     title: Vehículo
     title_list: Vehículos
@@ -489,6 +495,23 @@ admin:
     normal_hours: Total horas ordinarias
     extra_hours: Total horas extra
     category: Categoría
+    form:
+      year: Año
+      month: Mes
+      send: Generar PDF
+month:
+  january: Enero
+  febraury: Febrero
+  march: Marzo
+  april: Abril
+  may: Mayo
+  june: Junio
+  july: Julio
+  august: Agosto
+  september: Septiembre
+  october: Octubre
+  november: Noviembre
+  december: Diciembre
 gmap:
   general: ubicación general
 # Admin defaults
