@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "bc5d8c0ce000738a25c37561d0d0b3b0",
+    "content-hash": "0aa0089084563b7b76ac575bb6db7d56",
     "packages": [
         {
             "name": "a2lix/translation-form-bundle",
@@ -10394,6 +10394,7 @@
     "prefer-lowest": false,
     "platform": {
         "php": ">=7.4.0",
+        "ext-calendar": "*",
         "ext-ctype": "*",
         "ext-iconv": "*"
     },
