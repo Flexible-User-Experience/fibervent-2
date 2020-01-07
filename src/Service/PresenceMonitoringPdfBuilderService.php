@@ -14,8 +14,8 @@ use Symfony\Bundle\FrameworkBundle\Translation\Translator;
  */
 class PresenceMonitoringPdfBuilderService
 {
-    const PDF_MARGIN_LEFT = 10;
-    const PDF_MARGIN_RIGHT = 10;
+    const PDF_MARGIN_LEFT = 15;
+    const PDF_MARGIN_RIGHT = 15;
     const PDF_MARGIN_TOP = 10;
     const PDF_MARGIN_BOTTOM = 10;
 
@@ -75,28 +75,45 @@ class PresenceMonitoringPdfBuilderService
         $this->tcpdf->SetFont('', 'B', 7);
 
         $this->tcpdf->SetAbsXY(self::PDF_MARGIN_LEFT, self::PDF_MARGIN_TOP + 20);
-        $this->tcpdf->Cell(15, 6, $this->ts->trans('admin.presencemonitoring.day'), 1, 0, 'C', 0);
-        $this->tcpdf->Cell(15, 6, $this->ts->trans('admin.presencemonitoring.begin'), 1, 0, 'C', 0);
-        $this->tcpdf->Cell(15, 6, $this->ts->trans('admin.presencemonitoring.end'), 1, 0, 'C', 0);
-        $this->tcpdf->Cell(15, 6, $this->ts->trans('admin.presencemonitoring.begin'), 1, 0, 'C', 0);
-        $this->tcpdf->Cell(15, 6, $this->ts->trans('admin.presencemonitoring.end'), 1, 0, 'C', 0);
-        $this->tcpdf->Cell(20, 6, $this->ts->trans('admin.presencemonitoring.total_hours_short'), 1, 0, 'R', 0);
-        $this->tcpdf->Cell(25, 6, $this->ts->trans('admin.presencemonitoring.normal_hours_short'), 1, 0, 'R', 0);
-        $this->tcpdf->Cell(20, 6, $this->ts->trans('admin.presencemonitoring.extra_hours_short'), 1, 0, 'R', 0);
-        $this->tcpdf->Cell(35, 6, $this->ts->trans('admin.presencemonitoring.sign'), 1, 1, 'C', 0);
+        $this->tcpdf->Cell(20, 6, $this->ts->trans('admin.presencemonitoring.day'), 1, 0, 'C', true);
+        $this->tcpdf->Cell(15, 6, $this->ts->trans('admin.presencemonitoring.begin'), 1, 0, 'C', true);
+        $this->tcpdf->Cell(15, 6, $this->ts->trans('admin.presencemonitoring.end'), 1, 0, 'C', true);
+        $this->tcpdf->Cell(15, 6, $this->ts->trans('admin.presencemonitoring.begin'), 1, 0, 'C', true);
+        $this->tcpdf->Cell(15, 6, $this->ts->trans('admin.presencemonitoring.end'), 1, 0, 'C', true);
+        $this->tcpdf->Cell(20, 6, $this->ts->trans('admin.presencemonitoring.total_hours_short'), 1, 0, 'R', true);
+        $this->tcpdf->Cell(25, 6, $this->ts->trans('admin.presencemonitoring.normal_hours_short'), 1, 0, 'R', true);
+        $this->tcpdf->Cell(20, 6, $this->ts->trans('admin.presencemonitoring.extra_hours_short'), 1, 0, 'R', true);
+        $this->tcpdf->Cell(35, 6, $this->ts->trans('admin.presencemonitoring.sign'), 1, 1, 'C', true);
+        $this->tcpdf->SetFont('', '', 7);
 
+        $numItems = count($items);
+        $i = 0;
         /** @var PresenceMonitoring $pm */
         foreach ($items as $pm) {
-            $this->tcpdf->Cell(15, 6, $pm->getDateString(), 1, 0, 'C', 0);
-            $this->tcpdf->Cell(15, 6, $pm->getMorningHourBeginString(), 1, 0, 'C', 0);
-            $this->tcpdf->Cell(15, 6, $pm->getMorningHourEndString(), 1, 0, 'C', 0);
-            $this->tcpdf->Cell(15, 6, $pm->getAfternoonHourBeginString(), 1, 0, 'C', 0);
-            $this->tcpdf->Cell(15, 6, $pm->getAfternoonHourEndString(), 1, 0, 'C', 0);
-            $this->tcpdf->Cell(20, 6, $pm->getTotalHours(), 1, 0, 'R', 0);
-            $this->tcpdf->Cell(25, 6, $pm->getNormalHours(), 1, 0, 'R', 0);
-            $this->tcpdf->Cell(20, 6, $pm->getExtraHours(), 1, 0, 'R', 0);
+            $this->tcpdf->SetX(self::PDF_MARGIN_LEFT);
+            $cellBackgroundFill = false;
+            if (++$i === $numItems) {
+                $this->tcpdf->SetFont('', 'B', 7);
+                $cellBackgroundFill = true;
+                $this->tcpdf->Cell(80, 6, $this->ts->trans('admin.presencemonitoring.total'), 1, 0, 'R', $cellBackgroundFill);
+            } else {
+                $this->tcpdf->Cell(20, 6, $pm->getDateString(), 1, 0, 'C', 0);
+                $this->tcpdf->Cell(15, 6, $pm->getMorningHourBeginString(), 1, 0, 'C', 0);
+                $this->tcpdf->Cell(15, 6, $pm->getMorningHourEndString(), 1, 0, 'C', 0);
+                $this->tcpdf->Cell(15, 6, $pm->getAfternoonHourBeginString(), 1, 0, 'C', 0);
+                $this->tcpdf->Cell(15, 6, $pm->getAfternoonHourEndString(), 1, 0, 'C', 0);
+            }
+            $this->tcpdf->Cell(20, 6, $pm->getTotalHours(), 1, 0, 'R', $cellBackgroundFill);
+            $this->tcpdf->Cell(25, 6, $pm->getNormalHours(), 1, 0, 'R', $cellBackgroundFill);
+            $this->tcpdf->Cell(20, 6, $pm->getExtraHours(), 1, 0, 'R', $cellBackgroundFill);
             $this->tcpdf->Cell(35, 6, '', 1, 1, 'C', 0);
+            $this->tcpdf->SetFont('', '', 7);
         }
+
+        $this->tcpdf->Ln(AbstractPdfBuilderService::SECTION_SPACER_V);
+        $this->tcpdf->SetX(self::PDF_MARGIN_LEFT);
+        $this->tcpdf->SetFont('', 'B', 8);
+        $this->tcpdf->MultiCell(180, 12, $this->ts->trans('admin.presencemonitoring.legal'), 0, 'L', false, 1, $this->tcpdf->GetX(), '', true);
 
         return $this->tcpdf;
     }
