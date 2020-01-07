@@ -492,9 +492,18 @@ admin:
     afternoon_hour_begin: Hora entrada tarde
     afternoon_hour_end: Hora salida tarde
     total_hours: Total horas
+    total_hours_short: Horas jornada
     normal_hours: Total horas ordinarias
+    normal_hours_short: Horas ordinarias
     extra_hours: Total horas extra
+    extra_hours_short: Horas extra
     category: Categoría
+    day: Dia
+    morning: Mañana
+    afternoon: Tarde
+    begin: Entrada
+    end: Salida
+    sign: Firma
     form:
       year: Año
       month: Mes

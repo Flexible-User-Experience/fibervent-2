@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Enum\AuditLanguageEnum;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
@@ -103,7 +104,7 @@ class State extends AbstractBase
      */
     public function getCountryName()
     {
-        return Intl::getRegionBundle()->getCountryName($this->getCountryCode(), 'ES');
+        return Intl::getRegionBundle()->getCountryName($this->getCountryCode(), strtoupper(AuditLanguageEnum::DEFAULT_LANGUAGE_STRING));
     }
 
     /**

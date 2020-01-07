@@ -4,6 +4,7 @@ namespace App\Service;
 
 use App\Entity\User;
 use App\Entity\PresenceMonitoring;
+use App\Enum\AuditLanguageEnum;
 use Symfony\Bundle\FrameworkBundle\Translation\Translator;
 
 /**
@@ -13,6 +14,11 @@ use Symfony\Bundle\FrameworkBundle\Translation\Translator;
  */
 class PresenceMonitoringPdfBuilderService
 {
+    const PDF_MARGIN_LEFT = 10;
+    const PDF_MARGIN_RIGHT = 10;
+    const PDF_MARGIN_TOP = 10;
+    const PDF_MARGIN_BOTTOM = 10;
+
     /**
      * @var \TCPDF $tcpdf
      */
@@ -57,18 +63,40 @@ class PresenceMonitoringPdfBuilderService
      * @return \TCPDF
      */
     public function build(User $user, $items) {
-        $this->ts->setLocale('es');
+        $this->ts->setLocale(AuditLanguageEnum::DEFAULT_LANGUAGE_STRING);
         $this->tcpdf->setPrintHeader(false);
         $this->tcpdf->setPrintFooter(false);
         $this->tcpdf->AddPage('P', 'A4', true, true);
-        $this->tcpdf->Image($this->sahs->getAbsoluteAssetFilePath('/build/fibervent_logo_white_landscape.jpg'), 15, 15, 60, 0, 'JPEG', '', 'T', false, 300, '', false, false, 0, false, false, false);
+        $this->tcpdf->Image($this->sahs->getAbsoluteAssetFilePath('/build/fibervent_logo_white_landscape.jpg'), self::PDF_MARGIN_LEFT, self::PDF_MARGIN_TOP, 45, 0, 'JPEG', '', 'T', false, 300, '', false, false, 0, false, false, false);
         // Colors, line width and bold font
         $this->tcpdf->SetFillColor(179, 204, 255);
         $this->tcpdf->SetTextColor(0);
         $this->tcpdf->SetLineWidth(0.1);
         $this->tcpdf->SetFont('', 'B', 7);
 
-        $this->tcpdf->SetAbsXY(15,45);
+        $this->tcpdf->SetAbsXY(self::PDF_MARGIN_LEFT, self::PDF_MARGIN_TOP + 20);
+        $this->tcpdf->Cell(15, 6, $this->ts->trans('admin.presencemonitoring.day'), 1, 0, 'C', 0);
+        $this->tcpdf->Cell(15, 6, $this->ts->trans('admin.presencemonitoring.begin'), 1, 0, 'C', 0);
+        $this->tcpdf->Cell(15, 6, $this->ts->trans('admin.presencemonitoring.end'), 1, 0, 'C', 0);
+        $this->tcpdf->Cell(15, 6, $this->ts->trans('admin.presencemonitoring.begin'), 1, 0, 'C', 0);
+        $this->tcpdf->Cell(15, 6, $this->ts->trans('admin.presencemonitoring.end'), 1, 0, 'C', 0);
+        $this->tcpdf->Cell(20, 6, $this->ts->trans('admin.presencemonitoring.total_hours_short'), 1, 0, 'R', 0);
+        $this->tcpdf->Cell(20, 6, $this->ts->trans('admin.presencemonitoring.normal_hours_short'), 1, 0, 'R', 0);
+        $this->tcpdf->Cell(20, 6, $this->ts->trans('admin.presencemonitoring.extra_hours_short'), 1, 0, 'R', 0);
+        $this->tcpdf->Cell(15, 6, $this->ts->trans('admin.presencemonitoring.sign'), 1, 1, 'R', 0);
+
+        /** @var PresenceMonitoring $pm */
+        foreach ($items as $pm) {
+            $this->tcpdf->Cell(15, 6, $pm->getDateString(), 1, 0, 'C', 0);
+            $this->tcpdf->Cell(15, 6, $pm->getMorningHourBeginString(), 1, 0, 'C', 0);
+            $this->tcpdf->Cell(15, 6, $pm->getMorningHourEndString(), 1, 0, 'C', 0);
+            $this->tcpdf->Cell(15, 6, $pm->getAfternoonHourBeginString(), 1, 0, 'C', 0);
+            $this->tcpdf->Cell(15, 6, $pm->getAfternoonHourEndString(), 1, 0, 'C', 0);
+            $this->tcpdf->Cell(20, 6, $pm->getTotalHours(), 1, 0, 'R', 0);
+            $this->tcpdf->Cell(20, 6, $pm->getNormalHours(), 1, 0, 'R', 0);
+            $this->tcpdf->Cell(20, 6, $pm->getExtraHours(), 1, 0, 'R', 0);
+            $this->tcpdf->Cell(15, 6, $pm->getExtraHours(), 1, 1, 'R', 0);
+        }
 
         return $this->tcpdf;
     }
