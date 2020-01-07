@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Form\Type\UserOperatorChooseYearAndMonthPresenceMonitoring;
 use App\Form\Type\UserProfileFormType;
+use App\Manager\PresenceMonitoringManager;
 use App\Repository\PresenceMonitoringRepository;
 use App\Service\PresenceMonitoringPdfBuilderService;
 use FOS\UserBundle\Model\UserInterface;
@@ -64,9 +65,10 @@ class UserAdminController extends AbstractBaseAdminController
 
     /**
      * @param Request $request
-     * @param int     $id
+     * @param int $id
      *
      * @return Response
+     * @throws \Exception
      */
     public function buildPresenceMonitoringAction(Request $request, $id)
     {
@@ -79,9 +81,9 @@ class UserAdminController extends AbstractBaseAdminController
         $form = $this->createForm(UserOperatorChooseYearAndMonthPresenceMonitoring::class, $operator);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            /** @var PresenceMonitoringRepository $pmr */
-            $pmr = $this->get('app.precense_monitoring_repository');
-            $pmitems = $pmr->findByOperatorYearAndMonthSortedByDate($operator, 2020, 1);
+            /** @var PresenceMonitoringManager $pmm */
+            $pmm = $this->get('app.manager_precense_monitoring');
+            $pmitems = $pmm->createFullMonthItemsListByOperatorYearAndMonth($operator, $form->get('year')->getData(), $form->get('month')->getData());
             /** @var PresenceMonitoringPdfBuilderService $pmbs */
             $pmbs = $this->get('app.presence_monitoring_pdf_builder');
             $pdf = $pmbs->build($operator, $pmitems);

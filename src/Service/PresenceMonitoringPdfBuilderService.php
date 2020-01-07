@@ -81,9 +81,9 @@ class PresenceMonitoringPdfBuilderService
         $this->tcpdf->Cell(15, 6, $this->ts->trans('admin.presencemonitoring.begin'), 1, 0, 'C', 0);
         $this->tcpdf->Cell(15, 6, $this->ts->trans('admin.presencemonitoring.end'), 1, 0, 'C', 0);
         $this->tcpdf->Cell(20, 6, $this->ts->trans('admin.presencemonitoring.total_hours_short'), 1, 0, 'R', 0);
-        $this->tcpdf->Cell(20, 6, $this->ts->trans('admin.presencemonitoring.normal_hours_short'), 1, 0, 'R', 0);
+        $this->tcpdf->Cell(25, 6, $this->ts->trans('admin.presencemonitoring.normal_hours_short'), 1, 0, 'R', 0);
         $this->tcpdf->Cell(20, 6, $this->ts->trans('admin.presencemonitoring.extra_hours_short'), 1, 0, 'R', 0);
-        $this->tcpdf->Cell(15, 6, $this->ts->trans('admin.presencemonitoring.sign'), 1, 1, 'R', 0);
+        $this->tcpdf->Cell(35, 6, $this->ts->trans('admin.presencemonitoring.sign'), 1, 1, 'C', 0);
 
         /** @var PresenceMonitoring $pm */
         foreach ($items as $pm) {
@@ -93,9 +93,9 @@ class PresenceMonitoringPdfBuilderService
             $this->tcpdf->Cell(15, 6, $pm->getAfternoonHourBeginString(), 1, 0, 'C', 0);
             $this->tcpdf->Cell(15, 6, $pm->getAfternoonHourEndString(), 1, 0, 'C', 0);
             $this->tcpdf->Cell(20, 6, $pm->getTotalHours(), 1, 0, 'R', 0);
-            $this->tcpdf->Cell(20, 6, $pm->getNormalHours(), 1, 0, 'R', 0);
+            $this->tcpdf->Cell(25, 6, $pm->getNormalHours(), 1, 0, 'R', 0);
             $this->tcpdf->Cell(20, 6, $pm->getExtraHours(), 1, 0, 'R', 0);
-            $this->tcpdf->Cell(15, 6, $pm->getExtraHours(), 1, 1, 'R', 0);
+            $this->tcpdf->Cell(35, 6, '', 1, 1, 'C', 0);
         }
 
         return $this->tcpdf;

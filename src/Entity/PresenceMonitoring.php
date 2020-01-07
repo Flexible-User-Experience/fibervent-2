@@ -161,7 +161,7 @@ class PresenceMonitoring extends AbstractBase
      */
     public function getMorningHourBeginString()
     {
-        return $this->getMorningHourBegin()->format('H:i');
+        return $this->getMorningHourBegin() ? $this->getMorningHourBegin()->format('H:i') : '--:--';
     }
 
     /**
@@ -189,7 +189,7 @@ class PresenceMonitoring extends AbstractBase
      */
     public function getMorningHourEndString()
     {
-        return $this->getMorningHourEnd()->format('H:i');
+        return $this->getMorningHourEnd() ? $this->getMorningHourEnd()->format('H:i') : '--:--';
     }
 
     /**
@@ -217,7 +217,7 @@ class PresenceMonitoring extends AbstractBase
      */
     public function getAfternoonHourBeginString()
     {
-        return $this->getAfternoonHourBegin()->format('H:i');
+        return $this->getAfternoonHourBegin() ? $this->getAfternoonHourBegin()->format('H:i') : '--:--';
     }
 
     /**
@@ -245,7 +245,7 @@ class PresenceMonitoring extends AbstractBase
      */
     public function getAfternoonHourEndString()
     {
-        return $this->getAfternoonHourEnd()->format('H:i');
+        return $this->getAfternoonHourEnd() ? $this->getAfternoonHourEnd()->format('H:i') : '--:--';
     }
 
     /**
