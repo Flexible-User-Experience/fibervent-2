@@ -5,4 +5,5 @@ doctrine:
         dql:
             datetime_functions:
                 year:        DoctrineExtensions\Query\Sqlite\Year
+                month:       DoctrineExtensions\Query\Sqlite\Month
                 date_format: DoctrineExtensions\Query\Sqlite\DateFormat

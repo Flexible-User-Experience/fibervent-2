@@ -9,6 +9,8 @@ namespace App\Enum;
  */
 class AuditLanguageEnum
 {
+    const DEFAULT_LANGUAGE_STRING = 'es';
+
     const SPANISH = 0;
     const ENGLISH = 1;
     const FRENCH = 2;
@@ -34,7 +36,7 @@ class AuditLanguageEnum
     public static function getReversedEnumArray()
     {
         return array(
-            self::SPANISH => 'es',
+            self::SPANISH => self::DEFAULT_LANGUAGE_STRING,
             self::ENGLISH => 'en',
             self::FRENCH => 'fr',
             self::PORTUGUESE => 'pt',

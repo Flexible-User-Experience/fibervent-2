@@ -5,6 +5,7 @@
     "license": "proprietary",
     "require": {
         "php": ">=7.4.0",
+        "ext-calendar": "*",
         "ext-ctype": "*",
         "ext-iconv": "*",
         "a2lix/translation-form-bundle": "^2.0",

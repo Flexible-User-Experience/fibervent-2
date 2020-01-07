@@ -129,14 +129,17 @@ pdf_workorder:
     customer_data: 'DATOS CLIENTE'
     windmill_data: 'DATOS AEROS'
     certifying_company_data: 'DATOS CERTIFICADORA'
-    sumary_external_damages_to_repair: 'Resumen de daños a reparar en'
-    repair: 'Reparación con'
+    sumary_external_damages_to_repair: 'RESUMEN DE DAÑOS A REPARAR EN'
+    repair: 'REPARACIÓN CON'
   table_header:
     serial_number: 'Nº de serie'
-    team: 'Equipo'
-    bladedamage_size: Dimensión
-    bladedamage_radius: Radio
-    bladedamage_distance: Distancia
+    team: 'EQUIPO'
+    damage: 'DAÑO'
+    bladedamage_size: DIMENSIÓN
+    bladedamage_radius: RADIO
+    bladedamage_distance: DISTANCIA
+    bladedamage_position: POSICIÓN
+    workordertask_description: DESCRIPCIÓN
 enum:
   blade_damage_position:
     1_VP: VP
@@ -489,9 +492,29 @@ admin:
     afternoon_hour_begin: Hora entrada tarde
     afternoon_hour_end: Hora salida tarde
     total_hours: Total horas
+    total_hours_short: Horas jornada
     normal_hours: Total horas ordinarias
+    normal_hours_short: Horas ordinarias
     extra_hours: Total horas extra
+    extra_hours_short: Horas extra
     category: Categoría
+    day: Dia
+    morning: Mañana
+    afternoon: Tarde
+    begin: Entrada
+    end: Salida
+    sign: Firma
+    brand: empresa
+    brand_title: 'Razón social'
+    brand_cif: 'CIF'
+    operator: trabajador
+    operator_name: 'Nombre'
+    operator_nif: 'NIF'
+    total: TOTAL MES
+    legal: 'En cumplimineto de la obligación establecida en el Artículo 35.5 del Real Decreto Legislativo 2/2015 del 23 de Octubre, por el que se aprueba el texto refundido de la Ley del Estatuto de los Trabajadores'
+    head_line_1: 'REGISTRO DIARIO DE JORNADA DE TRABAJADORES A TIEMPO COMPLETO'
+    head_line_2: 'Periodo de liquidación'
+    head_line_3: 'Fecha'
     form:
       year: Año
       month: Mes
@@ -509,6 +532,9 @@ month:
   october: Octubre
   november: Noviembre
   december: Diciembre
+fibervent:
+  name: 'Fibervent, SL'
+  cif: 'B55572580'
 gmap:
   general: ubicación general
 # Admin defaults

@@ -64,6 +64,11 @@ services:
         public: true
         arguments:
             - '@doctrine.orm.entity_manager'
+    app.manager_precense_monitoring:
+        class: App\Manager\PresenceMonitoringManager
+        public: true
+        arguments:
+            - '@app.precense_monitoring_repository'
     # Messaging
     app.courier:
         class: App\Service\CourierService

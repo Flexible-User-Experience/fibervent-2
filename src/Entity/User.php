@@ -65,6 +65,13 @@ class User extends BaseUser
     private $language;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $nif;
+
+    /**
      * Methods.
      */
 
@@ -112,6 +119,26 @@ class User extends BaseUser
     public function setLanguage($language)
     {
         $this->language = $language;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getNif(): ?string
+    {
+        return $this->nif;
+    }
+
+    /**
+     * @param string $nif
+     *
+     * @return $this
+     */
+    public function setNif(?string $nif): User
+    {
+        $this->nif = $nif;
 
         return $this;
     }
