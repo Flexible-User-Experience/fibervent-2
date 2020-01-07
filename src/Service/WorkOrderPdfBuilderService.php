@@ -69,7 +69,7 @@ class WorkOrderPdfBuilderService
         $this->tcpdf->SetLineWidth(0.3);
         $this->tcpdf->SetFont('', 'B', 7);
 
-        $this->tcpdf->SetAbsXY(10,45);
+        $this->tcpdf->SetAbsXY(10, 45);
         $this->tcpdf->MultiCell(30, 5, $this->ts->trans('admin.workorder.project_number'), 1, 'L', 0, 0, '', '', true, 0, false, true, 5, 'M');
         $this->tcpdf->SetFont('');
         $this->tcpdf->MultiCell(15, 5, $workOrder->getId(), 1, 'C', 0, 0, '', '', true, 0, false, true, 5, 'M');
@@ -79,24 +79,23 @@ class WorkOrderPdfBuilderService
         $this->tcpdf->SetFont('');
         $this->tcpdf->MultiCell(15, 5, $workOrder->getCreatedAt()->format('d/m/Y'), 1, 'C', 0, 0, '', '', true, 0, false, true, 5, 'M');
 
-        $this->tcpdf->SetAbsXY(100,50);
+        $this->tcpdf->SetAbsXY(100, 50);
         $this->tcpdf->SetFont('', 'B', 10);
         $this->tcpdf->MultiCell(100, 5, $this->ts->trans('pdf_workorder.header.sumary_external_damages_to_repair').' '.strtoupper($workOrder->getWindfarm()->getName()), 0, 'C', 0, 0, '', '', true, 0, false, true, 5, 'M');
 
-
-        $this->tcpdf->SetAbsXY(112,10);
+        $this->tcpdf->SetAbsXY(112, 10);
 
         $this->tcpdf->SetFont('', 'B', 7);
         $this->tcpdf->Cell(55, 7,  $this->ts->trans('pdf_workorder.header.customer_data'), 1, 0, 'C', 1);
         $this->tcpdf->Cell(55, 7, $this->ts->trans('pdf_workorder.header.windmill_data'), 1, 0, 'C', 1);
         $this->tcpdf->Cell(65, 7, $this->ts->trans('pdf_workorder.header.certifying_company_data'), 1, 0, 'C', 1);
         $this->tcpdf->Ln();
-        // Color and font restoration
+        // Color and font restore
         $this->tcpdf->SetFillColor(224, 235, 255);
         $this->tcpdf->SetTextColor(0);
         $this->tcpdf->SetFont('');
 
-        $this->tcpdf->SetAbsXY(112,17);
+        $this->tcpdf->SetAbsXY(112, 17);
         $this->tcpdf->SetFont('', 'B', 7);
         $this->tcpdf->Cell(20, 5, $this->ts->trans('admin.customer.title'), 1, 0, 'L', 0);
         $this->tcpdf->SetFont('');
@@ -110,7 +109,7 @@ class WorkOrderPdfBuilderService
         $this->tcpdf->SetFont('');
         $this->tcpdf->Cell(35, 5, $workOrder->getCertifyingCompanyName(), 1, 0, 'C', 0);
 
-        $this->tcpdf->SetAbsXY(112,22);
+        $this->tcpdf->SetAbsXY(112, 22);
         $this->tcpdf->SetFont('', 'B', 7);
         $this->tcpdf->Cell(20, 5,  $this->ts->trans('admin.customer.contact'), 1, 0, 'L', 0);
         $this->tcpdf->SetFont('');
@@ -124,7 +123,7 @@ class WorkOrderPdfBuilderService
         $this->tcpdf->SetFont('');
         $this->tcpdf->Cell(35, 5, $workOrder->getCertifyingCompanyContactPerson(), 1, 0, 'C', 0);
 
-        $this->tcpdf->SetAbsXY(112,27);
+        $this->tcpdf->SetAbsXY(112, 27);
         $this->tcpdf->SetFont('', 'B', 7);
         $this->tcpdf->Cell(20, 5,  $this->ts->trans('admin.customer.phone'), 1, 0, 'L', 0);
         $this->tcpdf->SetFont('');
@@ -138,7 +137,7 @@ class WorkOrderPdfBuilderService
         $this->tcpdf->SetFont('');
         $this->tcpdf->Cell(35, 5, $workOrder->getCertifyingCompanyPhone(), 1, 0, 'C', 0);
 
-        $this->tcpdf->SetAbsXY(112,32);
+        $this->tcpdf->SetAbsXY(112, 32);
         $this->tcpdf->SetFont('', 'B', 7);
         $this->tcpdf->Cell(20, 5,  $this->ts->trans('admin.windfarm.title'), 1, 0, 'L', 0);
         $this->tcpdf->SetFont('');
@@ -152,7 +151,7 @@ class WorkOrderPdfBuilderService
         $this->tcpdf->SetFont('');
         $this->tcpdf->Cell(35, 5, $workOrder->getCertifyingCompanyEmail(), 1, 0, 'C', 0);
 
-        $this->tcpdf->SetAbsXY(112,37);
+        $this->tcpdf->SetAbsXY(112, 37);
         $this->tcpdf->SetFont('', 'B', 7);
         $this->tcpdf->Cell(20, 5,  $this->ts->trans('admin.customer.city'), 1, 0, 'L', 0);
         $this->tcpdf->SetFont('');
@@ -166,13 +165,13 @@ class WorkOrderPdfBuilderService
         $this->tcpdf->SetFont('');
         $this->tcpdf->Cell(35, 5, '', 1, 0, 'C', 0);
 
-        $this->tcpdf->SetAbsXY(10,60);
+        $this->tcpdf->SetAbsXY(10, 60);
         $this->tcpdf->SetFillColor(179, 204, 255);
         $this->tcpdf->SetTextColor(0);
         $this->tcpdf->SetLineWidth(0.3);
         $this->tcpdf->SetFont('', 'B', 7);
         // Header
-        $this->tcpdf->Cell(30, 7, 'WTG', 1, 0, 'C', 1);
+        $this->tcpdf->Cell(30, 7, $this->ts->trans('admin.workordertask.wtg'), 1, 0, 'C', 1);
         $this->tcpdf->Cell(10, 7, strtoupper($this->ts->trans('admin.windmill.bladetype')), 1, 0, 'C', 1);
         $this->tcpdf->Cell(25, 7, strtoupper($this->ts->trans('pdf_workorder.table_header.serial_number')), 1, 0, 'C', 1);
         $this->tcpdf->Cell(10, 7, $this->ts->trans('pdf_workorder.table_header.damage'), 1, 0, 'C', 1);
@@ -188,14 +187,14 @@ class WorkOrderPdfBuilderService
         $this->tcpdf->SetFillColor(224, 235, 255);
         $this->tcpdf->SetTextColor(0);
         $this->tcpdf->SetFont('');
-        $this->tcpdf->SetAbsXY(15,67);
+        $this->tcpdf->SetAbsXY(15, 67);
         // Data
         $fillWindmill = 1;
         $fillBlade = 1;
         $windmill = 0;
         $windmillBlade = 0;
         /** @var WorkOrderTask $workOrderTask */
-        foreach($workOrder->getWorkOrderTasks() as $workOrderTask) {
+        foreach ($workOrder->getWorkOrderTasks() as $workOrderTask) {
             $this->tcpdf->SetAbsX(10);
             if ($windmill != $workOrderTask->getWindmill()->getId()) {
                 $fillWindmill = !$fillWindmill;

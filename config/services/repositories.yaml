@@ -69,6 +69,12 @@ services:
         factory: [ "@doctrine", getRepository ]
         arguments:
             - App:Observation
+    app.precense_monitoring_repository:
+        public: true
+        class: App\Repository\PresenceMonitoringRepository
+        factory: [ "@doctrine", getRepository ]
+        arguments:
+            - App:PresenceMonitoring
     app.repositories_service:
         class: App\Service\RepositoriesService
         arguments:
