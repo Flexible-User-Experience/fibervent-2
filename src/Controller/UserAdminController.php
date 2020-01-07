@@ -2,11 +2,12 @@
 
 namespace App\Controller;
 
+use App\Entity\PresenceMonitoring;
 use App\Entity\User;
+use App\Enum\MonthsEnum;
 use App\Form\Type\UserOperatorChooseYearAndMonthPresenceMonitoring;
 use App\Form\Type\UserProfileFormType;
 use App\Manager\PresenceMonitoringManager;
-use App\Repository\PresenceMonitoringRepository;
 use App\Service\PresenceMonitoringPdfBuilderService;
 use FOS\UserBundle\Model\UserInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -73,6 +74,7 @@ class UserAdminController extends AbstractBaseAdminController
     public function buildPresenceMonitoringAction(Request $request, $id)
     {
         $showPdfPreview = false;
+        $pmitems = array();
         /** @var User $operator */
         $operator = $this->admin->getObject($id);
         if (!$operator) {
@@ -87,7 +89,7 @@ class UserAdminController extends AbstractBaseAdminController
             /** @var PresenceMonitoringPdfBuilderService $pmbs */
             $pmbs = $this->get('app.presence_monitoring_pdf_builder');
             $pdf = $pmbs->build($operator, $pmitems);
-            $pdf->Output($this->getDestPdfFilePath($operator), 'F');
+            $pdf->Output($this->getDestPdfFilePath($operator, $pmitems), 'F');
             $showPdfPreview = true;
         }
 
@@ -99,30 +101,52 @@ class UserAdminController extends AbstractBaseAdminController
                 'form' => $form->createView(),
                 'elements' => $this->admin->getShow(),
                 'show_pdf_preview' => $showPdfPreview,
-                'pdf_short_path' => $this->getShortPdfFilePath($operator),
+                'pdf_short_path' => $this->getShortPdfFilePath($operator, $pmitems),
             )
         );
     }
 
     /**
-     * @param User $user
+     * @param User       $user
+     * @param array|null $items
      *
      * @return string
      */
-    private function getDestPdfFilePath(User $user)
+    private function getDestPdfFilePath(User $user, $items = null)
     {
         $krd = $this->getParameter('kernel.project_dir');
 
-        return $krd.DIRECTORY_SEPARATOR.'public'.$this->getShortPdfFilePath($user);
+        return $krd.DIRECTORY_SEPARATOR.'public'.$this->getShortPdfFilePath($user, $items);
     }
 
     /**
-     * @param User $user
+     * @param User       $user
+     * @param array|null $items
      *
      * @return string
      */
-    private function getShortPdfFilePath(User $user)
+    private function getShortPdfFilePath(User $user, $items = null)
     {
-        return DIRECTORY_SEPARATOR.'pdfs'.DIRECTORY_SEPARATOR.'Registro---'.$user->getId().'.pdf';
+        return DIRECTORY_SEPARATOR.'pdfs'.DIRECTORY_SEPARATOR.'registro-diario-'.$user->getId().'-'.$this->getPeriodSluggedName($items).'.pdf';
+    }
+
+    /**
+     * @param array|null $items
+     *
+     * @return string
+     */
+    private function getPeriodSluggedName($items)
+    {
+        $ts = $this->get('translator');
+        $periodString = '';
+        $itemsCount = count($items);
+        if ($itemsCount > 0) {
+            /** @var PresenceMonitoring $lastItemDate */
+            $lastItemDate = $items[$itemsCount - 1];
+            $lastItemDate = $lastItemDate->getDate();
+            $periodString = strtolower($ts->trans(MonthsEnum::getOldMonthEnumArray()[intval($lastItemDate->format('n'))])).'_'.$lastItemDate->format('Y');
+        }
+
+        return $periodString;
     }
 }
