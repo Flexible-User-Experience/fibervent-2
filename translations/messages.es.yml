@@ -532,6 +532,9 @@ month:
   october: Octubre
   november: Noviembre
   december: Diciembre
+fibervent:
+  name: 'Fibervent, SL'
+  cif: 'B55572580'
 gmap:
   general: ubicación general
 # Admin defaults

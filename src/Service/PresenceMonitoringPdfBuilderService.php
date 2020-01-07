@@ -85,10 +85,10 @@ class PresenceMonitoringPdfBuilderService
         $this->tcpdf->Cell(90, 6, strtoupper($this->ts->trans('admin.presencemonitoring.brand')), 1, 0, 'C', true);
         $this->tcpdf->Cell(90, 6, strtoupper($this->ts->trans('admin.presencemonitoring.operator')), 1, 1, 'C', true);
         $this->tcpdf->SetFillColor(108, 197, 205);
-        $this->tcpdf->Cell(90, 6, $this->ts->trans('admin.presencemonitoring.brand_title').': ', 1, 0, 'L', true);
+        $this->tcpdf->Cell(90, 6, $this->ts->trans('admin.presencemonitoring.brand_title').': '.$this->ts->trans('fibervent.name'), 1, 0, 'L', true);
         $this->tcpdf->Cell(90, 6, $this->ts->trans('admin.presencemonitoring.operator_name').': '.$operator->getFullname(), 1, 1, 'L', true);
-        $this->tcpdf->Cell(90, 6, $this->ts->trans('admin.presencemonitoring.brand_cif').': ', 1, 0, 'L', true);
-        $this->tcpdf->Cell(90, 6, $this->ts->trans('admin.presencemonitoring.operator_nif').': '.$operator->getFullname(), 1, 1, 'L', true);
+        $this->tcpdf->Cell(90, 6, $this->ts->trans('admin.presencemonitoring.brand_cif').': '.$this->ts->trans('fibervent.cif'), 1, 0, 'L', true);
+        $this->tcpdf->Cell(90, 6, $this->ts->trans('admin.presencemonitoring.operator_nif').': '.'TODO', 1, 1, 'L', true);
         $this->tcpdf->SetFillColor(183, 223, 234);
         $this->tcpdf->Cell(90, 6, $this->ts->trans('admin.presencemonitoring.head_line_2').': ', 1, 0, 'L', true);
         $this->tcpdf->Cell(90, 6, $this->ts->trans('admin.presencemonitoring.head_line_3').': ', 1, 1, 'L', true);
@@ -120,7 +120,9 @@ class PresenceMonitoringPdfBuilderService
             if (++$i === $numItems) {
                 $this->tcpdf->SetFont('', 'B', 7);
                 $cellBackgroundFill = true;
+                $this->tcpdf->SetFillColor(183, 223, 234);
                 $this->tcpdf->Cell(80, 6, $this->ts->trans('admin.presencemonitoring.total'), 1, 0, 'R', $cellBackgroundFill);
+                $this->tcpdf->SetFillColor(108, 197, 205);
             } else {
                 $this->tcpdf->Cell(20, 6, $pm->getDateString(), 1, 0, 'C', 0);
                 $this->tcpdf->Cell(15, 6, $pm->getMorningHourBeginString(), 1, 0, 'C', 0);

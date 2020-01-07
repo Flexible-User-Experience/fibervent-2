@@ -287,9 +287,9 @@ class WindfarmAuditsPdfBuilderService extends AbstractPdfBuilderService
             $pdf->SetXY(CustomTcpdf::PDF_MARGIN_LEFT, 250);
             $pdf->setFontStyle(null, null, 8);
             $pdf->setBlueText();
-            $pdf->Write(0, 'Fibervent, SL', false, false, 'L', true);
+            $pdf->Write(0, $this->ts->trans('fibervent.name'), false, false, 'L', true);
             $pdf->setBlackText();
-            $pdf->Write(0, 'CIF: B55572580', false, false, 'L', true);
+            $pdf->Write(0, $this->ts->trans('admin.presencemonitoring.brand_cif').': '.$this->ts->trans('fibervent.cif'), false, false, 'L', true);
             $pdf->Write(0, 'Pol. Industrial Pla de Solans, Parcela 2', false, false, 'L', true);
             $pdf->Write(0, '43519 El Perelló (Tarragona)', false, false, 'L', true);
             $pdf->Write(0, 'Tel. +34 977 490 713', false, false, 'L', true);
