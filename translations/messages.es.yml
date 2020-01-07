@@ -504,6 +504,8 @@ admin:
     begin: Entrada
     end: Salida
     sign: Firma
+    brand: empresa
+    operator: trabajador
     total: TOTAL MES
     legal: 'En cumplimineto de la obligación establecida en el Artículo 35.5 del Real Decreto Legislativo 2/2015 del 23 de Octubre, por el que se aprueba el texto refundido de la Ley del Estatuto de los Trabajadores'
     form:

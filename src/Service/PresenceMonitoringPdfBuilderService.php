@@ -115,11 +115,22 @@ class PresenceMonitoringPdfBuilderService
             $this->tcpdf->SetFont('', '', 7);
         }
 
-        // Legal text
+        // legal text
         $this->tcpdf->Ln(AbstractPdfBuilderService::SECTION_SPACER_V);
         $this->tcpdf->SetX(self::PDF_MARGIN_LEFT);
         $this->tcpdf->SetFont('', 'B', 8);
         $this->tcpdf->MultiCell(180, 12, $this->ts->trans('admin.presencemonitoring.legal'), 0, 'L', false, 1, $this->tcpdf->GetX(), '', true);
+
+        // final sign boxes
+        $this->tcpdf->Ln(AbstractPdfBuilderService::SECTION_SPACER_V);
+        $this->tcpdf->SetX(self::PDF_MARGIN_LEFT);
+        $this->tcpdf->Cell(60, 6, $this->ts->trans('admin.presencemonitoring.sign').' '.$this->ts->trans('admin.presencemonitoring.brand'), 1, 0, 'C', true);
+        $this->tcpdf->Cell(15, 6, '', 0, 0, 'C', false);
+        $this->tcpdf->Cell(60, 6, $this->ts->trans('admin.presencemonitoring.sign').' '.$this->ts->trans('admin.presencemonitoring.operator'), 1, 1, 'C', true);
+        $this->tcpdf->SetX(self::PDF_MARGIN_LEFT);
+        $this->tcpdf->Cell(60, 18, '', 1, 0, 'C', false);
+        $this->tcpdf->Cell(15, 18, '', 0, 0, 'C', false);
+        $this->tcpdf->Cell(60, 18, '', 1, 1, 'C', false);
 
         return $this->tcpdf;
     }
