@@ -16,6 +16,7 @@ use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 /**
  * Class UserAdmin.
@@ -161,6 +162,14 @@ class UserAdmin extends ParentUserAdmin
                 )
             )
             ->add(
+                'nif',
+                TextType::class,
+                array(
+                    'label' => 'admin.presencemonitoring.operator_nif',
+                    'required' => false,
+                )
+            )
+            ->add(
                 'language',
                 ChoiceType::class,
                 array(
@@ -221,6 +230,13 @@ class UserAdmin extends ParentUserAdmin
                 null,
                 array(
                     'label' => 'admin.user.phone',
+                )
+            )
+            ->add(
+                'nif',
+                null,
+                array(
+                    'label' => 'admin.presencemonitoring.operator_nif',
                 )
             )
             ->add(

@@ -5,6 +5,7 @@ namespace App\Service;
 use App\Entity\User;
 use App\Entity\PresenceMonitoring;
 use App\Enum\AuditLanguageEnum;
+use App\Enum\MonthsEnum;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use TCPDF;
 
@@ -88,9 +89,17 @@ class PresenceMonitoringPdfBuilderService
         $this->tcpdf->Cell(90, 6, $this->ts->trans('admin.presencemonitoring.brand_title').': '.$this->ts->trans('fibervent.name'), 1, 0, 'L', true);
         $this->tcpdf->Cell(90, 6, $this->ts->trans('admin.presencemonitoring.operator_name').': '.$operator->getFullname(), 1, 1, 'L', true);
         $this->tcpdf->Cell(90, 6, $this->ts->trans('admin.presencemonitoring.brand_cif').': '.$this->ts->trans('fibervent.cif'), 1, 0, 'L', true);
-        $this->tcpdf->Cell(90, 6, $this->ts->trans('admin.presencemonitoring.operator_nif').': '.'TODO', 1, 1, 'L', true);
+        $this->tcpdf->Cell(90, 6, $this->ts->trans('admin.presencemonitoring.operator_nif').': '.$operator->getNif(), 1, 1, 'L', true);
         $this->tcpdf->SetFillColor(183, 223, 234);
-        $this->tcpdf->Cell(90, 6, $this->ts->trans('admin.presencemonitoring.head_line_2').': ', 1, 0, 'L', true);
+        $periodString = '';
+        $itemsCount = count($items);
+        if ($itemsCount > 0) {
+            /** @var PresenceMonitoring $lastItemDate */
+            $lastItemDate = $items[$itemsCount - 1];
+            $lastItemDate = $lastItemDate->getDate();
+            $periodString = $this->ts->trans(MonthsEnum::getOldMonthEnumArray()[intval($lastItemDate->format('n'))]).' '.$lastItemDate->format('Y');
+        }
+        $this->tcpdf->Cell(90, 6, $this->ts->trans('admin.presencemonitoring.head_line_2').': '.$periodString, 1, 0, 'L', true);
         $this->tcpdf->Cell(90, 6, $this->ts->trans('admin.presencemonitoring.head_line_3').': ', 1, 1, 'L', true);
         $this->tcpdf->SetFillColor(108, 197, 205);
 
@@ -143,13 +152,14 @@ class PresenceMonitoringPdfBuilderService
         $this->tcpdf->MultiCell(180, 12, $this->ts->trans('admin.presencemonitoring.legal'), 0, 'L', false, 1, $this->tcpdf->GetX(), '', true);
 
         // final sign boxes
+        $this->tcpdf->SetFillColor(183, 223, 234);
         $this->tcpdf->Ln(AbstractPdfBuilderService::SECTION_SPACER_V);
         $this->tcpdf->Cell(60, 6, $this->ts->trans('admin.presencemonitoring.sign').' '.$this->ts->trans('admin.presencemonitoring.brand'), 1, 0, 'C', true);
         $this->tcpdf->Cell(15, 6, '', 0, 0, 'C', false);
         $this->tcpdf->Cell(60, 6, $this->ts->trans('admin.presencemonitoring.sign').' '.$this->ts->trans('admin.presencemonitoring.operator'), 1, 1, 'C', true);
-        $this->tcpdf->Cell(60, 18, '', 1, 0, 'C', false);
-        $this->tcpdf->Cell(15, 18, '', 0, 0, 'C', false);
-        $this->tcpdf->Cell(60, 18, '', 1, 1, 'C', false);
+        $this->tcpdf->Cell(60, 16, '', 1, 0, 'C', false);
+        $this->tcpdf->Cell(15, 16, '', 0, 0, 'C', false);
+        $this->tcpdf->Cell(60, 16, '', 1, 1, 'C', false);
 
         return $this->tcpdf;
     }
