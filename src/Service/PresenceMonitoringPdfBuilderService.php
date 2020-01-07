@@ -16,8 +16,8 @@ class PresenceMonitoringPdfBuilderService
 {
     const PDF_MARGIN_LEFT = 15;
     const PDF_MARGIN_RIGHT = 15;
-    const PDF_MARGIN_TOP = 10;
-    const PDF_MARGIN_BOTTOM = 10;
+    const PDF_MARGIN_TOP = 4;
+    const PDF_MARGIN_BOTTOM = 4;
 
     /**
      * @var \TCPDF $tcpdf
@@ -66,6 +66,8 @@ class PresenceMonitoringPdfBuilderService
         $this->ts->setLocale(AuditLanguageEnum::DEFAULT_LANGUAGE_STRING);
         $this->tcpdf->setPrintHeader(false);
         $this->tcpdf->setPrintFooter(false);
+        $this->tcpdf->SetMargins(self::PDF_MARGIN_LEFT, self::PDF_MARGIN_TOP, self::PDF_MARGIN_RIGHT, true);
+        $this->tcpdf->SetAutoPageBreak(true, self::PDF_MARGIN_BOTTOM);
         $this->tcpdf->AddPage('P', 'A4', true, true);
         $this->tcpdf->Image($this->sahs->getAbsoluteAssetFilePath('/build/fibervent_logo_white_landscape.jpg'), self::PDF_MARGIN_LEFT, self::PDF_MARGIN_TOP, 45, 0, 'JPEG', '', 'T', false, 300, '', false, false, 0, false, false, false);
         // Colors, line width and bold font
@@ -73,8 +75,16 @@ class PresenceMonitoringPdfBuilderService
         $this->tcpdf->SetTextColor(0);
         $this->tcpdf->SetLineWidth(0.1);
         $this->tcpdf->SetFont('', 'B', 7);
-        // head line
-        $this->tcpdf->SetAbsXY(self::PDF_MARGIN_LEFT, self::PDF_MARGIN_TOP + 20);
+
+        // customer and worker table info
+        $this->tcpdf->SetAbsXY(self::PDF_MARGIN_LEFT, self::PDF_MARGIN_TOP + 14);
+        $this->tcpdf->Cell(180, 6, $this->ts->trans('admin.presencemonitoring.head_line_1'), 1, 1, 'C', true);
+        $this->tcpdf->Cell(90, 6, strtoupper($this->ts->trans('admin.presencemonitoring.brand')), 1, 0, 'C', true);
+        $this->tcpdf->Cell(90, 6, strtoupper($this->ts->trans('admin.presencemonitoring.operator')), 1, 1, 'C', true);
+        $this->tcpdf->Cell(90, 6, $this->ts->trans('admin.presencemonitoring.brand'), 1, 0, 'C', true);
+        $this->tcpdf->Cell(90, 6, $this->ts->trans('admin.presencemonitoring.operator'), 1, 1, 'C', true);
+
+        // main table head line
         $this->tcpdf->Cell(20, 12, $this->ts->trans('admin.presencemonitoring.day'), 1, 0, 'C', true);
         $this->tcpdf->Cell(30, 6, $this->ts->trans('admin.presencemonitoring.morning'), 1, 0, 'C', true);
         $this->tcpdf->Cell(30, 6, $this->ts->trans('admin.presencemonitoring.afternoon'), 1, 0, 'C', true);
@@ -82,20 +92,20 @@ class PresenceMonitoringPdfBuilderService
         $this->tcpdf->Cell(25, 12, $this->ts->trans('admin.presencemonitoring.normal_hours_short'), 1, 0, 'C', true);
         $this->tcpdf->Cell(20, 12, $this->ts->trans('admin.presencemonitoring.extra_hours_short'), 1, 0, 'C', true);
         $this->tcpdf->Cell(35, 12, $this->ts->trans('admin.presencemonitoring.sign'), 1, 0, 'C', true);
-        // head line 2
-        $this->tcpdf->SetAbsXY(self::PDF_MARGIN_LEFT + 20, self::PDF_MARGIN_TOP + 26);
+
+        // main table head line 2
+        $this->tcpdf->SetAbsXY(self::PDF_MARGIN_LEFT + 20, self::PDF_MARGIN_TOP + 38);
         $this->tcpdf->Cell(15, 6, $this->ts->trans('admin.presencemonitoring.begin'), 1, 0, 'C', true);
         $this->tcpdf->Cell(15, 6, $this->ts->trans('admin.presencemonitoring.end'), 1, 0, 'C', true);
         $this->tcpdf->Cell(15, 6, $this->ts->trans('admin.presencemonitoring.begin'), 1, 0, 'C', true);
         $this->tcpdf->Cell(15, 6, $this->ts->trans('admin.presencemonitoring.end'), 1, 1, 'C', true);
-
         $this->tcpdf->SetFont('', '', 7);
 
+        // main table values
         $numItems = count($items);
         $i = 0;
         /** @var PresenceMonitoring $pm */
         foreach ($items as $pm) {
-            $this->tcpdf->SetX(self::PDF_MARGIN_LEFT);
             $cellBackgroundFill = false;
             if (++$i === $numItems) {
                 $this->tcpdf->SetFont('', 'B', 7);
@@ -117,17 +127,14 @@ class PresenceMonitoringPdfBuilderService
 
         // legal text
         $this->tcpdf->Ln(AbstractPdfBuilderService::SECTION_SPACER_V);
-        $this->tcpdf->SetX(self::PDF_MARGIN_LEFT);
         $this->tcpdf->SetFont('', 'B', 8);
         $this->tcpdf->MultiCell(180, 12, $this->ts->trans('admin.presencemonitoring.legal'), 0, 'L', false, 1, $this->tcpdf->GetX(), '', true);
 
         // final sign boxes
         $this->tcpdf->Ln(AbstractPdfBuilderService::SECTION_SPACER_V);
-        $this->tcpdf->SetX(self::PDF_MARGIN_LEFT);
         $this->tcpdf->Cell(60, 6, $this->ts->trans('admin.presencemonitoring.sign').' '.$this->ts->trans('admin.presencemonitoring.brand'), 1, 0, 'C', true);
         $this->tcpdf->Cell(15, 6, '', 0, 0, 'C', false);
         $this->tcpdf->Cell(60, 6, $this->ts->trans('admin.presencemonitoring.sign').' '.$this->ts->trans('admin.presencemonitoring.operator'), 1, 1, 'C', true);
-        $this->tcpdf->SetX(self::PDF_MARGIN_LEFT);
         $this->tcpdf->Cell(60, 18, '', 1, 0, 'C', false);
         $this->tcpdf->Cell(15, 18, '', 0, 0, 'C', false);
         $this->tcpdf->Cell(60, 18, '', 1, 1, 'C', false);
