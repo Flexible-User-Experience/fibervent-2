@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\PresenceMonitoring;
 use App\Entity\User;
+use App\Enum\PresenceMonitoringCategoryEnum;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry as RegistryInterface;
 use Doctrine\ORM\Query;
@@ -105,5 +106,43 @@ class PresenceMonitoringRepository extends ServiceEntityRepository
     public function findByOperatorYearAndMonthSortedByDate(User $operator, $year, $month)
     {
         return $this->findByOperatorYearAndMonthSortedByDateQ($operator, $year, $month)->getResult();
+    }
+
+    /**
+     * @param User $operator
+     * @param int  $year
+     * @param int  $month
+     *
+     * @return QueryBuilder
+     */
+    public function findWorkdaysByOperatorYearAndMonthSortedByDateQB(User $operator, $year, $month)
+    {
+        return $this->findByOperatorYearAndMonthSortedByDateQB($operator, $year, $month)
+            ->andWhere('pm.category = :category')
+            ->setParameter('category', PresenceMonitoringCategoryEnum::WORKDAY);
+    }
+
+    /**
+     * @param User $operator
+     * @param int  $year
+     * @param int  $month
+     *
+     * @return Query
+     */
+    public function findWorkdaysByOperatorYearAndMonthSortedByDateQ(User $operator, $year, $month)
+    {
+        return $this->findWorkdaysByOperatorYearAndMonthSortedByDateQB($operator, $year, $month)->getQuery();
+    }
+
+    /**
+     * @param User $operator
+     * @param int  $year
+     * @param int  $month
+     *
+     * @return array
+     */
+    public function findWorkdaysByOperatorYearAndMonthSortedByDate(User $operator, $year, $month)
+    {
+        return $this->findWorkdaysByOperatorYearAndMonthSortedByDateQ($operator, $year, $month)->getResult();
     }
 }

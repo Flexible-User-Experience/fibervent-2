@@ -5,9 +5,12 @@ namespace App\Twig;
 use App\Entity\AuditWindmillBlade;
 use App\Entity\Damage;
 use App\Entity\DamageCategory;
+use App\Entity\PresenceMonitoring;
 use App\Enum\AuditTypeEnum;
+use App\Enum\PresenceMonitoringCategoryEnum;
 use App\Factory\WindmillBladesDamagesHelperFactory;
 use App\Repository\DamageRepository;
+use Symfony\Contracts\Translation\TranslatorInterface;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
 use Twig\TwigFunction;
@@ -22,12 +25,17 @@ class AppExtension extends AbstractExtension
     /**
      * @var DamageRepository
      */
-    private $dr;
+    private DamageRepository $dr;
 
     /**
      * @var WindmillBladesDamagesHelperFactory
      */
-    private $wbdhf;
+    private WindmillBladesDamagesHelperFactory $wbdhf;
+
+    /**
+     * @var TranslatorInterface
+     */
+    private TranslatorInterface $ts;
 
     /**
      * Methods.
@@ -38,11 +46,13 @@ class AppExtension extends AbstractExtension
      *
      * @param DamageRepository                   $dr
      * @param WindmillBladesDamagesHelperFactory $wbdhf
+     * @param TranslatorInterface                $ts
      */
-    public function __construct(DamageRepository $dr, WindmillBladesDamagesHelperFactory $wbdhf)
+    public function __construct(DamageRepository $dr, WindmillBladesDamagesHelperFactory $wbdhf, TranslatorInterface $ts)
     {
         $this->dr = $dr;
         $this->wbdhf = $wbdhf;
+        $this->ts = $ts;
     }
 
     /**
@@ -57,6 +67,7 @@ class AppExtension extends AbstractExtension
         return array(
             new TwigFilter('humanized_audit_type', array($this, 'filterHumanizedAuditType')),
             new TwigFilter('get_humanized_total_hours', array($this, 'getHumanizedTotalHours')),
+            new TwigFilter('draw_presence_monitory_category_label', array($this, 'drawPresenceMonitoryCategoryLabel')),
         );
     }
 
@@ -98,6 +109,26 @@ class AppExtension extends AbstractExtension
         }
 
         return $result;
+    }
+
+    /**
+     * @param PresenceMonitoring $pm
+     *
+     * @return string
+     */
+    public function drawPresenceMonitoryCategoryLabel(PresenceMonitoring $pm) {
+        $cssClass = 'default';
+        if ($pm->getCategory() == PresenceMonitoringCategoryEnum::WORKDAY) {
+            $cssClass = 'success';
+        } elseif ($pm->getCategory() == PresenceMonitoringCategoryEnum::DAYOFF) {
+            $cssClass = 'warning';
+        } elseif ($pm->getCategory() == PresenceMonitoringCategoryEnum::PERMITS) {
+            $cssClass = 'primary';
+        } elseif ($pm->getCategory() == PresenceMonitoringCategoryEnum::LEAVE) {
+            $cssClass = 'danger';
+        }
+
+        return '<span class="label label-'.$cssClass.'">'.$this->ts->trans($pm->getCategoryString()).'</span>';
     }
 
     /**
