@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Form\Type\UserOperatorChooseYearAndMonthPresenceMonitoring;
 use App\Form\Type\UserProfileFormType;
+use App\Repository\PresenceMonitoringRepository;
 use App\Service\PresenceMonitoringPdfBuilderService;
 use FOS\UserBundle\Model\UserInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -78,9 +79,12 @@ class UserAdminController extends AbstractBaseAdminController
         $form = $this->createForm(UserOperatorChooseYearAndMonthPresenceMonitoring::class, $operator);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+            /** @var PresenceMonitoringRepository $pmr */
+            $pmr = $this->get('app.precense_monitoring_repository');
+            $pmitems = $pmr->findByOperatorYearAndMonthSortedByDate($operator, 2020, 1);
             /** @var PresenceMonitoringPdfBuilderService $pmbs */
             $pmbs = $this->get('app.presence_monitoring_pdf_builder');
-            $pdf = $pmbs->build($operator);
+            $pdf = $pmbs->build($operator, $pmitems);
             $pdf->Output($this->getDestPdfFilePath($operator), 'F');
             $showPdfPreview = true;
         }

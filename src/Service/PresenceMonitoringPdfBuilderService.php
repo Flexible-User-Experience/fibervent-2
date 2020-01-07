@@ -3,6 +3,7 @@
 namespace App\Service;
 
 use App\Entity\User;
+use App\Entity\PresenceMonitoring;
 use Symfony\Bundle\FrameworkBundle\Translation\Translator;
 
 /**
@@ -50,11 +51,12 @@ class PresenceMonitoringPdfBuilderService
     }
 
     /**
-     * @param User $user
+     * @param User                       $user
+     * @param PresenceMonitoring[]|array $items
      *
      * @return \TCPDF
      */
-    public function build(User $user) {
+    public function build(User $user, $items) {
         $this->ts->setLocale('es');
         $this->tcpdf->setPrintHeader(false);
         $this->tcpdf->setPrintFooter(false);

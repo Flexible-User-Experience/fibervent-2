@@ -1,6 +1,0 @@
-doctrine:
-    orm:
-        dql:
-            datetime_functions:
-                year:        DoctrineExtensions\Query\Mysql\Year
-                date_format: DoctrineExtensions\Query\Mysql\DateFormat
