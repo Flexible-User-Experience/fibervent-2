@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\DeliveryNote;
-use App\Service\WorkOrderPdfBuilderService;
+use App\Service\DeliveryNotePdfBuilderService;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -16,7 +16,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 class DeliveryNoteAdminController extends AbstractBaseAdminController
 {
     /**
-     * Export WorkOrder in PDF format action.
+     * Export DeliveryNote in PDF format action.
      *
      * @return Response
      *
@@ -29,11 +29,11 @@ class DeliveryNoteAdminController extends AbstractBaseAdminController
         /** @var DeliveryNote $object */
         $object = $this->getPersistedObject();
 
-        /** @var WorkOrderPdfBuilderService $apbs */
-        $apbs = $this->get('app.workorder_pdf_builder');
-        $pdf = $apbs->build($object);
+        /** @var DeliveryNotePdfBuilderService $dnpbs */
+        $dnpbs = $this->get('app.delivery_note_pdf_builder');
+        $pdf = $dnpbs->build($object);
 
-        return new Response($pdf->Output('informe_proyecto_'.$object->getId().'.pdf', 'I'), 200, array('Content-type' => 'application/pdf'));
+        return new Response($pdf->Output('albaran_'.$object->getId().'.pdf', 'I'), 200, array('Content-type' => 'application/pdf'));
     }
 
     /**

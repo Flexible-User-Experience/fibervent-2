@@ -2,11 +2,9 @@
 
 namespace App\Service;
 
-use App\Entity\WorkOrder;
+use App\Entity\DeliveryNote;
 use App\Entity\WorkOrderTask;
 use App\Enum\AuditLanguageEnum;
-use App\Enum\WindfarmLanguageEnum;
-use Symfony\Bundle\FrameworkBundle\Translation\Translator;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use TCPDF;
 
@@ -26,11 +24,6 @@ class DeliveryNotePdfBuilderService
      * @var TranslatorInterface
      */
     private TranslatorInterface $ts;
-
-    /**
-     * @var string
-     */
-    private string $locale;
 
     /**
      * @var SmartAssetsHelperService
@@ -55,16 +48,12 @@ class DeliveryNotePdfBuilderService
     }
 
     /**
-     * @param WorkOrder $workOrder
+     * @param DeliveryNote $dn
      *
      * @return TCPDF
      */
-    public function build(WorkOrder $workOrder) {
-        $this->locale = AuditLanguageEnum::DEFAULT_LANGUAGE_STRING;
-        if ($workOrder->getWindfarm() && $workOrder->getWindfarm()->getLanguage() >= AuditLanguageEnum::SPANISH && $workOrder->getWindfarm()->getLanguage() <= AuditLanguageEnum::ITALIAN) {
-            $this->locale = WindfarmLanguageEnum::getReversedEnumArray()[$workOrder->getWindfarm()->getLanguage()];
-        }
-        $this->ts->setLocale($this->locale);
+    public function build(DeliveryNote $dn) {
+        $this->ts->setLocale(AuditLanguageEnum::DEFAULT_LANGUAGE_STRING);
         $this->tcpdf->setPrintHeader(false);
         $this->tcpdf->setPrintFooter(false);
         $this->tcpdf->AddPage('L', 'A4', true, true);
