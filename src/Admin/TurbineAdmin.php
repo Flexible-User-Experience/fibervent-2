@@ -129,6 +129,8 @@ class TurbineAdmin extends AbstractBaseAdmin
                 array(
                     'label' => 'admin.turbine.diameter',
                     'editable' => true,
+                    'header_class' => 'text-right',
+                    'row_align' => 'right',
                 )
             )
             ->add(
@@ -137,6 +139,8 @@ class TurbineAdmin extends AbstractBaseAdmin
                 array(
                     'label' => 'admin.turbine.power',
                     'editable' => true,
+                    'header_class' => 'text-right',
+                    'row_align' => 'right',
                 )
             )
             ->add(
@@ -145,6 +149,8 @@ class TurbineAdmin extends AbstractBaseAdmin
                 array(
                     'label' => 'admin.turbine.height',
                     'editable' => true,
+                    'header_class' => 'text-right',
+                    'row_align' => 'right',
                 )
             )
             ->add(
@@ -152,6 +158,8 @@ class TurbineAdmin extends AbstractBaseAdmin
                 'actions',
                 array(
                     'label' => 'admin.common.action',
+                    'header_class' => 'text-right',
+                    'row_align' => 'right',
                     'actions' => array(
                         'edit' => array('template' => 'Admin/Buttons/list__action_edit_button.html.twig'),
                         'delete' => array('template' => 'Admin/Buttons/list__action_delete_button.html.twig'),

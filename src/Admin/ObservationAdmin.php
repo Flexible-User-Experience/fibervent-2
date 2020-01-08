@@ -68,6 +68,7 @@ class ObservationAdmin extends AbstractBaseAdmin
                     ),
                 )
             )
-            ->end();
+            ->end()
+        ;
     }
 }

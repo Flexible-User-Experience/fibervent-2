@@ -311,6 +311,8 @@ class UserAdmin extends ParentUserAdmin
                 array(
                     'label' => 'admin.user.roles',
                     'template' => 'Admin/Cells/list__cell_user_roles.html.twig',
+                    'header_class' => 'text-center',
+                    'row_align' => 'center',
                 )
             )
             ->add(
@@ -319,6 +321,8 @@ class UserAdmin extends ParentUserAdmin
                 array(
                     'label' => 'admin.common.enabled',
                     'editable' => true,
+                    'header_class' => 'text-center',
+                    'row_align' => 'center',
                 )
             )
             ->add(
@@ -326,6 +330,8 @@ class UserAdmin extends ParentUserAdmin
                 'actions',
                 array(
                     'label' => 'admin.common.action',
+                    'header_class' => 'text-right',
+                    'row_align' => 'right',
                     'actions' => array(
                         'edit' => array('template' => 'Admin/Buttons/list__action_edit_button.html.twig'),
                         'buildPresenceMonitoring' => array('template' => 'Admin/Buttons/list__action_build_presence_monitoring_button.html.twig'),
