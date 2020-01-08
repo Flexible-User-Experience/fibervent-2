@@ -59,7 +59,8 @@ class NonStandardUsedMaterialAdmin extends AbstractBaseAdmin
         }
         $formMapper
             ->with('admin.common.general', $this->getFormMdSuccessBoxArray(3))
-            ->add('item',
+            ->add(
+                'item',
                 ChoiceType::class,
                 array(
                     'label' => 'admin.nonstandardusedmaterial.item',
@@ -67,13 +68,15 @@ class NonStandardUsedMaterialAdmin extends AbstractBaseAdmin
                     'multiple' => false,
                 )
             )
-            ->add('quantity',
+            ->add(
+                'quantity',
                 null,
                 array(
                     'label' => 'admin.nonstandardusedmaterial.quantity',
                 )
             )
-            ->add('description',
+            ->add(
+                'description',
                 null,
                 array(
                     'label' => 'admin.nonstandardusedmaterial.description',
@@ -97,7 +100,8 @@ class NonStandardUsedMaterialAdmin extends AbstractBaseAdmin
                 )
                 // TODO apply query builder to improve filter selector
             )
-            ->add('item',
+            ->add(
+                'item',
                 null,
                 array(
                     'label' => 'admin.nonstandardusedmaterial.item',
@@ -109,13 +113,15 @@ class NonStandardUsedMaterialAdmin extends AbstractBaseAdmin
                     'choices' => NonStandardUsedMaterialItemEnum::getEnumArray(),
                 )
             )
-            ->add('quantity',
+            ->add(
+                'quantity',
                 null,
                 array(
                     'label' => 'admin.nonstandardusedmaterial.quantity',
                 )
             )
-            ->add('description',
+            ->add(
+                'description',
                 null,
                 array(
                     'label' => 'admin.nonstandardusedmaterial.description',
@@ -138,23 +144,34 @@ class NonStandardUsedMaterialAdmin extends AbstractBaseAdmin
                     'sortable' => true,
                     'sort_field_mapping' => array('fieldName' => 'id'),
                     'sort_parent_association_mappings' => array(array('fieldName' => 'deliveryNote')),
+                    'editable' => false,
+                    'header_class' => 'text-center',
+                    'row_align' => 'center',
                 )
             )
-            ->add('item',
+            ->add(
+                'item',
                 'string',
                 array(
                     'label' => 'admin.nonstandardusedmaterial.item',
                     'template' => 'Admin/Cells/list__cell_non_standard_used_material_item.html.twig',
+                    'editable' => false,
+                    'header_class' => 'text-center',
+                    'row_align' => 'center',
                 )
             )
-            ->add('quantity',
-                null,
+            ->add(
+                'quantity',
+                'number',
                 array(
                     'label' => 'admin.nonstandardusedmaterial.quantity',
                     'editable' => true,
+                    'header_class' => 'text-right',
+                    'row_align' => 'right',
                 )
             )
-            ->add('description',
+            ->add(
+                'description',
                 null,
                 array(
                     'label' => 'admin.nonstandardusedmaterial.description',

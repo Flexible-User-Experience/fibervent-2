@@ -187,6 +187,9 @@ class DeliveryNoteTimeRegisterAdmin extends AbstractBaseAdmin
                     'sortable' => true,
                     'sort_field_mapping' => array('fieldName' => 'id'),
                     'sort_parent_association_mappings' => array(array('fieldName' => 'deliveryNote')),
+                    'editable' => false,
+                    'header_class' => 'text-center',
+                    'row_align' => 'center',
                 )
             )
             ->add('type',
@@ -194,6 +197,9 @@ class DeliveryNoteTimeRegisterAdmin extends AbstractBaseAdmin
                 array(
                     'label' => 'admin.deliverynotetimeregister.type',
                     'template' => 'Admin/Cells/list__cell_delivery_note_time_register_type.html.twig',
+                    'editable' => false,
+                    'header_class' => 'text-center',
+                    'row_align' => 'center',
                 )
             )
             ->add('shift',
@@ -201,6 +207,9 @@ class DeliveryNoteTimeRegisterAdmin extends AbstractBaseAdmin
                 array(
                     'label' => 'admin.deliverynotetimeregister.shift',
                     'template' => 'Admin/Cells/list__cell_delivery_note_time_register_shift.html.twig',
+                    'editable' => false,
+                    'header_class' => 'text-center',
+                    'row_align' => 'center',
                 )
             )
             ->add('begin',
@@ -208,6 +217,9 @@ class DeliveryNoteTimeRegisterAdmin extends AbstractBaseAdmin
                 array(
                     'label' => 'admin.deliverynotetimeregister.begin',
                     'format' => 'H:i',
+                    'editable' => false,
+                    'header_class' => 'text-center',
+                    'row_align' => 'center',
                 )
             )
             ->add('end',
@@ -215,6 +227,9 @@ class DeliveryNoteTimeRegisterAdmin extends AbstractBaseAdmin
                 array(
                     'label' => 'admin.deliverynotetimeregister.end',
                     'format' => 'H:i',
+                    'editable' => false,
+                    'header_class' => 'text-center',
+                    'row_align' => 'center',
                 )
             )
             ->add('totalHours',
@@ -222,6 +237,9 @@ class DeliveryNoteTimeRegisterAdmin extends AbstractBaseAdmin
                 array(
                     'label' => 'admin.deliverynotetimeregister.total_hours',
                     'template' => 'Admin/Cells/list__cell_delivery_note_time_register_total_hours.html.twig',
+                    'editable' => false,
+                    'header_class' => 'text-right',
+                    'row_align' => 'right',
                 )
             )
             ->add(

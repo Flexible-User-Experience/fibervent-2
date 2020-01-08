@@ -131,6 +131,8 @@ class DamageCategoryTranslationAdmin extends AbstractBaseAdmin
                 array(
                     'label' => 'admin.damagecategorytranslation.locale',
                     'editable' => true,
+                    'header_class' => 'text-center',
+                    'row_align' => 'center',
                 )
             )
             ->add(

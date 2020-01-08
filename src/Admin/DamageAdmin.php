@@ -109,6 +109,8 @@ class DamageAdmin extends AbstractBaseAdmin
                 array(
                     'label' => 'admin.damage.section',
                     'editable' => true,
+                    'header_class' => 'text-right',
+                    'row_align' => 'right',
                 )
             )
             ->add(
@@ -117,6 +119,8 @@ class DamageAdmin extends AbstractBaseAdmin
                 array(
                     'label' => 'admin.damage.code',
                     'editable' => true,
+                    'header_class' => 'text-right',
+                    'row_align' => 'right',
                 )
             )
             ->add(
@@ -133,6 +137,8 @@ class DamageAdmin extends AbstractBaseAdmin
                 array(
                     'label' => 'admin.common.enabled',
                     'editable' => true,
+                    'header_class' => 'text-center',
+                    'row_align' => 'center',
                 )
             )
             ->add(

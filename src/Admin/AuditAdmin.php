@@ -412,6 +412,8 @@ class AuditAdmin extends AbstractBaseAdmin
                 array(
                     'label' => 'admin.audit.begindate',
                     'format' => 'd/m/Y',
+                    'header_class' => 'text-center',
+                    'row_align' => 'center',
                 )
             )
         ;
@@ -469,6 +471,8 @@ class AuditAdmin extends AbstractBaseAdmin
                     'sortable' => true,
                     'sort_field_mapping' => array('fieldName' => 'id'),
                     'sort_parent_association_mappings' => array(array('fieldName' => 'workOrder')),
+                    'header_class' => 'text-center',
+                    'row_align' => 'center',
                 )
             )
             ->add(
@@ -477,6 +481,8 @@ class AuditAdmin extends AbstractBaseAdmin
                 array(
                     'label' => 'admin.audit.status',
                     'template' => 'Admin/Cells/list__cell_audit_status.html.twig',
+                    'header_class' => 'text-center',
+                    'row_align' => 'center',
                 )
             )
             ->add(

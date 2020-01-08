@@ -190,6 +190,9 @@ class PresenceMonitoringAdmin extends AbstractBaseAdmin
                 array(
                     'label' => 'admin.deliverynote.date',
                     'format' => 'd/m/Y',
+                    'editable' => false,
+                    'header_class' => 'text-center',
+                    'row_align' => 'center',
                 )
             )
             ->add(
@@ -208,6 +211,9 @@ class PresenceMonitoringAdmin extends AbstractBaseAdmin
                 array(
                     'label' => 'admin.presencemonitoring.category',
                     'template' => 'Admin/Cells/list__cell_presence_monitoring_category.html.twig',
+                    'editable' => false,
+                    'header_class' => 'text-center',
+                    'row_align' => 'center',
                 )
             )
             ->add(
@@ -216,6 +222,9 @@ class PresenceMonitoringAdmin extends AbstractBaseAdmin
                 array(
                     'label' => 'admin.presencemonitoring.morning_hour_begin',
                     'format' => 'H:i',
+                    'editable' => false,
+                    'header_class' => 'text-center',
+                    'row_align' => 'center',
                 )
             )
             ->add(
@@ -224,6 +233,9 @@ class PresenceMonitoringAdmin extends AbstractBaseAdmin
                 array(
                     'label' => 'admin.presencemonitoring.morning_hour_end',
                     'format' => 'H:i',
+                    'editable' => false,
+                    'header_class' => 'text-center',
+                    'row_align' => 'center',
                 )
             )
             ->add(
@@ -232,6 +244,9 @@ class PresenceMonitoringAdmin extends AbstractBaseAdmin
                 array(
                     'label' => 'admin.presencemonitoring.afternoon_hour_begin',
                     'format' => 'H:i',
+                    'editable' => false,
+                    'header_class' => 'text-center',
+                    'row_align' => 'center',
                 )
             )
             ->add(
@@ -240,6 +255,9 @@ class PresenceMonitoringAdmin extends AbstractBaseAdmin
                 array(
                     'label' => 'admin.presencemonitoring.afternoon_hour_end',
                     'format' => 'H:i',
+                    'editable' => false,
+                    'header_class' => 'text-center',
+                    'row_align' => 'center',
                 )
             )
             ->add(
@@ -247,6 +265,9 @@ class PresenceMonitoringAdmin extends AbstractBaseAdmin
                 null,
                 array(
                     'label' => 'admin.presencemonitoring.total_hours',
+                    'editable' => false,
+                    'header_class' => 'text-right',
+                    'row_align' => 'right',
                 )
             )
             ->add(
@@ -254,6 +275,9 @@ class PresenceMonitoringAdmin extends AbstractBaseAdmin
                 null,
                 array(
                     'label' => 'admin.presencemonitoring.normal_hours',
+                    'editable' => false,
+                    'header_class' => 'text-right',
+                    'row_align' => 'right',
                 )
             )
             ->add(
@@ -261,6 +285,9 @@ class PresenceMonitoringAdmin extends AbstractBaseAdmin
                 null,
                 array(
                     'label' => 'admin.presencemonitoring.extra_hours',
+                    'editable' => false,
+                    'header_class' => 'text-right',
+                    'row_align' => 'right',
                 )
             )
             ->add(

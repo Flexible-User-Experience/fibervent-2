@@ -364,12 +364,17 @@ class WorkOrderTaskAdmin extends AbstractBaseAdmin
                     'sortable' => true,
                     'sort_field_mapping' => array('fieldName' => 'projectNumber'),
                     'sort_parent_association_mappings' => array(array('fieldName' => 'workOrder')),
+                    'header_class' => 'text-center',
+                    'row_align' => 'center',
                 )
             )
             ->add('isFromAudit',
                 null,
                 array(
                     'label' => 'admin.workorder.is_from_audit',
+                    'editable' => false,
+                    'header_class' => 'text-center',
+                    'row_align' => 'center',
                 )
             )
             ->add('windmillBlade',
@@ -379,6 +384,8 @@ class WorkOrderTaskAdmin extends AbstractBaseAdmin
                     'sortable' => true,
                     'sort_field_mapping' => array('fieldName' => 'code'),
                     'sort_parent_association_mappings' => array(array('fieldName' => 'windmillBlade')),
+                    'header_class' => 'text-center',
+                    'row_align' => 'center',
                 )
             )
             ->add('windmill',
@@ -397,6 +404,8 @@ class WorkOrderTaskAdmin extends AbstractBaseAdmin
                     'sortable' => true,
                     'sort_field_mapping' => array('fieldName' => 'damage'),
                     'sort_parent_association_mappings' => array(array('fieldName' => 'bladeDamage')),
+                    'header_class' => 'text-center',
+                    'row_align' => 'center',
                 )
             )
             ->add(
@@ -404,6 +413,9 @@ class WorkOrderTaskAdmin extends AbstractBaseAdmin
                 null,
                 array(
                     'label' => 'admin.bladedamage.position',
+                    'editable' => false,
+                    'header_class' => 'text-right',
+                    'row_align' => 'right',
                 )
             )
             ->add(
@@ -411,6 +423,9 @@ class WorkOrderTaskAdmin extends AbstractBaseAdmin
                 null,
                 array(
                     'label' => 'admin.bladedamage.radius',
+                    'editable' => false,
+                    'header_class' => 'text-right',
+                    'row_align' => 'right',
                 )
             )
             ->add(
@@ -418,6 +433,9 @@ class WorkOrderTaskAdmin extends AbstractBaseAdmin
                 null,
                 array(
                     'label' => 'admin.bladedamage.distance',
+                    'editable' => false,
+                    'header_class' => 'text-right',
+                    'row_align' => 'right',
                 )
             )
             ->add(
@@ -425,12 +443,18 @@ class WorkOrderTaskAdmin extends AbstractBaseAdmin
                 null,
                 array(
                     'label' => 'admin.bladedamage.size',
+                    'editable' => false,
+                    'header_class' => 'text-right',
+                    'row_align' => 'right',
                 )
             )
             ->add('isCompleted',
                 null,
                 array(
                     'label' => 'admin.workordertask.is_completed',
+                    'editable' => false,
+                    'header_class' => 'text-center',
+                    'row_align' => 'center',
                 )
             )
             ->add(

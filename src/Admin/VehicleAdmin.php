@@ -118,6 +118,8 @@ class VehicleAdmin extends AbstractBaseAdmin
                 array(
                     'label' => 'admin.vehicle.active',
                     'editable' => true,
+                    'header_class' => 'text-center',
+                    'row_align' => 'center',
                 )
             )
             ->add(
