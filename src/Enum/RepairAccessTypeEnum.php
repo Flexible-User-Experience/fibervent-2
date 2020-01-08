@@ -40,6 +40,19 @@ class RepairAccessTypeEnum
     }
 
     /**
+     * @return array
+     */
+    public static function getDatagridFilterEnumArray()
+    {
+        return array(
+            'enum.repair_access_type.crane' => '0',
+            'enum.repair_access_type.basket_crane' => '1',
+            'enum.repair_access_type.ropes' => '2',
+            'enum.repair_access_type.ground' => '3',
+        );
+    }
+
+    /**
      * @param int $type
      *
      * @return string

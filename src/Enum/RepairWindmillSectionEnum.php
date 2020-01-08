@@ -38,6 +38,18 @@ class RepairWindmillSectionEnum
     }
 
     /**
+     * @return array
+     */
+    public static function getDatagridFilterEnumArray()
+    {
+        return array(
+            'enum.repair_windmill_section.blade' => '0',
+            'enum.repair_windmill_section.nacelle' => '1',
+            'enum.repair_windmill_section.tower' => '2',
+        );
+    }
+
+    /**
      * @param int $type
      *
      * @return string

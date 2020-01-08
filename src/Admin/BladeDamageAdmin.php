@@ -136,6 +136,7 @@ class BladeDamageAdmin extends AbstractBaseAdmin
                 null,
                 array(
                     'label' => 'admin.auditwindmillblade.windmillblade',
+                    'choice_label' => 'id',
                     'required' => true,
                     'disabled' => false,
                     'attr' => array(
