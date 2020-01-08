@@ -39,9 +39,10 @@ class DeliveryNoteAdmin extends AbstractBaseAdmin
      */
     protected function configureRoutes(RouteCollection $collection)
     {
-        $collection->remove('batch');
-//            ->add('pdf', $this->getRouterIdParameter().'/pdf')
-//            ->add('email', $this->getRouterIdParameter().'/email');
+        $collection
+            ->add('pdf', $this->getRouterIdParameter().'/pdf')
+            ->remove('batch')
+        ;
     }
 
     /**
@@ -191,20 +192,7 @@ class DeliveryNoteAdmin extends AbstractBaseAdmin
                 )
             )
             ->end()
-            ->with('admin.workordertask.title', $this->getFormMdSuccessBoxArray(12))
-            ->add(
-                'workOrderTasks',
-                ModelType::class,
-                array(
-                    'label' => 'admin.workordertask.title',
-                    'multiple' => true,
-                    'expanded' => false,
-                    'required' => false,
-                    'btn_add' => false,
-                )
-            )
-            ->end()
-            ->with('admin.nonstandardusedmaterial.title', $this->getFormMdSuccessBoxArray(6))
+            ->with('admin.nonstandardusedmaterial.title', $this->getFormMdSuccessBoxArray(12))
             ->add(
                 'nonStandardUsedMaterials',
                 CollectionType::class,
@@ -220,6 +208,19 @@ class DeliveryNoteAdmin extends AbstractBaseAdmin
                 array(
                     'edit' => 'inline',
                     'inline' => 'table',
+                )
+            )
+            ->end()
+            ->with('admin.workordertask.title', $this->getFormMdSuccessBoxArray(6))
+            ->add(
+                'workOrderTasks',
+                ModelType::class,
+                array(
+                    'label' => 'admin.workordertask.title',
+                    'multiple' => true,
+                    'expanded' => false,
+                    'required' => false,
+                    'btn_add' => false,
                 )
             )
             ->end()
@@ -516,8 +517,7 @@ class DeliveryNoteAdmin extends AbstractBaseAdmin
                     'actions' => array(
                         'edit' => array('template' => 'Admin/Buttons/list__action_edit_button.html.twig'),
                         'show' => array('template' => 'Admin/Buttons/list__action_show_button.html.twig'),
-                        // 'excel' => array('template' => 'Admin/Buttons/list__action_excel_button.html.twig'),
-                        // 'pdf' => array('template' => 'Admin/Buttons/list__action_pdf_windfarm_button.html.twig'),
+                        'pdf' => array('template' => 'Admin/Buttons/list__action_pdf_windfarm_button.html.twig'),
                     ),
                 )
             )
