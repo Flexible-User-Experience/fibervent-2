@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Enum\RepairAccessTypeEnum;
+use App\Enum\RepairWindmillSectionEnum;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
@@ -55,7 +56,7 @@ class DeliveryNote extends AbstractBase
      * @var User
      *
      * @ORM\ManyToOne(targetEntity="User")
-     * @ORM\JoinColumn(name="admin_user_id", referencedColumnName="id", nullable=true)
+     * @ORM\JoinColumn(name="team_technician_1_user_id", referencedColumnName="id", nullable=true)
      * @ORM\Cache(usage="NONSTRICT_READ_WRITE")
      */
     private $teamTechnician1;
@@ -64,7 +65,7 @@ class DeliveryNote extends AbstractBase
      * @var User
      *
      * @ORM\ManyToOne(targetEntity="User")
-     * @ORM\JoinColumn(name="admin_user_id", referencedColumnName="id", nullable=true)
+     * @ORM\JoinColumn(name="team_technician_2_user_id", referencedColumnName="id", nullable=true)
      * @ORM\Cache(usage="NONSTRICT_READ_WRITE")
      */
     private $teamTechnician2;
@@ -73,7 +74,7 @@ class DeliveryNote extends AbstractBase
      * @var User
      *
      * @ORM\ManyToOne(targetEntity="User")
-     * @ORM\JoinColumn(name="admin_user_id", referencedColumnName="id", nullable=true)
+     * @ORM\JoinColumn(name="team_technician_3_user_id", referencedColumnName="id", nullable=true)
      * @ORM\Cache(usage="NONSTRICT_READ_WRITE")
      */
     private $teamTechnician3;
@@ -82,7 +83,7 @@ class DeliveryNote extends AbstractBase
      * @var User
      *
      * @ORM\ManyToOne(targetEntity="User")
-     * @ORM\JoinColumn(name="admin_user_id", referencedColumnName="id", nullable=true)
+     * @ORM\JoinColumn(name="team_technician_4_user_id", referencedColumnName="id", nullable=true)
      * @ORM\Cache(usage="NONSTRICT_READ_WRITE")
      */
     private $teamTechnician4;
@@ -176,7 +177,7 @@ class DeliveryNote extends AbstractBase
      */
 
     /**
-     * @return $this
+     * @return WorkOrder
      */
     public function getWorkOrder()
     {
@@ -231,7 +232,7 @@ class DeliveryNote extends AbstractBase
         $repairWindmillSections = $this->getRepairWindmillSections();
         $repairWindmillSectionsString = [];
         foreach ($repairWindmillSections as $repairWindmillSection) {
-            $repairWindmillSectionsString[] = RepairAccessTypeEnum::getDecodedStringFromType($repairWindmillSection);
+            $repairWindmillSectionsString[] = RepairWindmillSectionEnum::getDecodedStringFromType($repairWindmillSection);
         }
 
         return $repairWindmillSectionsString;

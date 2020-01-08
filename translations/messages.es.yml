@@ -443,6 +443,7 @@ admin:
     title_create: Crear
     date: Fecha
     repair_windmill_sections: Secciones reparación aerogenerador
+    repair_windmill_sections_short: Secciones reparación
     crane_company: Empresa grua
     crane_driver: Conductor grua
     repair_access_types: Tipo de acceso
