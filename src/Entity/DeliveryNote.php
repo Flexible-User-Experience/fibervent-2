@@ -55,7 +55,7 @@ class DeliveryNote extends AbstractBase
      * @var User
      *
      * @ORM\ManyToOne(targetEntity="User")
-     * @ORM\JoinColumn(name="admin_user_id", referencedColumnName="id", nullable=true)
+     * @ORM\JoinColumn(name="team_technician_1_user_id", referencedColumnName="id", nullable=true)
      * @ORM\Cache(usage="NONSTRICT_READ_WRITE")
      */
     private $teamTechnician1;
@@ -64,7 +64,7 @@ class DeliveryNote extends AbstractBase
      * @var User
      *
      * @ORM\ManyToOne(targetEntity="User")
-     * @ORM\JoinColumn(name="admin_user_id", referencedColumnName="id", nullable=true)
+     * @ORM\JoinColumn(name="team_technician_2_user_id", referencedColumnName="id", nullable=true)
      * @ORM\Cache(usage="NONSTRICT_READ_WRITE")
      */
     private $teamTechnician2;
@@ -73,7 +73,7 @@ class DeliveryNote extends AbstractBase
      * @var User
      *
      * @ORM\ManyToOne(targetEntity="User")
-     * @ORM\JoinColumn(name="admin_user_id", referencedColumnName="id", nullable=true)
+     * @ORM\JoinColumn(name="team_technician_3_user_id", referencedColumnName="id", nullable=true)
      * @ORM\Cache(usage="NONSTRICT_READ_WRITE")
      */
     private $teamTechnician3;
@@ -82,7 +82,7 @@ class DeliveryNote extends AbstractBase
      * @var User
      *
      * @ORM\ManyToOne(targetEntity="User")
-     * @ORM\JoinColumn(name="admin_user_id", referencedColumnName="id", nullable=true)
+     * @ORM\JoinColumn(name="team_technician_4_user_id", referencedColumnName="id", nullable=true)
      * @ORM\Cache(usage="NONSTRICT_READ_WRITE")
      */
     private $teamTechnician4;
