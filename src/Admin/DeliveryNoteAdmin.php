@@ -3,6 +3,7 @@
 namespace App\Admin;
 
 use App\Entity\User;
+use App\Entity\Vehicle;
 use App\Enum\RepairAccessTypeEnum;
 use App\Enum\RepairWindmillSectionEnum;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
@@ -271,6 +272,11 @@ class DeliveryNoteAdmin extends AbstractBaseAdmin
                 null,
                 array(
                     'label' => 'admin.deliverynote.team_leader',
+                ),
+                EntityType::class,
+                array(
+                    'class' => User::class,
+                    'query_builder' => $this->ur->findAllSortedByNameQB(),
                 )
             )
             ->add(
@@ -278,6 +284,11 @@ class DeliveryNoteAdmin extends AbstractBaseAdmin
                 null,
                 array(
                     'label' => 'admin.deliverynote.team_technician_1',
+                ),
+                EntityType::class,
+                array(
+                    'class' => User::class,
+                    'query_builder' => $this->ur->findAllSortedByNameQB(),
                 )
             )
             ->add(
@@ -285,6 +296,11 @@ class DeliveryNoteAdmin extends AbstractBaseAdmin
                 null,
                 array(
                     'label' => 'admin.deliverynote.team_technician_2',
+                ),
+                EntityType::class,
+                array(
+                    'class' => User::class,
+                    'query_builder' => $this->ur->findAllSortedByNameQB(),
                 )
             )
             ->add(
@@ -292,6 +308,11 @@ class DeliveryNoteAdmin extends AbstractBaseAdmin
                 null,
                 array(
                     'label' => 'admin.deliverynote.team_technician_3',
+                ),
+                EntityType::class,
+                array(
+                    'class' => User::class,
+                    'query_builder' => $this->ur->findAllSortedByNameQB(),
                 )
             )
             ->add(
@@ -299,6 +320,11 @@ class DeliveryNoteAdmin extends AbstractBaseAdmin
                 null,
                 array(
                     'label' => 'admin.deliverynote.team_technician_4',
+                ),
+                EntityType::class,
+                array(
+                    'class' => User::class,
+                    'query_builder' => $this->ur->findAllSortedByNameQB(),
                 )
             )
             ->add(
@@ -306,6 +332,11 @@ class DeliveryNoteAdmin extends AbstractBaseAdmin
                 null,
                 array(
                     'label' => 'admin.vehicle.title',
+                ),
+                EntityType::class,
+                array(
+                    'class' => Vehicle::class,
+                    'query_builder' => $this->vr->findAllSortedByNameQB(),
                 )
             )
             ->add(
@@ -468,7 +499,9 @@ class DeliveryNoteAdmin extends AbstractBaseAdmin
         ;
     }
 
-
+    /**
+     * @param ShowMapper $showMapper
+     */
     protected function configureShowFields(ShowMapper $showMapper)
     {
         $showMapper

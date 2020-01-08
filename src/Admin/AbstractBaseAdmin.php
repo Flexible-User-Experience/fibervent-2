@@ -11,6 +11,7 @@ use App\Repository\DamageRepository;
 use App\Repository\StateRepository;
 use App\Repository\TurbineRepository;
 use App\Repository\UserRepository;
+use App\Repository\VehicleRepository;
 use App\Repository\WindfarmRepository;
 use App\Repository\WindmillBladeRepository;
 use App\Repository\WindmillRepository;
@@ -18,7 +19,6 @@ use App\Service\RepositoriesService;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Route\RouteCollection;
 use Liip\ImagineBundle\Imagine\Cache\CacheManager;
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationChecker;
 use Vich\UploaderBundle\Templating\Helper\UploaderHelper;
@@ -33,82 +33,87 @@ abstract class AbstractBaseAdmin extends AbstractAdmin
     /**
      * @var AuthorizationChecker
      */
-    protected $acs;
+    protected AuthorizationChecker $acs;
 
     /**
-     * @var TokenStorage
+     * @var TokenStorageInterface
      */
-    protected $tss;
+    protected TokenStorageInterface $tss;
 
     /**
      * @var CustomerRepository
      */
-    protected $cr;
+    protected CustomerRepository $cr;
 
     /**
      * @var UserRepository
      */
-    protected $ur;
+    protected UserRepository $ur;
 
     /**
      * @var WindmillRepository
      */
-    protected $wmr;
+    protected WindmillRepository $wmr;
 
     /**
      * @var WindfarmRepository
      */
-    protected $wfr;
+    protected WindfarmRepository $wfr;
 
     /**
      * @var BladeRepository
      */
-    protected $br;
+    protected BladeRepository $br;
 
     /**
      * @var TurbineRepository
      */
-    protected $tr;
+    protected TurbineRepository $tr;
 
     /**
      * @var StateRepository
      */
-    protected $sr;
+    protected StateRepository $sr;
 
     /**
      * @var DamageRepository
      */
-    protected $dr;
+    protected DamageRepository $dr;
 
     /**
      * @var DamageCategoryRepository
      */
-    protected $dcr;
+    protected DamageCategoryRepository $dcr;
 
     /**
      * @var AuditRepository
      */
-    protected $ar;
+    protected AuditRepository $ar;
 
     /**
      * @var WindmillBladeRepository
      */
-    protected $wbr;
+    protected WindmillBladeRepository $wbr;
 
     /**
      * @var BladeDamageRepository
      */
-    protected $bdr;
+    protected BladeDamageRepository $bdr;
+
+    /**
+     * @var VehicleRepository
+     */
+    protected VehicleRepository $vr;
 
     /**
      * @var UploaderHelper
      */
-    protected $vus;
+    protected UploaderHelper $vus;
 
     /**
      * @var CacheManager
      */
-    protected $lis;
+    protected CacheManager $lis;
 
     /**
      * Methods.
@@ -141,6 +146,7 @@ abstract class AbstractBaseAdmin extends AbstractAdmin
         $this->ar = $rs->getAr();
         $this->wbr = $rs->getWbr();
         $this->bdr = $rs->getBdr();
+        $this->vr = $rs->getVr();
         $this->vus = $vus;
         $this->lis = $lis;
     }
