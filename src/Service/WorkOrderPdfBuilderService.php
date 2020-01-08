@@ -4,6 +4,7 @@ namespace App\Service;
 
 use App\Entity\WorkOrder;
 use App\Entity\WorkOrderTask;
+use App\Enum\AuditLanguageEnum;
 use App\Enum\WindfarmLanguageEnum;
 use Symfony\Bundle\FrameworkBundle\Translation\Translator;
 
@@ -57,7 +58,10 @@ class WorkOrderPdfBuilderService
      * @return \TCPDF
      */
     public function build(WorkOrder $workOrder) {
-        $this->locale = WindfarmLanguageEnum::getReversedEnumArray()[$workOrder->getWindfarm()->getLanguage()];
+        $this->locale = AuditLanguageEnum::DEFAULT_LANGUAGE_STRING;
+        if ($workOrder->getWindfarm() && $workOrder->getWindfarm()->getLanguage() >= AuditLanguageEnum::SPANISH && $workOrder->getWindfarm()->getLanguage() <= AuditLanguageEnum::ITALIAN) {
+            $this->locale = WindfarmLanguageEnum::getReversedEnumArray()[$workOrder->getWindfarm()->getLanguage()];
+        }
         $this->ts->setLocale($this->locale);
         $this->tcpdf->setPrintHeader(false);
         $this->tcpdf->setPrintFooter(false);

@@ -228,7 +228,6 @@ class BladeDamageAdmin extends AbstractBaseAdmin
                 null,
                 array(
                     'label' => 'admin.common.enabled',
-                    'editable' => true,
                 )
             )
             ->add(
@@ -261,6 +260,8 @@ class BladeDamageAdmin extends AbstractBaseAdmin
                 array(
                     'label' => 'admin.common.enabled',
                     'editable' => true,
+                    'header_class' => 'text-center',
+                    'row_align' => 'center',
                 )
             )
             ->add(
@@ -268,6 +269,8 @@ class BladeDamageAdmin extends AbstractBaseAdmin
                 'actions',
                 array(
                     'label' => 'admin.common.action',
+                    'header_class' => 'text-right',
+                    'row_align' => 'right',
                     'actions' => array(
                         'edit' => array('template' => 'Admin/Buttons/list__action_edit_button.html.twig'),
                     ),

@@ -126,6 +126,8 @@ class DamageCategoryAdmin extends AbstractBaseAdmin
                     'label' => 'admin.damagecategory.colour',
                     'template' => 'Admin/Cells/list__cell_colour.html.twig',
                     'editable' => false,
+                    'header_class' => 'text-center',
+                    'row_align' => 'center',
                 )
             )
             ->add(
@@ -134,6 +136,8 @@ class DamageCategoryAdmin extends AbstractBaseAdmin
                 array(
                     'label' => 'admin.damagecategory.category',
                     'editable' => true,
+                    'header_class' => 'text-right',
+                    'row_align' => 'right',
                 )
             )
             ->add(
@@ -142,6 +146,8 @@ class DamageCategoryAdmin extends AbstractBaseAdmin
                 array(
                     'label' => 'admin.damagecategory.priority',
                     'editable' => true,
+                    'header_class' => 'text-center',
+                    'row_align' => 'center',
                 )
             )
             ->add(
@@ -166,6 +172,8 @@ class DamageCategoryAdmin extends AbstractBaseAdmin
                 array(
                     'label' => 'admin.common.enabled',
                     'editable' => true,
+                    'header_class' => 'text-center',
+                    'row_align' => 'center',
                 )
             )
             ->add(
@@ -173,6 +181,8 @@ class DamageCategoryAdmin extends AbstractBaseAdmin
                 'actions',
                 array(
                     'label' => 'admin.common.action',
+                    'header_class' => 'text-right',
+                    'row_align' => 'right',
                     'actions' => array(
                         'edit' => array('template' => 'Admin/Buttons/list__action_edit_button.html.twig'),
                     ),

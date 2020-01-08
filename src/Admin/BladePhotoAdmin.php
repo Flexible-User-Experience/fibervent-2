@@ -29,8 +29,7 @@ class BladePhotoAdmin extends AbstractBaseAdmin
     protected function configureRoutes(RouteCollection $collection)
     {
         parent::configureRoutes($collection);
-        $collection
-            ->remove('delete');
+        $collection->remove('delete');
     }
 
     /**
@@ -60,6 +59,7 @@ class BladePhotoAdmin extends AbstractBaseAdmin
                     'required' => false,
                 )
             )
-            ->end();
+            ->end()
+        ;
     }
 }
