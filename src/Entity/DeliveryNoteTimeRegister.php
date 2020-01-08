@@ -39,6 +39,7 @@ class DeliveryNoteTimeRegister extends AbstractBase
      * @var \DateTime
      *
      * @ORM\Column(type="time")
+     * @Assert\Time
      */
     private $begin;
 
@@ -46,6 +47,7 @@ class DeliveryNoteTimeRegister extends AbstractBase
      * @var \DateTime
      *
      * @ORM\Column(type="time")
+     * @Assert\Time
      */
     private $end;
 
@@ -240,15 +242,15 @@ class DeliveryNoteTimeRegister extends AbstractBase
      */
     public function validate(ExecutionContextInterface $context)
     {
-        if (!is_null($this->getBegin()) && !is_null($this->getEnd())) {
-            if ($this->getBegin() instanceof \DateTime && $this->getEnd() instanceof \DateTime) {
-                if ($this->getBegin()->format('H:i') >= $this->getEnd()->format('H:i')) {
-                    $context->buildViolation('Hora inicial mayor o igual que hora final!')
-                        ->atPath('begin')
-                        ->addViolation()
-                    ;
-                }
-            }
+        if ($this->getBegin() && !$this->getEnd()) {
+            $context->buildViolation('Falta hora de fin!')
+                ->atPath('end')
+                ->addViolation();
+        }
+        if ($this->getBegin() && $this->getEnd() && $this->getBegin()->format('H:i') >= $this->getEnd()->format('H:i')) {
+            $context->buildViolation('La hora de fin no puede ser menor o igual que la hora inicio!')
+                ->atPath('end')
+                ->addViolation();
         }
     }
 

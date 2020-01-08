@@ -13,7 +13,7 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TimeType;
 
 /**
- * Class WorkOrderTaskAdmin.
+ * Class DeliveryNoteTimeRegisterAdmin.
  *
  * @category Admin
  */
@@ -39,7 +39,7 @@ class DeliveryNoteTimeRegisterAdmin extends AbstractBaseAdmin
                     null,
                     array(
                         'label' => 'admin.deliverynote.title',
-                        // TODO apply query builder strategy
+                        'required' => true,
                     )
                 )
                 ->end()
@@ -52,7 +52,7 @@ class DeliveryNoteTimeRegisterAdmin extends AbstractBaseAdmin
                     null,
                     array(
                         'label' => 'admin.deliverynote.title',
-                        // TODO apply query builder strategy
+                        'required' => true,
                         'attr' => array(
                             'hidden' => true,
                         ),
@@ -63,7 +63,8 @@ class DeliveryNoteTimeRegisterAdmin extends AbstractBaseAdmin
         }
         $formMapper
             ->with('admin.common.general', $this->getFormMdSuccessBoxArray(3))
-            ->add('type',
+            ->add(
+                'type',
                 ChoiceType::class,
                 array(
                     'label' => 'admin.deliverynotetimeregister.type',
@@ -71,7 +72,8 @@ class DeliveryNoteTimeRegisterAdmin extends AbstractBaseAdmin
                     'multiple' => false,
                 )
             )
-            ->add('shift',
+            ->add(
+                'shift',
                 ChoiceType::class,
                 array(
                     'label' => 'admin.deliverynotetimeregister.shift',
@@ -81,7 +83,8 @@ class DeliveryNoteTimeRegisterAdmin extends AbstractBaseAdmin
             )
             ->end()
             ->with('admin.common.controls', $this->getFormMdSuccessBoxArray(3))
-            ->add('begin',
+            ->add(
+                'begin',
                 TimeType::class,
                 array(
                     'label' => 'admin.deliverynotetimeregister.begin',
@@ -89,7 +92,8 @@ class DeliveryNoteTimeRegisterAdmin extends AbstractBaseAdmin
                     'minutes' => MinutesEnum::getEnumArray(),
                 )
             )
-            ->add('end',
+            ->add(
+                'end',
                 TimeType::class,
                 array(
                     'label' => 'admin.deliverynotetimeregister.end',
@@ -97,7 +101,8 @@ class DeliveryNoteTimeRegisterAdmin extends AbstractBaseAdmin
                     'minutes' => MinutesEnum::getEnumArray(),
                 )
             )
-            ->add('totalHours',
+            ->add(
+                'totalHours',
                 null,
                 array(
                     'label' => 'admin.deliverynotetimeregister.total_hours',
@@ -122,9 +127,9 @@ class DeliveryNoteTimeRegisterAdmin extends AbstractBaseAdmin
                 array(
                     'label' => 'admin.deliverynote.title',
                 )
-                // TODO apply query builder to improve filter selector
             )
-            ->add('type',
+            ->add(
+                'type',
                 null,
                 array(
                     'label' => 'admin.deliverynotetimeregister.type',
@@ -136,7 +141,8 @@ class DeliveryNoteTimeRegisterAdmin extends AbstractBaseAdmin
                     'choices' => TimeRegisterTypeEnum::getEnumArray(),
                 )
             )
-            ->add('shift',
+            ->add(
+                'shift',
                 null,
                 array(
                     'label' => 'admin.deliverynotetimeregister.shift',
@@ -148,7 +154,8 @@ class DeliveryNoteTimeRegisterAdmin extends AbstractBaseAdmin
                     'choices' => TimeRegisterShiftEnum::getEnumArray(),
                 )
             )
-            ->add('begin',
+            ->add(
+                'begin',
                 null,
                 array(
                     'label' => 'admin.deliverynotetimeregister.begin',
@@ -156,10 +163,11 @@ class DeliveryNoteTimeRegisterAdmin extends AbstractBaseAdmin
                 ),
                 TimeType::class,
                 array(
-                    'minutes' => array(0, 15, 30, 45),
+                    'minutes' => MinutesEnum::getEnumArray(),
                 )
             )
-            ->add('end',
+            ->add(
+                'end',
                 null,
                 array(
                     'label' => 'admin.deliverynotetimeregister.end',
@@ -167,7 +175,7 @@ class DeliveryNoteTimeRegisterAdmin extends AbstractBaseAdmin
                 ),
                 TimeType::class,
                 array(
-                    'minutes' => array(0, 15, 30, 45),
+                    'minutes' => MinutesEnum::getEnumArray(),
                 )
             )
         ;
@@ -192,7 +200,8 @@ class DeliveryNoteTimeRegisterAdmin extends AbstractBaseAdmin
                     'row_align' => 'center',
                 )
             )
-            ->add('type',
+            ->add(
+                'type',
                 'string',
                 array(
                     'label' => 'admin.deliverynotetimeregister.type',
@@ -202,7 +211,8 @@ class DeliveryNoteTimeRegisterAdmin extends AbstractBaseAdmin
                     'row_align' => 'center',
                 )
             )
-            ->add('shift',
+            ->add(
+                'shift',
                 'string',
                 array(
                     'label' => 'admin.deliverynotetimeregister.shift',
@@ -212,7 +222,8 @@ class DeliveryNoteTimeRegisterAdmin extends AbstractBaseAdmin
                     'row_align' => 'center',
                 )
             )
-            ->add('begin',
+            ->add(
+                'begin',
                 'date',
                 array(
                     'label' => 'admin.deliverynotetimeregister.begin',
@@ -222,7 +233,8 @@ class DeliveryNoteTimeRegisterAdmin extends AbstractBaseAdmin
                     'row_align' => 'center',
                 )
             )
-            ->add('end',
+            ->add(
+                'end',
                 'date',
                 array(
                     'label' => 'admin.deliverynotetimeregister.end',
@@ -232,7 +244,8 @@ class DeliveryNoteTimeRegisterAdmin extends AbstractBaseAdmin
                     'row_align' => 'center',
                 )
             )
-            ->add('totalHours',
+            ->add(
+                'totalHours',
                 null,
                 array(
                     'label' => 'admin.deliverynotetimeregister.total_hours',
