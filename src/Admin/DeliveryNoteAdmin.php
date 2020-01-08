@@ -63,7 +63,7 @@ class DeliveryNoteAdmin extends AbstractBaseAdmin
                 DatePickerType::class,
                 array(
                     'label' => 'admin.deliverynote.date',
-                    'format' => 'd/M/Y',
+                    'format' => 'd/M/y',
                 )
             )
             ->add(
@@ -225,13 +225,6 @@ class DeliveryNoteAdmin extends AbstractBaseAdmin
     {
         $datagridMapper
             ->add(
-                'workOrder',
-                null,
-                array(
-                    'label' => 'admin.workorder.title',
-                )
-            )
-            ->add(
                 'date',
                 'doctrine_orm_date',
                 array(
@@ -246,10 +239,24 @@ class DeliveryNoteAdmin extends AbstractBaseAdmin
                 )
             )
             ->add(
+                'workOrder',
+                null,
+                array(
+                    'label' => 'admin.workorder.title',
+                )
+            )
+            ->add(
                 'repairWindmillSections',
                 null,
                 array(
-                    'label' => 'admin.deliverynote.repair_windmill_sections',
+                    'label' => 'admin.deliverynote.repair_windmill_sections_short',
+                ),
+                ChoiceType::class,
+                array(
+                    'choices' => RepairWindmillSectionEnum::getDatagridFilterEnumArray(),
+                    'multiple' => false,
+                    'expanded' => false,
+                    'required' => false,
                 )
             )
             ->add(
@@ -299,7 +306,13 @@ class DeliveryNoteAdmin extends AbstractBaseAdmin
                 null,
                 array(
                     'label' => 'admin.workorder.repair_access_types',
-                    'template' => 'Admin/Cells/list__cell_repair_access_type.html.twig',
+                ),
+                ChoiceType::class,
+                array(
+                    'choices' => RepairAccessTypeEnum::getEnumArray(),
+                    'multiple' => false,
+                    'expanded' => false,
+                    'required' => false,
                 )
             )
             ->add(
@@ -319,6 +332,14 @@ class DeliveryNoteAdmin extends AbstractBaseAdmin
     {
         $listMapper
             ->add(
+                'date',
+                null,
+                array(
+                    'label' => 'admin.deliverynote.date',
+                    'format' => 'd/m/Y',
+                )
+            )
+            ->add(
                 'workOrder',
                 null,
                 array(
@@ -329,18 +350,10 @@ class DeliveryNoteAdmin extends AbstractBaseAdmin
                 )
             )
             ->add(
-                'date',
-                null,
-                array(
-                    'label' => 'admin.deliverynote.date',
-                    'format' => 'd/m/Y',
-                )
-            )
-            ->add(
                 'repairWindmillSections',
                 null,
                 array(
-                    'label' => 'admin.deliverynote.repair_windmill_sections',
+                    'label' => 'admin.deliverynote.repair_windmill_sections_short',
                     'template' => 'Admin/Cells/list__cell_repair_windmill_sections.html.twig',
                 )
             )
@@ -392,25 +405,11 @@ class DeliveryNoteAdmin extends AbstractBaseAdmin
                 )
             )
             ->add(
-                'craneDriver',
-                null,
-                array(
-                    'label' => 'admin.deliverynote.crane_driver',
-                )
-            )
-            ->add(
                 'repairAccessTypes',
                 null,
                 array(
                     'label' => 'admin.workorder.repair_access_types',
                     'template' => 'Admin/Cells/list__cell_repair_access_type.html.twig',
-                )
-            )
-            ->add(
-                'observations',
-                null,
-                array(
-                    'label' => 'admin.deliverynote.observations',
                 )
             )
             ->add(
@@ -421,8 +420,8 @@ class DeliveryNoteAdmin extends AbstractBaseAdmin
                     'actions' => array(
                         'edit' => array('template' => 'Admin/Buttons/list__action_edit_button.html.twig'),
                         'show' => array('template' => 'Admin/Buttons/list__action_show_button.html.twig'),
-                        //                       'excel' => array('template' => 'Admin/Buttons/list__action_excel_button.html.twig'),
-                        //                       'pdf' => array('template' => 'Admin/Buttons/list__action_pdf_windfarm_button.html.twig'),
+                        // 'excel' => array('template' => 'Admin/Buttons/list__action_excel_button.html.twig'),
+                        // 'pdf' => array('template' => 'Admin/Buttons/list__action_pdf_windfarm_button.html.twig'),
                     ),
                 )
             )
