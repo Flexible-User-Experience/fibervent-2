@@ -281,6 +281,20 @@ class DeliveryNoteAdmin extends AbstractBaseAdmin
                 )
             )
             ->add(
+                'teamTechnician3',
+                null,
+                array(
+                    'label' => 'admin.deliverynote.team_technician_3',
+                )
+            )
+            ->add(
+                'teamTechnician4',
+                null,
+                array(
+                    'label' => 'admin.deliverynote.team_technician_4',
+                )
+            )
+            ->add(
                 'vehicle',
                 null,
                 array(
@@ -309,7 +323,7 @@ class DeliveryNoteAdmin extends AbstractBaseAdmin
                 ),
                 ChoiceType::class,
                 array(
-                    'choices' => RepairAccessTypeEnum::getEnumArray(),
+                    'choices' => RepairAccessTypeEnum::getDatagridFilterEnumArray(),
                     'multiple' => false,
                     'expanded' => false,
                     'required' => false,
