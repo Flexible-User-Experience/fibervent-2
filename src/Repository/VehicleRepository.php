@@ -93,7 +93,7 @@ class VehicleRepository extends ServiceEntityRepository
     public function findEnabledSortedByNameQB()
     {
         return $this->findAllSortedByNameQB()
-            ->where('t.enabled = :enabled')
+            ->where('t.active = :enabled')
             ->setParameter('enabled', true);
     }
 

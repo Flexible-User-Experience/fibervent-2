@@ -52,19 +52,19 @@ class DeliveryNoteAdmin extends AbstractBaseAdmin
         $formMapper
             ->with('admin.common.general', $this->getFormMdSuccessBoxArray(4))
             ->add(
-                'workOrder',
-                null,
-                array(
-                    'label' => 'admin.workorder.title',
-                    'required' => true,
-                )
-            )
-            ->add(
                 'date',
                 DatePickerType::class,
                 array(
                     'label' => 'admin.deliverynote.date',
                     'format' => 'd/M/y',
+                )
+            )
+            ->add(
+                'workOrder',
+                null,
+                array(
+                    'label' => 'admin.workorder.title',
+                    'required' => true,
                 )
             )
             ->add(
@@ -86,46 +86,77 @@ class DeliveryNoteAdmin extends AbstractBaseAdmin
                 array(
                     'label' => 'admin.deliverynote.team_leader',
                     'class' => User::class,
+                    'query_builder' => $this->ur->findAllTechniciansSortedByNameQB(),
+                    'choice_label' => 'getFullnameCanonical',
                     'required' => true,
                 )
             )
             ->add(
                 'teamTechnician1',
-                null,
+                EntityType::class,
                 array(
                     'label' => 'admin.deliverynote.team_technician_1',
+                    'class' => User::class,
+                    'query_builder' => $this->ur->findAllTechniciansSortedByNameQB(),
+                    'choice_label' => 'getFullnameCanonical',
+                    'required' => false,
                 )
             )
             ->add(
                 'teamTechnician2',
-                null,
+                EntityType::class,
                 array(
                     'label' => 'admin.deliverynote.team_technician_2',
+                    'class' => User::class,
+                    'query_builder' => $this->ur->findAllTechniciansSortedByNameQB(),
+                    'choice_label' => 'getFullnameCanonical',
+                    'required' => false,
                 )
             )
             ->add(
                 'teamTechnician3',
-                null,
+                EntityType::class,
                 array(
                     'label' => 'admin.deliverynote.team_technician_3',
+                    'class' => User::class,
+                    'query_builder' => $this->ur->findAllTechniciansSortedByNameQB(),
+                    'choice_label' => 'getFullnameCanonical',
+                    'required' => false,
                 )
             )
             ->add(
                 'teamTechnician4',
-                null,
+                EntityType::class,
                 array(
                     'label' => 'admin.deliverynote.team_technician_4',
+                    'class' => User::class,
+                    'query_builder' => $this->ur->findAllTechniciansSortedByNameQB(),
+                    'choice_label' => 'getFullnameCanonical',
+                    'required' => false,
                 )
             )
             ->add(
                 'vehicle',
-                null,
+                EntityType::class,
                 array(
                     'label' => 'admin.vehicle.title',
+                    'class' => Vehicle::class,
+                    'query_builder' => $this->vr->findEnabledSortedByNameQB(),
                 )
             )
             ->end()
             ->with('admin.deliverynote.repair_access_types', $this->getFormMdSuccessBoxArray(4))
+            ->add(
+                'repairAccessTypes',
+                ChoiceType::class,
+                array(
+                    'label' => 'admin.deliverynote.repair_access_types',
+                    'choices' => RepairAccessTypeEnum::getEnumArray(),
+                    'multiple' => true,
+                    'expanded' => false,
+                    'required' => true,
+                )
+            )
             ->add(
                 'craneCompany',
                 null,
@@ -138,17 +169,6 @@ class DeliveryNoteAdmin extends AbstractBaseAdmin
                 null,
                 array(
                     'label' => 'admin.deliverynote.crane_driver',
-                )
-            )
-            ->add(
-                'repairAccessTypes',
-                ChoiceType::class,
-                array(
-                    'label' => 'admin.deliverynote.repair_access_types',
-                    'choices' => RepairAccessTypeEnum::getEnumArray(),
-                    'multiple' => true,
-                    'expanded' => false,
-                    'required' => true,
                 )
             )
             ->end()
@@ -276,7 +296,8 @@ class DeliveryNoteAdmin extends AbstractBaseAdmin
                 EntityType::class,
                 array(
                     'class' => User::class,
-                    'query_builder' => $this->ur->findAllSortedByNameQB(),
+                    'query_builder' => $this->ur->findAllTechniciansSortedByNameQB(),
+                    'choice_label' => 'getFullnameCanonical',
                 )
             )
             ->add(
@@ -288,7 +309,8 @@ class DeliveryNoteAdmin extends AbstractBaseAdmin
                 EntityType::class,
                 array(
                     'class' => User::class,
-                    'query_builder' => $this->ur->findAllSortedByNameQB(),
+                    'query_builder' => $this->ur->findAllTechniciansSortedByNameQB(),
+                    'choice_label' => 'getFullnameCanonical',
                 )
             )
             ->add(
@@ -300,7 +322,8 @@ class DeliveryNoteAdmin extends AbstractBaseAdmin
                 EntityType::class,
                 array(
                     'class' => User::class,
-                    'query_builder' => $this->ur->findAllSortedByNameQB(),
+                    'query_builder' => $this->ur->findAllTechniciansSortedByNameQB(),
+                    'choice_label' => 'getFullnameCanonical',
                 )
             )
             ->add(
@@ -312,7 +335,8 @@ class DeliveryNoteAdmin extends AbstractBaseAdmin
                 EntityType::class,
                 array(
                     'class' => User::class,
-                    'query_builder' => $this->ur->findAllSortedByNameQB(),
+                    'query_builder' => $this->ur->findAllTechniciansSortedByNameQB(),
+                    'choice_label' => 'getFullnameCanonical',
                 )
             )
             ->add(
@@ -324,7 +348,8 @@ class DeliveryNoteAdmin extends AbstractBaseAdmin
                 EntityType::class,
                 array(
                     'class' => User::class,
-                    'query_builder' => $this->ur->findAllSortedByNameQB(),
+                    'query_builder' => $this->ur->findAllTechniciansSortedByNameQB(),
+                    'choice_label' => 'getFullnameCanonical',
                 )
             )
             ->add(
