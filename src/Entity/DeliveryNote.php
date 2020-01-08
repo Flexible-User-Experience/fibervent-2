@@ -194,6 +194,14 @@ class DeliveryNote extends AbstractBase
     }
 
     /**
+     * @return string
+     */
+    public function getDateString()
+    {
+        return $this->getDate()->format('d/m/Y');
+    }
+
+    /**
      * @param \DateTime $date
      *
      * @return DeliveryNote

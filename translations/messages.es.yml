@@ -458,6 +458,12 @@ admin:
     team_technician_2: Técnico 2
     team_technician_3: Técnico 3
     team_technician_4: Técnico 4
+    pdf:
+      customer_data: 'Datos cliente'
+      windfarm_data: 'Datos parque'
+      windfarm: 'Parque'
+      city: 'Localidad'
+      work_in: 'Trabajo en'
   deliverynotetimeregister:
     title: Fichajes
     title_list: Fichajes
