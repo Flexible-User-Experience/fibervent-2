@@ -109,19 +109,19 @@ services:
             - { name: sonata.admin, manager_type: orm, label: 'Vehículos', group: 'WorkOrder', label_translator_strategy: 'sonata.admin.label.strategy.noop', show_in_dashboard: true }
     admin.delivery_note:
         class: App\Admin\DeliveryNoteAdmin
-        arguments: [~, App\Entity\DeliveryNote, ~, '@security.authorization_checker', '@security.token_storage', '@app.repositories_service', '@vich_uploader.templating.helper.uploader_helper', '@liip_imagine.cache.manager' ]
+        arguments: [~, App\Entity\DeliveryNote, App\Controller\DeliveryNoteAdminController, '@security.authorization_checker', '@security.token_storage', '@app.repositories_service', '@vich_uploader.templating.helper.uploader_helper', '@liip_imagine.cache.manager' ]
         tags:
             - { name: sonata.admin, manager_type: orm, label: 'Albarán', group: 'WorkOrder', label_translator_strategy: 'sonata.admin.label.strategy.noop', show_in_dashboard: true }
     admin.delivery_note_time_register:
         class: App\Admin\DeliveryNoteTimeRegisterAdmin
         arguments: [~, App\Entity\DeliveryNoteTimeRegister, ~, '@security.authorization_checker', '@security.token_storage', '@app.repositories_service', '@vich_uploader.templating.helper.uploader_helper', '@liip_imagine.cache.manager' ]
         tags:
-            - { name: sonata.admin, manager_type: orm, label: 'Fichajes', group: 'WorkOrder', label_translator_strategy: 'sonata.admin.label.strategy.noop', show_in_dashboard: true }
+            - { name: sonata.admin, manager_type: orm, label: 'Fichajes', group: 'WorkOrder', label_translator_strategy: 'sonata.admin.label.strategy.noop', show_in_dashboard: false }
     admin.non_standard_used_material:
         class: App\Admin\NonStandardUsedMaterialAdmin
         arguments: [~, App\Entity\NonStandardUsedMaterial, ~, '@security.authorization_checker', '@security.token_storage', '@app.repositories_service', '@vich_uploader.templating.helper.uploader_helper', '@liip_imagine.cache.manager' ]
         tags:
-            - { name: sonata.admin, manager_type: orm, label: 'Materiales no est. utilizados', group: 'WorkOrder', label_translator_strategy: 'sonata.admin.label.strategy.noop', show_in_dashboard: true }
+            - { name: sonata.admin, manager_type: orm, label: 'Materiales no est. utilizados', group: 'WorkOrder', label_translator_strategy: 'sonata.admin.label.strategy.noop', show_in_dashboard: false }
     admin.worker_timesheet:
         class: App\Admin\WorkerTimesheetAdmin
         arguments: [~, App\Entity\WorkerTimesheet, ~, '@security.authorization_checker', '@security.token_storage', '@app.repositories_service', '@vich_uploader.templating.helper.uploader_helper', '@liip_imagine.cache.manager' ]

@@ -62,4 +62,54 @@ class VehicleRepository extends ServiceEntityRepository
     {
         return $this->findAllSortedByIdQ($limit, $order)->getResult();
     }
+
+    /**
+     * @return QueryBuilder
+     */
+    public function findAllSortedByNameQB()
+    {
+        return $this->createQueryBuilder('t')->orderBy('t.name', 'ASC');
+    }
+
+    /**
+     * @return Query
+     */
+    public function findAllSortedByNameQ()
+    {
+        return $this->findAllSortedByNameQB()->getQuery();
+    }
+
+    /**
+     * @return array|Vehicle[]
+     */
+    public function findAllSortedByName()
+    {
+        return $this->findAllSortedByNameQ()->getResult();
+    }
+
+    /**
+     * @return QueryBuilder
+     */
+    public function findEnabledSortedByNameQB()
+    {
+        return $this->findAllSortedByNameQB()
+            ->where('t.active = :enabled')
+            ->setParameter('enabled', true);
+    }
+
+    /**
+     * @return Query
+     */
+    public function findEnabledSortedByNameQ()
+    {
+        return $this->findEnabledSortedByNameQB()->getQuery();
+    }
+
+    /**
+     * @return array|Vehicle[]
+     */
+    public function findEnabledSortedByName()
+    {
+        return $this->findEnabledSortedByNameQ()->getResult();
+    }
 }

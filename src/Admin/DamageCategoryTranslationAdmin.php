@@ -131,6 +131,8 @@ class DamageCategoryTranslationAdmin extends AbstractBaseAdmin
                 array(
                     'label' => 'admin.damagecategorytranslation.locale',
                     'editable' => true,
+                    'header_class' => 'text-center',
+                    'row_align' => 'center',
                 )
             )
             ->add(
@@ -154,6 +156,8 @@ class DamageCategoryTranslationAdmin extends AbstractBaseAdmin
                 'actions',
                 array(
                     'label' => 'admin.common.action',
+                    'header_class' => 'text-right',
+                    'row_align' => 'right',
                     'actions' => array(
                         'edit' => array('template' => 'Admin/Buttons/list__action_edit_button.html.twig'),
                     ),

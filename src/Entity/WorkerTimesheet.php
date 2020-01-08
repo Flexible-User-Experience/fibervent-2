@@ -12,7 +12,6 @@ use Gedmo\Mapping\Annotation as Gedmo;
  *
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="App\Repository\WorkerTimesheetRepository")
- * @ORM\Cache(usage="NONSTRICT_READ_WRITE")
  * @Gedmo\SoftDeleteable(fieldName="removedAt", timeAware=false)
  */
 class WorkerTimesheet extends AbstractBase
@@ -22,7 +21,6 @@ class WorkerTimesheet extends AbstractBase
      *
      * @ORM\ManyToOne(targetEntity="DeliveryNote")
      * @ORM\JoinColumn(name="delivery_note_id", referencedColumnName="id", nullable=false)
-     * @ORM\Cache(usage="NONSTRICT_READ_WRITE")
      */
     private $deliveryNote;
 
@@ -31,7 +29,6 @@ class WorkerTimesheet extends AbstractBase
      *
      * @ORM\ManyToOne(targetEntity="User")
      * @ORM\JoinColumn(name="admin_user_id", referencedColumnName="id", nullable=false)
-     * @ORM\Cache(usage="NONSTRICT_READ_WRITE")
      */
     private $worker;
 

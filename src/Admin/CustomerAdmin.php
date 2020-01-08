@@ -332,6 +332,8 @@ class CustomerAdmin extends AbstractBaseAdmin
                 array(
                     'label' => 'admin.customer.show_logo_in_pdfs',
                     'editable' => true,
+                    'header_class' => 'text-center',
+                    'row_align' => 'center',
                 )
             )
             ->add(
@@ -340,6 +342,8 @@ class CustomerAdmin extends AbstractBaseAdmin
                 array(
                     'label' => 'admin.common.enabled',
                     'editable' => true,
+                    'header_class' => 'text-center',
+                    'row_align' => 'center',
                 )
             )
             ->add(
@@ -347,6 +351,8 @@ class CustomerAdmin extends AbstractBaseAdmin
                 'actions',
                 array(
                     'label' => 'admin.common.action',
+                    'header_class' => 'text-right',
+                    'row_align' => 'right',
                     'actions' => array(
                         'edit' => array('template' => 'Admin/Buttons/list__action_edit_button.html.twig'),
                         'map' => array('template' => 'Admin/Buttons/list__action_map_button.html.twig'),

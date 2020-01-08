@@ -4,8 +4,10 @@ namespace App\Service;
 
 use App\Entity\WorkOrder;
 use App\Entity\WorkOrderTask;
+use App\Enum\AuditLanguageEnum;
 use App\Enum\WindfarmLanguageEnum;
-use Symfony\Bundle\FrameworkBundle\Translation\Translator;
+use Symfony\Contracts\Translation\TranslatorInterface;
+use TCPDF;
 
 /**
  * Class WorkOrder Pdf Builder Service.
@@ -15,24 +17,24 @@ use Symfony\Bundle\FrameworkBundle\Translation\Translator;
 class WorkOrderPdfBuilderService
 {
     /**
-     * @var \TCPDF $tcpdf
+     * @var TCPDF
      */
-    private $tcpdf;
+    private TCPDF $tcpdf;
 
     /**
-     * @var Translator
+     * @var TranslatorInterface
      */
-    private $ts;
+    private TranslatorInterface $ts;
 
     /**
      * @var string
      */
-    private $locale;
+    private string $locale;
 
     /**
      * @var SmartAssetsHelperService
      */
-    private $sahs;
+    private SmartAssetsHelperService $sahs;
 
     /**
      * Methods.
@@ -41,12 +43,12 @@ class WorkOrderPdfBuilderService
     /**
      * WorkOrderPdfBuilderService constructor.
      *
-     * @param Translator $ts
+     * @param TranslatorInterface      $ts
      * @param SmartAssetsHelperService $sahs
      */
-    public function __construct(Translator $ts, SmartAssetsHelperService $sahs)
+    public function __construct(TranslatorInterface $ts, SmartAssetsHelperService $sahs)
     {
-        $this->tcpdf = new \TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
+        $this->tcpdf = new TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
         $this->ts = $ts;
         $this->sahs = $sahs;
     }
@@ -54,10 +56,13 @@ class WorkOrderPdfBuilderService
     /**
      * @param WorkOrder $workOrder
      *
-     * @return \TCPDF
+     * @return TCPDF
      */
     public function build(WorkOrder $workOrder) {
-        $this->locale = WindfarmLanguageEnum::getReversedEnumArray()[$workOrder->getWindfarm()->getLanguage()];
+        $this->locale = AuditLanguageEnum::DEFAULT_LANGUAGE_STRING;
+        if ($workOrder->getWindfarm() && $workOrder->getWindfarm()->getLanguage() >= AuditLanguageEnum::SPANISH && $workOrder->getWindfarm()->getLanguage() <= AuditLanguageEnum::ITALIAN) {
+            $this->locale = WindfarmLanguageEnum::getReversedEnumArray()[$workOrder->getWindfarm()->getLanguage()];
+        }
         $this->ts->setLocale($this->locale);
         $this->tcpdf->setPrintHeader(false);
         $this->tcpdf->setPrintFooter(false);
@@ -189,27 +194,31 @@ class WorkOrderPdfBuilderService
         $this->tcpdf->SetFont('');
         $this->tcpdf->SetAbsXY(15, 67);
         // Data
-        $fillWindmill = 1;
-        $fillBlade = 1;
         $windmill = 0;
         $windmillBlade = 0;
         /** @var WorkOrderTask $workOrderTask */
         foreach ($workOrder->getWorkOrderTasks() as $workOrderTask) {
             $this->tcpdf->SetAbsX(10);
-            if ($windmill != $workOrderTask->getWindmill()->getId()) {
-                $fillWindmill = !$fillWindmill;
-                $fillBlade = !$fillBlade;
-            } elseif ($windmillBlade != $workOrderTask->getWindmillBlade()->getId()) {
-                $fillBlade = !$fillBlade;
+            if (1 == $workOrderTask->getWindmillBlade()->getOrder()) {
+                $fillBlade = 1;
+                $this->tcpdf->SetFillColor(255, 242, 230);
+            } elseif (2 == $workOrderTask->getWindmillBlade()->getOrder()) {
+                $fillBlade = 1;
+                $this->tcpdf->SetFillColor(230, 255, 230);
+            } elseif (3 == $workOrderTask->getWindmillBlade()->getOrder()) {
+                $fillBlade = 1;
+                $this->tcpdf->SetFillColor(255, 255, 230);
+            } else {
+                $fillBlade = 0;
             }
             $windmill = $workOrderTask->getWindmill()->getId();
             $windmillBlade =$workOrderTask->getWindmillBlade()->getId();
 
-            $this->tcpdf->Cell(30, 5, $workOrderTask->getWindmill()->getCode(), 1, 0, 'C', $fillWindmill);
+            $this->tcpdf->Cell(30, 5, $workOrderTask->getWindmill()->getCode(), 1, 0, 'C', $fillBlade);
             $this->tcpdf->Cell(10, 5, $workOrderTask->getWindmillBlade()->getOrder(), 1, 0, 'C', $fillBlade);
             $this->tcpdf->Cell(25, 5,  $workOrderTask->getWindmill()->getBladeType()->getModel(), 1, 0, 'C', $fillBlade);
             if ($workOrderTask->getBladeDamage()) {
-                $this->tcpdf->Cell(10, 5, $workOrderTask->getBladeDamage()->getDamage()->getCode(), 1, 0, 'C', $fillBlade);
+                $this->tcpdf->Cell(10, 5, $workOrderTask->getBladeDamage()->getCalculatedNumberByRadius(), 1, 0, 'C', $fillBlade);
             } else {
                 $this->tcpdf->Cell(10, 5, '-', 1, 0, 'C', $fillBlade);
             }

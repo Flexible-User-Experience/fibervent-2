@@ -80,6 +80,8 @@ class WindmillBladeAdmin extends AbstractBaseAdmin
                 'actions',
                 array(
                     'label' => 'admin.common.action',
+                    'header_class' => 'text-right',
+                    'row_align' => 'right',
                     'actions' => array(
                         'edit' => array('template' => 'Admin/Buttons/list__action_edit_button.html.twig'),
                         'delete' => array('template' => 'Admin/Buttons/list__action_delete_button.html.twig'),

@@ -15,7 +15,6 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
  *
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="App\Repository\PresenceMonitoringRepository")
- * @ORM\Cache(usage="NONSTRICT_READ_WRITE")
  * @Gedmo\SoftDeleteable(fieldName="removedAt", timeAware=false)
  */
 class PresenceMonitoring extends AbstractBase
@@ -32,7 +31,6 @@ class PresenceMonitoring extends AbstractBase
      *
      * @ORM\ManyToOne(targetEntity="User")
      * @ORM\JoinColumn(name="admin_user_id", referencedColumnName="id", nullable=false)
-     * @ORM\Cache(usage="NONSTRICT_READ_WRITE")
      */
     private $worker;
 
@@ -361,7 +359,7 @@ class PresenceMonitoring extends AbstractBase
                 ->atPath('morningHourEnd')
                 ->addViolation();
         }
-        if ($this->getMorningHourBegin() && $this->getMorningHourEnd() && $this->getMorningHourBegin()->format('H:i:s') >= $this->getMorningHourEnd()->format('H:i:s')) {
+        if ($this->getMorningHourBegin() && $this->getMorningHourEnd() && $this->getMorningHourBegin()->format('H:i') >= $this->getMorningHourEnd()->format('H:i')) {
             $context->buildViolation('La hora de salida mañana no puede ser menor o igual que la hora de entrada!')
                 ->atPath('morningHourEnd')
                 ->addViolation();
@@ -371,12 +369,12 @@ class PresenceMonitoring extends AbstractBase
                 ->atPath('afternoonHourEnd')
                 ->addViolation();
         }
-        if ($this->getAfternoonHourBegin() && $this->getAfternoonHourEnd() && $this->getAfternoonHourBegin()->format('H:i:s') >= $this->getAfternoonHourEnd()->format('H:i:s')) {
+        if ($this->getAfternoonHourBegin() && $this->getAfternoonHourEnd() && $this->getAfternoonHourBegin()->format('H:i') >= $this->getAfternoonHourEnd()->format('H:i')) {
             $context->buildViolation('La hora de salida tarde no puede ser menor o igual que la hora de entrada!')
                 ->atPath('afternoonHourEnd')
                 ->addViolation();
         }
-        if ($this->getMorningHourBegin() && $this->getMorningHourEnd() && $this->getMorningHourBegin()->format('H:i:s') < $this->getMorningHourEnd()->format('H:i:s') && $this->getAfternoonHourBegin() && $this->getAfternoonHourEnd() && $this->getAfternoonHourBegin()->format('H:i:s') < $this->getAfternoonHourEnd()->format('H:i:s') && $this->getMorningHourBegin()->format('H:i:s') >= $this->getAfternoonHourBegin()->format('H:i:s')) {
+        if ($this->getMorningHourBegin() && $this->getMorningHourEnd() && $this->getMorningHourBegin()->format('H:i') < $this->getMorningHourEnd()->format('H:i') && $this->getAfternoonHourBegin() && $this->getAfternoonHourEnd() && $this->getAfternoonHourBegin()->format('H:i') < $this->getAfternoonHourEnd()->format('H:i') && $this->getMorningHourEnd()->format('H:i') < $this->getAfternoonHourBegin()->format('H:i')) {
             $context->buildViolation('La hora de entrada tarde no puede ser menor o igual que la hora de entrada mañana!')
                 ->atPath('afternoonHourBegin')
                 ->addViolation();

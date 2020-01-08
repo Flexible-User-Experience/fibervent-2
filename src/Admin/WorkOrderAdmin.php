@@ -152,25 +152,6 @@ class WorkOrderAdmin extends AbstractBaseAdmin
                     )
                 )
                 ->end()
-                ->with('admin.deliverynote.title', $this->getFormMdSuccessBoxArray(12))
-                ->add(
-                    'deliveryNotes',
-                    CollectionType::class,
-                    array(
-                        'label' => ' ',
-                        'required' => false,
-                        'btn_add' => false,
-                        'error_bubbling' => true,
-                        'type_options' => array(
-                            'delete' => false,
-                        ),
-                    ),
-                    array(
-                        'edit' => 'inline',
-                        'inline' => 'table',
-                    )
-                )
-                ->end()
             ;
             if ($this->getSubject()->isFromAudit()) {
                 $formMapper
@@ -379,6 +360,9 @@ class WorkOrderAdmin extends AbstractBaseAdmin
                 array(
                     'label' => 'admin.workorder.date',
                     'format' => 'd/m/Y',
+                    'editable' => false,
+                    'header_class' => 'text-center',
+                    'row_align' => 'center',
                 )
             )
             ->add(
@@ -386,6 +370,9 @@ class WorkOrderAdmin extends AbstractBaseAdmin
                 null,
                 array(
                     'label' => 'admin.workorder.project_number',
+                    'editable' => false,
+                    'header_class' => 'text-center',
+                    'row_align' => 'center',
                 )
             )
             ->add(
@@ -403,6 +390,9 @@ class WorkOrderAdmin extends AbstractBaseAdmin
                 null,
                 array(
                     'label' => 'admin.workorder.is_from_audit',
+                    'editable' => false,
+                    'header_class' => 'text-center',
+                    'row_align' => 'center',
                 )
             )
             ->add(
@@ -431,6 +421,8 @@ class WorkOrderAdmin extends AbstractBaseAdmin
                 array(
                     'label' => 'admin.workorder.repair_access_types',
                     'template' => 'Admin/Cells/list__cell_repair_access_type.html.twig',
+                    'header_class' => 'text-center',
+                    'row_align' => 'center',
                 )
             )
             ->add(
@@ -438,6 +430,8 @@ class WorkOrderAdmin extends AbstractBaseAdmin
                 'actions',
                 array(
                     'label' => 'admin.common.action',
+                    'header_class' => 'text-right',
+                    'row_align' => 'right',
                     'actions' => array(
                         'edit' => array('template' => 'Admin/Buttons/list__action_edit_button.html.twig'),
                         'show' => array('template' => 'Admin/Buttons/list__action_show_button.html.twig'),
