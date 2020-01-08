@@ -43,6 +43,7 @@ class ObservationAdmin extends AbstractBaseAdmin
                 'auditWindmillBlade',
                 null,
                 array(
+                    'choice_label' => 'id',
                     'attr' => array(
                         'hidden' => true,
                     ),
