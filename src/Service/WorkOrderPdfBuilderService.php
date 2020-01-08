@@ -217,7 +217,7 @@ class WorkOrderPdfBuilderService
             $this->tcpdf->Cell(10, 5, $workOrderTask->getWindmillBlade()->getOrder(), 1, 0, 'C', $fillBlade);
             $this->tcpdf->Cell(25, 5,  $workOrderTask->getWindmill()->getBladeType()->getModel(), 1, 0, 'C', $fillBlade);
             if ($workOrderTask->getBladeDamage()) {
-                $this->tcpdf->Cell(10, 5, $workOrderTask->getBladeDamage()->getDamage()->getCode(), 1, 0, 'C', $fillBlade);
+                $this->tcpdf->Cell(10, 5, $workOrderTask->getBladeDamage()->getCalculatedNumberByRadius(), 1, 0, 'C', $fillBlade);
             } else {
                 $this->tcpdf->Cell(10, 5, '-', 1, 0, 'C', $fillBlade);
             }
