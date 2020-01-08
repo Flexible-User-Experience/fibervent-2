@@ -16,7 +16,7 @@ use App\Repository\CustomerRepository;
 use App\Repository\DamageRepository;
 use App\Repository\BladeDamageRepository;
 use App\Repository\DamageCategoryRepository;
-use Symfony\Bundle\FrameworkBundle\Translation\Translator;
+use Symfony\Contracts\Translation\TranslatorInterface;
 use WhiteOctober\TCPDFBundle\Controller\TCPDFController;
 use Liip\ImagineBundle\Imagine\Cache\CacheManager;
 use Vich\UploaderBundle\Templating\Helper\UploaderHelper;
@@ -61,72 +61,72 @@ class AbstractPdfBuilderService
     /**
      * @var TCPDFController
      */
-    protected $tcpdf;
+    protected TCPDFController $tcpdf;
 
     /**
      * @var CacheManager
      */
-    protected $cm;
+    protected CacheManager $cm;
 
     /**
      * @var UploaderHelper
      */
-    protected $uh;
+    protected UploaderHelper $uh;
 
     /**
      * @var SmartAssetsHelperService
      */
-    protected $sahs;
+    protected SmartAssetsHelperService $sahs;
 
     /**
-     * @var Translator
+     * @var TranslatorInterface
      */
-    protected $ts;
+    protected TranslatorInterface $ts;
 
     /**
      * @var DamageRepository
      */
-    protected $dr;
+    protected DamageRepository $dr;
 
     /**
      * @var DamageCategoryRepository
      */
-    protected $dcr;
+    protected DamageCategoryRepository $dcr;
 
     /**
      * @var BladeDamageRepository
      */
-    protected $bdr;
+    protected BladeDamageRepository $bdr;
 
     /**
      * @var CustomerRepository
      */
-    protected $cr;
+    protected CustomerRepository $cr;
 
     /**
      * @var AuditModelDiagramBridgeService
      */
-    protected $amdb;
+    protected AuditModelDiagramBridgeService $amdb;
 
     /**
      * @var WindfarmBuilderBridgeService
      */
-    protected $wbbs;
+    protected WindfarmBuilderBridgeService $wbbs;
 
     /**
      * @var WindmillBladesDamagesHelperFactory
      */
-    protected $wbdhf;
+    protected WindmillBladesDamagesHelperFactory $wbdhf;
 
     /**
      * @var ObservationManager
      */
-    protected $om;
+    protected ObservationManager $om;
 
     /**
      * @var string
      */
-    protected $locale;
+    protected string $locale;
 
     /**
      * Methods.
@@ -139,7 +139,7 @@ class AbstractPdfBuilderService
      * @param CacheManager                       $cm
      * @param UploaderHelper                     $uh
      * @param SmartAssetsHelperService           $sahs
-     * @param Translator                         $ts
+     * @param TranslatorInterface                $ts
      * @param DamageRepository                   $dr
      * @param DamageCategoryRepository           $dcr
      * @param BladeDamageRepository              $bdr
@@ -149,7 +149,7 @@ class AbstractPdfBuilderService
      * @param WindmillBladesDamagesHelperFactory $wbdhf
      * @param ObservationManager                 $om
      */
-    public function __construct(TCPDFController $tcpdf, CacheManager $cm, UploaderHelper $uh, SmartAssetsHelperService $sahs, Translator $ts, DamageRepository $dr, DamageCategoryRepository $dcr, BladeDamageRepository $bdr, CustomerRepository $cr, AuditModelDiagramBridgeService $amdb, WindfarmBuilderBridgeService $wbbs, WindmillBladesDamagesHelperFactory $wbdhf, ObservationManager $om)
+    public function __construct(TCPDFController $tcpdf, CacheManager $cm, UploaderHelper $uh, SmartAssetsHelperService $sahs, TranslatorInterface $ts, DamageRepository $dr, DamageCategoryRepository $dcr, BladeDamageRepository $bdr, CustomerRepository $cr, AuditModelDiagramBridgeService $amdb, WindfarmBuilderBridgeService $wbbs, WindmillBladesDamagesHelperFactory $wbdhf, ObservationManager $om)
     {
         $this->tcpdf = $tcpdf;
         $this->cm = $cm;
@@ -226,6 +226,7 @@ class AbstractPdfBuilderService
      * @param CustomTcpdf $pdf
      * @param Audit $audit
      * @param bool $showAuditMark
+     *
      * @throws \Doctrine\ORM\NonUniqueResultException
      */
     protected function drawAuditDamage(CustomTcpdf $pdf, Audit $audit, $showAuditMark = false)
@@ -572,6 +573,7 @@ class AbstractPdfBuilderService
      * @param CustomTcpdf $pdf
      * @param int $key
      * @param BladeDamage $bladeDamage
+     *
      * @throws \Doctrine\ORM\NonUniqueResultException
      */
     private function drawDamageTableBodyRow(CustomTcpdf $pdf, $key, BladeDamage $bladeDamage)

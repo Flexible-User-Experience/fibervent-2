@@ -11,6 +11,7 @@ use App\Repository\DamageRepository;
 use App\Repository\StateRepository;
 use App\Repository\TurbineRepository;
 use App\Repository\UserRepository;
+use App\Repository\VehicleRepository;
 use App\Repository\WindfarmRepository;
 use App\Repository\WindmillBladeRepository;
 use App\Repository\WindmillRepository;
@@ -25,62 +26,67 @@ class RepositoriesService
     /**
      * @var CustomerRepository
      */
-    private $cr;
+    private CustomerRepository $cr;
 
     /**
      * @var UserRepository
      */
-    private $ur;
+    private UserRepository $ur;
 
     /**
      * @var WindmillRepository
      */
-    private $wmr;
+    private WindmillRepository $wmr;
 
     /**
      * @var WindfarmRepository
      */
-    private $wfr;
+    private WindfarmRepository $wfr;
 
     /**
      * @var BladeRepository
      */
-    private $br;
+    private BladeRepository $br;
 
     /**
      * @var TurbineRepository
      */
-    private $tr;
+    private TurbineRepository $tr;
 
     /**
      * @var StateRepository
      */
-    private $sr;
+    private StateRepository $sr;
 
     /**
      * @var DamageRepository
      */
-    private $dr;
+    private DamageRepository $dr;
 
     /**
      * @var DamageCategoryRepository
      */
-    private $dcr;
+    private DamageCategoryRepository $dcr;
 
     /**
      * @var AuditRepository
      */
-    private $ar;
+    private AuditRepository $ar;
 
     /**
      * @var WindmillBladeRepository
      */
-    private $wbr;
+    private WindmillBladeRepository $wbr;
 
     /**
      * @var BladeDamageRepository
      */
-    private $bdr;
+    private BladeDamageRepository $bdr;
+
+    /**
+     * @var VehicleRepository
+     */
+    private VehicleRepository $vr;
 
     /**
      * Methods.
@@ -101,8 +107,9 @@ class RepositoriesService
      * @param AuditRepository          $ar
      * @param WindmillBladeRepository  $wbr
      * @param BladeDamageRepository    $bdr
+     * @param VehicleRepository        $vr
      */
-    public function __construct(CustomerRepository $cr, UserRepository $ur, WindmillRepository $wmr, WindfarmRepository $wfr, BladeRepository $br, TurbineRepository $tr, StateRepository $sr, DamageRepository $dr, DamageCategoryRepository $dcr, AuditRepository $ar, WindmillBladeRepository $wbr, BladeDamageRepository $bdr)
+    public function __construct(CustomerRepository $cr, UserRepository $ur, WindmillRepository $wmr, WindfarmRepository $wfr, BladeRepository $br, TurbineRepository $tr, StateRepository $sr, DamageRepository $dr, DamageCategoryRepository $dcr, AuditRepository $ar, WindmillBladeRepository $wbr, BladeDamageRepository $bdr, VehicleRepository $vr)
     {
         $this->cr = $cr;
         $this->ur = $ur;
@@ -116,6 +123,7 @@ class RepositoriesService
         $this->ar = $ar;
         $this->wbr = $wbr;
         $this->bdr = $bdr;
+        $this->vr = $vr;
     }
 
     /**
@@ -212,5 +220,13 @@ class RepositoriesService
     public function getBdr()
     {
         return $this->bdr;
+    }
+
+    /**
+     * @return VehicleRepository
+     */
+    public function getVr()
+    {
+        return $this->vr;
     }
 }

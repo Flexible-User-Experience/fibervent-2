@@ -16,7 +16,6 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  *
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="App\Repository\WorkOrderTaskRepository")
- * @ORM\Cache(usage="NONSTRICT_READ_WRITE")
  * @UniqueEntity("id")
  * @Gedmo\SoftDeleteable(fieldName="removedAt", timeAware=false)
  */
@@ -26,7 +25,6 @@ class WorkOrderTask extends AbstractBase
      * @var WorkOrder
      *
      * @ORM\ManyToOne(targetEntity="WorkOrder", inversedBy="workOrderTasks", cascade={"persist"})
-     * @ORM\Cache(usage="NONSTRICT_READ_WRITE")
      */
     private $workOrder;
 
@@ -42,7 +40,6 @@ class WorkOrderTask extends AbstractBase
      *
      * @ORM\OneToOne(targetEntity="BladeDamage")
      * @ORM\JoinColumn(name="blade_damage_id", referencedColumnName="id", nullable=true)
-     * @ORM\Cache(usage="NONSTRICT_READ_WRITE")
      */
     private $bladeDamage;
 
@@ -51,7 +48,6 @@ class WorkOrderTask extends AbstractBase
      *
      * @ORM\ManyToOne(targetEntity="WindmillBlade")
      * @ORM\JoinColumn(name="windmill_blade_id", referencedColumnName="id", nullable=true)
-     * @ORM\Cache(usage="NONSTRICT_READ_WRITE")
      */
     private $windmillBlade;
 
@@ -60,7 +56,6 @@ class WorkOrderTask extends AbstractBase
      *
      * @ORM\ManyToOne(targetEntity="Windmill")
      * @ORM\JoinColumn(name="windmill_id", referencedColumnName="id", nullable=true)
-     * @ORM\Cache(usage="NONSTRICT_READ_WRITE")
      */
     private $windmill;
 
@@ -117,7 +112,6 @@ class WorkOrderTask extends AbstractBase
      * @var DeliveryNote[]|ArrayCollection
      *
      * @ORM\ManyToMany(targetEntity="DeliveryNote", inversedBy="workOrderTasks")
-     * @ORM\Cache(usage="NONSTRICT_READ_WRITE")
      */
     private $deliveryNotes;
 

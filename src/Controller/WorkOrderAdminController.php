@@ -10,6 +10,7 @@ use App\Entity\WorkOrder;
 use App\Model\AjaxResponse;
 use App\Repository\WindfarmRepository;
 use App\Repository\WindmillBladeRepository;
+use App\Service\WorkOrderPdfBuilderService;
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -105,7 +106,7 @@ class WorkOrderAdminController extends AbstractBaseAdminController
         /** @var WorkOrder $object */
         $object = $this->admin->getObject($id);
         if (!$object) {
-            throw $this->createNotFoundException(sprintf('Unable to find audit record with id: %s', $id));
+            throw $this->createNotFoundException(sprintf('Unable to find work order record with id: %s', $id));
         }
 
         return $object;
