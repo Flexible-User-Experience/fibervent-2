@@ -15,7 +15,6 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="App\Repository\WorkOrderRepository")
- * @ORM\Cache(usage="NONSTRICT_READ_WRITE")
  * @Gedmo\SoftDeleteable(fieldName="removedAt", timeAware=false)
  */
 class WorkOrder extends AbstractBase
@@ -39,7 +38,6 @@ class WorkOrder extends AbstractBase
      *
      * @ORM\ManyToOne(targetEntity="Customer")
      * @ORM\JoinColumn(name="customer_id", referencedColumnName="id", nullable=false)
-     * @ORM\Cache(usage="NONSTRICT_READ_WRITE")
      */
     private $customer;
 
@@ -48,7 +46,6 @@ class WorkOrder extends AbstractBase
      *
      * @ORM\ManyToOne(targetEntity="Windfarm")
      * @ORM\JoinColumn(name="windfarm_id", referencedColumnName="id", nullable=true)
-     * @ORM\Cache(usage="NONSTRICT_READ_WRITE")
      */
     private $windfarm;
 
@@ -56,7 +53,6 @@ class WorkOrder extends AbstractBase
      * @var Audit[]|ArrayCollection
      *
      * @ORM\OneToMany(targetEntity="Audit", mappedBy="workOrder")
-     * @ORM\Cache(usage="NONSTRICT_READ_WRITE")
      */
     private $audits;
 
@@ -99,7 +95,6 @@ class WorkOrder extends AbstractBase
      * @var WorkOrderTask[]|ArrayCollection
      *
      * @ORM\OneToMany(targetEntity="WorkOrderTask", mappedBy="workOrder", cascade={"persist", "remove"}, orphanRemoval=true)
-     * @ORM\Cache(usage="NONSTRICT_READ_WRITE")
      * @Assert\Valid
      */
     private $workOrderTasks;
@@ -108,7 +103,6 @@ class WorkOrder extends AbstractBase
      * @var DeliveryNote[]|ArrayCollection
      *
      * @ORM\OneToMany(targetEntity="DeliveryNote", mappedBy="workOrder", cascade={"persist", "remove"}, orphanRemoval=true)
-     * @ORM\Cache(usage="NONSTRICT_READ_WRITE")
      * @Assert\Valid
      */
     private $deliveryNotes;

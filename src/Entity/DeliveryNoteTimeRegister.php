@@ -16,7 +16,6 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
  *
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="App\Repository\DeliveryNoteTimeRegisterRepository")
- * @ORM\Cache(usage="NONSTRICT_READ_WRITE")
  * @Gedmo\SoftDeleteable(fieldName="removedAt", timeAware=false)
  */
 class DeliveryNoteTimeRegister extends AbstractBase
@@ -62,7 +61,6 @@ class DeliveryNoteTimeRegister extends AbstractBase
      * @var DeliveryNote
      *
      * @ORM\ManyToOne(targetEntity="DeliveryNote", inversedBy="timeRegisters", cascade={"persist"})
-     * @ORM\Cache(usage="NONSTRICT_READ_WRITE")
      */
     private $deliveryNote;
 
