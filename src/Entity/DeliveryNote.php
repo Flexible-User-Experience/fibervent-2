@@ -176,7 +176,7 @@ class DeliveryNote extends AbstractBase
      */
 
     /**
-     * @return $this
+     * @return WorkOrder
      */
     public function getWorkOrder()
     {

@@ -2,6 +2,7 @@
 
 namespace App\Admin;
 
+use App\Entity\User;
 use App\Enum\RepairAccessTypeEnum;
 use App\Enum\RepairWindmillSectionEnum;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
@@ -12,6 +13,7 @@ use Sonata\AdminBundle\Route\RouteCollection;
 use Sonata\AdminBundle\Show\ShowMapper;
 use Sonata\Form\Type\CollectionType;
 use Sonata\Form\Type\DatePickerType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
@@ -53,6 +55,7 @@ class DeliveryNoteAdmin extends AbstractBaseAdmin
                 null,
                 array(
                     'label' => 'admin.workorder.title',
+                    'required' => true,
                 )
             )
             ->add(
@@ -60,7 +63,7 @@ class DeliveryNoteAdmin extends AbstractBaseAdmin
                 DatePickerType::class,
                 array(
                     'label' => 'admin.deliverynote.date',
-                    'format' => 'd/m/Y',
+                    'format' => 'd/M/Y',
                 )
             )
             ->add(
@@ -78,9 +81,10 @@ class DeliveryNoteAdmin extends AbstractBaseAdmin
             ->with('admin.deliverynote.team', $this->getFormMdSuccessBoxArray(4))
             ->add(
                 'teamLeader',
-                null,
+                EntityType::class,
                 array(
                     'label' => 'admin.deliverynote.team_leader',
+                    'class' => User::class,
                     'required' => true,
                 )
             )
@@ -229,9 +233,16 @@ class DeliveryNoteAdmin extends AbstractBaseAdmin
             )
             ->add(
                 'date',
-                null,
+                'doctrine_orm_date',
                 array(
                     'label' => 'admin.deliverynote.date',
+                    'field_type' => DatePickerType::class,
+                    'format' => 'd/m/Y',
+                ),
+                null,
+                array(
+                    'widget' => 'single_text',
+                    'format' => 'dd/MM/yyyy',
                 )
             )
             ->add(
