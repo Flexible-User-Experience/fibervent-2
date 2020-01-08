@@ -194,27 +194,31 @@ class WorkOrderPdfBuilderService
         $this->tcpdf->SetFont('');
         $this->tcpdf->SetAbsXY(15, 67);
         // Data
-        $fillWindmill = 1;
-        $fillBlade = 1;
         $windmill = 0;
         $windmillBlade = 0;
         /** @var WorkOrderTask $workOrderTask */
         foreach ($workOrder->getWorkOrderTasks() as $workOrderTask) {
             $this->tcpdf->SetAbsX(10);
-            if ($windmill != $workOrderTask->getWindmill()->getId()) {
-                $fillWindmill = !$fillWindmill;
-                $fillBlade = !$fillBlade;
-            } elseif ($windmillBlade != $workOrderTask->getWindmillBlade()->getId()) {
-                $fillBlade = !$fillBlade;
+            if (1 == $workOrderTask->getWindmillBlade()->getOrder()) {
+                $fillBlade = 1;
+                $this->tcpdf->SetFillColor(255, 242, 230);
+            } elseif (2 == $workOrderTask->getWindmillBlade()->getOrder()) {
+                $fillBlade = 1;
+                $this->tcpdf->SetFillColor(230, 255, 230);
+            } elseif (3 == $workOrderTask->getWindmillBlade()->getOrder()) {
+                $fillBlade = 1;
+                $this->tcpdf->SetFillColor(255, 255, 230);
+            } else {
+                $fillBlade = 0;
             }
             $windmill = $workOrderTask->getWindmill()->getId();
             $windmillBlade =$workOrderTask->getWindmillBlade()->getId();
 
-            $this->tcpdf->Cell(30, 5, $workOrderTask->getWindmill()->getCode(), 1, 0, 'C', $fillWindmill);
+            $this->tcpdf->Cell(30, 5, $workOrderTask->getWindmill()->getCode(), 1, 0, 'C', $fillBlade);
             $this->tcpdf->Cell(10, 5, $workOrderTask->getWindmillBlade()->getOrder(), 1, 0, 'C', $fillBlade);
             $this->tcpdf->Cell(25, 5,  $workOrderTask->getWindmill()->getBladeType()->getModel(), 1, 0, 'C', $fillBlade);
             if ($workOrderTask->getBladeDamage()) {
-                $this->tcpdf->Cell(10, 5, $workOrderTask->getBladeDamage()->getDamage()->getCode(), 1, 0, 'C', $fillBlade);
+                $this->tcpdf->Cell(10, 5, $workOrderTask->getBladeDamage()->getCalculatedNumberByRadius(), 1, 0, 'C', $fillBlade);
             } else {
                 $this->tcpdf->Cell(10, 5, '-', 1, 0, 'C', $fillBlade);
             }

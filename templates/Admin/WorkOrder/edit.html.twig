@@ -1,5 +1,32 @@
 {% extends "Admin/edit.html.twig" %}
 
+{% block sonata_tab_content %}
+    {{ parent() }}
+    <div class="col-md-12">
+        <div class="box box-success">
+            <div class="box-header">
+                <h4 class="box-title">
+                    Albarán
+                </h4>
+            </div>
+            <div class="box-body">
+                <div class="sonata-ba-collapsed-fields">
+                    <div class="form-group">
+                        <label class="  control-label"></label>
+                            <div class="sonata-ba-field sonata-ba-field-inline-table">
+                            <div class="field-container">
+            <span>
+                {% include "Admin/Cells/list__delivery_notes.html.twig" with {show_edit_button: true} %}
+            </span>
+                            </div>
+                            </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
 {# override javascript includes #}
 {% block javascripts %}
     {{ parent() }}
