@@ -6,15 +6,16 @@ use App\Entity\WorkOrder;
 use App\Entity\WorkOrderTask;
 use App\Enum\AuditLanguageEnum;
 use App\Enum\WindfarmLanguageEnum;
+use Symfony\Bundle\FrameworkBundle\Translation\Translator;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use TCPDF;
 
 /**
- * Class WorkOrder Pdf Builder Service.
+ * Class Delivery Note Pdf Builder Service.
  *
  * @category Service
  */
-class WorkOrderPdfBuilderService
+class DeliveryNotePdfBuilderService
 {
     /**
      * @var TCPDF
@@ -41,7 +42,7 @@ class WorkOrderPdfBuilderService
      */
 
     /**
-     * WorkOrderPdfBuilderService constructor.
+     * DeliveryNotePdfBuilderService constructor.
      *
      * @param TranslatorInterface      $ts
      * @param SmartAssetsHelperService $sahs
