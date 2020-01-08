@@ -239,6 +239,13 @@ class DeliveryNoteAdmin extends AbstractBaseAdmin
                 )
             )
             ->add(
+                'id',
+                null,
+                array(
+                    'label' => 'admin.deliverynote.id',
+                )
+            )
+            ->add(
                 'workOrder',
                 null,
                 array(
@@ -351,6 +358,17 @@ class DeliveryNoteAdmin extends AbstractBaseAdmin
                 array(
                     'label' => 'admin.deliverynote.date',
                     'format' => 'd/m/Y',
+                    'row_align' => 'center',
+                    'header_class' => 'text-center',
+                )
+            )
+            ->add(
+                'id',
+                null,
+                array(
+                    'label' => 'admin.deliverynote.id',
+                    'row_align' => 'center',
+                    'header_class' => 'text-center',
                 )
             )
             ->add(
@@ -361,6 +379,8 @@ class DeliveryNoteAdmin extends AbstractBaseAdmin
                     'sortable' => true,
                     'sort_field_mapping' => array('fieldName' => 'projectNumber'),
                     'sort_parent_association_mappings' => array(array('fieldName' => 'workOrder')),
+                    'row_align' => 'center',
+                    'header_class' => 'text-center',
                 )
             )
             ->add(
@@ -368,6 +388,8 @@ class DeliveryNoteAdmin extends AbstractBaseAdmin
                 null,
                 array(
                     'label' => 'admin.deliverynote.repair_windmill_sections_short',
+                    'header_class' => 'text-center',
+                    'row_align' => 'center',
                     'template' => 'Admin/Cells/list__cell_repair_windmill_sections.html.twig',
                 )
             )
@@ -424,6 +446,8 @@ class DeliveryNoteAdmin extends AbstractBaseAdmin
                 array(
                     'label' => 'admin.workorder.repair_access_types',
                     'template' => 'Admin/Cells/list__cell_repair_access_type.html.twig',
+                    'header_class' => 'text-center',
+                    'row_align' => 'center',
                 )
             )
             ->add(
@@ -431,6 +455,8 @@ class DeliveryNoteAdmin extends AbstractBaseAdmin
                 'actions',
                 array(
                     'label' => 'admin.common.action',
+                    'header_class' => 'text-right',
+                    'row_align' => 'right',
                     'actions' => array(
                         'edit' => array('template' => 'Admin/Buttons/list__action_edit_button.html.twig'),
                         'show' => array('template' => 'Admin/Buttons/list__action_show_button.html.twig'),

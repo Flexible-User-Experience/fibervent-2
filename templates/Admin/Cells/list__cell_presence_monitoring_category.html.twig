@@ -1,7 +1,5 @@
 {% extends 'SonataAdminBundle:CRUD:base_list_field.html.twig' %}
 
 {% block field %}
-    <div class="text-left">
-        {{ object | draw_presence_monitory_category_label | raw }}
-    </div>
+    {{ object | draw_presence_monitory_category_label | raw }}
 {% endblock %}

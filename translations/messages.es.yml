@@ -438,6 +438,7 @@ admin:
     licence_plate: Matrícula
     active: Activo
   deliverynote:
+    id: Número
     title: Albarán
     title_list: Albarán
     title_create: Crear

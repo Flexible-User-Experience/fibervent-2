@@ -22,6 +22,68 @@ class WorkerTimesheetAdmin extends AbstractBaseAdmin
     );
 
     /**
+     * @param FormMapper $formMapper
+     */
+    protected function configureFormFields(FormMapper $formMapper)
+    {
+        $formMapper
+            ->with('admin.common.general', $this->getFormMdSuccessBoxArray(4))
+            ->add(
+                'deliveryNote',
+                null,
+                array(
+                    'label' => 'admin.deliverynote.title',
+                )
+            )
+            ->add(
+                'worker',
+                null,
+                array(
+                    'label' => 'admin.workertimesheet.worker',
+                )
+            )
+            ->add(
+                'workDescription',
+                null,
+                array(
+                    'label' => 'admin.workertimesheet.work_description',
+                )
+            )
+            ->end()
+            ->with('admin.common.details', $this->getFormMdSuccessBoxArray(4))
+            ->add(
+                'totalNormalHours',
+                null,
+                array(
+                    'label' => 'admin.workertimesheet.total_normal_hours',
+                )
+            )
+            ->add(
+                'totalVerticalHours',
+                null,
+                array(
+                    'label' => 'admin.workertimesheet.total_vertical_hours',
+                )
+            )
+            ->add(
+                'totalInclementWeatherHours',
+                null,
+                array(
+                    'label' => 'admin.workertimesheet.total_inclement_weather_hours',
+                )
+            )
+            ->add(
+                'totalTripHours',
+                null,
+                array(
+                    'label' => 'admin.workertimesheet.total_trip_hours',
+                )
+            )
+            ->end()
+        ;
+    }
+
+    /**
      * @param DatagridMapper $datagridMapper
      */
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
@@ -63,9 +125,12 @@ class WorkerTimesheetAdmin extends AbstractBaseAdmin
                     'sortable' => true,
                     'sort_field_mapping' => array('fieldName' => 'id'),
                     'sort_parent_association_mappings' => array(array('fieldName' => 'deliveryNote')),
+                    'header_class' => 'text-center',
+                    'row_align' => 'center',
                 )
             )
-            ->add('worker',
+            ->add(
+                'worker',
                 null,
                 array(
                     'label' => 'admin.workertimesheet.worker',
@@ -74,34 +139,52 @@ class WorkerTimesheetAdmin extends AbstractBaseAdmin
                     'sort_parent_association_mappings' => array(array('fieldName' => 'worker')),
                 )
             )
-            ->add('workDescription',
+            ->add(
+                'workDescription',
                 null,
                 array(
                     'label' => 'admin.workertimesheet.work_description',
+                    'editable' => true,
                 )
             )
-            ->add('totalNormalHours',
+            ->add(
+                'totalNormalHours',
                 null,
                 array(
                     'label' => 'admin.workertimesheet.total_normal_hours',
+                    'editable' => true,
+                    'header_class' => 'text-right',
+                    'row_align' => 'right',
                 )
             )
-            ->add('totalVerticalHours',
+            ->add(
+                'totalVerticalHours',
                 null,
                 array(
                     'label' => 'admin.workertimesheet.total_vertical_hours',
+                    'editable' => true,
+                    'header_class' => 'text-right',
+                    'row_align' => 'right',
                 )
             )
-            ->add('totalInclementWeatherHours',
+            ->add(
+                'totalInclementWeatherHours',
                 null,
                 array(
                     'label' => 'admin.workertimesheet.total_inclement_weather_hours',
+                    'editable' => true,
+                    'header_class' => 'text-right',
+                    'row_align' => 'right',
                 )
             )
-            ->add('totalTripHours',
+            ->add(
+                'totalTripHours',
                 null,
                 array(
                     'label' => 'admin.workertimesheet.total_trip_hours',
+                    'editable' => true,
+                    'header_class' => 'text-right',
+                    'row_align' => 'right',
                 )
             )
             ->add(
@@ -109,70 +192,18 @@ class WorkerTimesheetAdmin extends AbstractBaseAdmin
                 'actions',
                 array(
                     'label' => 'admin.common.action',
+                    'header_class' => 'text-right',
+                    'row_align' => 'right',
                     'actions' => array(
                         'edit' => array('template' => 'Admin/Buttons/list__action_edit_button.html.twig'),
-//                        'show' => array('template' => 'Admin/Buttons/list__action_show_button.html.twig'),
+                        // 'show' => array('template' => 'Admin/Buttons/list__action_show_button.html.twig'),
                     ),
                 )
             )
         ;
     }
 
-    /**
-     * @param FormMapper $formMapper
-     */
-    protected function configureFormFields(FormMapper $formMapper)
-    {
-        $formMapper
-            ->with('admin.common.general', $this->getFormMdSuccessBoxArray(4))
-            ->add(
-                'deliveryNote',
-                null,
-                array(
-                    'label' => 'admin.deliverynote.title',
-                )
-            )
-            ->add('worker',
-                null,
-                array(
-                    'label' => 'admin.workertimesheet.worker',
-                )
-            )
-            ->add('workDescription',
-                null,
-                array(
-                    'label' => 'admin.workertimesheet.work_description',
-                )
-            )
-            ->end()
-            ->with('admin.common.details', $this->getFormMdSuccessBoxArray(4))
-            ->add('totalNormalHours',
-                null,
-                array(
-                    'label' => 'admin.workertimesheet.total_normal_hours',
-                )
-            )
-            ->add('totalVerticalHours',
-                null,
-                array(
-                    'label' => 'admin.workertimesheet.total_vertical_hours',
-                )
-            )
-            ->add('totalInclementWeatherHours',
-                null,
-                array(
-                    'label' => 'admin.workertimesheet.total_inclement_weather_hours',
-                )
-            )
-            ->add('totalTripHours',
-                null,
-                array(
-                    'label' => 'admin.workertimesheet.total_trip_hours',
-                )
-            )
-            ->end()
-        ;
-    }
+
 
     /**
      * @param ShowMapper $showMapper
@@ -188,13 +219,15 @@ class WorkerTimesheetAdmin extends AbstractBaseAdmin
                     'label' => 'admin.deliverynote.title',
                 )
             )
-            ->add('worker',
+            ->add(
+                'worker',
                 null,
                 array(
                     'label' => 'admin.workertimesheet.worker',
                 )
             )
-            ->add('workDescription',
+            ->add(
+                'workDescription',
                 null,
                 array(
                     'label' => 'admin.workertimesheet.work_description',
@@ -202,25 +235,29 @@ class WorkerTimesheetAdmin extends AbstractBaseAdmin
             )
             ->end()
             ->with('admin.common.details', $this->getFormMdSuccessBoxArray(4))
-            ->add('totalNormalHours',
+            ->add(
+                'totalNormalHours',
                 null,
                 array(
                     'label' => 'admin.workertimesheet.total_normal_hours',
                 )
             )
-            ->add('totalVerticalHours',
+            ->add(
+                'totalVerticalHours',
                 null,
                 array(
                     'label' => 'admin.workertimesheet.total_vertical_hours',
                 )
             )
-            ->add('totalInclementWeatherHours',
+            ->add(
+                'totalInclementWeatherHours',
                 null,
                 array(
                     'label' => 'admin.workertimesheet.total_inclement_weather_hours',
                 )
             )
-            ->add('totalTripHours',
+            ->add(
+                'totalTripHours',
                 null,
                 array(
                     'label' => 'admin.workertimesheet.total_trip_hours',
