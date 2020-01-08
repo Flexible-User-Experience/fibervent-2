@@ -460,10 +460,13 @@ admin:
     team_technician_4: Técnico 4
     pdf:
       customer_data: 'Datos cliente'
+      business_data: 'Datos empresa'
       windfarm_data: 'Datos parque'
       windfarm: 'Parque'
       city: 'Localidad'
       work_in: 'Trabajo en'
+      blade_number: 'Nº pala'
+      serial_number: 'Nº serie'
   deliverynotetimeregister:
     title: Fichajes
     title_list: Fichajes

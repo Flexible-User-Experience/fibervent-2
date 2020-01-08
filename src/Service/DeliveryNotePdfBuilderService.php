@@ -122,6 +122,81 @@ class DeliveryNotePdfBuilderService
         $this->tcpdf->Cell(22, 5, $this->ts->trans('admin.deliverynote.pdf.work_in'), 1, 0, 'L', false);
         $this->tcpdf->SetFont('', '', 7);
         $this->tcpdf->Cell(80, 5, '---', 1, 1, 'L', false);
+        $this->tcpdf->SetX(self::PDF_MARGIN_LEFT + self::H_DIVISOR);
+        $this->tcpdf->SetFont('', 'B', 7);
+        $this->tcpdf->Cell(22, 5, $this->ts->trans('admin.deliverynote.pdf.blade_number'), 1, 0, 'L', false);
+        $this->tcpdf->SetFont('', '', 7);
+        $this->tcpdf->Cell(80, 5, '---', 1, 1, 'L', false);
+        $this->tcpdf->SetX(self::PDF_MARGIN_LEFT + self::H_DIVISOR);
+        $this->tcpdf->SetFont('', 'B', 7);
+        $this->tcpdf->Cell(22, 5, $this->ts->trans('admin.deliverynote.pdf.serial_number'), 1, 0, 'L', false);
+        $this->tcpdf->SetFont('', '', 7);
+        $this->tcpdf->Cell(80, 5, '---', 1, 1, 'L', false);
+        $this->tcpdf->SetX(self::PDF_MARGIN_LEFT + self::H_DIVISOR);
+        $this->tcpdf->Cell(102, 5, '', 0, 1, 'C', false);
+
+        // windfarm data header table info
+        $this->tcpdf->SetX(self::PDF_MARGIN_LEFT + self::H_DIVISOR);
+        $this->tcpdf->SetFont('', 'B', 7);
+        $this->tcpdf->Cell(102, 5, $this->ts->trans('admin.deliverynote.pdf.business_data'), 1, 1, 'C', true);
+        $this->tcpdf->SetX(self::PDF_MARGIN_LEFT + self::H_DIVISOR);
+        $this->tcpdf->Cell(22, 5, $this->ts->trans('admin.deliverynote.team_leader'), 1, 0, 'L', false);
+        $this->tcpdf->SetFont('', '', 7);
+        $this->tcpdf->Cell(80, 5, $dn->getTeamLeader()->getFullname(), 1, 1, 'L', false);
+        $this->tcpdf->SetX(self::PDF_MARGIN_LEFT + self::H_DIVISOR);
+        $this->tcpdf->SetFont('', 'B', 7);
+        $this->tcpdf->Cell(22, 5, $this->ts->trans('admin.deliverynote.team_technician_1'), 1, 0, 'L', false);
+        $this->tcpdf->SetFont('', '', 7);
+        $this->tcpdf->Cell(80, 5, $dn->getTeamTechnician1() ? $dn->getTeamTechnician1()->getFullname() : '---', 1, 1, 'L', false);
+        $this->tcpdf->SetX(self::PDF_MARGIN_LEFT + self::H_DIVISOR);
+        $this->tcpdf->SetFont('', 'B', 7);
+        $this->tcpdf->Cell(22, 5, $this->ts->trans('admin.deliverynote.team_technician_2'), 1, 0, 'L', false);
+        $this->tcpdf->SetFont('', '', 7);
+        $this->tcpdf->Cell(80, 5, $dn->getTeamTechnician2() ? $dn->getTeamTechnician2()->getFullname() : '---', 1, 1, 'L', false);
+        if ($dn->getTeamTechnician3()) {
+            $this->tcpdf->SetX(self::PDF_MARGIN_LEFT + self::H_DIVISOR);
+            $this->tcpdf->SetFont('', 'B', 7);
+            $this->tcpdf->Cell(22, 5, $this->ts->trans('admin.deliverynote.team_technician_3'), 1, 0, 'L', false);
+            $this->tcpdf->SetFont('', '', 7);
+            $this->tcpdf->Cell(80, 5, $dn->getTeamTechnician3()->getFullname(), 1, 1, 'L', false);
+        }
+        if ($dn->getTeamTechnician4()) {
+            $this->tcpdf->SetX(self::PDF_MARGIN_LEFT + self::H_DIVISOR);
+            $this->tcpdf->SetFont('', 'B', 7);
+            $this->tcpdf->Cell(22, 5, $this->ts->trans('admin.deliverynote.team_technician_4'), 1, 0, 'L', false);
+            $this->tcpdf->SetFont('', '', 7);
+            $this->tcpdf->Cell(80, 5, $dn->getTeamTechnician4()->getFullname(), 1, 1, 'L', false);
+        }
+        if ($dn->getVehicle()) {
+            $this->tcpdf->SetX(self::PDF_MARGIN_LEFT + self::H_DIVISOR);
+            $this->tcpdf->SetFont('', 'B', 7);
+            $this->tcpdf->Cell(22, 5, $this->ts->trans('admin.vehicle.title'), 1, 0, 'L', false);
+            $this->tcpdf->SetFont('', '', 7);
+            $this->tcpdf->Cell(80, 5, $dn->getVehicle()->getName(), 1, 1, 'L', false);
+            $this->tcpdf->SetX(self::PDF_MARGIN_LEFT + self::H_DIVISOR);
+            $this->tcpdf->SetFont('', 'B', 7);
+            $this->tcpdf->Cell(22, 5, $this->ts->trans('admin.vehicle.licence_plate'), 1, 0, 'L', false);
+            $this->tcpdf->SetFont('', '', 7);
+            $this->tcpdf->Cell(80, 5, $dn->getVehicle()->getLicensePlate(), 1, 1, 'L', false);
+        }
+        $this->tcpdf->SetX(self::PDF_MARGIN_LEFT + self::H_DIVISOR);
+        $this->tcpdf->Cell(102, 5, '', 0, 1, 'C', false);
+
+        // access type table info
+        $this->tcpdf->SetX(self::PDF_MARGIN_LEFT + self::H_DIVISOR);
+        $this->tcpdf->SetFont('', 'B', 7);
+        $this->tcpdf->Cell(102, 5, $this->ts->trans('admin.deliverynote.repair_access_types'), 1, 1, 'C', true);
+
+        $this->tcpdf->SetX(self::PDF_MARGIN_LEFT + self::H_DIVISOR);
+        $this->tcpdf->Cell(22, 5, $this->ts->trans('admin.deliverynote.crane_company'), 1, 0, 'L', false);
+        $this->tcpdf->SetFont('', '', 7);
+        $this->tcpdf->Cell(80, 5, $dn->getCraneCompany(), 1, 1, 'L', false);
+        $this->tcpdf->SetX(self::PDF_MARGIN_LEFT + self::H_DIVISOR);
+        $this->tcpdf->SetFont('', 'B', 7);
+        $this->tcpdf->Cell(22, 5, $this->ts->trans('admin.deliverynote.crane_driver'), 1, 0, 'L', false);
+        $this->tcpdf->SetFont('', '', 7);
+        $this->tcpdf->Cell(80, 5, $dn->getCraneDriver(), 1, 1, 'L', false);
+
 
         return $this->tcpdf;
     }
