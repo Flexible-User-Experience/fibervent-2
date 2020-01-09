@@ -1,18 +1,51 @@
 - name: compile yarn assets
   shell: "chdir={{ ansistrano_release_path.stdout }}
     SYMFONY_ENV={{ symfony_env }} yarn install && yarn encore production"
+- name: find build production fibervent logo images files
+  find:
+    path: "{{ ansistrano_release_path.stdout }}/assets/images"
+    recurse: no
+    file_type: file
+    pattern: "fibervent*"
+  register: files
 - name: copy build production fibervent logo images without versioning filenames
   copy:
-    src:  "{{ ansistrano_release_path.stdout }}/assets/images/fibervent*"
+    remote_src: yes
+    src:  "{{ item.path }}"
     dest: "{{ ansistrano_release_path.stdout }}/public/build/"
+    owner: "{{ remote_system_user }}"
+    group: "{{ remote_system_group }}"
+  with_items: "{{ files.files }}"
+- name: find build production fibervent blade images files
+  find:
+    path: "{{ ansistrano_release_path.stdout }}/assets/images/blade_diagrams"
+    recurse: no
+    file_type: file
+    pattern: "*"
+  register: files
 - name: copy build production fibervent blade images without versioning filenames
   copy:
-    src:  "{{ ansistrano_release_path.stdout }}/assets/images/blade_diagrams/*"
+    remote_src: yes
+    src:  "{{ item.path }}"
     dest: "{{ ansistrano_release_path.stdout }}/public/build/blade_diagrams/"
+    owner: "{{ remote_system_user }}"
+    group: "{{ remote_system_group }}"
+  with_items: "{{ files.files }}"
+- name: find build production fibervent turbine images files
+  find:
+    path: "{{ ansistrano_release_path.stdout }}/assets/images/turbine_diagrams"
+    recurse: no
+    file_type: file
+    pattern: "*"
+  register: files
 - name: copy build production fibervent turbine images without versioning filenames
   copy:
-    src:  "{{ ansistrano_release_path.stdout }}/assets/images/turbine_diagrams/*"
+    remote_src: yes
+    src:  "{{ item.path }}"
     dest: "{{ ansistrano_release_path.stdout }}/public/build/turbine_diagrams/"
+    owner: "{{ remote_system_user }}"
+    group: "{{ remote_system_group }}"
+  with_items: "{{ files.files }}"
 - name: fix symfony web directory apache ownership
   file:
     path: "{{ ansistrano_release_path.stdout }}/public"
