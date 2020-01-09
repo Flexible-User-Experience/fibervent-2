@@ -116,7 +116,7 @@ class WorkOrder extends AbstractBase
      */
     public function getProjectNumber()
     {
-        return $this->getId();
+        return $this->projectNumber;
     }
 
     /**
