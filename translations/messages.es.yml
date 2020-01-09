@@ -546,6 +546,11 @@ month:
 fibervent:
   name: 'Fibervent, SL'
   cif: 'B55572580'
+  address_1: 'Pol. Industrial Pla de Solans, Parcela 2'
+  address_2: '43519 El Perelló (Tarragona)'
+  tel: 'Tel. +34 977 490 713'
+  email: 'info@fibervent.com'
+  web: 'www.fibervent.com'
 gmap:
   general: ubicación general
 # Admin defaults

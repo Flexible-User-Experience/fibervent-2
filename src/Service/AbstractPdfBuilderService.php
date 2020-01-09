@@ -542,6 +542,28 @@ class AbstractPdfBuilderService
     }
 
     /**
+     * @param CustomTcpdf $pdf
+     */
+    protected function writeCommonFooterWithBrandDetails(CustomTcpdf $pdf)
+    {
+        $pdf->SetXY(CustomTcpdf::PDF_MARGIN_LEFT, 250);
+        $pdf->setFontStyle(null, null, 8);
+        $pdf->setBlueText();
+        $pdf->Write(0, $this->ts->trans('fibervent.name'), false, false, 'L', true);
+        $pdf->setBlackText();
+        $pdf->Write(0, $this->ts->trans('admin.presencemonitoring.brand_cif').': '.$this->ts->trans('fibervent.cif'), false, false, 'L', true);
+        $pdf->Write(0, $this->ts->trans('fibervent.address_1'), false, false, 'L', true);
+        $pdf->Write(0, $this->ts->trans('fibervent.address_2'), false, false, 'L', true);
+        $pdf->Write(0, $this->ts->trans('fibervent.tel'), false, false, 'L', true);
+        $pdf->setFontStyle(null, 'U', 8);
+        $pdf->setBlueText();
+        $pdf->Write(0, $this->ts->trans('fibervent.email'), 'mailto:info@fibervent.com', false, 'L', true);
+        $pdf->setFontStyle(null, null, 8);
+        $pdf->Write(0, $this->ts->trans('fibervent.web'), 'http://www.fibervent.com/', false, 'L');
+        $pdf->setBlackText();
+    }
+
+    /**
      * Draw damage table header.
      *
      * @param CustomTcpdf $pdf

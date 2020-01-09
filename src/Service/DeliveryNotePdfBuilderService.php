@@ -65,12 +65,24 @@ class DeliveryNotePdfBuilderService
         $this->tcpdf->SetMargins(self::PDF_MARGIN_LEFT, self::PDF_MARGIN_TOP, self::PDF_MARGIN_RIGHT, true);
         $this->tcpdf->SetAutoPageBreak(true, self::PDF_MARGIN_BOTTOM);
         $this->tcpdf->AddPage('P', 'A4', true, true);
+
+        // left image header
         $this->tcpdf->Image($this->sahs->getAbsoluteAssetFilePath('/build/fibervent_logo_white_landscape.jpg'), self::PDF_MARGIN_LEFT, self::PDF_MARGIN_TOP, 60, 0, 'JPEG', '', 'T', false, 300, '', false, false, 0, false, false, false);
         // Colors, line width and bold font
         $this->tcpdf->SetFillColor(108, 197, 205);
-        $this->tcpdf->SetTextColor(0);
         $this->tcpdf->SetLineWidth(0.1);
-        $this->tcpdf->SetFont('', 'B', 7);
+        $this->tcpdf->SetAbsXY(self::PDF_MARGIN_LEFT, self::PDF_MARGIN_TOP + 18);
+        $this->tcpdf->SetFont('', '', 8);
+        $this->tcpdf->SetTextColor(50, 118, 179);
+        $this->tcpdf->Cell(85, 5, $this->ts->trans('fibervent.name'), 0, 1, 'L', false);
+        $this->tcpdf->SetTextColor(0);
+        $this->tcpdf->Cell(85, 5, $this->ts->trans('fibervent.address_1'), 0, 1, 'L', false);
+        $this->tcpdf->Cell(85, 5, $this->ts->trans('fibervent.address_2'), 0, 1, 'L', false);
+        $this->tcpdf->Cell(85, 5, $this->ts->trans('fibervent.tel'), 0, 1, 'L', false);
+        $this->tcpdf->Cell(85, 5, $this->ts->trans('fibervent.email'), 0, 1, 'L', false, 'mailto:info@fibervent.com');
+        $this->tcpdf->SetTextColor(50, 118, 179);
+        $this->tcpdf->Cell(85, 5, $this->ts->trans('fibervent.web'), 0, 1, 'L', false, 'http://www.fibervent.com/');
+        $this->tcpdf->SetTextColor(0);
 
         // delivery note header table info
         $this->tcpdf->SetAbsXY(self::PDF_MARGIN_LEFT + self::H_DIVISOR, self::PDF_MARGIN_TOP);
@@ -126,12 +138,12 @@ class DeliveryNotePdfBuilderService
         $this->tcpdf->SetFont('', 'B', 7);
         $this->tcpdf->Cell(22, 5, $this->ts->trans('admin.deliverynote.pdf.blade_number'), 1, 0, 'L', false);
         $this->tcpdf->SetFont('', '', 7);
-        $this->tcpdf->Cell(80, 5, '---', 1, 1, 'L', false);
+        $this->tcpdf->Cell(80, 5, '---'/* TODO */, 1, 1, 'L', false);
         $this->tcpdf->SetX(self::PDF_MARGIN_LEFT + self::H_DIVISOR);
         $this->tcpdf->SetFont('', 'B', 7);
         $this->tcpdf->Cell(22, 5, $this->ts->trans('admin.deliverynote.pdf.serial_number'), 1, 0, 'L', false);
         $this->tcpdf->SetFont('', '', 7);
-        $this->tcpdf->Cell(80, 5, '---', 1, 1, 'L', false);
+        $this->tcpdf->Cell(80, 5, '---'/* TODO */, 1, 1, 'L', false);
         $this->tcpdf->SetX(self::PDF_MARGIN_LEFT + self::H_DIVISOR);
         $this->tcpdf->Cell(102, 5, '', 0, 1, 'C', false);
 
