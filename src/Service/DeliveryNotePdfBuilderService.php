@@ -3,6 +3,7 @@
 namespace App\Service;
 
 use App\Entity\DeliveryNote;
+use App\Entity\NonStandardUsedMaterial;
 use App\Enum\AuditLanguageEnum;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use TCPDF;
@@ -86,6 +87,7 @@ class DeliveryNotePdfBuilderService
 
         // delivery note header table info
         $this->tcpdf->SetAbsXY(self::PDF_MARGIN_LEFT + self::H_DIVISOR, self::PDF_MARGIN_TOP);
+        $this->tcpdf->SetFont('', 'B', 7);
         $this->tcpdf->Cell(14, 5, $this->ts->trans('admin.deliverynote.title'), 1, 0, 'C', true);
         $this->tcpdf->SetFont('', '', 7);
         $this->tcpdf->Cell(20, 5, $dn->getId(), 1, 0, 'C', false);
@@ -219,6 +221,29 @@ class DeliveryNotePdfBuilderService
         $this->tcpdf->SetX(self::PDF_MARGIN_LEFT + self::H_DIVISOR);
         $this->tcpdf->SetFont('', '', 7);
         $this->tcpdf->Cell(102, 5, '----'/* TODO iterations */, 1, 1, 'L', false);
+        $this->tcpdf->SetX(self::PDF_MARGIN_LEFT + self::H_DIVISOR);
+        $this->tcpdf->Cell(102, 5, '', 0, 1, 'C', false);
+
+        // non standard userd materials table info
+        $this->tcpdf->SetX(self::PDF_MARGIN_LEFT + self::H_DIVISOR);
+        $this->tcpdf->SetFont('', 'B', 7);
+        $this->tcpdf->Cell(102, 5, $this->ts->trans('admin.nonstandardusedmaterial.title'), 1, 1, 'C', true);
+        $this->tcpdf->SetX(self::PDF_MARGIN_LEFT + self::H_DIVISOR);
+        $this->tcpdf->SetFillColor(183, 223, 234);
+        $this->tcpdf->Cell(13, 5, $this->ts->trans('admin.nonstandardusedmaterial.quantity'), 1, 0, 'R', true);
+        $this->tcpdf->Cell(17, 5, $this->ts->trans('admin.nonstandardusedmaterial.item'), 1, 0, 'L', true);
+        $this->tcpdf->Cell(72, 5, $this->ts->trans('admin.nonstandardusedmaterial.description'), 1, 1, 'L', true);
+        $this->tcpdf->SetFillColor(108, 197, 205);
+        $this->tcpdf->SetFont('', '', 7);
+        /** @var NonStandardUsedMaterial $nsum */
+        foreach ($dn->getNonStandardUsedMaterials() as $nsum) {
+            $this->tcpdf->SetX(self::PDF_MARGIN_LEFT + self::H_DIVISOR);
+            $this->tcpdf->Cell(13, 5, $nsum->getQuantity(), 1, 0, 'R', false);
+            $this->tcpdf->Cell(17, 5, $this->ts->trans($nsum->getItemString()), 1, 0, 'L', false);
+            $this->tcpdf->Cell(72, 5, $nsum->getDescription(), 1, 1, 'L', false);
+        }
+        $this->tcpdf->SetX(self::PDF_MARGIN_LEFT + self::H_DIVISOR);
+        $this->tcpdf->Cell(102, 5, '', 0, 1, 'C', false);
 
         return $this->tcpdf;
     }
