@@ -235,6 +235,22 @@ class DeliveryNote extends AbstractBase
     }
 
     /**
+     * @return array
+     */
+    public function getRepairWindmillSectionsStringsArray(): array
+    {
+        $repairWindmillSectionsString = [];
+        foreach ($this->getRepairWindmillSections() as $repairWindmillSection) {
+            $repairWindmillSectionsString[] = RepairWindmillSectionEnum::getDecodedStringFromType(
+                $repairWindmillSection
+            );
+
+        }
+
+        return $repairWindmillSectionsString;
+    }
+
+    /**
      * @param array $repairWindmillSections
      *
      * @return DeliveryNote
@@ -493,6 +509,19 @@ class DeliveryNote extends AbstractBase
         }
 
         return join(', ', $repairAccessTypesString);
+    }
+
+    /**
+     * @return array
+     */
+    public function getRepairAccessTypesStringsArray(): array
+    {
+        $repairAccessTypesString = [];
+        foreach ($this->getRepairAccessTypes() as $repairAccessType) {
+            $repairAccessTypesString[] = RepairAccessTypeEnum::getDecodedStringFromType($repairAccessType);
+        }
+
+        return $repairAccessTypesString;
     }
 
     /**
