@@ -38,9 +38,6 @@
     file_type: file
     pattern: "*"
   register: files
-- name: check the content and structure of the variable
-  debug:
-    var: files
 - name: copy build production fibervent turbine images without versioning filenames
   copy:
     remote_src: yes
