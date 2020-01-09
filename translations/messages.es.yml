@@ -467,6 +467,7 @@ admin:
       work_in: 'Trabajo en'
       blade_number: 'Nº pala'
       serial_number: 'Nº serie'
+      job_description: 'Descripción del trabajo realizado'
   deliverynotetimeregister:
     title: Fichajes
     title_list: Fichajes
