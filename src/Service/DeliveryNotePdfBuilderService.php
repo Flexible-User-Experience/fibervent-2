@@ -78,9 +78,9 @@ class DeliveryNotePdfBuilderService
         $this->tcpdf->SetFont('', '', 7);
         $this->tcpdf->Cell(20, 5, $dn->getId(), 1, 0, 'C', false);
         $this->tcpdf->SetFont('', 'B', 7);
-        $this->tcpdf->Cell(14, 5, $this->ts->trans('admin.deliverynote.id'), 1, 0, 'C', true);
+        $this->tcpdf->Cell(14, 5, $this->ts->trans('admin.workorder.title'), 1, 0, 'C', true);
         $this->tcpdf->SetFont('', '', 7);
-        $this->tcpdf->Cell(20, 5, $dn->getWorkOrder()->getId(), 1, 0, 'C', false);
+        $this->tcpdf->Cell(20, 5, $dn->getWorkOrder()->getProjectNumber(), 1, 0, 'C', false);
         $this->tcpdf->SetFont('', 'B', 7);
         $this->tcpdf->Cell(14, 5, $this->ts->trans('admin.deliverynote.date'), 1, 0, 'C', true);
         $this->tcpdf->SetFont('', '', 7);
@@ -148,11 +148,13 @@ class DeliveryNotePdfBuilderService
         $this->tcpdf->Cell(22, 5, $this->ts->trans('admin.deliverynote.team_technician_1'), 1, 0, 'L', false);
         $this->tcpdf->SetFont('', '', 7);
         $this->tcpdf->Cell(80, 5, $dn->getTeamTechnician1() ? $dn->getTeamTechnician1()->getFullname() : '---', 1, 1, 'L', false);
-        $this->tcpdf->SetX(self::PDF_MARGIN_LEFT + self::H_DIVISOR);
-        $this->tcpdf->SetFont('', 'B', 7);
-        $this->tcpdf->Cell(22, 5, $this->ts->trans('admin.deliverynote.team_technician_2'), 1, 0, 'L', false);
-        $this->tcpdf->SetFont('', '', 7);
-        $this->tcpdf->Cell(80, 5, $dn->getTeamTechnician2() ? $dn->getTeamTechnician2()->getFullname() : '---', 1, 1, 'L', false);
+        if ($dn->getTeamTechnician2()) {
+            $this->tcpdf->SetX(self::PDF_MARGIN_LEFT + self::H_DIVISOR);
+            $this->tcpdf->SetFont('', 'B', 7);
+            $this->tcpdf->Cell(22, 5, $this->ts->trans('admin.deliverynote.team_technician_2'), 1, 0, 'L', false);
+            $this->tcpdf->SetFont('', '', 7);
+            $this->tcpdf->Cell(80, 5, $dn->getTeamTechnician2()->getFullname(), 1, 1, 'L', false);
+        }
         if ($dn->getTeamTechnician3()) {
             $this->tcpdf->SetX(self::PDF_MARGIN_LEFT + self::H_DIVISOR);
             $this->tcpdf->SetFont('', 'B', 7);
@@ -172,12 +174,7 @@ class DeliveryNotePdfBuilderService
             $this->tcpdf->SetFont('', 'B', 7);
             $this->tcpdf->Cell(22, 5, $this->ts->trans('admin.vehicle.title'), 1, 0, 'L', false);
             $this->tcpdf->SetFont('', '', 7);
-            $this->tcpdf->Cell(80, 5, $dn->getVehicle()->getName(), 1, 1, 'L', false);
-            $this->tcpdf->SetX(self::PDF_MARGIN_LEFT + self::H_DIVISOR);
-            $this->tcpdf->SetFont('', 'B', 7);
-            $this->tcpdf->Cell(22, 5, $this->ts->trans('admin.vehicle.licence_plate'), 1, 0, 'L', false);
-            $this->tcpdf->SetFont('', '', 7);
-            $this->tcpdf->Cell(80, 5, $dn->getVehicle()->getLicensePlate(), 1, 1, 'L', false);
+            $this->tcpdf->Cell(80, 5, $dn->getVehicle()->getName().' · '.$dn->getVehicle()->getLicensePlate(), 1, 1, 'L', false);
         }
         $this->tcpdf->SetX(self::PDF_MARGIN_LEFT + self::H_DIVISOR);
         $this->tcpdf->Cell(102, 5, '', 0, 1, 'C', false);
@@ -196,7 +193,6 @@ class DeliveryNotePdfBuilderService
         $this->tcpdf->Cell(22, 5, $this->ts->trans('admin.deliverynote.crane_driver'), 1, 0, 'L', false);
         $this->tcpdf->SetFont('', '', 7);
         $this->tcpdf->Cell(80, 5, $dn->getCraneDriver(), 1, 1, 'L', false);
-
 
         return $this->tcpdf;
     }
