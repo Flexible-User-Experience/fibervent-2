@@ -222,17 +222,16 @@ class DeliveryNote extends AbstractBase
     }
 
     /**
-     * @return array
+     * @return string
      */
-    public function getRepairWindmillSectionsString(): array
+    public function getRepairWindmillSectionsString(): string
     {
-        $repairWindmillSections = $this->getRepairWindmillSections();
         $repairWindmillSectionsString = [];
-        foreach ($repairWindmillSections as $repairWindmillSection) {
-            $repairWindmillSectionsString[] = RepairWindmillSectionEnum::getDecodedStringFromType($repairWindmillSection);
+        foreach ($this->getRepairWindmillSections() as $repairWindmillSection) {
+            $repairWindmillSectionsString[] = RepairWindmillSectionEnum::getTranslatedDecodedStringFromType($repairWindmillSection);
         }
 
-        return $repairWindmillSectionsString;
+        return join(', ', $repairWindmillSectionsString);
     }
 
     /**
@@ -484,17 +483,16 @@ class DeliveryNote extends AbstractBase
     }
 
     /**
-     * @return array
+     * @return string
      */
-    public function getRepairAccessTypesString(): array
+    public function getRepairAccessTypesString(): string
     {
-        $repairAccessTypes = $this->getRepairAccessTypes();
         $repairAccessTypesString = [];
-        foreach ($repairAccessTypes as $repairAccessType) {
-            $repairAccessTypesString[] = RepairAccessTypeEnum::getDecodedStringFromType($repairAccessType);
+        foreach ($this->getRepairAccessTypes() as $repairAccessType) {
+            $repairAccessTypesString[] = RepairAccessTypeEnum::getTranslatedDecodedStringFromType($repairAccessType);
         }
 
-        return $repairAccessTypesString;
+        return join(', ', $repairAccessTypesString);
     }
 
     /**

@@ -121,7 +121,7 @@ class DeliveryNotePdfBuilderService
         $this->tcpdf->SetFont('', 'B', 7);
         $this->tcpdf->Cell(22, 5, $this->ts->trans('admin.deliverynote.pdf.work_in'), 1, 0, 'L', false);
         $this->tcpdf->SetFont('', '', 7);
-        $this->tcpdf->Cell(80, 5, '---', 1, 1, 'L', false);
+        $this->tcpdf->Cell(80, 5, $dn->getRepairWindmillSectionsString(), 1, 1, 'L', false);
         $this->tcpdf->SetX(self::PDF_MARGIN_LEFT + self::H_DIVISOR);
         $this->tcpdf->SetFont('', 'B', 7);
         $this->tcpdf->Cell(22, 5, $this->ts->trans('admin.deliverynote.pdf.blade_number'), 1, 0, 'L', false);
@@ -183,8 +183,11 @@ class DeliveryNotePdfBuilderService
         $this->tcpdf->SetX(self::PDF_MARGIN_LEFT + self::H_DIVISOR);
         $this->tcpdf->SetFont('', 'B', 7);
         $this->tcpdf->Cell(102, 5, $this->ts->trans('admin.deliverynote.repair_access_types'), 1, 1, 'C', true);
-
         $this->tcpdf->SetX(self::PDF_MARGIN_LEFT + self::H_DIVISOR);
+        $this->tcpdf->SetFont('', '', 7);
+        $this->tcpdf->Cell(102, 5, $dn->getRepairAccessTypesString(), 1, 1, 'C', false);
+        $this->tcpdf->SetX(self::PDF_MARGIN_LEFT + self::H_DIVISOR);
+        $this->tcpdf->SetFont('', 'B', 7);
         $this->tcpdf->Cell(22, 5, $this->ts->trans('admin.deliverynote.crane_company'), 1, 0, 'L', false);
         $this->tcpdf->SetFont('', '', 7);
         $this->tcpdf->Cell(80, 5, $dn->getCraneCompany(), 1, 1, 'L', false);
