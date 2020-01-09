@@ -1,6 +1,18 @@
 - name: compile yarn assets
   shell: "chdir={{ ansistrano_release_path.stdout }}
     SYMFONY_ENV={{ symfony_env }} yarn install && yarn encore production"
+- name: copy build production fibervent logo images without versioning filenames
+  copy:
+    src:  "{{ ansistrano_release_path.stdout }}/assets/images/fibervent*"
+    dest: "{{ ansistrano_release_path.stdout }}/public/build/"
+- name: copy build production fibervent blade images without versioning filenames
+  copy:
+    src:  "{{ ansistrano_release_path.stdout }}/assets/images/blade_diagrams/*"
+    dest: "{{ ansistrano_release_path.stdout }}/public/build/blade_diagrams/"
+- name: copy build production fibervent turbine images without versioning filenames
+  copy:
+    src:  "{{ ansistrano_release_path.stdout }}/assets/images/turbine_diagrams/*"
+    dest: "{{ ansistrano_release_path.stdout }}/public/build/turbine_diagrams/"
 - name: fix symfony web directory apache ownership
   file:
     path: "{{ ansistrano_release_path.stdout }}/public"
