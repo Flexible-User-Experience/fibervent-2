@@ -40,6 +40,18 @@ class RepairWindmillSectionEnum
     /**
      * @return array
      */
+    public static function getTranslatedReversedEnumArray()
+    {
+        return array(
+            self::BLADE => 'PALA',
+            self::NACELLE => 'NACELLE',
+            self::TOWER => 'TORRE',
+        );
+    }
+
+    /**
+     * @return array
+     */
     public static function getDatagridFilterEnumArray()
     {
         return array(
@@ -57,5 +69,15 @@ class RepairWindmillSectionEnum
     public static function getDecodedStringFromType(int $type)
     {
         return self::getReversedEnumArray()[$type];
+    }
+
+    /**
+     * @param int $type
+     *
+     * @return string
+     */
+    public static function getTranslatedDecodedStringFromType(int $type)
+    {
+        return self::getTranslatedReversedEnumArray()[$type];
     }
 }

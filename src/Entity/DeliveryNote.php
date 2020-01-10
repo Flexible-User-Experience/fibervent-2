@@ -222,14 +222,29 @@ class DeliveryNote extends AbstractBase
     }
 
     /**
+     * @return string
+     */
+    public function getRepairWindmillSectionsString(): string
+    {
+        $repairWindmillSectionsString = [];
+        foreach ($this->getRepairWindmillSections() as $repairWindmillSection) {
+            $repairWindmillSectionsString[] = RepairWindmillSectionEnum::getTranslatedDecodedStringFromType($repairWindmillSection);
+        }
+
+        return join(', ', $repairWindmillSectionsString);
+    }
+
+    /**
      * @return array
      */
-    public function getRepairWindmillSectionsString(): array
+    public function getRepairWindmillSectionsStringsArray(): array
     {
-        $repairWindmillSections = $this->getRepairWindmillSections();
         $repairWindmillSectionsString = [];
-        foreach ($repairWindmillSections as $repairWindmillSection) {
-            $repairWindmillSectionsString[] = RepairWindmillSectionEnum::getDecodedStringFromType($repairWindmillSection);
+        foreach ($this->getRepairWindmillSections() as $repairWindmillSection) {
+            $repairWindmillSectionsString[] = RepairWindmillSectionEnum::getDecodedStringFromType(
+                $repairWindmillSection
+            );
+
         }
 
         return $repairWindmillSectionsString;
@@ -484,13 +499,25 @@ class DeliveryNote extends AbstractBase
     }
 
     /**
+     * @return string
+     */
+    public function getRepairAccessTypesString(): string
+    {
+        $repairAccessTypesString = [];
+        foreach ($this->getRepairAccessTypes() as $repairAccessType) {
+            $repairAccessTypesString[] = RepairAccessTypeEnum::getTranslatedDecodedStringFromType($repairAccessType);
+        }
+
+        return join(', ', $repairAccessTypesString);
+    }
+
+    /**
      * @return array
      */
-    public function getRepairAccessTypesString(): array
+    public function getRepairAccessTypesStringsArray(): array
     {
-        $repairAccessTypes = $this->getRepairAccessTypes();
         $repairAccessTypesString = [];
-        foreach ($repairAccessTypes as $repairAccessType) {
+        foreach ($this->getRepairAccessTypes() as $repairAccessType) {
             $repairAccessTypesString[] = RepairAccessTypeEnum::getDecodedStringFromType($repairAccessType);
         }
 

@@ -3,7 +3,7 @@
 </th>
 <td>
     <ul class="sonata-ba-show-one-to-many no-margin">
-        {% for repairAccessType in object.repairAccessTypesString %}
+        {% for repairAccessType in object.repairAccessTypesStringsArray %}
             <li>{{ repairAccessType | trans }}</li>
         {% endfor %}
     </ul>

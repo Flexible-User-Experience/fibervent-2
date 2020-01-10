@@ -81,6 +81,12 @@ services:
         factory: [ '@doctrine', getRepository ]
         arguments:
             - App:Vehicle
+    app.delivery_note_time_register_repository:
+        public: true
+        class: App\Repository\DeliveryNoteTimeRegisterRepository
+        factory: [ '@doctrine', getRepository ]
+        arguments:
+            - App:DeliveryNoteTimeRegister
     app.repositories_service:
         class: App\Service\RepositoriesService
         arguments:

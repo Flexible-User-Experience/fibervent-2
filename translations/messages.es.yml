@@ -449,6 +449,7 @@ admin:
     crane_driver: Conductor grua
     repair_access_types: Tipo de acceso
     observations: Observaciones
+    observations_long: 'Observaciones / Causas de parada por ajenas'
     total_trip_hours: Total horas de desplazamiento
     total_work_hours: Total horas de trabajo
     total_stop_hours: Total horas de parada
@@ -467,6 +468,10 @@ admin:
       work_in: 'Trabajo en'
       blade_number: 'Nº pala'
       serial_number: 'Nº serie'
+      job_description: 'Descripción del trabajo realizado'
+      customer_sing_box: 'El cliente (firma autorizada)'
+      fibervent_sing_box: 'Firma responsable Fibervent'
+      dni_sing_box: 'DNI:'
   deliverynotetimeregister:
     title: Fichajes
     title_list: Fichajes
@@ -474,6 +479,7 @@ admin:
     type: Tipo
     shift: Turno
     begin: Inicio
+    stop: Paro
     end: Fin
     total_hours: Total horas
   nonstandardusedmaterial:
@@ -509,11 +515,13 @@ admin:
     extra_hours: Total horas extra
     extra_hours_short: Horas extra
     category: Categoría
+    hour: Hora
     day: Dia
     morning: Mañana
     afternoon: Tarde
     begin: Entrada
     end: Salida
+    arrival: Llegada
     sign: Firma
     brand: empresa
     brand_title: 'Razón social'
@@ -523,7 +531,7 @@ admin:
     operator_nif: 'NIF'
     total: TOTAL MES
     legal: 'En cumplimineto de la obligación establecida en el Artículo 35.5 del Real Decreto Legislativo 2/2015 del 23 de Octubre, por el que se aprueba el texto refundido de la Ley del Estatuto de los Trabajadores'
-    head_line_1: 'REGISTRO DIARIO DE JORNADA DE TRABAJADORES A TIEMPO COMPLETO'
+    head_line_1: 'REGISTRO DIARIO DE JORNADA DE TRABAJADORES'
     head_line_2: 'Periodo de liquidación'
     head_line_3: 'Fecha'
     form:
@@ -546,6 +554,11 @@ month:
 fibervent:
   name: 'Fibervent, SL'
   cif: 'B55572580'
+  address_1: 'Pol. Industrial Pla de Solans, Parcela 2'
+  address_2: '43519 El Perelló (Tarragona)'
+  tel: 'Tel. +34 977 490 713'
+  email: 'info@fibervent.com'
+  web: 'www.fibervent.com'
 gmap:
   general: ubicación general
 # Admin defaults

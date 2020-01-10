@@ -4,7 +4,10 @@ namespace App\Entity;
 
 use App\Enum\TimeRegisterShiftEnum;
 use App\Enum\TimeRegisterTypeEnum;
+use App\Manager\DeliveryNoteTimeRegisterManager;
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
+use Exception;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
@@ -35,7 +38,7 @@ class DeliveryNoteTimeRegister extends AbstractBase
     private $shift;
 
     /**
-     * @var \DateTime
+     * @var DateTime
      *
      * @ORM\Column(type="time")
      * @Assert\Time
@@ -43,7 +46,7 @@ class DeliveryNoteTimeRegister extends AbstractBase
     private $begin;
 
     /**
-     * @var \DateTime
+     * @var DateTime
      *
      * @ORM\Column(type="time")
      * @Assert\Time
@@ -51,14 +54,14 @@ class DeliveryNoteTimeRegister extends AbstractBase
     private $end;
 
     /**
-     * @var float
+     * @var float|null
      *
      * @ORM\Column(type="float", nullable=true)
      */
     private $totalHours;
 
     /**
-     * @var DeliveryNote
+     * @var DeliveryNote|null
      *
      * @ORM\ManyToOne(targetEntity="DeliveryNote", inversedBy="timeRegisters", cascade={"persist"})
      */
@@ -125,7 +128,7 @@ class DeliveryNoteTimeRegister extends AbstractBase
     }
 
     /**
-     * @return \DateTime
+     * @return DateTime
      */
     public function getBegin()
     {
@@ -133,11 +136,19 @@ class DeliveryNoteTimeRegister extends AbstractBase
     }
 
     /**
-     * @param \DateTime $begin
+     * @return string
+     */
+    public function getBeginString()
+    {
+        return $this->getBegin()->format('H:i');
+    }
+
+    /**
+     * @param DateTime $begin
      *
      * @return DeliveryNoteTimeRegister
      */
-    public function setBegin(\DateTime $begin): DeliveryNoteTimeRegister
+    public function setBegin(DateTime $begin): DeliveryNoteTimeRegister
     {
         $this->begin = $begin;
 
@@ -145,7 +156,7 @@ class DeliveryNoteTimeRegister extends AbstractBase
     }
 
     /**
-     * @return \DateTime
+     * @return DateTime
      */
     public function getEnd()
     {
@@ -153,11 +164,19 @@ class DeliveryNoteTimeRegister extends AbstractBase
     }
 
     /**
-     * @param \DateTime $end
+     * @return string
+     */
+    public function getEndString()
+    {
+        return $this->getEnd()->format('H:i');
+    }
+
+    /**
+     * @param DateTime $end
      *
      * @return DeliveryNoteTimeRegister
      */
-    public function setEnd(\DateTime $end): DeliveryNoteTimeRegister
+    public function setEnd(DateTime $end): DeliveryNoteTimeRegister
     {
         $this->end = $end;
 
@@ -165,7 +184,7 @@ class DeliveryNoteTimeRegister extends AbstractBase
     }
 
     /**
-     * @return float
+     * @return float|null
      */
     public function getTotalHours()
     {
@@ -173,32 +192,35 @@ class DeliveryNoteTimeRegister extends AbstractBase
     }
 
     /**
-     * @return string
-     *
-     * @throws \Exception
+     * @return float
      */
-    public function getTotalHoursString()
+    public function getDifferenceBetweenEndAndBeginHoursInSeconds()
     {
-        $result = '---';
-        $hours = $this->getTotalHours();
-        if (!is_null($hours)) {
-            if (is_integer($hours) || is_float($hours)) {
-                $whole = floor($hours);
-                $fraction = $hours - $whole;
-                $minutes = 0;
-                if (0.25 == $fraction) {
-                    $minutes = 15;
-                } elseif (0.5 == $fraction) {
-                    $minutes = 30;
-                } elseif (0.75 == $fraction) {
-                    $minutes = 45;
-                }
-                $interval = new \DateInterval(sprintf('PT%dH%dM', intval($hours), $minutes));
-                $result = $interval->format('%H:%I');
-            }
+        $result = 0.0;
+        if ($this->getBegin() && $this->getEnd()) {
+            $result = floatval($this->getEnd()->getTimestamp() - $this->getBegin()->getTimestamp());
         }
 
         return $result;
+    }
+
+
+    /**
+     * @return float
+     */
+    public function getDifferenceBetweenEndAndBeginHoursInDecimalHours()
+    {
+        return $this->getDifferenceBetweenEndAndBeginHoursInSeconds() / 60 / 60;
+    }
+
+    /**
+     * @return string
+     *
+     * @throws Exception
+     */
+    public function getTotalHoursString()
+    {
+        return DeliveryNoteTimeRegisterManager::getTotalHoursHumanizedString($this->getTotalHours());
     }
 
     /**
@@ -255,7 +277,7 @@ class DeliveryNoteTimeRegister extends AbstractBase
     /**
      * @return string
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function __toString()
     {

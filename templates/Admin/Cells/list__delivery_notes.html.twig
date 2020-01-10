@@ -5,7 +5,7 @@
                 {{ 'admin.deliverynote.date' | trans }}
             </th>
             <th>
-                {{ 'admin.deliverynote.repair_windmill_sections' | trans }}
+                {{ 'admin.deliverynote.repair_windmill_sections_short' | trans }}
             </th>
             <th>
                 {{ 'admin.deliverynote.team_leader' | trans }}
@@ -38,7 +38,7 @@
                 {{ deliveryNote.getDate().format('d/m/y') }}
             </td>
             <td>
-                {% for repairWindmillSection in deliveryNote.getRepairWindmillSectionsString() %}
+                {% for repairWindmillSection in deliveryNote.repairWindmillSectionsStringsArray %}
                     <span class="label label-default">{{ repairWindmillSection | trans }}</span>
                 {% endfor %}
             </td>
@@ -58,7 +58,7 @@
                 {{ deliveryNote.getCraneCompany }}
             </td>
             <td>
-                {% for repairAccessType in deliveryNote.getRepairAccessTypesString %}
+                {% for repairAccessType in deliveryNote.repairAccessTypesStringsArray %}
                     <span class="label label-default">{{ repairAccessType | trans }}</span>
                 {% endfor %}
             </td>

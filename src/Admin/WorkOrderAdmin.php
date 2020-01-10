@@ -14,7 +14,6 @@ use Sonata\AdminBundle\Form\Type\ModelType;
 use Sonata\AdminBundle\Route\RouteCollection;
 use Sonata\AdminBundle\Show\ShowMapper;
 use Sonata\Form\Type\CollectionType;
-use Sonata\Form\Type\DatePickerType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
@@ -60,7 +59,7 @@ class WorkOrderAdmin extends AbstractBaseAdmin
                     null,
                     array(
                         'label' => 'admin.workorder.project_number',
-                        'disabled' => true,
+                        'required' => true,
                     )
                 )
                 ->add(
@@ -175,6 +174,14 @@ class WorkOrderAdmin extends AbstractBaseAdmin
             $formMapper
                 ->with('admin.common.general', $this->getFormMdSuccessBoxArray(4))
                 ->add(
+                    'projectNumber',
+                    null,
+                    array(
+                        'label' => 'admin.workorder.project_number',
+                        'required' => true,
+                    )
+                )
+                ->add(
                     'customer',
                     ModelType::class,
                     array(
@@ -235,7 +242,8 @@ class WorkOrderAdmin extends AbstractBaseAdmin
                         'label' => 'admin.workorder.certifying_company_email',
                     )
                 )
-                ->end();
+                ->end()
+            ;
         }
     }
 
@@ -245,20 +253,6 @@ class WorkOrderAdmin extends AbstractBaseAdmin
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
         $datagridMapper
-            ->add(
-                'createdAt',
-                'doctrine_orm_date',
-                array(
-                    'label' => 'admin.workorder.date',
-                    'field_type' => DatePickerType::class,
-                    'format' => 'd/m/Y',
-                ),
-                null,
-                array(
-                    'widget' => 'single_text',
-                    'format' => 'dd/MM/yyyy',
-                )
-            )
             ->add(
                 'projectNumber',
                 null,
@@ -355,22 +349,11 @@ class WorkOrderAdmin extends AbstractBaseAdmin
     {
         $listMapper
             ->add(
-                'createdAt',
-                null,
-                array(
-                    'label' => 'admin.workorder.date',
-                    'format' => 'd/m/Y',
-                    'editable' => false,
-                    'header_class' => 'text-center',
-                    'row_align' => 'center',
-                )
-            )
-            ->add(
                 'projectNumber',
                 null,
                 array(
                     'label' => 'admin.workorder.project_number',
-                    'editable' => false,
+                    'editable' => true,
                     'header_class' => 'text-center',
                     'row_align' => 'center',
                 )
