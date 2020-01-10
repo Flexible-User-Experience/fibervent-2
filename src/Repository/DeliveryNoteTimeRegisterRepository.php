@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\DeliveryNote;
 use App\Entity\DeliveryNoteTimeRegister;
 use App\Enum\TimeRegisterShiftEnum;
+use App\Enum\TimeRegisterTypeEnum;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\Query;
 use Doctrine\ORM\QueryBuilder;
@@ -72,12 +73,7 @@ class DeliveryNoteTimeRegisterRepository extends ServiceEntityRepository
      */
     public function getMorningTripsFromDeliveryNoteSortedByTimeQB(DeliveryNote $dn)
     {
-        return $this->createQueryBuilder('dntr')
-            ->where('dntr.deliveryNote = :dn')
-            ->andWhere('dntr.type = :type')
-            ->setParameter('dn', $dn)
-            ->setParameter('type', TimeRegisterShiftEnum::MORNING)
-            ->orderBy('dntr.begin', 'ASC');
+        return $this->buildCommonInternalQuery($dn, TimeRegisterShiftEnum::MORNING, TimeRegisterTypeEnum::TRIP);
     }
 
     /**
@@ -98,5 +94,84 @@ class DeliveryNoteTimeRegisterRepository extends ServiceEntityRepository
     public function getMorningTripsFromDeliveryNoteSortedByTime(DeliveryNote $dn)
     {
         return $this->getMorningTripsFromDeliveryNoteSortedByTimeQ($dn)->getResult();
+    }
+
+    /**
+     * @param DeliveryNote $dn
+     *
+     * @return QueryBuilder
+     */
+    public function getAfternoonTripsFromDeliveryNoteSortedByTimeQB(DeliveryNote $dn)
+    {
+        return $this->buildCommonInternalQuery($dn, TimeRegisterShiftEnum::AFTERNOON, TimeRegisterTypeEnum::TRIP);
+    }
+
+    /**
+     * @param DeliveryNote $dn
+     *
+     * @return Query
+     */
+    public function getAfternoonTripsFromDeliveryNoteSortedByTimeQ(DeliveryNote $dn)
+    {
+        return $this->getAfternoonTripsFromDeliveryNoteSortedByTimeQB($dn)->getQuery();
+    }
+
+    /**
+     * @param DeliveryNote $dn
+     *
+     * @return DeliveryNoteTimeRegister[]|array
+     */
+    public function getAfternoonTripsFromDeliveryNoteSortedByTime(DeliveryNote $dn)
+    {
+        return $this->getAfternoonTripsFromDeliveryNoteSortedByTimeQ($dn)->getResult();
+    }
+
+    /**
+     * @param DeliveryNote $dn
+     *
+     * @return QueryBuilder
+     */
+    public function getNightTripsFromDeliveryNoteSortedByTimeQB(DeliveryNote $dn)
+    {
+        return $this->buildCommonInternalQuery($dn, TimeRegisterShiftEnum::NIGHT, TimeRegisterTypeEnum::TRIP);
+    }
+
+    /**
+     * @param DeliveryNote $dn
+     *
+     * @return Query
+     */
+    public function getNightTripsFromDeliveryNoteSortedByTimeQ(DeliveryNote $dn)
+    {
+        return $this->getNightTripsFromDeliveryNoteSortedByTimeQB($dn)->getQuery();
+    }
+
+    /**
+     * @param DeliveryNote $dn
+     *
+     * @return DeliveryNoteTimeRegister[]|array
+     */
+    public function getNightTripsFromDeliveryNoteSortedByTime(DeliveryNote $dn)
+    {
+        return $this->getNightTripsFromDeliveryNoteSortedByTimeQ($dn)->getResult();
+    }
+
+    /**
+     * @param DeliveryNote $dn
+     * @param int          $shift
+     * @param int          $type
+     *
+     * @return QueryBuilder
+     */
+    private function buildCommonInternalQuery(DeliveryNote $dn, int $shift, int $type)
+    {
+        return $this->createQueryBuilder('dntr')
+            ->where('dntr.deliveryNote = :dn')
+            ->andWhere('dntr.type = :type')
+            ->andWhere('dntr.shift = :shift')
+            ->setParameter('dn', $dn)
+            ->setParameter('type', $type)
+            ->setParameter('shift', $shift)
+            ->orderBy('dntr.begin', 'ASC');
     }
 }

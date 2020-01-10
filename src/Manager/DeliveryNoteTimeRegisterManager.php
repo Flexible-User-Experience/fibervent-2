@@ -41,9 +41,10 @@ class DeliveryNoteTimeRegisterManager
      */
     public function getDeliveryNoteTimeRegistersSortedAndFormatedArray(DeliveryNote $dn)
     {
-        $morningTrips = $this->dntrr->getMorningTripsFromDeliveryNoteSortedByTime($dn);
         $result = array();
-        $result[TimeRegisterShiftEnum::MORNING][TimeRegisterTypeEnum::TRIP] = $morningTrips;
+        $result[TimeRegisterShiftEnum::MORNING][TimeRegisterTypeEnum::TRIP] = $this->dntrr->getMorningTripsFromDeliveryNoteSortedByTime($dn);
+        $result[TimeRegisterShiftEnum::AFTERNOON][TimeRegisterTypeEnum::TRIP] = $this->dntrr->getAfternoonTripsFromDeliveryNoteSortedByTime($dn);
+        $result[TimeRegisterShiftEnum::NIGHT][TimeRegisterTypeEnum::TRIP] = $this->dntrr->getAfternoonTripsFromDeliveryNoteSortedByTime($dn);
 
         return $result;
     }
