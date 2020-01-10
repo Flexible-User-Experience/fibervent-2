@@ -469,6 +469,9 @@ admin:
       blade_number: 'Nº pala'
       serial_number: 'Nº serie'
       job_description: 'Descripción del trabajo realizado'
+      customer_sing_box: 'El cliente (firma autorizada)'
+      fibervent_sing_box: 'Firma responsable Fibervent'
+      dni_sing_box: 'DNI:'
   deliverynotetimeregister:
     title: Fichajes
     title_list: Fichajes
@@ -476,6 +479,7 @@ admin:
     type: Tipo
     shift: Turno
     begin: Inicio
+    stop: Paro
     end: Fin
     total_hours: Total horas
   nonstandardusedmaterial:
@@ -511,11 +515,13 @@ admin:
     extra_hours: Total horas extra
     extra_hours_short: Horas extra
     category: Categoría
+    hour: Hora
     day: Dia
     morning: Mañana
     afternoon: Tarde
     begin: Entrada
     end: Salida
+    arrival: Llegada
     sign: Firma
     brand: empresa
     brand_title: 'Razón social'

@@ -9,6 +9,7 @@ use App\Entity\PresenceMonitoring;
 use App\Enum\AuditTypeEnum;
 use App\Enum\PresenceMonitoringCategoryEnum;
 use App\Factory\WindmillBladesDamagesHelperFactory;
+use App\Manager\DeliveryNoteTimeRegisterManager;
 use App\Repository\DamageRepository;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Twig\Extension\AbstractExtension;
@@ -90,25 +91,7 @@ class AppExtension extends AbstractExtension
      */
     public function getHumanizedTotalHours($hours)
     {
-        $result = '---';
-        if (!is_null($hours)) {
-            if (is_integer($hours) || is_float($hours)) {
-                $whole = floor($hours);
-                $fraction = $hours - $whole;
-                $minutes = 0;
-                if (0.25 == $fraction) {
-                    $minutes = 15;
-                } elseif (0.5 == $fraction) {
-                    $minutes = 30;
-                } elseif (0.75 == $fraction) {
-                    $minutes = 45;
-                }
-                $interval = new \DateInterval(sprintf('PT%dH%dM', intval($hours), $minutes));
-                $result = $interval->format('%H:%I');
-            }
-        }
-
-        return $result;
+        return DeliveryNoteTimeRegisterManager::getTotalHoursHumanizedString($hours);
     }
 
     /**
