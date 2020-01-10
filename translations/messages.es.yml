@@ -514,11 +514,13 @@ admin:
     extra_hours: Total horas extra
     extra_hours_short: Horas extra
     category: Categoría
+    hour: Hora
     day: Dia
     morning: Mañana
     afternoon: Tarde
     begin: Entrada
     end: Salida
+    arrival: Llegada
     sign: Firma
     brand: empresa
     brand_title: 'Razón social'

@@ -67,3 +67,4 @@ services:
         arguments:
             - '@translator'
             - '@app.smart_assets_helper'
+            - '@app.manager_delivery_note_time_register'

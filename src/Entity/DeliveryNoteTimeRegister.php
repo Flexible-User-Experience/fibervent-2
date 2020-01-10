@@ -27,14 +27,14 @@ class DeliveryNoteTimeRegister extends AbstractBase
      *
      * @ORM\Column(type="integer")
      */
-    private int $type;
+    private $type;
 
     /**
      * @var int
      *
      * @ORM\Column(type="integer")
      */
-    private int $shift;
+    private $shift;
 
     /**
      * @var DateTime
@@ -42,7 +42,7 @@ class DeliveryNoteTimeRegister extends AbstractBase
      * @ORM\Column(type="time")
      * @Assert\Time
      */
-    private DateTime $begin;
+    private $begin;
 
     /**
      * @var DateTime
@@ -50,14 +50,14 @@ class DeliveryNoteTimeRegister extends AbstractBase
      * @ORM\Column(type="time")
      * @Assert\Time
      */
-    private DateTime $end;
+    private $end;
 
     /**
      * @var float|null
      *
      * @ORM\Column(type="float", nullable=true)
      */
-    private ?float $totalHours;
+    private $totalHours;
 
     /**
      * @var DeliveryNote|null
@@ -135,6 +135,14 @@ class DeliveryNoteTimeRegister extends AbstractBase
     }
 
     /**
+     * @return string
+     */
+    public function getBeginString()
+    {
+        return $this->getBegin()->format('H:i');
+    }
+
+    /**
      * @param DateTime $begin
      *
      * @return DeliveryNoteTimeRegister
@@ -152,6 +160,14 @@ class DeliveryNoteTimeRegister extends AbstractBase
     public function getEnd()
     {
         return $this->end;
+    }
+
+    /**
+     * @return string
+     */
+    public function getEndString()
+    {
+        return $this->getEnd()->format('H:i');
     }
 
     /**

@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\DeliveryNote;
 use App\Entity\DeliveryNoteTimeRegister;
+use App\Enum\TimeRegisterShiftEnum;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\Query;
 use Doctrine\ORM\QueryBuilder;
@@ -73,7 +74,9 @@ class DeliveryNoteTimeRegisterRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('dntr')
             ->where('dntr.deliveryNote = :dn')
+            ->andWhere('dntr.type = :type')
             ->setParameter('dn', $dn)
+            ->setParameter('type', TimeRegisterShiftEnum::MORNING)
             ->orderBy('dntr.begin', 'ASC');
     }
 
