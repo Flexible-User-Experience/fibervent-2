@@ -256,6 +256,16 @@ class DeliveryNotePdfBuilderService
         $this->tcpdf->SetX(self::PDF_MARGIN_LEFT + self::H_DIVISOR);
         $this->tcpdf->Cell(194, 5, '', 0, 1, 'C', false);
 
+        // final sign boxes
+        $this->tcpdf->SetX(self::PDF_MARGIN_LEFT);
+        $this->tcpdf->SetFillColor(183, 223, 234);
+        $this->tcpdf->Cell(60, 6, $this->ts->trans('admin.deliverynote.pdf.customer_sing_box'), 1, 0, 'L', true);
+        $this->tcpdf->Cell(15, 6, '', 0, 0, 'L', false);
+        $this->tcpdf->Cell(60, 6, $this->ts->trans('admin.deliverynote.pdf.fibervent_sing_box'), 1, 1, 'L', true);
+        $this->tcpdf->Cell(60, 16, $this->ts->trans('admin.deliverynote.pdf.dni_sing_box'), 1, 0, 'L', false, '', 0, false, 'T', 'B');
+        $this->tcpdf->Cell(15, 16, '', 0, 0, 'L', false);
+        $this->tcpdf->Cell(60, 16, $this->ts->trans('admin.deliverynote.pdf.dni_sing_box'), 1, 1, 'L', false, '', 0, false, 'T', 'B');
+
         return $this->tcpdf;
     }
 }

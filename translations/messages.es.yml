@@ -469,6 +469,9 @@ admin:
       blade_number: 'Nº pala'
       serial_number: 'Nº serie'
       job_description: 'Descripción del trabajo realizado'
+      customer_sing_box: 'El cliente (firma autorizada)'
+      fibervent_sing_box: 'Firma responsable Fibervent'
+      dni_sing_box: 'DNI:'
   deliverynotetimeregister:
     title: Fichajes
     title_list: Fichajes
