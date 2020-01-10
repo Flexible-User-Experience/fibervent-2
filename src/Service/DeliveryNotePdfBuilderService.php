@@ -141,6 +141,37 @@ class DeliveryNotePdfBuilderService
             );
         }
         $this->tcpdf->Cell(10, 5, '', 0, 1, 'L', false);
+        // morning stops table section
+        /** @var DeliveryNoteTimeRegister $dntr */
+        foreach ($dntrs[TimeRegisterShiftEnum::MORNING][TimeRegisterTypeEnum::STOP] as $dntr) {
+            $this->drawTimeRegister(
+                $dntr,
+                $this->ts->trans('enum.time_register_type.stop').' '.strtolower($this->ts->trans('enum.time_register_shift.morning')),
+                $this->ts->trans('admin.presencemonitoring.hour').' '.strtolower($this->ts->trans('admin.deliverynotetimeregister.stop')),
+                $this->ts->trans('admin.presencemonitoring.hour').' '.strtolower($this->ts->trans('admin.deliverynotetimeregister.end'))
+            );
+        }
+        // afternoon stops table section
+        /** @var DeliveryNoteTimeRegister $dntr */
+        foreach ($dntrs[TimeRegisterShiftEnum::AFTERNOON][TimeRegisterTypeEnum::STOP] as $dntr) {
+            $this->drawTimeRegister(
+                $dntr,
+                $this->ts->trans('enum.time_register_type.stop').' '.strtolower($this->ts->trans('enum.time_register_shift.afternoon')),
+                $this->ts->trans('admin.presencemonitoring.hour').' '.strtolower($this->ts->trans('admin.deliverynotetimeregister.stop')),
+                $this->ts->trans('admin.presencemonitoring.hour').' '.strtolower($this->ts->trans('admin.deliverynotetimeregister.end'))
+            );
+        }
+        // night stops table section
+        /** @var DeliveryNoteTimeRegister $dntr */
+        foreach ($dntrs[TimeRegisterShiftEnum::NIGHT][TimeRegisterTypeEnum::STOP] as $dntr) {
+            $this->drawTimeRegister(
+                $dntr,
+                $this->ts->trans('enum.time_register_type.stop').' '.strtolower($this->ts->trans('enum.time_register_shift.night')),
+                $this->ts->trans('admin.presencemonitoring.hour').' '.strtolower($this->ts->trans('admin.deliverynotetimeregister.stop')),
+                $this->ts->trans('admin.presencemonitoring.hour').' '.strtolower($this->ts->trans('admin.deliverynotetimeregister.end'))
+            );
+        }
+        $this->tcpdf->Cell(10, 5, '', 0, 1, 'L', false);
 
         // afternoon trip table section
         /** @var DeliveryNoteTimeRegister $dntr */
@@ -339,9 +370,11 @@ class DeliveryNotePdfBuilderService
         // final sign boxes
         $this->tcpdf->SetX(self::PDF_MARGIN_LEFT);
         $this->tcpdf->SetFillColor(183, 223, 234);
+        $this->tcpdf->SetFont('', 'B', 7);
         $this->tcpdf->Cell(60, 6, $this->ts->trans('admin.deliverynote.pdf.customer_sing_box'), 1, 0, 'L', true);
         $this->tcpdf->Cell(15, 6, '', 0, 0, 'L', false);
         $this->tcpdf->Cell(60, 6, $this->ts->trans('admin.deliverynote.pdf.fibervent_sing_box'), 1, 1, 'L', true);
+        $this->tcpdf->SetFont('', '', 7);
         $this->tcpdf->Cell(60, 16, $this->ts->trans('admin.deliverynote.pdf.dni_sing_box'), 1, 0, 'L', false, '', 0, false, 'T', 'B');
         $this->tcpdf->Cell(15, 16, '', 0, 0, 'L', false);
         $this->tcpdf->Cell(60, 16, $this->ts->trans('admin.deliverynote.pdf.dni_sing_box'), 1, 1, 'L', false, '', 0, false, 'T', 'B');
@@ -360,14 +393,14 @@ class DeliveryNotePdfBuilderService
         $this->tcpdf->SetX(self::PDF_MARGIN_LEFT);
         $this->tcpdf->SetFillColor(108, 197, 205);
         $this->tcpdf->SetFont('', 'B', 7);
-        $this->tcpdf->Cell(35, 10, $head, 1, 0, 'L', true);
+        $this->tcpdf->Cell(33, 10, $head, 1, 0, 'L', true);
         $this->tcpdf->SetFillColor(183, 223, 234);
-        $this->tcpdf->Cell(20, 5, $title1, 1, 0, 'L', true);
+        $this->tcpdf->Cell(20, 5, $title1, 1, 0, 'R', true);
         $this->tcpdf->SetFont('', '', 7);
         $this->tcpdf->Cell(20, 5, $dntr->getBeginString(), 1, 1, 'C', false);
-        $this->tcpdf->SetX(self::PDF_MARGIN_LEFT + 35);
+        $this->tcpdf->SetX(self::PDF_MARGIN_LEFT + 33);
         $this->tcpdf->SetFont('', 'B', 7);
-        $this->tcpdf->Cell(20, 5, $title2, 1, 0, 'L', true);
+        $this->tcpdf->Cell(20, 5, $title2, 1, 0, 'R', true);
         $this->tcpdf->SetFont('', '', 7);
         $this->tcpdf->Cell(20, 5, $dntr->getEndString(), 1, 1, 'C', false);
     }

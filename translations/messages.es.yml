@@ -479,6 +479,7 @@ admin:
     type: Tipo
     shift: Turno
     begin: Inicio
+    stop: Paro
     end: Fin
     total_hours: Total horas
   nonstandardusedmaterial:
