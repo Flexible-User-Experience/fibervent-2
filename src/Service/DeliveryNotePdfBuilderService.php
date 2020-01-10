@@ -245,6 +245,17 @@ class DeliveryNotePdfBuilderService
         $this->tcpdf->SetX(self::PDF_MARGIN_LEFT + self::H_DIVISOR);
         $this->tcpdf->Cell(102, 5, '', 0, 1, 'C', false);
 
+        $fixedYPoint = $this->tcpdf->GetY();
+
+        // observations table info
+        $this->tcpdf->SetX(self::PDF_MARGIN_LEFT);
+        $this->tcpdf->SetFont('', 'B', 7);
+        $this->tcpdf->Cell(194, 5, $this->ts->trans('admin.deliverynote.observations_long'), 1, 1, 'C', true);
+        $this->tcpdf->SetFont('', '', 7);
+        $this->tcpdf->Cell(194, 5, $dn->getObservations(), 1, 1, 'L', false);
+        $this->tcpdf->SetX(self::PDF_MARGIN_LEFT + self::H_DIVISOR);
+        $this->tcpdf->Cell(194, 5, '', 0, 1, 'C', false);
+
         return $this->tcpdf;
     }
 }
