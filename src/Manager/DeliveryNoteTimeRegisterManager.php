@@ -44,7 +44,10 @@ class DeliveryNoteTimeRegisterManager
         $result = array();
         $result[TimeRegisterShiftEnum::MORNING][TimeRegisterTypeEnum::TRIP] = $this->dntrr->getMorningTripsFromDeliveryNoteSortedByTime($dn);
         $result[TimeRegisterShiftEnum::AFTERNOON][TimeRegisterTypeEnum::TRIP] = $this->dntrr->getAfternoonTripsFromDeliveryNoteSortedByTime($dn);
-        $result[TimeRegisterShiftEnum::NIGHT][TimeRegisterTypeEnum::TRIP] = $this->dntrr->getAfternoonTripsFromDeliveryNoteSortedByTime($dn);
+        $result[TimeRegisterShiftEnum::NIGHT][TimeRegisterTypeEnum::TRIP] = $this->dntrr->getNightTripsFromDeliveryNoteSortedByTime($dn);
+        $result[TimeRegisterShiftEnum::MORNING][TimeRegisterTypeEnum::WORK] = $this->dntrr->getMorningWorksFromDeliveryNoteSortedByTime($dn);
+        $result[TimeRegisterShiftEnum::AFTERNOON][TimeRegisterTypeEnum::WORK] = $this->dntrr->getAfternoonWorksFromDeliveryNoteSortedByTime($dn);
+        $result[TimeRegisterShiftEnum::NIGHT][TimeRegisterTypeEnum::WORK] = $this->dntrr->getNightWorksFromDeliveryNoteSortedByTime($dn);
 
         return $result;
     }

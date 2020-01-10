@@ -102,8 +102,40 @@ class DeliveryNotePdfBuilderService
         // morning trip table section
         /** @var DeliveryNoteTimeRegister $dntr */
         foreach ($dntrs[TimeRegisterShiftEnum::MORNING][TimeRegisterTypeEnum::TRIP] as $dntr) {
-            $this->drawTimeRegister($dntr);
+            $this->drawTimeRegister(
+                $dntr,
+                $this->ts->trans('enum.time_register_type.trip').' '.strtolower($this->ts->trans('enum.time_register_shift.morning')),
+                $this->ts->trans('admin.presencemonitoring.hour').' '.strtolower($this->ts->trans('admin.presencemonitoring.end')),
+                $this->ts->trans('admin.presencemonitoring.hour').' '.strtolower($this->ts->trans('admin.presencemonitoring.arrival'))
+            );
         }
+        $this->tcpdf->Cell(10, 5, '', 0, 1, 'L', false);
+        /** @var DeliveryNoteTimeRegister $dntr */
+        foreach ($dntrs[TimeRegisterShiftEnum::MORNING][TimeRegisterTypeEnum::WORK] as $dntr) {
+            $this->drawTimeRegister(
+                $dntr,
+                $this->ts->trans('enum.time_register_type.work').' '.strtolower($this->ts->trans('enum.time_register_shift.morning')),
+                $this->ts->trans('admin.presencemonitoring.hour').' '.strtolower($this->ts->trans('admin.deliverynotetimeregister.begin')),
+                $this->ts->trans('admin.presencemonitoring.hour').' '.strtolower($this->ts->trans('admin.deliverynotetimeregister.end'))
+            );
+        }
+        /** @var DeliveryNoteTimeRegister $dntr */
+        foreach ($dntrs[TimeRegisterShiftEnum::AFTERNOON][TimeRegisterTypeEnum::WORK] as $dntr) {
+            $this->drawTimeRegister(
+                $dntr,
+                $this->ts->trans('enum.time_register_type.work').' '.strtolower($this->ts->trans('enum.time_register_shift.afternoon')),
+                $this->ts->trans('admin.presencemonitoring.hour').' '.strtolower($this->ts->trans('admin.deliverynotetimeregister.begin')),
+                $this->ts->trans('admin.presencemonitoring.hour').' '.strtolower($this->ts->trans('admin.deliverynotetimeregister.end'))
+            );
+        }
+//        /** @var DeliveryNoteTimeRegister $dntr */
+//        foreach ($dntrs[TimeRegisterShiftEnum::AFTERNOON][TimeRegisterTypeEnum::WORK] as $dntr) {
+//            $this->drawTimeRegister($dntr);
+//        }
+//        /** @var DeliveryNoteTimeRegister $dntr */
+//        foreach ($dntrs[TimeRegisterShiftEnum::NIGHT][TimeRegisterTypeEnum::WORK] as $dntr) {
+//            $this->drawTimeRegister($dntr);
+//        }
 
         // RIGHT COLUMN
         // delivery note header table info
@@ -293,20 +325,23 @@ class DeliveryNotePdfBuilderService
 
     /**
      * @param DeliveryNoteTimeRegister $dntr
+     * @param string                   $head
+     * @param string                   $title1
+     * @param string                   $title2
      */
-    private function drawTimeRegister(DeliveryNoteTimeRegister $dntr)
+    private function drawTimeRegister(DeliveryNoteTimeRegister $dntr, string $head, string $title1, string $title2)
     {
         $this->tcpdf->SetX(self::PDF_MARGIN_LEFT);
         $this->tcpdf->SetFillColor(108, 197, 205);
         $this->tcpdf->SetFont('', 'B', 7);
-        $this->tcpdf->Cell(35, 10, $this->ts->trans('enum.time_register_type.trip').' '.strtolower($this->ts->trans('enum.time_register_shift.morning')), 1, 0, 'L', true);
+        $this->tcpdf->Cell(35, 10, $head, 1, 0, 'L', true);
         $this->tcpdf->SetFillColor(183, 223, 234);
-        $this->tcpdf->Cell(20, 5, $this->ts->trans('admin.presencemonitoring.hour').' '.strtolower($this->ts->trans('admin.presencemonitoring.end')), 1, 0, 'L', true);
+        $this->tcpdf->Cell(20, 5, $title1, 1, 0, 'L', true);
         $this->tcpdf->SetFont('', '', 7);
         $this->tcpdf->Cell(20, 5, $dntr->getBeginString(), 1, 1, 'C', false);
         $this->tcpdf->SetX(self::PDF_MARGIN_LEFT + 35);
         $this->tcpdf->SetFont('', 'B', 7);
-        $this->tcpdf->Cell(20, 5, $this->ts->trans('admin.presencemonitoring.hour').' '.strtolower($this->ts->trans('admin.presencemonitoring.arrival')), 1, 0, 'L', true);
+        $this->tcpdf->Cell(20, 5, $title2, 1, 0, 'L', true);
         $this->tcpdf->SetFont('', '', 7);
         $this->tcpdf->Cell(20, 5, $dntr->getEndString(), 1, 1, 'C', false);
     }

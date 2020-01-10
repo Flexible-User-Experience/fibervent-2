@@ -155,6 +155,95 @@ class DeliveryNoteTimeRegisterRepository extends ServiceEntityRepository
     {
         return $this->getNightTripsFromDeliveryNoteSortedByTimeQ($dn)->getResult();
     }
+    /**
+     * @param DeliveryNote $dn
+     *
+     * @return QueryBuilder
+     */
+    public function getMorningWorksFromDeliveryNoteSortedByTimeQB(DeliveryNote $dn)
+    {
+        return $this->buildCommonInternalQuery($dn, TimeRegisterShiftEnum::MORNING, TimeRegisterTypeEnum::WORK);
+    }
+
+    /**
+     * @param DeliveryNote $dn
+     *
+     * @return Query
+     */
+    public function getMorningWorksFromDeliveryNoteSortedByTimeQ(DeliveryNote $dn)
+    {
+        return $this->getMorningWorksFromDeliveryNoteSortedByTimeQB($dn)->getQuery();
+    }
+
+    /**
+     * @param DeliveryNote $dn
+     *
+     * @return DeliveryNoteTimeRegister[]|array
+     */
+    public function getMorningWorksFromDeliveryNoteSortedByTime(DeliveryNote $dn)
+    {
+        return $this->getMorningWorksFromDeliveryNoteSortedByTimeQ($dn)->getResult();
+    }
+
+    /**
+     * @param DeliveryNote $dn
+     *
+     * @return QueryBuilder
+     */
+    public function getAfternoonWorksFromDeliveryNoteSortedByTimeQB(DeliveryNote $dn)
+    {
+        return $this->buildCommonInternalQuery($dn, TimeRegisterShiftEnum::AFTERNOON, TimeRegisterTypeEnum::WORK);
+    }
+
+    /**
+     * @param DeliveryNote $dn
+     *
+     * @return Query
+     */
+    public function getAfternoonWorksFromDeliveryNoteSortedByTimeQ(DeliveryNote $dn)
+    {
+        return $this->getAfternoonWorksFromDeliveryNoteSortedByTimeQB($dn)->getQuery();
+    }
+
+    /**
+     * @param DeliveryNote $dn
+     *
+     * @return DeliveryNoteTimeRegister[]|array
+     */
+    public function getAfternoonWorksFromDeliveryNoteSortedByTime(DeliveryNote $dn)
+    {
+        return $this->getAfternoonWorksFromDeliveryNoteSortedByTimeQ($dn)->getResult();
+    }
+
+    /**
+     * @param DeliveryNote $dn
+     *
+     * @return QueryBuilder
+     */
+    public function getNightWorksFromDeliveryNoteSortedByTimeQB(DeliveryNote $dn)
+    {
+        return $this->buildCommonInternalQuery($dn, TimeRegisterShiftEnum::NIGHT, TimeRegisterTypeEnum::WORK);
+    }
+
+    /**
+     * @param DeliveryNote $dn
+     *
+     * @return Query
+     */
+    public function getNightWorksFromDeliveryNoteSortedByTimeQ(DeliveryNote $dn)
+    {
+        return $this->getNightWorksFromDeliveryNoteSortedByTimeQB($dn)->getQuery();
+    }
+
+    /**
+     * @param DeliveryNote $dn
+     *
+     * @return DeliveryNoteTimeRegister[]|array
+     */
+    public function getNightWorksFromDeliveryNoteSortedByTime(DeliveryNote $dn)
+    {
+        return $this->getNightWorksFromDeliveryNoteSortedByTimeQ($dn)->getResult();
+    }
 
     /**
      * @param DeliveryNote $dn
@@ -167,11 +256,11 @@ class DeliveryNoteTimeRegisterRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('dntr')
             ->where('dntr.deliveryNote = :dn')
-            ->andWhere('dntr.type = :type')
             ->andWhere('dntr.shift = :shift')
+            ->andWhere('dntr.type = :type')
             ->setParameter('dn', $dn)
-            ->setParameter('type', $type)
             ->setParameter('shift', $shift)
+            ->setParameter('type', $type)
             ->orderBy('dntr.begin', 'ASC');
     }
 }
