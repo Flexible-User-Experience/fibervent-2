@@ -60,15 +60,20 @@ services:
         arguments:
             - '@app.audit_repository'
     app.manager_work_order:
-        class: App\Manager\WorkOrderManager
         public: true
+        class: App\Manager\WorkOrderManager
         arguments:
             - '@doctrine.orm.entity_manager'
     app.manager_precense_monitoring:
-        class: App\Manager\PresenceMonitoringManager
         public: true
+        class: App\Manager\PresenceMonitoringManager
         arguments:
             - '@app.precense_monitoring_repository'
+    app.manager_delivery_note_time_register:
+        public: true
+        class: App\Manager\DeliveryNoteTimeRegisterManager
+        arguments:
+            - '@app.delivery_note_time_register_repository'
     # Messaging
     app.courier:
         class: App\Service\CourierService

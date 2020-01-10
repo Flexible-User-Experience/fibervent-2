@@ -6,6 +6,8 @@ use App\Entity\PresenceMonitoring;
 use App\Entity\User;
 use App\Enum\PresenceMonitoringCategoryEnum;
 use App\Repository\PresenceMonitoringRepository;
+use DateTime;
+use Exception;
 
 /**
  * Class PresenceMonitoringManager
@@ -51,7 +53,7 @@ class PresenceMonitoringManager
      * @param int $month
      *
      * @return array|PresenceMonitoring[]
-     * @throws \Exception
+     * @throws Exception
      */
     public function createFullMonthItemsListByOperatorYearAndMonth(User $operator, $year, $month)
     {
@@ -59,12 +61,12 @@ class PresenceMonitoringManager
         $items = $this->getItemsByOperatorYearAndMonthSortedByDate($operator, $year, $month);
         $currentItem = array_shift($items);
         $daysInMonth = cal_days_in_month(CAL_GREGORIAN, $month , $year);
-        $day = new \DateTime();
+        $day = new DateTime();
         $day->setDate($year, $month, 1);
         $totalItem = $this->buildEmptyItemForDay($operator, $day);
 
         for ($dayNumber = 1; $dayNumber <= $daysInMonth; $dayNumber++) {
-            $day = new \DateTime();
+            $day = new DateTime();
             $day->setDate($year, $month, $dayNumber);
             if ($currentItem && $currentItem->getDateString() == $day->format('d/m/Y')) {
                 $totalItem
@@ -85,11 +87,11 @@ class PresenceMonitoringManager
 
     /**
      * @param User $operator
-     * @param \DateTime $day
+     * @param DateTime $day
      *
      * @return PresenceMonitoring
      */
-    private function buildEmptyItemForDay(User $operator, \DateTime $day)
+    private function buildEmptyItemForDay(User $operator, DateTime $day)
     {
         $emptyItem = new PresenceMonitoring();
         $emptyItem

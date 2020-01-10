@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Entity\DeliveryNote;
 use App\Entity\DeliveryNoteTimeRegister;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\Query;
@@ -61,5 +62,38 @@ class DeliveryNoteTimeRegisterRepository extends ServiceEntityRepository
     public function findAllSortedById($limit = null, $order = 'ASC')
     {
         return $this->findAllSortedByIdQ($limit, $order)->getResult();
+    }
+
+    /**
+     * @param DeliveryNote $dn
+     *
+     * @return QueryBuilder
+     */
+    public function getMorningTripsFromDeliveryNoteSortedByTimeQB(DeliveryNote $dn)
+    {
+        return $this->createQueryBuilder('dntr')
+            ->where('dntr.deliveryNote = :dn')
+            ->setParameter('dn', $dn)
+            ->orderBy('dntr.begin', 'ASC');
+    }
+
+    /**
+     * @param DeliveryNote $dn
+     *
+     * @return Query
+     */
+    public function getMorningTripsFromDeliveryNoteSortedByTimeQ(DeliveryNote $dn)
+    {
+        return $this->getMorningTripsFromDeliveryNoteSortedByTimeQB($dn)->getQuery();
+    }
+
+    /**
+     * @param DeliveryNote $dn
+     *
+     * @return DeliveryNoteTimeRegister[]|array
+     */
+    public function getMorningTripsFromDeliveryNoteSortedByTime(DeliveryNote $dn)
+    {
+        return $this->getMorningTripsFromDeliveryNoteSortedByTimeQ($dn)->getResult();
     }
 }

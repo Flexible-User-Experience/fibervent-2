@@ -9,6 +9,8 @@ use App\Entity\WorkOrder;
 use App\Entity\WorkOrderTask;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\ORMException;
+use Doctrine\ORM\OptimisticLockException;
 
 /**
  * Class WorkOrderManager
@@ -46,7 +48,7 @@ class WorkOrderManager
         $check = true;
         $windfarm = $audits[0]->getWindfarm();
         foreach ($audits as $audit) {
-            if ($audit->getWindfarm() != $windfarm) {
+            if ($audit->getWindfarm()->getId() !== $windfarm->getId()) {
                 $check = false;
             }
         }
@@ -58,8 +60,8 @@ class WorkOrderManager
      * @param $audits Audit[]
      *
      * @return WorkOrder
-     * @throws \Doctrine\ORM\ORMException
-     * @throws \Doctrine\ORM\OptimisticLockException
+     * @throws ORMException
+     * @throws OptimisticLockException
      */
     public function createWorkOrderFromAudits($audits)
     {
