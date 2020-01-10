@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Enum\TimeRegisterShiftEnum;
 use App\Enum\TimeRegisterTypeEnum;
+use App\Manager\DeliveryNoteTimeRegisterManager;
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use Exception;
@@ -191,32 +192,35 @@ class DeliveryNoteTimeRegister extends AbstractBase
     }
 
     /**
+     * @return float
+     */
+    public function getDifferenceBetweenEndAndBeginHoursInSeconds()
+    {
+        $result = 0.0;
+        if ($this->getBegin() && $this->getEnd()) {
+            $result = floatval($this->getEnd()->getTimestamp() - $this->getBegin()->getTimestamp());
+        }
+
+        return $result;
+    }
+
+
+    /**
+     * @return float
+     */
+    public function getDifferenceBetweenEndAndBeginHoursInDecimalHours()
+    {
+        return $this->getDifferenceBetweenEndAndBeginHoursInSeconds() / 60 / 60;
+    }
+
+    /**
      * @return string
      *
      * @throws Exception
      */
     public function getTotalHoursString()
     {
-        $result = '---';
-        $hours = $this->getTotalHours();
-        if (!is_null($hours)) {
-            if (is_integer($hours) || is_float($hours)) {
-                $whole = floor($hours);
-                $fraction = $hours - $whole;
-                $minutes = 0;
-                if (0.25 == $fraction) {
-                    $minutes = 15;
-                } elseif (0.5 == $fraction) {
-                    $minutes = 30;
-                } elseif (0.75 == $fraction) {
-                    $minutes = 45;
-                }
-                $interval = new \DateInterval(sprintf('PT%dH%dM', intval($hours), $minutes));
-                $result = $interval->format('%H:%I');
-            }
-        }
-
-        return $result;
+        return DeliveryNoteTimeRegisterManager::getTotalHoursHumanizedString($this->getTotalHours());
     }
 
     /**

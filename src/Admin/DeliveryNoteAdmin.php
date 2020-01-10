@@ -2,6 +2,8 @@
 
 namespace App\Admin;
 
+use App\Entity\DeliveryNote;
+use App\Entity\DeliveryNoteTimeRegister;
 use App\Entity\User;
 use App\Entity\Vehicle;
 use App\Enum\RepairAccessTypeEnum;
@@ -653,5 +655,32 @@ class DeliveryNoteAdmin extends AbstractBaseAdmin
             )
             ->end()
         ;
+    }
+
+    /**
+     * @param object|DeliveryNote $object
+     */
+    function prePersist($object)
+    {
+        $this->commonUpdates($object);
+    }
+
+    /**
+     * @param object|DeliveryNote $object
+     */
+    function preUpdate($object)
+    {
+        $this->commonUpdates($object);
+    }
+
+    /**
+     * @param DeliveryNote $object
+     */
+    private function commonUpdates($object)
+    {
+        /** @var DeliveryNoteTimeRegister $dntr */
+        foreach ($object->getTimeRegisters() as $dntr) {
+            $dntr->setTotalHours($dntr->getDifferenceBetweenEndAndBeginHoursInDecimalHours());
+        }
     }
 }
