@@ -116,7 +116,7 @@ class WorkOrder extends AbstractBase
      */
     public function getProjectNumber()
     {
-        return $this->getId();
+        return $this->projectNumber;
     }
 
     /**
@@ -327,6 +327,19 @@ class WorkOrder extends AbstractBase
         $repairAccessTypes = $this->getRepairAccessTypes();
         $repairAccessTypesString = [];
         foreach ($repairAccessTypes as $repairAccessType) {
+            $repairAccessTypesString[] = RepairAccessTypeEnum::getDecodedStringFromType($repairAccessType);
+        }
+
+        return $repairAccessTypesString;
+    }
+
+    /**
+     * @return array
+     */
+    public function getRepairAccessTypesStringsArray(): array
+    {
+        $repairAccessTypesString = [];
+        foreach ($this->getRepairAccessTypes() as $repairAccessType) {
             $repairAccessTypesString[] = RepairAccessTypeEnum::getDecodedStringFromType($repairAccessType);
         }
 

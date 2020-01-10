@@ -1,7 +1,7 @@
 {% extends 'SonataAdminBundle:CRUD:base_list_field.html.twig' %}
 
 {% block field %}
-    {% for repairWindmillSection in object.repairWindmillSectionsString %}
+    {% for repairWindmillSection in object.getRepairWindmillSectionsStringsArray %}
         <span class="label label-default"{% if loop.index > 1%} style="margin-left:5px"{% endif %}>{{ repairWindmillSection | trans }}</span>
     {% endfor %}
 {% endblock %}

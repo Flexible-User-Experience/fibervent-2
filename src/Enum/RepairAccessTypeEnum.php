@@ -42,6 +42,19 @@ class RepairAccessTypeEnum
     /**
      * @return array
      */
+    public static function getTranslatedReversedEnumArray()
+    {
+        return array(
+            self::CRANE => 'GRÚA',
+            self::BASKET_CRANE => 'CESTA FV',
+            self::ROPES => 'CUERDAS',
+            self::GROUND => 'SUELO',
+        );
+    }
+
+    /**
+     * @return array
+     */
     public static function getDatagridFilterEnumArray()
     {
         return array(
@@ -60,5 +73,15 @@ class RepairAccessTypeEnum
     public static function getDecodedStringFromType(int $type)
     {
         return self::getReversedEnumArray()[$type];
+    }
+
+    /**
+     * @param int $type
+     *
+     * @return string
+     */
+    public static function getTranslatedDecodedStringFromType(int $type)
+    {
+        return self::getTranslatedReversedEnumArray()[$type];
     }
 }
