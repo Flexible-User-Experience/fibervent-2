@@ -155,6 +155,7 @@ class DeliveryNoteTimeRegisterRepository extends ServiceEntityRepository
     {
         return $this->getNightTripsFromDeliveryNoteSortedByTimeQ($dn)->getResult();
     }
+
     /**
      * @param DeliveryNote $dn
      *
@@ -243,6 +244,96 @@ class DeliveryNoteTimeRegisterRepository extends ServiceEntityRepository
     public function getNightWorksFromDeliveryNoteSortedByTime(DeliveryNote $dn)
     {
         return $this->getNightWorksFromDeliveryNoteSortedByTimeQ($dn)->getResult();
+    }
+
+    /**
+     * @param DeliveryNote $dn
+     *
+     * @return QueryBuilder
+     */
+    public function getMorningStopsFromDeliveryNoteSortedByTimeQB(DeliveryNote $dn)
+    {
+        return $this->buildCommonInternalQuery($dn, TimeRegisterShiftEnum::MORNING, TimeRegisterTypeEnum::STOP);
+    }
+
+    /**
+     * @param DeliveryNote $dn
+     *
+     * @return Query
+     */
+    public function getMorningStopsFromDeliveryNoteSortedByTimeQ(DeliveryNote $dn)
+    {
+        return $this->getMorningStopsFromDeliveryNoteSortedByTimeQB($dn)->getQuery();
+    }
+
+    /**
+     * @param DeliveryNote $dn
+     *
+     * @return DeliveryNoteTimeRegister[]|array
+     */
+    public function getMorningStopsFromDeliveryNoteSortedByTime(DeliveryNote $dn)
+    {
+        return $this->getMorningStopsFromDeliveryNoteSortedByTimeQ($dn)->getResult();
+    }
+
+    /**
+     * @param DeliveryNote $dn
+     *
+     * @return QueryBuilder
+     */
+    public function getAfternoonStopsFromDeliveryNoteSortedByTimeQB(DeliveryNote $dn)
+    {
+        return $this->buildCommonInternalQuery($dn, TimeRegisterShiftEnum::AFTERNOON, TimeRegisterTypeEnum::STOP);
+    }
+
+    /**
+     * @param DeliveryNote $dn
+     *
+     * @return Query
+     */
+    public function getAfternoonStopsFromDeliveryNoteSortedByTimeQ(DeliveryNote $dn)
+    {
+        return $this->getAfternoonStopsFromDeliveryNoteSortedByTimeQB($dn)->getQuery();
+    }
+
+    /**
+     * @param DeliveryNote $dn
+     *
+     * @return DeliveryNoteTimeRegister[]|array
+     */
+    public function getAfternoonStopsFromDeliveryNoteSortedByTime(DeliveryNote $dn)
+    {
+        return $this->getAfternoonStopsFromDeliveryNoteSortedByTimeQ($dn)->getResult();
+    }
+
+    /**
+     * @param DeliveryNote $dn
+     *
+     * @return QueryBuilder
+     */
+    public function getNightStopsFromDeliveryNoteSortedByTimeQB(DeliveryNote $dn)
+    {
+        return $this->buildCommonInternalQuery($dn, TimeRegisterShiftEnum::NIGHT, TimeRegisterTypeEnum::STOP);
+    }
+
+    /**
+     * @param DeliveryNote $dn
+     *
+     * @return Query
+     */
+    public function getNightStopsFromDeliveryNoteSortedByTimeQ(DeliveryNote $dn)
+    {
+        return $this->getNightStopsFromDeliveryNoteSortedByTimeQB($dn)->getQuery();
+    }
+
+    /**
+     * @param DeliveryNote $dn
+     *
+     * @return DeliveryNoteTimeRegister[]|array
+     */
+    public function getNightStopsFromDeliveryNoteSortedByTime(DeliveryNote $dn)
+    {
+        return $this->getNightStopsFromDeliveryNoteSortedByTimeQ($dn)->getResult();
     }
 
     /**

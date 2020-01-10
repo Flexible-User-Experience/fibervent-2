@@ -110,6 +110,7 @@ class DeliveryNotePdfBuilderService
             );
         }
         $this->tcpdf->Cell(10, 5, '', 0, 1, 'L', false);
+        // morning works table section
         /** @var DeliveryNoteTimeRegister $dntr */
         foreach ($dntrs[TimeRegisterShiftEnum::MORNING][TimeRegisterTypeEnum::WORK] as $dntr) {
             $this->drawTimeRegister(
@@ -119,6 +120,7 @@ class DeliveryNotePdfBuilderService
                 $this->ts->trans('admin.presencemonitoring.hour').' '.strtolower($this->ts->trans('admin.deliverynotetimeregister.end'))
             );
         }
+        // afternoon works table section
         /** @var DeliveryNoteTimeRegister $dntr */
         foreach ($dntrs[TimeRegisterShiftEnum::AFTERNOON][TimeRegisterTypeEnum::WORK] as $dntr) {
             $this->drawTimeRegister(
@@ -128,14 +130,38 @@ class DeliveryNotePdfBuilderService
                 $this->ts->trans('admin.presencemonitoring.hour').' '.strtolower($this->ts->trans('admin.deliverynotetimeregister.end'))
             );
         }
-//        /** @var DeliveryNoteTimeRegister $dntr */
-//        foreach ($dntrs[TimeRegisterShiftEnum::AFTERNOON][TimeRegisterTypeEnum::WORK] as $dntr) {
-//            $this->drawTimeRegister($dntr);
-//        }
-//        /** @var DeliveryNoteTimeRegister $dntr */
-//        foreach ($dntrs[TimeRegisterShiftEnum::NIGHT][TimeRegisterTypeEnum::WORK] as $dntr) {
-//            $this->drawTimeRegister($dntr);
-//        }
+        // night works table section
+        /** @var DeliveryNoteTimeRegister $dntr */
+        foreach ($dntrs[TimeRegisterShiftEnum::NIGHT][TimeRegisterTypeEnum::WORK] as $dntr) {
+            $this->drawTimeRegister(
+                $dntr,
+                $this->ts->trans('enum.time_register_type.work').' '.strtolower($this->ts->trans('enum.time_register_shift.night')),
+                $this->ts->trans('admin.presencemonitoring.hour').' '.strtolower($this->ts->trans('admin.deliverynotetimeregister.begin')),
+                $this->ts->trans('admin.presencemonitoring.hour').' '.strtolower($this->ts->trans('admin.deliverynotetimeregister.end'))
+            );
+        }
+        $this->tcpdf->Cell(10, 5, '', 0, 1, 'L', false);
+
+        // afternoon trip table section
+        /** @var DeliveryNoteTimeRegister $dntr */
+        foreach ($dntrs[TimeRegisterShiftEnum::AFTERNOON][TimeRegisterTypeEnum::TRIP] as $dntr) {
+            $this->drawTimeRegister(
+                $dntr,
+                $this->ts->trans('enum.time_register_type.trip').' '.strtolower($this->ts->trans('enum.time_register_shift.afternoon')),
+                $this->ts->trans('admin.presencemonitoring.hour').' '.strtolower($this->ts->trans('admin.presencemonitoring.end')),
+                $this->ts->trans('admin.presencemonitoring.hour').' '.strtolower($this->ts->trans('admin.presencemonitoring.arrival'))
+            );
+        }
+        // night trip table section
+        /** @var DeliveryNoteTimeRegister $dntr */
+        foreach ($dntrs[TimeRegisterShiftEnum::NIGHT][TimeRegisterTypeEnum::TRIP] as $dntr) {
+            $this->drawTimeRegister(
+                $dntr,
+                $this->ts->trans('enum.time_register_type.trip').' '.strtolower($this->ts->trans('enum.time_register_shift.night')),
+                $this->ts->trans('admin.presencemonitoring.hour').' '.strtolower($this->ts->trans('admin.presencemonitoring.end')),
+                $this->ts->trans('admin.presencemonitoring.hour').' '.strtolower($this->ts->trans('admin.presencemonitoring.arrival'))
+            );
+        }
 
         // RIGHT COLUMN
         // delivery note header table info
