@@ -8,7 +8,7 @@ use App\Enum\TimeRegisterShiftEnum;
 use App\Enum\TimeRegisterTypeEnum;
 use App\Repository\DeliveryNoteTimeRegisterRepository;
 use DateInterval;
-use PHPUnit\Exception;
+use Exception;
 
 /**
  * Class DeliveryNoteTimeRegisterManager
@@ -40,6 +40,7 @@ class DeliveryNoteTimeRegisterManager
      * @param DeliveryNote $dn
      *
      * @return DeliveryNoteTimeRegister[]|array
+     * @throws Exception
      */
     public function getDeliveryNoteTimeRegistersSortedAndFormatedArray(DeliveryNote $dn)
     {
@@ -66,9 +67,9 @@ class DeliveryNoteTimeRegisterManager
         foreach ($result[TimeRegisterShiftEnum::NIGHT][TimeRegisterTypeEnum::TRIP] as $dntr) {
             $totalHours += $dntr->getDifferenceBetweenEndAndBeginHoursInDecimalHours();
         }
-        $result['total_trip_hours'] = $this->getTotalHoursByType($result, TimeRegisterTypeEnum::TRIP);
-        $result['total_work_hours'] = $this->getTotalHoursByType($result, TimeRegisterTypeEnum::WORK);
-        $result['total_stop_hours'] = $this->getTotalHoursByType($result, TimeRegisterTypeEnum::STOP);
+        $result['total_trip_hours'] = self::getTotalHoursHumanizedString($this->getTotalHoursByType($result, TimeRegisterTypeEnum::TRIP));
+        $result['total_work_hours'] = self::getTotalHoursHumanizedString($this->getTotalHoursByType($result, TimeRegisterTypeEnum::WORK));
+        $result['total_stop_hours'] = self::getTotalHoursHumanizedString($this->getTotalHoursByType($result, TimeRegisterTypeEnum::STOP));
 
         return $result;
     }
@@ -93,12 +94,11 @@ class DeliveryNoteTimeRegisterManager
         }
         try {
             $interval = new DateInterval(sprintf('PT%dH%dM', intval($hours), $minutes));
-
-            return $interval->format('%H:%I');
         } catch (Exception $e) {
-
             return '--:--';
         }
+
+        return $interval->format('%H:%I').'h';
     }
 
     /**
