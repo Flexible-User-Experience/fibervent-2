@@ -146,7 +146,7 @@ class DeliveryNotePdfBuilderService
             $this->tcpdf->SetFont('', 'B', 7);
             $this->tcpdf->Cell(20, 5, $this->ts->trans('admin.presencemonitoring.total_hours'), 1, 0, 'R', true);
             $this->tcpdf->SetFont('', '', 7);
-            $this->tcpdf->Cell(20, 5, $dntrs['total_work_hours'], 1, 1, 'C', false);
+            $this->tcpdf->Cell(20, 5, $dntrs['total_work_hours'], 1, 1, 'C', true);
         }
         $this->tcpdf->Cell(10, 5, '', 0, 1, 'L', false);
         // morning stops table section
@@ -185,7 +185,7 @@ class DeliveryNotePdfBuilderService
             $this->tcpdf->SetFont('', 'B', 7);
             $this->tcpdf->Cell(20, 5, $this->ts->trans('admin.presencemonitoring.total_hours'), 1, 0, 'R', true);
             $this->tcpdf->SetFont('', '', 7);
-            $this->tcpdf->Cell(20, 5, $dntrs['total_stop_hours'], 1, 1, 'C', false);
+            $this->tcpdf->Cell(20, 5, $dntrs['total_stop_hours'], 1, 1, 'C', true);
         }
         $this->tcpdf->Cell(10, 5, '', 0, 1, 'L', false);
 
