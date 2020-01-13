@@ -415,6 +415,7 @@ admin:
     certifying_company_phone: Teléfono (certificadora)
     certifying_company_phone_short: Teléfono
     is_from_audit: Proviene de auditoría
+    is_from_audit_short: Proviene auditoría
     repair_access_types: Tipos de acceso
   workordertask:
     title: Tareas
