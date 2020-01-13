@@ -27,7 +27,7 @@ class WorkOrderAdmin extends AbstractBaseAdmin
     protected $classnameLabel = 'admin.workorder.title';
     protected $baseRoutePattern = 'workorders/workorder';
     protected $datagridValues = array(
-        '_sort_by' => 'createdAt',
+        '_sort_by' => 'projectNumber',
         '_sort_order' => 'desc',
     );
 
@@ -58,7 +58,7 @@ class WorkOrderAdmin extends AbstractBaseAdmin
                     'projectNumber',
                     null,
                     array(
-                        'label' => 'admin.workorder.project_number',
+                        'label' => 'admin.workorder.project_number_short',
                         'required' => true,
                     )
                 )
@@ -177,7 +177,7 @@ class WorkOrderAdmin extends AbstractBaseAdmin
                     'projectNumber',
                     null,
                     array(
-                        'label' => 'admin.workorder.project_number',
+                        'label' => 'admin.workorder.project_number_short',
                         'required' => true,
                     )
                 )
@@ -257,7 +257,7 @@ class WorkOrderAdmin extends AbstractBaseAdmin
                 'projectNumber',
                 null,
                 array(
-                    'label' => 'admin.workorder.project_number',
+                    'label' => 'admin.workorder.project_number_short',
                 )
             )
             ->add(
@@ -352,7 +352,7 @@ class WorkOrderAdmin extends AbstractBaseAdmin
                 'projectNumber',
                 null,
                 array(
-                    'label' => 'admin.workorder.project_number',
+                    'label' => 'admin.workorder.project_number_short',
                     'editable' => true,
                     'header_class' => 'text-center',
                     'row_align' => 'center',
@@ -436,7 +436,7 @@ class WorkOrderAdmin extends AbstractBaseAdmin
                 'projectNumber',
                 null,
                 array(
-                    'label' => 'admin.workorder.project_number',
+                    'label' => 'admin.workorder.project_number_short',
                 )
             )
             ->add(

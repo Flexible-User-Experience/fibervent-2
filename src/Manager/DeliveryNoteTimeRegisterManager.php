@@ -7,7 +7,6 @@ use App\Entity\DeliveryNoteTimeRegister;
 use App\Enum\TimeRegisterShiftEnum;
 use App\Enum\TimeRegisterTypeEnum;
 use App\Repository\DeliveryNoteTimeRegisterRepository;
-use DateInterval;
 use Exception;
 
 /**
@@ -78,27 +77,27 @@ class DeliveryNoteTimeRegisterManager
      * @param float $hours
      *
      * @return string
-     * @throws \Exception
      */
     public static function getTotalHoursHumanizedString(float $hours)
     {
-        $whole = floor($hours);
-        $fraction = $hours - $whole;
-        $minutes = 0;
-        if (0.25 == $fraction) {
-            $minutes = 15;
-        } elseif (0.5 == $fraction) {
-            $minutes = 30;
-        } elseif (0.75 == $fraction) {
-            $minutes = 45;
-        }
-        try {
-            $interval = new DateInterval(sprintf('PT%dH%dM', intval($hours), $minutes));
-        } catch (Exception $e) {
-            return '--:--';
+        return self::clockalize($hours);
+    }
+
+    /**
+     * @param float $in
+     *
+     * @return string
+     */
+    private static function clockalize(float $in)
+    {
+        $h = intval($in);
+        $m = round((((($in - $h) / 100.0) * 60.0) * 100), 0);
+        if ($m == 60) {
+            $h++;
+            $m = 0;
         }
 
-        return $interval->format('%H:%I').'h';
+        return $m == 0 ? sprintf("%dh", $h) : sprintf("%dh %dm", $h, $m);
     }
 
     /**
