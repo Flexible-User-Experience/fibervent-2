@@ -20,6 +20,13 @@ use Symfony\Component\Validator\Constraints as Assert;
 class WorkOrder extends AbstractBase
 {
     /**
+     * @var int
+     *
+     * @ORM\Column(type="integer", nullable=true, options={"default": 0})
+     */
+    private $status;
+
+    /**
      * @var string
      *
      * @ORM\Column(type="string", length=45, nullable=true)
@@ -110,6 +117,26 @@ class WorkOrder extends AbstractBase
     /**
      * Methods.
      */
+
+    /**
+     * @return int|null
+     */
+    public function getStatus(): ?int
+    {
+        return $this->status;
+    }
+
+    /**
+     * @param int|null $status
+     *
+     * @return $this
+     */
+    public function setStatus(?int $status): WorkOrder
+    {
+        $this->status = $status;
+
+        return $this;
+    }
 
     /**
      * @return string
