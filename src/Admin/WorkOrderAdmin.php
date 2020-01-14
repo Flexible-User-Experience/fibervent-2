@@ -361,7 +361,7 @@ class WorkOrderAdmin extends AbstractBaseAdmin
                 array(
                     'expanded' => false,
                     'multiple' => false,
-                    'choices' => WorkOrderStatusEnum::getEnumArray(),
+                    'choices' => WorkOrderStatusEnum::getReversedEnumArray(),
                 )
             )
         ;
