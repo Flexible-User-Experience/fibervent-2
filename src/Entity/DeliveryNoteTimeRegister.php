@@ -61,6 +61,13 @@ class DeliveryNoteTimeRegister extends AbstractBase
     private $totalHours;
 
     /**
+     * @var string|null
+     *
+     * @ORM\Column(type="string", nullable=true)
+     */
+    private $comment;
+
+    /**
      * @var DeliveryNote|null
      *
      * @ORM\ManyToOne(targetEntity="DeliveryNote", inversedBy="timeRegisters", cascade={"persist"})
@@ -230,6 +237,26 @@ class DeliveryNoteTimeRegister extends AbstractBase
     public function setTotalHours(?float $totalHours): DeliveryNoteTimeRegister
     {
         $this->totalHours = $totalHours;
+
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getComment(): ?string
+    {
+        return $this->comment;
+    }
+
+    /**
+     * @param string|null $comment
+     *
+     * @return $this
+     */
+    public function setComment(?string $comment): DeliveryNoteTimeRegister
+    {
+        $this->comment = $comment;
 
         return $this;
     }
