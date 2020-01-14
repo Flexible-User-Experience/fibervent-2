@@ -415,16 +415,16 @@ class DeliveryNotePdfBuilderService
         $this->tcpdf->SetX(self::PDF_MARGIN_LEFT);
         $this->tcpdf->SetFillColor(108, 197, 205);
         $this->tcpdf->SetFont('', 'B', 7);
-        $this->tcpdf->Cell(33, 10, $head, 1, 0, 'L', true);
+        $this->tcpdf->Cell(31, 10, $head, 1, 0, 'L', true);
         $this->tcpdf->SetFillColor(183, 223, 234);
-        $this->tcpdf->Cell(20, 5, $title1, 1, 0, 'R', true);
+        $this->tcpdf->Cell(17, 5, $title1, 1, 0, 'R', true);
         $this->tcpdf->SetFont('', '', 7);
-        $this->tcpdf->Cell(20, 5, $dntr->getBeginString(), 1, 1, 'C', false);
-        $this->tcpdf->SetX(self::PDF_MARGIN_LEFT + 33);
+        $this->tcpdf->Cell(14, 5, $dntr->getBeginString(), 1, 1, 'C', false);
+        $this->tcpdf->SetX(self::PDF_MARGIN_LEFT + 31);
         $this->tcpdf->SetFont('', 'B', 7);
-        $this->tcpdf->Cell(20, 5, $title2, 1, 0, 'R', true);
+        $this->tcpdf->Cell(17, 5, $title2, 1, 0, 'R', true);
         $this->tcpdf->SetFont('', '', 7);
-        $this->tcpdf->Cell(20, 5, $dntr->getEndString(), 1, 1, 'C', false);
+        $this->tcpdf->Cell(14, 5, $dntr->getEndString(), 1, 1, 'C', false);
     }
 
     /**
@@ -432,11 +432,11 @@ class DeliveryNotePdfBuilderService
      */
     private function drawTotalHourCells($value)
     {
-        $this->tcpdf->SetX(self::PDF_MARGIN_LEFT + 33);
+        $this->tcpdf->SetX(self::PDF_MARGIN_LEFT + 31);
         $this->tcpdf->SetFillColor(108, 197, 205);
         $this->tcpdf->SetFont('', 'B', 7);
-        $this->tcpdf->Cell(20, 5, $this->ts->trans('admin.presencemonitoring.total_hours'), 1, 0, 'R', true);
+        $this->tcpdf->Cell(17, 5, $this->ts->trans('admin.presencemonitoring.total_hours'), 1, 0, 'R', true);
         $this->tcpdf->SetFont('', '', 7);
-        $this->tcpdf->Cell(20, 5, $value, 1, 1, 'C', true);
+        $this->tcpdf->Cell(14, 5, $value, 1, 1, 'C', true);
     }
 }
