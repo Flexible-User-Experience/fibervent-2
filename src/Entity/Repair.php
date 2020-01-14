@@ -15,7 +15,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="App\Repository\RepairRepository")
  * @ORM\Cache(usage="NONSTRICT_READ_WRITE")
- * @UniqueEntity("namel")
+ * @UniqueEntity("name")
  * @Gedmo\SoftDeleteable(fieldName="removedAt", timeAware=false)
  */
 class Repair extends AbstractBase

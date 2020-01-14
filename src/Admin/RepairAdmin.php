@@ -31,7 +31,7 @@ class RepairAdmin extends AbstractBaseAdmin
                 'name',
                 null,
                 array(
-                    'label' => 'admin.common.name',
+                    'label' => 'admin.repair.name',
                     'required' => true,
                 )
             )
@@ -59,7 +59,7 @@ class RepairAdmin extends AbstractBaseAdmin
                 'name',
                 null,
                 array(
-                    'label' => 'admin.common.name',
+                    'label' => 'admin.repair.name',
                 )
             )
             ->add(
@@ -82,7 +82,7 @@ class RepairAdmin extends AbstractBaseAdmin
                 'name',
                 null,
                 array(
-                    'label' => 'admin.common.namel',
+                    'label' => 'admin.repair.name',
                     'editable' => true,
                 )
             )

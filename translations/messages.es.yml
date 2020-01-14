@@ -195,6 +195,7 @@ enum:
     leave: Baja
 admin:
   common:
+    name: Nombre
     general: General
     controls: Controles
     action: Acciones
@@ -547,6 +548,8 @@ admin:
       year: Año
       month: Mes
       send: Generar PDF
+  repair:
+    name: Reparación
 month:
   january: Enero
   febraury: Febrero
