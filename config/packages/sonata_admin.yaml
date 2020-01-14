@@ -29,7 +29,7 @@ sonata_admin:
                 label: 'Proyectos'
             PresenceMonitoring:
                 icon:  '<i class="fa fa-clock-o" aria-hidden="true"></i>'
-                label: 'Registro horario'
+                label: 'Registros horarios'
         blocks:
             -
                 position: top

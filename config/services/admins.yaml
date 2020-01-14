@@ -126,12 +126,17 @@ services:
         class: App\Admin\PresenceMonitoringAdmin
         arguments: [~, App\Entity\PresenceMonitoring, ~, '@security.authorization_checker', '@security.token_storage', '@app.repositories_service', '@vich_uploader.templating.helper.uploader_helper', '@liip_imagine.cache.manager' ]
         tags:
-            - { name: sonata.admin, manager_type: orm, label: 'Registros', group: 'PresenceMonitoring', label_translator_strategy: 'sonata.admin.label.strategy.noop', show_in_dashboard: true }
+            - { name: sonata.admin, manager_type: orm, label: 'Registro', group: 'PresenceMonitoring', label_translator_strategy: 'sonata.admin.label.strategy.noop', show_in_dashboard: true }
     admin.vehicle:
         class: App\Admin\VehicleAdmin
         arguments: [~, App\Entity\Vehicle, ~, '@security.authorization_checker', '@security.token_storage', '@app.repositories_service', '@vich_uploader.templating.helper.uploader_helper', '@liip_imagine.cache.manager' ]
         tags:
-            - { name: sonata.admin, manager_type: orm, label: 'Vehículos', group: 'WorkOrder', label_translator_strategy: 'sonata.admin.label.strategy.noop', show_in_dashboard: true }
+            - { name: sonata.admin, manager_type: orm, label: 'Vehículo', group: 'WorkOrder', label_translator_strategy: 'sonata.admin.label.strategy.noop', show_in_dashboard: true }
+    admin.repair:
+        class: App\Admin\RepairAdmin
+        arguments: [~, App\Entity\Repair, ~, '@security.authorization_checker', '@security.token_storage', '@app.repositories_service', '@vich_uploader.templating.helper.uploader_helper', '@liip_imagine.cache.manager' ]
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: 'Reparación', group: 'WorkOrder', label_translator_strategy: 'sonata.admin.label.strategy.noop', show_in_dashboard: true }
 
     # Sonata Blocks
     admin.block.audits:
