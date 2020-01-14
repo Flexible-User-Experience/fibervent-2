@@ -106,16 +106,24 @@ class PresenceMonitoringAdmin extends AbstractBaseAdmin
             ->with('admin.common.totals', $this->getFormMdSuccessBoxArray(4))
             ->add(
                 'normalHours',
-                null,
+                ChoiceType::class,
                 array(
                     'label' => 'admin.presencemonitoring.normal_hours',
+                    'choices' => MinutesEnum::getChoicesQuartersEnumArray(),
+                    'multiple' => false,
+                    'expanded' => false,
+                    'required' => true,
                 )
             )
             ->add(
                 'extraHours',
-                null,
+                ChoiceType::class,
                 array(
                     'label' => 'admin.presencemonitoring.extra_hours',
+                    'choices' => MinutesEnum::getChoicesQuartersEnumArray(),
+                    'multiple' => false,
+                    'expanded' => false,
+                    'required' => true,
                 )
             )
             ->add(

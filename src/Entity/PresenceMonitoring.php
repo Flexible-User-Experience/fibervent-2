@@ -400,7 +400,7 @@ class PresenceMonitoring extends AbstractBase
                 ->atPath('afternoonHourEnd')
                 ->addViolation();
         }
-        if ($this->getMorningHourBegin() && $this->getMorningHourEnd() && $this->getMorningHourBegin()->format('H:i') < $this->getMorningHourEnd()->format('H:i') && $this->getAfternoonHourBegin() && $this->getAfternoonHourEnd() && $this->getAfternoonHourBegin()->format('H:i') < $this->getAfternoonHourEnd()->format('H:i') && $this->getMorningHourEnd()->format('H:i') < $this->getAfternoonHourBegin()->format('H:i')) {
+        if ($this->getMorningHourBegin() && $this->getMorningHourEnd() && $this->getMorningHourBegin()->format('H:i') < $this->getMorningHourEnd()->format('H:i') && $this->getAfternoonHourBegin() && $this->getAfternoonHourEnd() && $this->getAfternoonHourBegin()->format('H:i') < $this->getAfternoonHourEnd()->format('H:i') && $this->getMorningHourEnd()->format('H:i') >= $this->getAfternoonHourBegin()->format('H:i')) {
             $context->buildViolation('La hora de entrada tarde no puede ser menor o igual que la hora de entrada mañana!')
                 ->atPath('afternoonHourBegin')
                 ->addViolation();
