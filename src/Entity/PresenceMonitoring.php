@@ -3,7 +3,9 @@
 namespace App\Entity;
 
 use App\Enum\PresenceMonitoringCategoryEnum;
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
+use Exception;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
@@ -20,7 +22,7 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
 class PresenceMonitoring extends AbstractBase
 {
     /**
-     * @var \DateTime
+     * @var DateTime
      *
      * @ORM\Column(type="datetime")
      */
@@ -35,7 +37,7 @@ class PresenceMonitoring extends AbstractBase
     private $worker;
 
     /**
-     * @var \DateTime
+     * @var DateTime
      *
      * @ORM\Column(type="time", nullable=true)
      * @Assert\Time
@@ -43,7 +45,7 @@ class PresenceMonitoring extends AbstractBase
     private $morningHourBegin;
 
     /**
-     * @var \DateTime
+     * @var DateTime
      *
      * @ORM\Column(type="time", nullable=true)
      * @Assert\Time
@@ -51,7 +53,7 @@ class PresenceMonitoring extends AbstractBase
     private $morningHourEnd;
 
     /**
-     * @var \DateTime
+     * @var DateTime
      *
      * @ORM\Column(type="time", nullable=true)
      * @Assert\Time
@@ -59,7 +61,7 @@ class PresenceMonitoring extends AbstractBase
     private $afternoonHourBegin;
 
     /**
-     * @var \DateTime
+     * @var DateTime
      *
      * @ORM\Column(type="time", nullable=true)
      * @Assert\Time
@@ -99,7 +101,7 @@ class PresenceMonitoring extends AbstractBase
      */
 
     /**
-     * @return \DateTime
+     * @return DateTime
      */
     public function getDate()
     {
@@ -115,11 +117,11 @@ class PresenceMonitoring extends AbstractBase
     }
 
     /**
-     * @param \DateTime $date
+     * @param DateTime $date
      *
      * @return PresenceMonitoring
      */
-    public function setDate(?\DateTime $date): PresenceMonitoring
+    public function setDate(?DateTime $date): PresenceMonitoring
     {
         $this->date = $date;
 
@@ -147,7 +149,7 @@ class PresenceMonitoring extends AbstractBase
     }
 
     /**
-     * @return \DateTime
+     * @return DateTime
      */
     public function getMorningHourBegin()
     {
@@ -163,11 +165,11 @@ class PresenceMonitoring extends AbstractBase
     }
 
     /**
-     * @param \DateTime $morningHourBegin
+     * @param DateTime $morningHourBegin
      *
      * @return PresenceMonitoring
      */
-    public function setMorningHourBegin(?\DateTime $morningHourBegin): PresenceMonitoring
+    public function setMorningHourBegin(?DateTime $morningHourBegin): PresenceMonitoring
     {
         $this->morningHourBegin = $morningHourBegin;
 
@@ -175,7 +177,7 @@ class PresenceMonitoring extends AbstractBase
     }
 
     /**
-     * @return \DateTime
+     * @return DateTime
      */
     public function getMorningHourEnd()
     {
@@ -191,11 +193,11 @@ class PresenceMonitoring extends AbstractBase
     }
 
     /**
-     * @param \DateTime $morningHourEnd
+     * @param DateTime $morningHourEnd
      *
      * @return PresenceMonitoring
      */
-    public function setMorningHourEnd(?\DateTime $morningHourEnd): PresenceMonitoring
+    public function setMorningHourEnd(?DateTime $morningHourEnd): PresenceMonitoring
     {
         $this->morningHourEnd = $morningHourEnd;
 
@@ -203,7 +205,7 @@ class PresenceMonitoring extends AbstractBase
     }
 
     /**
-     * @return \DateTime
+     * @return DateTime
      */
     public function getAfternoonHourBegin()
     {
@@ -219,11 +221,11 @@ class PresenceMonitoring extends AbstractBase
     }
 
     /**
-     * @param \DateTime $afternoonHourBegin
+     * @param DateTime $afternoonHourBegin
      *
      * @return PresenceMonitoring
      */
-    public function setAfternoonHourBegin(?\DateTime $afternoonHourBegin): PresenceMonitoring
+    public function setAfternoonHourBegin(?DateTime $afternoonHourBegin): PresenceMonitoring
     {
         $this->afternoonHourBegin = $afternoonHourBegin;
 
@@ -231,7 +233,7 @@ class PresenceMonitoring extends AbstractBase
     }
 
     /**
-     * @return \DateTime
+     * @return DateTime
      */
     public function getAfternoonHourEnd()
     {
@@ -247,11 +249,11 @@ class PresenceMonitoring extends AbstractBase
     }
 
     /**
-     * @param \DateTime $afternoonHourEnd
+     * @param DateTime $afternoonHourEnd
      *
      * @return PresenceMonitoring
      */
-    public function setAfternoonHourEnd(?\DateTime $afternoonHourEnd): PresenceMonitoring
+    public function setAfternoonHourEnd(?DateTime $afternoonHourEnd): PresenceMonitoring
     {
         $this->afternoonHourEnd = $afternoonHourEnd;
 
@@ -264,6 +266,30 @@ class PresenceMonitoring extends AbstractBase
     public function getTotalHours()
     {
         return $this->totalHours;
+    }
+
+    /**
+     * @return float
+     */
+    public function getDifferenceBetweenEndAndBeginHoursInSeconds()
+    {
+        $result = 0.0;
+        if ($this->getMorningHourBegin() && $this->getMorningHourEnd()) {
+            $result += floatval($this->getMorningHourEnd()->getTimestamp() - $this->getMorningHourBegin()->getTimestamp());
+        }
+        if ($this->getAfternoonHourBegin() && $this->getAfternoonHourEnd()) {
+            $result += floatval($this->getAfternoonHourEnd()->getTimestamp() - $this->getAfternoonHourBegin()->getTimestamp());
+        }
+
+        return $result;
+    }
+
+    /**
+     * @return float
+     */
+    public function getDifferenceBetweenEndAndBeginHoursInDecimalHours()
+    {
+        return $this->getDifferenceBetweenEndAndBeginHoursInSeconds() / 60 / 60;
     }
 
     /**

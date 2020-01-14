@@ -2,6 +2,7 @@
 
 namespace App\Admin;
 
+use App\Entity\PresenceMonitoring;
 use App\Enum\MinutesEnum;
 use App\Enum\PresenceMonitoringCategoryEnum;
 use App\Entity\User;
@@ -104,13 +105,6 @@ class PresenceMonitoringAdmin extends AbstractBaseAdmin
             ->end()
             ->with('admin.common.totals', $this->getFormMdSuccessBoxArray(4))
             ->add(
-                'totalHours',
-                null,
-                array(
-                    'label' => 'admin.presencemonitoring.total_hours',
-                )
-            )
-            ->add(
                 'normalHours',
                 null,
                 array(
@@ -122,6 +116,16 @@ class PresenceMonitoringAdmin extends AbstractBaseAdmin
                 null,
                 array(
                     'label' => 'admin.presencemonitoring.extra_hours',
+                )
+            )
+            ->add(
+                'totalHours',
+                null,
+                array(
+                    'label' => 'admin.presencemonitoring.total_hours',
+                    'attr' => array(
+                        'disabled' => true,
+                    ),
                 )
             )
             ->end()
@@ -307,5 +311,29 @@ class PresenceMonitoringAdmin extends AbstractBaseAdmin
                 )
             )
         ;
+    }
+
+    /**
+     * @param object|PresenceMonitoring $object
+     */
+    function prePersist($object)
+    {
+        $this->commonUpdates($object);
+    }
+
+    /**
+     * @param object|PresenceMonitoring $object
+     */
+    function preUpdate($object)
+    {
+        $this->commonUpdates($object);
+    }
+
+    /**
+     * @param PresenceMonitoring $object
+     */
+    private function commonUpdates($object)
+    {
+        $object->setTotalHours($object->getDifferenceBetweenEndAndBeginHoursInDecimalHours());
     }
 }

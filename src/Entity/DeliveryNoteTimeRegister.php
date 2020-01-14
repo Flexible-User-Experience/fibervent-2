@@ -204,7 +204,6 @@ class DeliveryNoteTimeRegister extends AbstractBase
         return $result;
     }
 
-
     /**
      * @return float
      */
