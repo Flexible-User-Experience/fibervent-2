@@ -1,0 +1,12 @@
+{% extends '@SonataAdmin/CRUD/base_list.html.twig' %}
+
+{% block batch_actions %}
+    {{ parent() }}
+    <select name="damage_category_level" style="width:auto;height:auto"class="form-control">
+        <option value="1">para todos los tipos de categoria de daño</option>
+        <option value="2">para las categorias de daño mayor o igual que 2</option>
+        <option value="3">para las categorias de daño mayor o igual que 3</option>
+        <option value="4">para las categorias de daño mayor o igual que 4</option>
+        <option value="5">para la categoria de daño 5</option>
+    </select>
+{% endblock %}

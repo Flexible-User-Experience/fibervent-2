@@ -7,6 +7,7 @@ use App\Entity\User;
 use App\Form\Type\AuditEmailSendFormType;
 use App\Manager\WorkOrderManager;
 use App\Service\AuditPdfBuilderService;
+use Exception;
 use Sonata\AdminBundle\Datagrid\ProxyQueryInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -29,7 +30,7 @@ class AuditAdminController extends AbstractBaseAdminController
      *
      * @throws NotFoundHttpException     If the object does not exist
      * @throws AccessDeniedHttpException If access is not granted
-     * @throws \Exception
+     * @throws Exception
      */
     public function pdfAction()
     {
@@ -46,7 +47,7 @@ class AuditAdminController extends AbstractBaseAdminController
     /**
      * Custom show action redirect to public frontend view.
      *
-     * @param null $id
+     * @param null|int $id
      *
      * @return Response
      *
@@ -82,10 +83,10 @@ class AuditAdminController extends AbstractBaseAdminController
     /**
      * Custom email action.
      *
-     * @param Request $request
+     * @param Request|null $request
      *
      * @return Response
-     * @throws \Exception
+     * @throws Exception
      */
     public function emailAction(Request $request = null)
     {
@@ -125,18 +126,21 @@ class AuditAdminController extends AbstractBaseAdminController
 
     /**
      * @param ProxyQueryInterface $selectedModelQuery
+     * @param Request|null        $request
      *
      * @return Response|RedirectResponse
      */
-    public function batchActioncreateWorkorder(ProxyQueryInterface $selectedModelQuery)
+    public function batchActionCreateWorkOrder(ProxyQueryInterface $selectedModelQuery, Request $request = null)
     {
+        /** @var Router $routing */
+        $routing = $this->container->get('router');
         $this->admin->checkAccess('edit');
         $selectedModels = $selectedModelQuery->execute();
         try {
             /** @var WorkOrderManager $workOrderManager */
             $workOrderManager = $this->container->get('app.manager_work_order');
             if ($workOrderManager->checkIfAllAuditsBelongToOneWindfarm($selectedModels)) {
-                $workOrder = $workOrderManager->createWorkOrderFromAudits($selectedModels);
+                $workOrder = $workOrderManager->createWorkOrderFromAuditsForDamageCategoryLevel($selectedModels, intval($request->get('damage_category_level')));
             } else {
                 $this->addFlash('error', 'Error al generar el proyecto. Las auditorias no pertenecen a un mismo parque eólico.');
 
@@ -146,12 +150,6 @@ class AuditAdminController extends AbstractBaseAdminController
                     ])
                 );
             }
-            /** @var Router $routing */
-            $routing = $this->container->get('router');
-
-            return new RedirectResponse(
-                $routing->generate('admin_app_workorder_edit', ['id' => $workOrder->getId()])
-            );
         } catch (\Exception $e) {
             $this->addFlash('error', 'Error al generar el proyecto.');
             $this->addFlash('error', $e->getMessage());
@@ -162,6 +160,10 @@ class AuditAdminController extends AbstractBaseAdminController
                 ])
             );
         }
+
+        return new RedirectResponse(
+            $routing->generate('admin_app_workorder_edit', ['id' => $workOrder->getId()])
+        );
     }
 
     /**
