@@ -3,10 +3,10 @@
 {% block batch_actions %}
     {{ parent() }}
     <select name="damage_category_level" style="width:auto;height:auto"class="form-control">
-        <option value="1">para todos los tipos de categoria de daño</option>
-        <option value="2">para las categorias de daño mayor o igual que 2</option>
-        <option value="3">para las categorias de daño mayor o igual que 3</option>
-        <option value="4">para las categorias de daño mayor o igual que 4</option>
-        <option value="5">para la categoria de daño 5</option>
+        <option value="1">{{ 'admin.audit.batch.select_option_damage_category_level_1' | trans }}</option>
+        <option value="2">{{ 'admin.audit.batch.select_option_damage_category_level_2' | trans }}</option>
+        <option value="3">{{ 'admin.audit.batch.select_option_damage_category_level_3' | trans }}</option>
+        <option value="4">{{ 'admin.audit.batch.select_option_damage_category_level_4' | trans }}</option>
+        <option value="5">{{ 'admin.audit.batch.select_option_damage_category_level_5' | trans }}</option>
     </select>
 {% endblock %}

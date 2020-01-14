@@ -233,7 +233,13 @@ admin:
       subject_placeholder: Resultado inspección Fibervent
       message: Mensaje
       send: Enviar email
-    create_workorder: Crear proyecto
+    batch:
+      create_workorder: Crear proyecto
+      select_option_damage_category_level_1: para todos los tipos de categoria de daño
+      select_option_damage_category_level_2: para las categorias de daño mayor o igual que 2
+      select_option_damage_category_level_3: para las categorias de daño mayor o igual que 3
+      select_option_damage_category_level_4: para las categorias de daño mayor o igual que 4
+      select_option_damage_category_level_5: para la categoria de daño 5
   auditwindmillblade:
     title: Auditoría Pala Aerogenerador
     title_list: Auditoría Pala Aerogenerador

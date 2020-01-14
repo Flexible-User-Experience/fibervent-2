@@ -60,7 +60,7 @@ class AuditAdmin extends AbstractBaseAdmin
     {
         if ($this->hasRoute('edit') && $this->hasAccess('edit')) {
             $actions['CreateWorkOrder'] = array(
-                'label' => 'admin.audit.create_workorder',
+                'label' => 'admin.audit.batch.create_workorder',
                 'translation_domain' => 'messages',
                 'ask_confirmation' => false,
             );
