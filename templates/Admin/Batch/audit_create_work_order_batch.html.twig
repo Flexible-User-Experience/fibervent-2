@@ -1,0 +1,12 @@
+{% extends '@SonataAdmin/CRUD/base_list.html.twig' %}
+
+{% block batch_actions %}
+    {{ parent() }}
+    <select name="damage_category_level" style="width:auto;height:auto"class="form-control">
+        <option value="1">{{ 'admin.audit.batch.select_option_damage_category_level_1' | trans }}</option>
+        <option value="2">{{ 'admin.audit.batch.select_option_damage_category_level_2' | trans }}</option>
+        <option value="3">{{ 'admin.audit.batch.select_option_damage_category_level_3' | trans }}</option>
+        <option value="4">{{ 'admin.audit.batch.select_option_damage_category_level_4' | trans }}</option>
+        <option value="5">{{ 'admin.audit.batch.select_option_damage_category_level_5' | trans }}</option>
+    </select>
+{% endblock %}

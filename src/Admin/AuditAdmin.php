@@ -59,8 +59,8 @@ class AuditAdmin extends AbstractBaseAdmin
     public function configureBatchActions($actions)
     {
         if ($this->hasRoute('edit') && $this->hasAccess('edit')) {
-            $actions['createWorkorder'] = array(
-                'label' => 'admin.audit.create_workorder',
+            $actions['CreateWorkOrder'] = array(
+                'label' => 'admin.audit.batch.create_workorder',
                 'translation_domain' => 'messages',
                 'ask_confirmation' => false,
             );
@@ -500,7 +500,28 @@ class AuditAdmin extends AbstractBaseAdmin
                         'delete' => array('template' => 'Admin/Buttons/list__action_delete_button.html.twig'),
                     ),
                 )
-            );
+            )
+        ;
+    }
+
+    /**
+     * Override list template according to a specific batch action management
+     *
+     * @param string $name
+     *
+     * @return string|null
+     */
+    public function getTemplate($name)
+    {
+        switch ($name) {
+            case 'list':
+                return 'Admin/Batch/audit_create_work_order_batch.html.twig';
+                break;
+
+            default:
+                return parent::getTemplate($name);
+                break;
+        }
     }
 
     /**
@@ -552,9 +573,6 @@ class AuditAdmin extends AbstractBaseAdmin
 
         $this->commomPreEvent($object);
     }
-
-    // TODO fix this error behaviour: when windmill blades are changed after an existing audit makes inconsistent references
-    // TODO related problem with Sonata >3.20.1 upgrade (but it works with Sonata v1.15.0)
 
     /**
      * @param Audit $object
