@@ -6,10 +6,12 @@ use App\Enum\MinutesEnum;
 use App\Entity\DeliveryNoteTimeRegister;
 use App\Enum\TimeRegisterShiftEnum;
 use App\Enum\TimeRegisterTypeEnum;
+use DateTime;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TimeType;
 
 /**
@@ -45,6 +47,7 @@ class DeliveryNoteTimeRegisterAdmin extends AbstractBaseAdmin
                 ->end()
             ;
         } else {
+            // is embeded form in DeliveryNoteAdmin
             $formMapper
                 ->with('admin.common.general', $this->getFormMdSuccessBoxArray(3))
                 ->add(
@@ -99,6 +102,14 @@ class DeliveryNoteTimeRegisterAdmin extends AbstractBaseAdmin
                     'label' => 'admin.deliverynotetimeregister.end',
                     'widget' => 'choice',
                     'minutes' => MinutesEnum::getEnumArray(),
+                )
+            )
+            ->add(
+                'comment',
+                TextType::class,
+                array(
+                    'label' => 'admin.deliverynotetimeregister.comment',
+                    'required' => false,
                 )
             )
             ->add(
@@ -293,7 +304,7 @@ class DeliveryNoteTimeRegisterAdmin extends AbstractBaseAdmin
     private function commonPreEvent($object)
     {
         if (!is_null($object->getBegin()) && !is_null($object->getEnd())) {
-            if ($object->getBegin() instanceof \DateTime && $object->getEnd() instanceof \DateTime) {
+            if ($object->getBegin() instanceof DateTime && $object->getEnd() instanceof DateTime) {
                 if ($object->getBegin()->format('H:i') < $object->getEnd()->format('H:i')) {
                     $time1 = strtotime($object->getBegin()->format('H:i:s'));
                     $time2 = strtotime($object->getEnd()->format('H:i:s'));

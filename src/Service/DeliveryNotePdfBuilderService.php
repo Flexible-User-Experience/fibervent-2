@@ -424,7 +424,12 @@ class DeliveryNotePdfBuilderService
         $this->tcpdf->SetFont('', 'B', 7);
         $this->tcpdf->Cell(17, 5, $title2, 1, 0, 'R', true);
         $this->tcpdf->SetFont('', '', 7);
-        $this->tcpdf->Cell(14, 5, $dntr->getEndString(), 1, 1, 'C', false);
+        if ($dntr->getComment()) {
+            $this->tcpdf->Cell(14, 5, $dntr->getEndString(), 1, 0, 'C', false);
+            $this->tcpdf->Cell(27, 5, $dntr->getComment(), 1, 1, 'L', false);
+        } else {
+            $this->tcpdf->Cell(14, 5, $dntr->getEndString(), 1, 1, 'C', false);
+        }
     }
 
     /**

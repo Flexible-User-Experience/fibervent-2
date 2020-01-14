@@ -490,6 +490,7 @@ admin:
     stop: Paro
     end: Fin
     total_hours: Total horas
+    comment: Comentario
   nonstandardusedmaterial:
     title: Materiales no estándar utilizados
     title_list: Materiales no estándar utilizados
