@@ -7,6 +7,7 @@ use App\Entity\AuditWindmillBlade;
 use App\Entity\BladeDamage;
 use App\Entity\WorkOrder;
 use App\Entity\WorkOrderTask;
+use App\Enum\WorkOrderStatusEnum;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\ORMException;
@@ -66,9 +67,12 @@ class WorkOrderManager
     public function createWorkOrderFromAudits($audits)
     {
         $workOrder = new WorkOrder();
-        $workOrder->setCustomer($audits[0]->getCustomer());
-        $workOrder->setIsFromAudit(true);
-        $workOrder->setWindfarm($audits[0]->getWindfarm());
+        $workOrder
+            ->setCustomer($audits[0]->getCustomer())
+            ->setIsFromAudit(true)
+            ->setWindfarm($audits[0]->getWindfarm())
+            ->setStatus(WorkOrderStatusEnum::PENDING)
+        ;
         $this->em->persist($workOrder);
         /** @var Audit $audit */
         foreach ($audits as $audit) {
@@ -109,9 +113,12 @@ class WorkOrderManager
     public function createWorkOrderFromAuditsForDamageCategoryLevel($audits, $damageCategoryLevel)
     {
         $workOrder = new WorkOrder();
-        $workOrder->setCustomer($audits[0]->getCustomer());
-        $workOrder->setIsFromAudit(true);
-        $workOrder->setWindfarm($audits[0]->getWindfarm());
+        $workOrder
+            ->setCustomer($audits[0]->getCustomer())
+            ->setIsFromAudit(true)
+            ->setWindfarm($audits[0]->getWindfarm())
+            ->setStatus(WorkOrderStatusEnum::PENDING)
+        ;
         $this->em->persist($workOrder);
         /** @var Audit $audit */
         foreach ($audits as $audit) {
