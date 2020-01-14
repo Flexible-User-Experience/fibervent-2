@@ -9,6 +9,7 @@ use App\Enum\AuditLanguageEnum;
 use App\Enum\TimeRegisterShiftEnum;
 use App\Enum\TimeRegisterTypeEnum;
 use App\Manager\DeliveryNoteTimeRegisterManager;
+use Exception;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use TCPDF;
 
@@ -69,6 +70,7 @@ class DeliveryNotePdfBuilderService
      * @param DeliveryNote $dn
      *
      * @return TCPDF
+     * @throws Exception
      */
     public function build(DeliveryNote $dn) {
         $this->ts->setLocale(AuditLanguageEnum::DEFAULT_LANGUAGE_STRING);
@@ -109,7 +111,10 @@ class DeliveryNotePdfBuilderService
                 $this->ts->trans('admin.presencemonitoring.hour').' '.strtolower($this->ts->trans('admin.presencemonitoring.arrival'))
             );
         }
-        $this->tcpdf->Cell(10, 5, '', 0, 1, 'L', false);
+        if (count($dntrs[TimeRegisterShiftEnum::MORNING][TimeRegisterTypeEnum::TRIP]) > 0) {
+            $this->drawTotalHourCells($dntrs['total_trip_morning_hours']);
+            $this->tcpdf->Cell(10, 5, '', 0, 1, 'L', false);
+        }
         // morning works table section
         /** @var DeliveryNoteTimeRegister $dntr */
         foreach ($dntrs[TimeRegisterShiftEnum::MORNING][TimeRegisterTypeEnum::WORK] as $dntr) {
@@ -141,14 +146,9 @@ class DeliveryNotePdfBuilderService
             );
         }
         if (count($dntrs[TimeRegisterShiftEnum::MORNING][TimeRegisterTypeEnum::WORK]) > 0 || count($dntrs[TimeRegisterShiftEnum::AFTERNOON][TimeRegisterTypeEnum::WORK]) > 0 || count($dntrs[TimeRegisterShiftEnum::NIGHT][TimeRegisterTypeEnum::WORK]) > 0) {
-            $this->tcpdf->SetX(self::PDF_MARGIN_LEFT + 33);
-            $this->tcpdf->SetFillColor(108, 197, 205);
-            $this->tcpdf->SetFont('', 'B', 7);
-            $this->tcpdf->Cell(20, 5, $this->ts->trans('admin.presencemonitoring.total_hours'), 1, 0, 'R', true);
-            $this->tcpdf->SetFont('', '', 7);
-            $this->tcpdf->Cell(20, 5, $dntrs['total_work_hours'], 1, 1, 'C', true);
+            $this->drawTotalHourCells($dntrs['total_work_hours']);
+            $this->tcpdf->Cell(10, 5, '', 0, 1, 'L', false);
         }
-        $this->tcpdf->Cell(10, 5, '', 0, 1, 'L', false);
         // morning stops table section
         /** @var DeliveryNoteTimeRegister $dntr */
         foreach ($dntrs[TimeRegisterShiftEnum::MORNING][TimeRegisterTypeEnum::STOP] as $dntr) {
@@ -419,5 +419,18 @@ class DeliveryNotePdfBuilderService
         $this->tcpdf->Cell(20, 5, $title2, 1, 0, 'R', true);
         $this->tcpdf->SetFont('', '', 7);
         $this->tcpdf->Cell(20, 5, $dntr->getEndString(), 1, 1, 'C', false);
+    }
+
+    /**
+     * @param int|string $value
+     */
+    private function drawTotalHourCells($value)
+    {
+        $this->tcpdf->SetX(self::PDF_MARGIN_LEFT + 33);
+        $this->tcpdf->SetFillColor(108, 197, 205);
+        $this->tcpdf->SetFont('', 'B', 7);
+        $this->tcpdf->Cell(20, 5, $this->ts->trans('admin.presencemonitoring.total_hours'), 1, 0, 'R', true);
+        $this->tcpdf->SetFont('', '', 7);
+        $this->tcpdf->Cell(20, 5, $value, 1, 1, 'C', true);
     }
 }

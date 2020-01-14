@@ -66,7 +66,9 @@ class DeliveryNoteTimeRegisterManager
         foreach ($result[TimeRegisterShiftEnum::NIGHT][TimeRegisterTypeEnum::TRIP] as $dntr) {
             $totalHours += $dntr->getDifferenceBetweenEndAndBeginHoursInDecimalHours();
         }
-        $result['total_trip_hours'] = self::getTotalHoursHumanizedString($this->getTotalHoursByType($result, TimeRegisterTypeEnum::TRIP));
+        $result['total_trip_morning_hours'] = self::getTotalHoursHumanizedString($this->getTotalHoursByShiftAndType($result, TimeRegisterShiftEnum::MORNING, TimeRegisterTypeEnum::TRIP));
+        $result['total_trip_afternoon_hours'] = self::getTotalHoursHumanizedString($this->getTotalHoursByShiftAndType($result, TimeRegisterShiftEnum::AFTERNOON, TimeRegisterTypeEnum::TRIP));
+        $result['total_trip_night_hours'] = self::getTotalHoursHumanizedString($this->getTotalHoursByShiftAndType($result, TimeRegisterShiftEnum::NIGHT, TimeRegisterTypeEnum::TRIP));
         $result['total_work_hours'] = self::getTotalHoursHumanizedString($this->getTotalHoursByType($result, TimeRegisterTypeEnum::WORK));
         $result['total_stop_hours'] = self::getTotalHoursHumanizedString($this->getTotalHoursByType($result, TimeRegisterTypeEnum::STOP));
 
@@ -115,25 +117,33 @@ class DeliveryNoteTimeRegisterManager
 
     /**
      * @param array $result
+     * @param int   $shift
+     * @param int   $type
+     *
+     * @return float
+     */
+    private function getTotalHoursByShiftAndType(array $result, int $shift, int $type)
+    {
+        $totalHours = 0.0;
+        /** @var DeliveryNoteTimeRegister $dntr */
+        foreach ($result[$shift][$type] as $dntr) {
+            $totalHours += $dntr->getDifferenceBetweenEndAndBeginHoursInDecimalHours();
+        }
+
+        return $totalHours;
+    }
+
+    /**
+     * @param array $result
      * @param int   $type
      *
      * @return float
      */
     private function getTotalHoursByType(array $result, int $type)
     {
-        $totalHours = 0.0;
-        /** @var DeliveryNoteTimeRegister $dntr */
-        foreach ($result[TimeRegisterShiftEnum::MORNING][$type] as $dntr) {
-            $totalHours += $dntr->getDifferenceBetweenEndAndBeginHoursInDecimalHours();
-        }
-        /** @var DeliveryNoteTimeRegister $dntr */
-        foreach ($result[TimeRegisterShiftEnum::AFTERNOON][$type] as $dntr) {
-            $totalHours += $dntr->getDifferenceBetweenEndAndBeginHoursInDecimalHours();
-        }
-        /** @var DeliveryNoteTimeRegister $dntr */
-        foreach ($result[TimeRegisterShiftEnum::NIGHT][$type] as $dntr) {
-            $totalHours += $dntr->getDifferenceBetweenEndAndBeginHoursInDecimalHours();
-        }
+        $totalHours = $this->getTotalHoursByShiftAndType($result, TimeRegisterShiftEnum::MORNING, $type);
+        $totalHours += $this->getTotalHoursByShiftAndType($result, TimeRegisterShiftEnum::AFTERNOON, $type);
+        $totalHours += $this->getTotalHoursByShiftAndType($result, TimeRegisterShiftEnum::NIGHT, $type);
 
         return $totalHours;
     }
