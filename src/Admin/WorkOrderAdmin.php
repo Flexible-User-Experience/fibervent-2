@@ -6,6 +6,7 @@ use App\Entity\Audit;
 use App\Entity\Customer;
 use App\Entity\Windfarm;
 use App\Enum\RepairAccessTypeEnum;
+use App\Enum\WorkOrderStatusEnum;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
@@ -75,8 +76,19 @@ class WorkOrderAdmin extends AbstractBaseAdmin
                     'isFromAudit',
                     null,
                     array(
-                        'label' => 'admin.workorder.is_from_audit',
+                        'label' => 'admin.workorder.is_from_audit_short',
                         'disabled' => true,
+                    )
+                )
+                ->add(
+                    'status',
+                    ChoiceType::class,
+                    array(
+                        'label' => 'admin.audit.status',
+                        'choices' => WorkOrderStatusEnum::getReversedEnumArray(),
+                        'multiple' => false,
+                        'expanded' => false,
+                        'required' => true,
                     )
                 )
                 ->end()
@@ -273,13 +285,6 @@ class WorkOrderAdmin extends AbstractBaseAdmin
                 )
             )
             ->add(
-                'isFromAudit',
-                null,
-                array(
-                    'label' => 'admin.workorder.is_from_audit',
-                )
-            )
-            ->add(
                 'windfarm',
                 null,
                 array(
@@ -339,6 +344,26 @@ class WorkOrderAdmin extends AbstractBaseAdmin
                     'label' => 'admin.workorder.repair_access_types',
                 )
             )
+            ->add(
+                'isFromAudit',
+                null,
+                array(
+                    'label' => 'admin.workorder.is_from_audit_short',
+                )
+            )
+            ->add(
+                'status',
+                null,
+                array(
+                    'label' => 'admin.audit.status',
+                ),
+                ChoiceType::class,
+                array(
+                    'expanded' => false,
+                    'multiple' => false,
+                    'choices' => WorkOrderStatusEnum::getReversedEnumArray(),
+                )
+            )
         ;
     }
 
@@ -369,16 +394,6 @@ class WorkOrderAdmin extends AbstractBaseAdmin
                 )
             )
             ->add(
-                'isFromAudit',
-                null,
-                array(
-                    'label' => 'admin.workorder.is_from_audit',
-                    'editable' => false,
-                    'header_class' => 'text-center',
-                    'row_align' => 'center',
-                )
-            )
-            ->add(
                 'windfarm',
                 null,
                 array(
@@ -404,6 +419,27 @@ class WorkOrderAdmin extends AbstractBaseAdmin
                 array(
                     'label' => 'admin.workorder.repair_access_types',
                     'template' => 'Admin/Cells/list__cell_repair_access_type.html.twig',
+                    'header_class' => 'text-center',
+                    'row_align' => 'center',
+                )
+            )
+            ->add(
+                'isFromAudit',
+                null,
+                array(
+                    'label' => 'admin.workorder.is_from_audit_short',
+                    'editable' => false,
+                    'header_class' => 'text-center',
+                    'row_align' => 'center',
+                )
+            )
+            ->add(
+                'status',
+                null,
+                array(
+                    'label' => 'admin.audit.status',
+                    'editable' => false,
+                    'template' => 'Admin/Cells/list__cell_audit_status.html.twig',
                     'header_class' => 'text-center',
                     'row_align' => 'center',
                 )
@@ -440,6 +476,13 @@ class WorkOrderAdmin extends AbstractBaseAdmin
                 )
             )
             ->add(
+                'statusString',
+                null,
+                array(
+                    'label' => 'admin.audit.status',
+                )
+            )
+            ->add(
                 'customer',
                 null,
                 array(
@@ -450,7 +493,7 @@ class WorkOrderAdmin extends AbstractBaseAdmin
                 'isFromAudit',
                 null,
                 array(
-                    'label' => 'admin.workorder.is_from_audit',
+                    'label' => 'admin.workorder.is_from_audit_short',
                 )
             )
             ->add(

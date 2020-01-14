@@ -1,5 +1,5 @@
 {% extends 'SonataAdminBundle:CRUD:base_list_field.html.twig' %}
 
 {% block field %}
-    {{ object.totalHours | get_humanized_total_hours }}
+    {{ object.normalHours | get_humanized_total_hours }}
 {% endblock %}
