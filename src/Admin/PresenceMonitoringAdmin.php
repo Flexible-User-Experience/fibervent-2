@@ -261,20 +261,11 @@ class PresenceMonitoringAdmin extends AbstractBaseAdmin
                 )
             )
             ->add(
-                'totalHours',
-                null,
-                array(
-                    'label' => 'admin.presencemonitoring.total_hours',
-                    'editable' => false,
-                    'header_class' => 'text-right',
-                    'row_align' => 'right',
-                )
-            )
-            ->add(
                 'normalHours',
                 null,
                 array(
                     'label' => 'admin.presencemonitoring.normal_hours',
+                    'template' => 'Admin/Cells/list__cell_presence_monitoring_normal_hours.html.twig',
                     'editable' => false,
                     'header_class' => 'text-right',
                     'row_align' => 'right',
@@ -285,6 +276,18 @@ class PresenceMonitoringAdmin extends AbstractBaseAdmin
                 null,
                 array(
                     'label' => 'admin.presencemonitoring.extra_hours',
+                    'template' => 'Admin/Cells/list__cell_presence_monitoring_extra_hours.html.twig',
+                    'editable' => false,
+                    'header_class' => 'text-right',
+                    'row_align' => 'right',
+                )
+            )
+            ->add(
+                'totalHours',
+                null,
+                array(
+                    'label' => 'admin.presencemonitoring.total_hours',
+                    'template' => 'Admin/Cells/list__cell_presence_monitoring_total_hours.html.twig',
                     'editable' => false,
                     'header_class' => 'text-right',
                     'row_align' => 'right',

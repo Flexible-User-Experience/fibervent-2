@@ -78,9 +78,14 @@ class DeliveryNoteTimeRegisterManager
      *
      * @return string
      */
-    public static function getTotalHoursHumanizedString(float $hours)
+    public static function getTotalHoursHumanizedString(?float $hours)
     {
-        return self::clockalize($hours);
+        $result = '---';
+        if ($hours) {
+            $result = self::clockalize($hours);
+        }
+
+        return $result;
     }
 
     /**
