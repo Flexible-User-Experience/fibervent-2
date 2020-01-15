@@ -22,11 +22,13 @@ services:
         arguments:
             - App:BladeDamage
     app.windfarm_repository:
+        public: true
         class: App\Repository\WindfarmRepository
         factory: [ '@doctrine', getRepository ]
         arguments:
             - App:Windfarm
     app.windmill_repository:
+        public: true
         class: App\Repository\WindmillRepository
         factory: [ '@doctrine', getRepository ]
         arguments:
@@ -60,6 +62,7 @@ services:
         arguments:
             - App:Audit
     app.windmill_blade_repository:
+        public: true
         class: App\Repository\WindmillBladeRepository
         factory: [ '@doctrine', getRepository ]
         arguments:

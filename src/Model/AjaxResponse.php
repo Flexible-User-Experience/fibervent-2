@@ -12,22 +12,22 @@ class AjaxResponse
     /**
      * @var int
      */
-    private $code;
+    private int $code;
 
     /**
      * @var string
      */
-    private $error;
+    private string $error;
 
     /**
      * @var array
      */
-    private $data;
+    private array $data;
 
     /**
      * @var string
      */
-    private $htmlOptionStringData;
+    private string $htmlOptionStringData;
 
     /**
      * Methods.

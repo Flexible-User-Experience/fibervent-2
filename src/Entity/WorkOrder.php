@@ -129,6 +129,14 @@ class WorkOrder extends AbstractBase
      */
 
     /**
+     * WorkOrder constructor.
+     */
+    public function __construct()
+    {
+        $this->windfarms = new ArrayCollection();
+    }
+
+    /**
      * @return int|null
      */
     public function getStatus(): ?int
