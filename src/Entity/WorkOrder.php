@@ -57,6 +57,16 @@ class WorkOrder extends AbstractBase
     private $windfarm;
 
     /**
+     * @var Windfarm[]|ArrayCollection|array
+     *
+     * @ORM\ManyToMany(targetEntity="Windfarm")
+     * @ORM\JoinTable(name="work_orders_windfarms",
+     *      joinColumns={@ORM\JoinColumn(name="work_order_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="windfarm_id", referencedColumnName="id")})
+     */
+    private $windfarms;
+
+    /**
      * @var Audit[]|ArrayCollection
      *
      * @ORM\OneToMany(targetEntity="Audit", mappedBy="workOrder")
@@ -214,6 +224,54 @@ class WorkOrder extends AbstractBase
     public function setWindfarm(Windfarm $windfarm): WorkOrder
     {
         $this->windfarm = $windfarm;
+
+        return $this;
+    }
+
+    /**
+     * @return Windfarm[]|array|ArrayCollection
+     */
+    public function getWindfarms()
+    {
+        return $this->windfarms;
+    }
+
+    /**
+     * @param Windfarm[]|array|ArrayCollection $windfarms
+     *
+     * @return WorkOrder
+     */
+    public function setWindfarms($windfarms): WorkOrder
+    {
+        $this->windfarms = $windfarms;
+
+        return $this;
+    }
+
+    /**
+     * @param Windfarm $windfarm
+     *
+     * @return WorkOrder
+     */
+    public function addWindfarm(Windfarm $windfarm): WorkOrder
+    {
+        if (!$this->windfarms->contains($windfarm)) {
+            $this->windfarms->add($windfarm);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param Windfarm $windfarm
+     *
+     * @return WorkOrder
+     */
+    public function removeWindfarm(Windfarm $windfarm): WorkOrder
+    {
+        if ($this->windfarms->contains($windfarm)) {
+            $this->windfarms->removeElement($windfarm);
+        }
 
         return $this;
     }
