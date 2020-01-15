@@ -29,27 +29,33 @@
             });
             {% if admin.id(object) %}
                 {# edit mode #}
-                jQuery('#field_widget_{{ form.workOrderTasks.vars.id }}')[0].children[0].children[0].children[0].children[1].width = '30%';
-                jQuery('#field_widget_{{ form.workOrderTasks.vars.id }}')[0].children[0].children[0].children[0].children[2].width = '5%';
-                jQuery('#field_widget_{{ form.workOrderTasks.vars.id }}')[0].children[0].children[0].children[0].children[3].width = '5%';
-                jQuery('#field_widget_{{ form.workOrderTasks.vars.id }}')[0].children[0].children[0].children[0].children[4].width = '5%';
-                jQuery('#field_widget_{{ form.workOrderTasks.vars.id }}')[0].children[0].children[0].children[0].children[5].width = '5%';
-                jQuery('#field_widget_{{ form.workOrderTasks.vars.id }}')[0].children[0].children[0].children[0].children[6].width = '5%';
-                jQuery('#field_widget_{{ form.workOrderTasks.vars.id }}')[0].children[0].children[0].children[0].children[7].width = '5%';
-                jQuery('#field_widget_{{ form.workOrderTasks.vars.id }}')[0].children[0].children[0].children[0].children[9].width = '30%';
-                let workOrderTasks = jQuery('#field_widget_{{  form.workOrderTasks.vars.id }}')[0].children[0].children[1].childElementCount;
-                let windmillNodes = [];
-                for (let i = 0; i < workOrderTasks; i++) {
-                    windmillNodes[i] = jQuery('#{{ form.workOrderTasks.vars.id }}_' + i + '_windmill');
-                    windmillNodes[i].change((function() {
-                        let k = i;
-                        return function (event) {
-                            let windmillBladeId = event.val;
-                            let windmillNode = windmillNodes[k];
-                            updateWindmillBladeNodeByWindmill(windmillBladeId, windmillNode, k);
-                        }
-                    })());
-                }
+                {% if not object.isFromAudit %}
+                    let windfarmsNode = jQuery('#{{ form.windfarms.vars.id }}');
+                    windfarmsNode.prop('disabled', false);
+                {% endif %}
+                {% if object.workOrderTasks | length > 0 %}
+                    jQuery('#field_widget_{{ form.workOrderTasks.vars.id }}')[0].children[0].children[0].children[0].children[1].width = '30%';
+                    jQuery('#field_widget_{{ form.workOrderTasks.vars.id }}')[0].children[0].children[0].children[0].children[2].width = '5%';
+                    jQuery('#field_widget_{{ form.workOrderTasks.vars.id }}')[0].children[0].children[0].children[0].children[3].width = '5%';
+                    jQuery('#field_widget_{{ form.workOrderTasks.vars.id }}')[0].children[0].children[0].children[0].children[4].width = '5%';
+                    jQuery('#field_widget_{{ form.workOrderTasks.vars.id }}')[0].children[0].children[0].children[0].children[5].width = '5%';
+                    jQuery('#field_widget_{{ form.workOrderTasks.vars.id }}')[0].children[0].children[0].children[0].children[6].width = '5%';
+                    jQuery('#field_widget_{{ form.workOrderTasks.vars.id }}')[0].children[0].children[0].children[0].children[7].width = '5%';
+                    jQuery('#field_widget_{{ form.workOrderTasks.vars.id }}')[0].children[0].children[0].children[0].children[9].width = '30%';
+                    let workOrderTasks = jQuery('#field_widget_{{  form.workOrderTasks.vars.id }}')[0].children[0].children[1].childElementCount;
+                    let windmillNodes = [];
+                    for (let i = 0; i < workOrderTasks; i++) {
+                        windmillNodes[i] = jQuery('#{{ form.workOrderTasks.vars.id }}_' + i + '_windmill');
+                        windmillNodes[i].change((function() {
+                            let k = i;
+                            return function (event) {
+                                let windmillBladeId = event.val;
+                                let windmillNode = windmillNodes[k];
+                                updateWindmillBladeNodeByWindmill(windmillBladeId, windmillNode, k);
+                            }
+                        })());
+                    }
+                {% endif %}
                 jQuery(document).on('sonata.add_element', function(event, elementId, objectId, uniqid) {
                     // TODO Update only the new object
                     let workOrderTasks = jQuery('#field_widget_{{  form.workOrderTasks.vars.id }}')[0].children[0].children[1].childElementCount;
@@ -87,7 +93,6 @@
             {% else %}
                 {# create mode (new) #}
                 let selectedFirstOptionCustomerId = parseInt(jQuery('#{{ form.customer.vars.id }} option:eq(0)').prop('value'), 10);
-                console.log('cusNod', customerNode, selectedFirstOptionCustomerId);
                 updateWindfarmNodeByCustomer(selectedFirstOptionCustomerId);
             {% endif %}
         });
