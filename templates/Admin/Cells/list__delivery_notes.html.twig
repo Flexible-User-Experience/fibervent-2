@@ -1,74 +1,82 @@
-<table class="table table-bordered">
-    <thead>
-        <tr>
-            <th>
-                {{ 'admin.deliverynote.date' | trans }}
-            </th>
-            <th>
-                {{ 'admin.deliverynote.repair_windmill_sections_short' | trans }}
-            </th>
-            <th>
-                {{ 'admin.deliverynote.team_leader' | trans }}
-            </th>
-            <th>
-                {{ 'admin.deliverynote.team_technician_1' | trans }}
-            </th>
-            <th>
-                {{ 'admin.deliverynote.team_technician_2' | trans }}
-            </th>
-            <th>
-                {{ 'admin.vehicle.title' | trans }}
-            </th>
-            <th>
-                {{ 'admin.deliverynote.crane_company' | trans }}
-            </th>
-            <th>
-                {{ 'admin.deliverynote.repair_access_types' | trans }}
-            </th>
-            {% if show_edit_button is defined and show_edit_button %}
-            <th>
-            </th>
-            {% endif %}
-        </tr>
-    </thead>
-    <tbody>
-    {% for deliveryNote in object.deliveryNotes %}
-        <tr>
-            <td>
-                {{ deliveryNote.getDate().format('d/m/y') }}
-            </td>
-            <td>
-                {% for repairWindmillSection in deliveryNote.repairWindmillSectionsStringsArray %}
-                    <span class="label label-default">{{ repairWindmillSection | trans }}</span>
-                {% endfor %}
-            </td>
-            <td>
-                {{ deliveryNote.getTeamLeader }}
-            </td>
-            <td>
-                {{ deliveryNote.getTeamTechnician1 }}
-            </td>
-            <td>
-                {{ deliveryNote.getTeamTechnician2 }}
-            </td>
-            <td>
-                {{ deliveryNote.getVehicle }}
-            </td>
-            <td>
-                {{ deliveryNote.getCraneCompany }}
-            </td>
-            <td>
-                {% for repairAccessType in deliveryNote.repairAccessTypesStringsArray %}
-                    <span class="label label-default">{{ repairAccessType | trans }}</span>
-                {% endfor %}
-            </td>
-            {% if show_edit_button is defined and show_edit_button %}
-            <td>
-                <a href="/index.php/admin/workorders/deliverynote/{{ deliveryNote.id }}/edit" class="btn btn-primary"><i class="fa fa-plus-square"></i> Editar</a>
-            </td>
-            {% endif %}
-        </tr>
-    {% endfor %}
-    </tbody>
-</table>
-
+<div class="box-body">
+    {% if object.deliveryNotes | length > 0 %}
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        {{ 'admin.deliverynote.date' | trans }}
+                    </th>
+                    <th>
+                        {{ 'admin.deliverynote.repair_windmill_sections_short' | trans }}
+                    </th>
+                    <th>
+                        {{ 'admin.deliverynote.team_leader' | trans }}
+                    </th>
+                    <th>
+                        {{ 'admin.deliverynote.team_technician_1' | trans }}
+                    </th>
+                    <th>
+                        {{ 'admin.deliverynote.team_technician_2' | trans }}
+                    </th>
+                    <th>
+                        {{ 'admin.vehicle.title' | trans }}
+                    </th>
+                    <th>
+                        {{ 'admin.deliverynote.crane_company' | trans }}
+                    </th>
+                    <th>
+                        {{ 'admin.deliverynote.repair_access_types' | trans }}
+                    </th>
+                    {% if show_edit_button is defined and show_edit_button %}
+                    <th>
+                    </th>
+                    {% endif %}
+                </tr>
+            </thead>
+            <tbody>
+            {% for deliveryNote in object.deliveryNotes %}
+                <tr>
+                    <td>
+                        {{ deliveryNote.getDate().format('d/m/y') }}
+                    </td>
+                    <td>
+                        {% for repairWindmillSection in deliveryNote.repairWindmillSectionsStringsArray %}
+                            <span class="label label-default">{{ repairWindmillSection | trans }}</span>
+                        {% endfor %}
+                    </td>
+                    <td>
+                        {{ deliveryNote.getTeamLeader }}
+                    </td>
+                    <td>
+                        {{ deliveryNote.getTeamTechnician1 }}
+                    </td>
+                    <td>
+                        {{ deliveryNote.getTeamTechnician2 }}
+                    </td>
+                    <td>
+                        {{ deliveryNote.getVehicle }}
+                    </td>
+                    <td>
+                        {{ deliveryNote.getCraneCompany }}
+                    </td>
+                    <td>
+                        {% for repairAccessType in deliveryNote.repairAccessTypesStringsArray %}
+                            <span class="label label-default">{{ repairAccessType | trans }}</span>
+                        {% endfor %}
+                    </td>
+                    {% if show_edit_button is defined and show_edit_button %}
+                    <td>
+                        <a href="/index.php/admin/workorders/deliverynote/{{ deliveryNote.id }}/edit" class="btn btn-primary"><i class="fa fa-plus-square"></i> {{ 'title_edit' | trans({}, 'SonataAdminBundle') }}</a>
+                    </td>
+                    {% endif %}
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <div class="alert alert-warning" role="alert">
+            <i class="fa fa-warning"></i> {{ 'admin.deliverynote.no_records' | trans }}
+        </div>
+        <a href="{{ path('admin_app_deliverynote_create') }}?for_work_order={{ object.id }}" class="btn btn-primary"><i class="fa fa-plus-circle"></i> {{ 'admin.deliverynote.new' | trans }}</a>
+    {% endif %}
+</div>
