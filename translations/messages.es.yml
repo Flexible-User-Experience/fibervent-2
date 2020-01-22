@@ -424,6 +424,7 @@ admin:
     is_from_audit: Proviene de auditoría
     is_from_audit_short: Proviene auditoría
     repair_access_types: Tipos de acceso
+    windfarms: Parques eólicos
   workordertask:
     title: Tareas
     title_list: Tareas
@@ -448,6 +449,8 @@ admin:
     active: Activo
   deliverynote:
     id: Número
+    new: Añadir albarán
+    no_records: 'No existen albaranes asociados.'
     title: Albarán
     title_list: Albarán
     title_create: Crear
