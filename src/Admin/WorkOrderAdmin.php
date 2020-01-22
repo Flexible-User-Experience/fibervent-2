@@ -43,6 +43,7 @@ class WorkOrderAdmin extends AbstractBaseAdmin
             ->remove('batch')
             ->add('getWindfarmsFromCustomerId', $this->getRouterIdParameter().'/get-windfarms-from-customer-id')
             ->add('getWindmillbladesFromWindmillId', $this->getRouterIdParameter().'/get-windmillblades-from-windmill-id')
+            ->add('getWindmillsFromWindfarmsName', 'get-windmills-from-windfarms-name')
             ->add('pdf', $this->getRouterIdParameter().'/pdf')
         ;
     }
@@ -52,7 +53,8 @@ class WorkOrderAdmin extends AbstractBaseAdmin
      */
     protected function configureFormFields(FormMapper $formMapper)
     {
-        if ($this->id($this->getSubject())) { // is edit mode, disable on new subjects
+        if ($this->id($this->getSubject())) {
+            // is edit mode
             $formMapper
                 ->with('admin.common.general', $this->getFormMdSuccessBoxArray(4))
                 ->add(
@@ -73,14 +75,6 @@ class WorkOrderAdmin extends AbstractBaseAdmin
                     )
                 )
                 ->add(
-                    'isFromAudit',
-                    null,
-                    array(
-                        'label' => 'admin.workorder.is_from_audit_short',
-                        'disabled' => true,
-                    )
-                )
-                ->add(
                     'status',
                     ChoiceType::class,
                     array(
@@ -91,14 +85,23 @@ class WorkOrderAdmin extends AbstractBaseAdmin
                         'required' => true,
                     )
                 )
+                ->add(
+                    'isFromAudit',
+                    null,
+                    array(
+                        'label' => 'admin.workorder.is_from_audit_short',
+                        'disabled' => true,
+                    )
+                )
                 ->end()
                 ->with('admin.windfarm.title', $this->getFormMdSuccessBoxArray(4))
                 ->add(
-                    'windfarm',
+                    'windfarms',
                     EntityType::class,
                     array(
                         'class' => Windfarm::class,
-                        'label' => 'admin.windfarm.title',
+                        'label' => 'admin.workorder.windfarms',
+                        'multiple' => true,
                         'disabled' => true,
                     )
                 )
@@ -182,7 +185,8 @@ class WorkOrderAdmin extends AbstractBaseAdmin
                     ->end()
                 ;
             }
-        } else { // is in create mode
+        } else {
+            // is create mode (new)
             $formMapper
                 ->with('admin.common.general', $this->getFormMdSuccessBoxArray(4))
                 ->add(
@@ -204,13 +208,28 @@ class WorkOrderAdmin extends AbstractBaseAdmin
                         'query' => $this->cr->findEnabledSortedByNameQ(),
                     )
                 )
+                ->add(
+                    'status',
+                    ChoiceType::class,
+                    array(
+                        'label' => 'admin.audit.status',
+                        'choices' => WorkOrderStatusEnum::getReversedEnumArray(),
+                        'multiple' => false,
+                        'expanded' => false,
+                        'required' => true,
+                    )
+                )
                 ->end()
                 ->with('admin.windfarm.title', $this->getFormMdSuccessBoxArray(4))
                 ->add(
-                    'windfarm',
-                    null,
+                    'windfarms',
+                    EntityType::class,
                     array(
-                        'label' => 'admin.windfarm.title',
+                        'label' => 'admin.workorder.windfarms',
+                        'class' => Windfarm::class,
+                        'query_builder' => $this->wfr->findEnabledSortedByNameQB(),
+                        'required' => false,
+                        'multiple' => true,
                     )
                 )
                 ->add(
@@ -285,10 +304,10 @@ class WorkOrderAdmin extends AbstractBaseAdmin
                 )
             )
             ->add(
-                'windfarm',
+                'windfarms',
                 null,
                 array(
-                    'label' => 'admin.windfarm.title',
+                    'label' => 'admin.workorder.windfarms',
                 ),
                 EntityType::class,
                 array(
@@ -394,10 +413,10 @@ class WorkOrderAdmin extends AbstractBaseAdmin
                 )
             )
             ->add(
-                'windfarm',
+                'windfarms',
                 null,
                 array(
-                    'label' => 'admin.windfarm.title',
+                    'label' => 'admin.workorder.windfarms',
                     'sortable' => true,
                     'sort_field_mapping' => array('fieldName' => 'name'),
                     'sort_parent_association_mappings' => array(array('fieldName' => 'windfarm')),
@@ -506,10 +525,10 @@ class WorkOrderAdmin extends AbstractBaseAdmin
             ->end()
             ->with('admin.windfarm.title', $this->getFormMdSuccessBoxArray(4))
             ->add(
-                'windfarm',
+                'windfarms',
                 null,
                 array(
-                    'label' => 'admin.windfarm.title',
+                    'label' => 'admin.workorder.windfarms',
                 )
             )
             ->add(

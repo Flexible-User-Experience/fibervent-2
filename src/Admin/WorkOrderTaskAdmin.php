@@ -139,7 +139,7 @@ class WorkOrderTaskAdmin extends AbstractBaseAdmin
                             'btn_add' => false,
                             'required' => false,
                             'property' => 'code',
-                            'query' => $this->wmr->findEnabledandWindfarmSortedByCustomerWindfarmAndWindmillCodeQB($windfarm),
+//                            'query' => $this->wmr->findEnabledandWindfarmSortedByCustomerWindfarmAndWindmillCodeQB($windfarm),
                         )
                     )
                     ->add('windmillBlade',

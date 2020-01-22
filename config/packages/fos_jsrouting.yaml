@@ -3,3 +3,4 @@ fos_js_routing:
         - 'admin_app_customer_getAuditsFromCustomerId'
         - 'admin_app_workorder_getWindfarmsFromCustomerId'
         - 'admin_app_workorder_getWindmillbladesFromWindmillId'
+        - 'admin_app_workorder_getWindmillsFromWindfarmsName'
