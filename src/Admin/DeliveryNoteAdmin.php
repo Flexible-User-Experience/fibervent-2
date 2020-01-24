@@ -553,7 +553,7 @@ class DeliveryNoteAdmin extends AbstractBaseAdmin
                 null,
                 array(
                     'label' => 'admin.deliverynote.repair_windmill_sections',
-                    'template' => 'Admin/Cells/list__cell_repair_windmill_sections.html.twig',
+                    'template' => 'Admin/Cells/show__repair_windmill_sections.html.twig',
                 )
             )
             ->end()
@@ -621,7 +621,7 @@ class DeliveryNoteAdmin extends AbstractBaseAdmin
                 null,
                 array(
                     'label' => 'admin.workorder.repair_access_types',
-                    'template' => 'Admin/Cells/list__cell_repair_access_type.html.twig',
+                    'template' => 'Admin/Cells/show__extends_repair_access_type.html.twig',
                 )
             )
             ->end()
