@@ -145,4 +145,40 @@ class PresenceMonitoringRepository extends ServiceEntityRepository
     {
         return $this->findWorkdaysByOperatorYearAndMonthSortedByDateQ($operator, $year, $month)->getResult();
     }
+
+    /**
+     * @param User $operator
+     * @param int  $year
+     * @param int  $month
+     *
+     * @return QueryBuilder
+     */
+    public function findAllDaysByOperatorYearAndMonthSortedByDateQB(User $operator, $year, $month)
+    {
+        return $this->findByOperatorYearAndMonthSortedByDateQB($operator, $year, $month);
+    }
+
+    /**
+     * @param User $operator
+     * @param int  $year
+     * @param int  $month
+     *
+     * @return Query
+     */
+    public function findAllDaysByOperatorYearAndMonthSortedByDateQ(User $operator, $year, $month)
+    {
+        return $this->findAllDaysByOperatorYearAndMonthSortedByDateQB($operator, $year, $month)->getQuery();
+    }
+
+    /**
+     * @param User $operator
+     * @param int  $year
+     * @param int  $month
+     *
+     * @return array
+     */
+    public function findAllDaysByOperatorYearAndMonthSortedByDate(User $operator, $year, $month)
+    {
+        return $this->findAllDaysByOperatorYearAndMonthSortedByDateQ($operator, $year, $month)->getResult();
+    }
 }

@@ -113,6 +113,9 @@ class PresenceMonitoringAdmin extends AbstractBaseAdmin
                     'multiple' => false,
                     'expanded' => false,
                     'required' => true,
+                    'attr' => array(
+                        'disabled' => true,
+                    ),
                 )
             )
             ->add(
@@ -124,13 +127,20 @@ class PresenceMonitoringAdmin extends AbstractBaseAdmin
                     'multiple' => false,
                     'expanded' => false,
                     'required' => true,
+                    'attr' => array(
+                        'disabled' => true,
+                    ),
                 )
             )
             ->add(
                 'totalHours',
-                null,
+                ChoiceType::class,
                 array(
                     'label' => 'admin.presencemonitoring.total_hours',
+                    'choices' => MinutesEnum::getChoicesQuartersEnumArray(),
+                    'multiple' => false,
+                    'expanded' => false,
+                    'required' => true,
                     'attr' => array(
                         'disabled' => true,
                     ),
@@ -342,6 +352,10 @@ class PresenceMonitoringAdmin extends AbstractBaseAdmin
      */
     private function commonUpdates($object)
     {
-        $object->setTotalHours($object->getDifferenceBetweenEndAndBeginHoursInDecimalHours());
+        $object
+            ->setTotalHours($object->getDifferenceBetweenEndAndBeginHoursInDecimalHours())
+            ->setNormalHours($object->getNormalHoursDifferenceFromTotal())
+            ->setExtraHours($object->getExtraHoursDifferenceFromTotal())
+        ;
     }
 }
