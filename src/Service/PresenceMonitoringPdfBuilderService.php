@@ -2,6 +2,8 @@
 
 namespace App\Service;
 
+use App\Enum\MinutesEnum;
+use DateTimeImmutable;
 use App\Entity\User;
 use App\Entity\PresenceMonitoring;
 use App\Enum\AuditLanguageEnum;
@@ -91,6 +93,7 @@ class PresenceMonitoringPdfBuilderService
         $this->tcpdf->Cell(90, 6, $this->ts->trans('admin.presencemonitoring.brand_cif').': '.$this->ts->trans('fibervent.cif'), 1, 0, 'L', true);
         $this->tcpdf->Cell(90, 6, $this->ts->trans('admin.presencemonitoring.operator_nif').': '.$operator->getNif(), 1, 1, 'L', true);
         $this->tcpdf->SetFillColor(183, 223, 234);
+        $today = new DateTimeImmutable();
         $periodString = '';
         $itemsCount = count($items);
         if ($itemsCount > 0) {
@@ -100,7 +103,7 @@ class PresenceMonitoringPdfBuilderService
             $periodString = $this->ts->trans(MonthsEnum::getOldMonthEnumArray()[intval($lastItemDate->format('n'))]).' '.$lastItemDate->format('Y');
         }
         $this->tcpdf->Cell(90, 6, $this->ts->trans('admin.presencemonitoring.head_line_2').': '.$periodString, 1, 0, 'L', true);
-        $this->tcpdf->Cell(90, 6, $this->ts->trans('admin.presencemonitoring.head_line_3').': ', 1, 1, 'L', true);
+        $this->tcpdf->Cell(90, 6, $this->ts->trans('admin.presencemonitoring.head_line_3').': '.$today->format('d/m/Y'), 1, 1, 'L', true);
         $this->tcpdf->SetFillColor(108, 197, 205);
 
         // main table head line
