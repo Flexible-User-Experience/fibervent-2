@@ -207,6 +207,8 @@ admin:
     details: Detalle
     totals: Totales
     print: Imprimir
+    edit: Editar
+    add: Añadir
   audit:
     title: Inspección
     title_list: Inspección
