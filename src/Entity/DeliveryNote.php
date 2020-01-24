@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Enum\RepairAccessTypeEnum;
 use App\Enum\RepairWindmillSectionEnum;
+use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
@@ -28,7 +29,21 @@ class DeliveryNote extends AbstractBase
     private $workOrder;
 
     /**
-     * @var \DateTime
+     * @var Windfarm
+     *
+     * @ORM\ManyToOne(targetEntity="App\Entity\Windfarm")
+     */
+    private $windfarm;
+
+    /**
+     * @var Windmill
+     *
+     * @ORM\ManyToOne(targetEntity="App\Entity\Windmill")
+     */
+    private $windmill;
+
+    /**
+     * @var DateTime
      *
      * @ORM\Column(type="datetime")
      */
@@ -186,7 +201,47 @@ class DeliveryNote extends AbstractBase
     }
 
     /**
-     * @return \DateTime
+     * @return Windfarm
+     */
+    public function getWindfarm(): Windfarm
+    {
+        return $this->windfarm;
+    }
+
+    /**
+     * @param Windfarm $windfarm
+     *
+     * @return $this
+     */
+    public function setWindfarm(Windfarm $windfarm): DeliveryNote
+    {
+        $this->windfarm = $windfarm;
+
+        return $this;
+    }
+
+    /**
+     * @return Windmill
+     */
+    public function getWindmill(): Windmill
+    {
+        return $this->windmill;
+    }
+
+    /**
+     * @param Windmill $windmill
+     *
+     * @return $this
+     */
+    public function setWindmill(Windmill $windmill): DeliveryNote
+    {
+        $this->windmill = $windmill;
+
+        return $this;
+    }
+
+    /**
+     * @return DateTime
      */
     public function getDate()
     {
@@ -202,11 +257,11 @@ class DeliveryNote extends AbstractBase
     }
 
     /**
-     * @param \DateTime $date
+     * @param DateTime $date
      *
      * @return DeliveryNote
      */
-    public function setDate(\DateTime $date): DeliveryNote
+    public function setDate(DateTime $date): DeliveryNote
     {
         $this->date = $date;
 
