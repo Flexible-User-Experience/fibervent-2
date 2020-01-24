@@ -3,11 +3,13 @@
 namespace App\Service;
 
 use App\Enum\MinutesEnum;
-use DateTimeImmutable;
 use App\Entity\User;
 use App\Entity\PresenceMonitoring;
 use App\Enum\AuditLanguageEnum;
 use App\Enum\MonthsEnum;
+use App\Enum\PresenceMonitoringCategoryEnum;
+use DateTimeImmutable;
+use Exception;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use TCPDF;
 
@@ -61,10 +63,11 @@ class PresenceMonitoringPdfBuilderService
     }
 
     /**
-     * @param User                       $operator
+     * @param User $operator
      * @param PresenceMonitoring[]|array $items
      *
      * @return TCPDF
+     * @throws Exception
      */
     public function build(User $operator, $items) {
         $this->ts->setLocale(AuditLanguageEnum::DEFAULT_LANGUAGE_STRING);
@@ -135,16 +138,19 @@ class PresenceMonitoringPdfBuilderService
                 $this->tcpdf->SetFillColor(183, 223, 234);
                 $this->tcpdf->Cell(80, 6, $this->ts->trans('admin.presencemonitoring.total'), 1, 0, 'R', $cellBackgroundFill);
                 $this->tcpdf->SetFillColor(108, 197, 205);
+                $this->drawTotalHourCells($pm, $cellBackgroundFill);
             } else {
                 $this->tcpdf->Cell(20, 6, $pm->getDateString(), 1, 0, 'C', 0);
-                $this->tcpdf->Cell(15, 6, $pm->getMorningHourBeginString(), 1, 0, 'C', 0);
-                $this->tcpdf->Cell(15, 6, $pm->getMorningHourEndString(), 1, 0, 'C', 0);
-                $this->tcpdf->Cell(15, 6, $pm->getAfternoonHourBeginString(), 1, 0, 'C', 0);
-                $this->tcpdf->Cell(15, 6, $pm->getAfternoonHourEndString(), 1, 0, 'C', 0);
+                if ($pm->getCategory() == PresenceMonitoringCategoryEnum::WORKDAY) {
+                    $this->tcpdf->Cell(15, 6, $pm->getMorningHourBeginString(), 1, 0, 'C', 0);
+                    $this->tcpdf->Cell(15, 6, $pm->getMorningHourEndString(), 1, 0, 'C', 0);
+                    $this->tcpdf->Cell(15, 6, $pm->getAfternoonHourBeginString(), 1, 0, 'C', 0);
+                    $this->tcpdf->Cell(15, 6, $pm->getAfternoonHourEndString(), 1, 0, 'C', 0);
+                    $this->drawTotalHourCells($pm, $cellBackgroundFill);
+                } else {
+                    $this->tcpdf->Cell(125, 6, $this->ts->trans($pm->getCategoryString()), 1, 0, 'C', 0);
+                }
             }
-            $this->tcpdf->Cell(20, 6, $pm->getTotalHours() ? MinutesEnum::transformToHoursAmountString($pm->getTotalHours()) : '0h', 1, 0, 'R', $cellBackgroundFill);
-            $this->tcpdf->Cell(25, 6, $pm->getNormalHours() ? MinutesEnum::transformToHoursAmountString($pm->getNormalHours()) : '0h', 1, 0, 'R', $cellBackgroundFill);
-            $this->tcpdf->Cell(20, 6, $pm->getExtraHours() ? MinutesEnum::transformToHoursAmountString($pm->getExtraHours()) : '0h', 1, 0, 'R', $cellBackgroundFill);
             $this->tcpdf->Cell(35, 6, '', 1, 1, 'C', 0);
             $this->tcpdf->SetFont('', '', 7);
         }
@@ -165,5 +171,16 @@ class PresenceMonitoringPdfBuilderService
         $this->tcpdf->Cell(60, 16, '', 1, 1, 'C', false);
 
         return $this->tcpdf;
+    }
+
+    /**
+     * @param PresenceMonitoring $pm
+     * @param bool               $cellBackgroundFill
+     */
+    private function drawTotalHourCells(PresenceMonitoring $pm, bool $cellBackgroundFill)
+    {
+        $this->tcpdf->Cell(20, 6, $pm->getTotalHours() ? MinutesEnum::transformToHoursAmountString($pm->getTotalHours()) : '0h', 1, 0, 'R', $cellBackgroundFill);
+        $this->tcpdf->Cell(25, 6, $pm->getNormalHours() ? MinutesEnum::transformToHoursAmountString($pm->getNormalHours()) : '0h', 1, 0, 'R', $cellBackgroundFill);
+        $this->tcpdf->Cell(20, 6, $pm->getExtraHours() ? MinutesEnum::transformToHoursAmountString($pm->getExtraHours()) : '0h', 1, 0, 'R', $cellBackgroundFill);
     }
 }
