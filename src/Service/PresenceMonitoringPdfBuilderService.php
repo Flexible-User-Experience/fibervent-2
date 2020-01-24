@@ -142,9 +142,9 @@ class PresenceMonitoringPdfBuilderService
                 $this->tcpdf->Cell(15, 6, $pm->getAfternoonHourBeginString(), 1, 0, 'C', 0);
                 $this->tcpdf->Cell(15, 6, $pm->getAfternoonHourEndString(), 1, 0, 'C', 0);
             }
-            $this->tcpdf->Cell(20, 6, $pm->getTotalHours() ? $pm->getTotalHours() : 0, 1, 0, 'R', $cellBackgroundFill);
-            $this->tcpdf->Cell(25, 6, $pm->getNormalHours() ? $pm->getNormalHours() : 0, 1, 0, 'R', $cellBackgroundFill);
-            $this->tcpdf->Cell(20, 6, $pm->getExtraHours() ? $pm->getExtraHours() : 0, 1, 0, 'R', $cellBackgroundFill);
+            $this->tcpdf->Cell(20, 6, $pm->getTotalHours() ? MinutesEnum::transformToHoursAmountString($pm->getTotalHours()) : '0h', 1, 0, 'R', $cellBackgroundFill);
+            $this->tcpdf->Cell(25, 6, $pm->getNormalHours() ? MinutesEnum::transformToHoursAmountString($pm->getNormalHours()) : '0h', 1, 0, 'R', $cellBackgroundFill);
+            $this->tcpdf->Cell(20, 6, $pm->getExtraHours() ? MinutesEnum::transformToHoursAmountString($pm->getExtraHours()) : '0h', 1, 0, 'R', $cellBackgroundFill);
             $this->tcpdf->Cell(35, 6, '', 1, 1, 'C', 0);
             $this->tcpdf->SetFont('', '', 7);
         }

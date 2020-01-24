@@ -132,4 +132,49 @@ class MinutesEnum
             '20h' => 20.0,
         );
     }
+
+    /**
+     * Get an hours float value and transform to a string with time ellapsed
+     *
+     * @param float $value
+     *
+     * @return string
+     */
+    public static function transformToHoursAmountString(float $value)
+    {
+        $result = '0h';
+        $whole = floor($value);
+        $fraction = $value - $whole;
+        if ($whole > 0.0) {
+            $result = $whole.'h';
+        }
+        if ($fraction > 0.0) {
+            if ($whole == 0.0) {
+                $result = self::transformMinutesAmountString($fraction);
+            } else {
+                $result .= ' '.self::transformMinutesAmountString($fraction);
+            }
+        }
+
+        return $result;
+    }
+
+    /**
+     * @param float $value
+     *
+     * @return string
+     */
+    private static function transformMinutesAmountString(float $value)
+    {
+        $result = '';
+        if ($value == 0.25) {
+            $result = '15m';
+        } elseif ($value == 0.50) {
+            $result = '30m';
+        } elseif ($value == 0.75) {
+            $result = '45m';
+        }
+
+        return $result;
+    }
 }
