@@ -177,7 +177,7 @@ enum:
     stop: Parada
     work: Trabajo
   time_register_shift:
-    morning: Mañana
+    morning: 'Mañana'
     afternoon: Tarde
     night: Noche
   non_standard_used_material_item:
@@ -519,8 +519,8 @@ admin:
     title_list: Registro horario
     title_create: Crear
     worker: Empleado
-    morning_hour_begin: Hora entrada mañana
-    morning_hour_end: Hora salida mañana
+    morning_hour_begin: 'Hora entrada mañana'
+    morning_hour_end: 'Hora salida mañana'
     afternoon_hour_begin: Hora entrada tarde
     afternoon_hour_end: Hora salida tarde
     total_hours: Total horas
@@ -532,7 +532,7 @@ admin:
     category: Categoría
     hour: Hora
     day: Dia
-    morning: Mañana
+    morning: 'Mañana'
     afternoon: Tarde
     begin: Entrada
     end: Salida
