@@ -2,6 +2,8 @@
 
 namespace App\Service;
 
+use App\Enum\MinutesEnum;
+use DateTimeImmutable;
 use App\Entity\User;
 use App\Entity\PresenceMonitoring;
 use App\Enum\AuditLanguageEnum;
@@ -91,6 +93,7 @@ class PresenceMonitoringPdfBuilderService
         $this->tcpdf->Cell(90, 6, $this->ts->trans('admin.presencemonitoring.brand_cif').': '.$this->ts->trans('fibervent.cif'), 1, 0, 'L', true);
         $this->tcpdf->Cell(90, 6, $this->ts->trans('admin.presencemonitoring.operator_nif').': '.$operator->getNif(), 1, 1, 'L', true);
         $this->tcpdf->SetFillColor(183, 223, 234);
+        $today = new DateTimeImmutable();
         $periodString = '';
         $itemsCount = count($items);
         if ($itemsCount > 0) {
@@ -100,7 +103,7 @@ class PresenceMonitoringPdfBuilderService
             $periodString = $this->ts->trans(MonthsEnum::getOldMonthEnumArray()[intval($lastItemDate->format('n'))]).' '.$lastItemDate->format('Y');
         }
         $this->tcpdf->Cell(90, 6, $this->ts->trans('admin.presencemonitoring.head_line_2').': '.$periodString, 1, 0, 'L', true);
-        $this->tcpdf->Cell(90, 6, $this->ts->trans('admin.presencemonitoring.head_line_3').': ', 1, 1, 'L', true);
+        $this->tcpdf->Cell(90, 6, $this->ts->trans('admin.presencemonitoring.head_line_3').': '.$today->format('d/m/Y'), 1, 1, 'L', true);
         $this->tcpdf->SetFillColor(108, 197, 205);
 
         // main table head line
@@ -139,9 +142,9 @@ class PresenceMonitoringPdfBuilderService
                 $this->tcpdf->Cell(15, 6, $pm->getAfternoonHourBeginString(), 1, 0, 'C', 0);
                 $this->tcpdf->Cell(15, 6, $pm->getAfternoonHourEndString(), 1, 0, 'C', 0);
             }
-            $this->tcpdf->Cell(20, 6, $pm->getTotalHours() ? $pm->getTotalHours() : 0, 1, 0, 'R', $cellBackgroundFill);
-            $this->tcpdf->Cell(25, 6, $pm->getNormalHours() ? $pm->getNormalHours() : 0, 1, 0, 'R', $cellBackgroundFill);
-            $this->tcpdf->Cell(20, 6, $pm->getExtraHours() ? $pm->getExtraHours() : 0, 1, 0, 'R', $cellBackgroundFill);
+            $this->tcpdf->Cell(20, 6, $pm->getTotalHours() ? MinutesEnum::transformToHoursAmountString($pm->getTotalHours()) : '0h', 1, 0, 'R', $cellBackgroundFill);
+            $this->tcpdf->Cell(25, 6, $pm->getNormalHours() ? MinutesEnum::transformToHoursAmountString($pm->getNormalHours()) : '0h', 1, 0, 'R', $cellBackgroundFill);
+            $this->tcpdf->Cell(20, 6, $pm->getExtraHours() ? MinutesEnum::transformToHoursAmountString($pm->getExtraHours()) : '0h', 1, 0, 'R', $cellBackgroundFill);
             $this->tcpdf->Cell(35, 6, '', 1, 1, 'C', 0);
             $this->tcpdf->SetFont('', '', 7);
         }
