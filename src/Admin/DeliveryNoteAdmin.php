@@ -685,11 +685,11 @@ class DeliveryNoteAdmin extends AbstractBaseAdmin
                 null,
                 array(
                     'label' => 'admin.nonstandardusedmaterial.title',
-                    'template' => 'Admin/Cells/list__non_standard_used_materials.html.twig',
+                    'template' => 'Admin/Cells/show__non_standard_used_materials.html.twig',
                 )
             )
             ->end()
-            ->with('admin.deliverynotetimeregister.title', $this->getFormMdSuccessBoxArray(6))
+            ->with('admin.deliverynotetimeregister.title', $this->getFormMdSuccessBoxArray(8))
             ->add(
                 'timeRegisters',
                 null,
@@ -699,7 +699,7 @@ class DeliveryNoteAdmin extends AbstractBaseAdmin
                 )
             )
             ->end()
-            ->with('admin.deliverynote.observations', $this->getFormMdSuccessBoxArray(6))
+            ->with('admin.deliverynote.observations', $this->getFormMdSuccessBoxArray(4))
             ->add(
                 'observations',
                 null,
