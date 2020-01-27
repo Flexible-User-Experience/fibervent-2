@@ -443,13 +443,50 @@ class DeliveryNoteAdmin extends AbstractBaseAdmin
                 )
             )
             ->add(
+                'workOrder.customer',
+                null,
+                array(
+                    'label' => 'admin.customer.title',
+                )
+            )
+            ->add(
+                'windfarm',
+                null,
+                array(
+                    'label' => 'admin.windfarm.title',
+                    'sortable' => true,
+                    'sort_field_mapping' => array('fieldName' => 'name'),
+                    'sort_parent_association_mappings' => array(array('fieldName' => 'windfarm')),
+                )
+            )
+            ->add(
+                'windmill',
+                null,
+                array(
+                    'label' => 'admin.windmill.title',
+                    'sortable' => true,
+                    'sort_field_mapping' => array('fieldName' => 'code'),
+                    'sort_parent_association_mappings' => array(array('fieldName' => 'windmill')),
+                )
+            )
+            ->add(
                 'repairWindmillSections',
                 null,
                 array(
-                    'label' => 'admin.deliverynote.repair_windmill_sections_short',
+                    'label' => 'admin.deliverynote.pdf.work_in',
                     'header_class' => 'text-center',
                     'row_align' => 'center',
                     'template' => 'Admin/Cells/list__cell_repair_windmill_sections.html.twig',
+                )
+            )
+            ->add(
+                'blades',
+                null,
+                array(
+                    'label' => 'admin.deliverynote.pdf.blade_number',
+                    'header_class' => 'text-center',
+                    'row_align' => 'center',
+                    'template' => 'Admin/Cells/list__cell_blades.html.twig',
                 )
             )
             ->add(
@@ -470,33 +507,6 @@ class DeliveryNoteAdmin extends AbstractBaseAdmin
                     'sortable' => true,
                     'sort_field_mapping' => array('fieldName' => 'firstname'),
                     'sort_parent_association_mappings' => array(array('fieldName' => 'teamTechnician1')),
-                )
-            )
-            ->add(
-                'teamTechnician2',
-                null,
-                array(
-                    'label' => 'admin.deliverynote.team_technician_2',
-                    'sortable' => true,
-                    'sort_field_mapping' => array('fieldName' => 'firstname'),
-                    'sort_parent_association_mappings' => array(array('fieldName' => 'teamTechnician2')),
-                )
-            )
-            ->add(
-                'vehicle',
-                null,
-                array(
-                    'label' => 'admin.vehicle.title',
-                    'sortable' => true,
-                    'sort_field_mapping' => array('fieldName' => 'name'),
-                    'sort_parent_association_mappings' => array(array('fieldName' => 'vehicle')),
-                )
-            )
-            ->add(
-                'craneCompany',
-                null,
-                array(
-                    'label' => 'admin.deliverynote.crane_company',
                 )
             )
             ->add(
@@ -591,17 +601,18 @@ class DeliveryNoteAdmin extends AbstractBaseAdmin
                 'repairWindmillSections',
                 null,
                 array(
-                    'label' => 'admin.deliverynote.repair_windmill_sections',
+                    'label' => 'admin.deliverynote.pdf.work_in',
                     'template' => 'Admin/Cells/show__repair_windmill_sections.html.twig',
                 )
             )
-//            ->add(
-//                'windmill.blade.model',
-//                null,
-//                array(
-//                    'label' => 'admin.deliverynote.pdf.blade_number',
-//                )
-//            )
+            ->add(
+                'blades',
+                null,
+                array(
+                    'label' => 'admin.deliverynote.pdf.blade_number',
+                    'template' => 'Admin/Cells/show__blades.html.twig',
+                )
+            )
             ->add(
                 'windmill.blade.model',
                 null,
