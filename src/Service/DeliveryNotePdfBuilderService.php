@@ -106,7 +106,7 @@ class DeliveryNotePdfBuilderService
         foreach ($dntrs[TimeRegisterShiftEnum::MORNING][TimeRegisterTypeEnum::TRIP] as $dntr) {
             $this->drawTimeRegister(
                 $dntr,
-                $this->ts->trans('enum.time_register_type.trip').' '.strtolower($this->ts->trans('enum.time_register_shift.morning')),
+                $this->ts->trans('enum.time_register_type.trip').' '.$this->ts->trans('enum.time_register_shift.morning'),
                 $this->ts->trans('admin.presencemonitoring.hour').' '.strtolower($this->ts->trans('admin.presencemonitoring.end')),
                 $this->ts->trans('admin.presencemonitoring.hour').' '.strtolower($this->ts->trans('admin.presencemonitoring.arrival'))
             );
@@ -120,7 +120,7 @@ class DeliveryNotePdfBuilderService
         foreach ($dntrs[TimeRegisterShiftEnum::MORNING][TimeRegisterTypeEnum::WORK] as $dntr) {
             $this->drawTimeRegister(
                 $dntr,
-                $this->ts->trans('enum.time_register_type.work').' '.strtolower($this->ts->trans('enum.time_register_shift.morning')),
+                $this->ts->trans('enum.time_register_type.work').' '.$this->ts->trans('enum.time_register_shift.morning'),
                 $this->ts->trans('admin.presencemonitoring.hour').' '.strtolower($this->ts->trans('admin.deliverynotetimeregister.begin')),
                 $this->ts->trans('admin.presencemonitoring.hour').' '.strtolower($this->ts->trans('admin.deliverynotetimeregister.end'))
             );
@@ -154,7 +154,7 @@ class DeliveryNotePdfBuilderService
         foreach ($dntrs[TimeRegisterShiftEnum::MORNING][TimeRegisterTypeEnum::STOP] as $dntr) {
             $this->drawTimeRegister(
                 $dntr,
-                $this->ts->trans('enum.time_register_type.stop').' '.strtolower($this->ts->trans('enum.time_register_shift.morning')),
+                $this->ts->trans('enum.time_register_type.stop').' '.$this->ts->trans('enum.time_register_shift.morning'),
                 $this->ts->trans('admin.presencemonitoring.hour').' '.strtolower($this->ts->trans('admin.deliverynotetimeregister.stop')),
                 $this->ts->trans('admin.presencemonitoring.hour').' '.strtolower($this->ts->trans('admin.deliverynotetimeregister.end'))
             );
