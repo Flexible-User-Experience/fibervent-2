@@ -695,11 +695,11 @@ class DeliveryNoteAdmin extends AbstractBaseAdmin
                 null,
                 array(
                     'label' => 'admin.deliverynote.repair_windmill_sections',
-                    'template' => 'Admin/Cells/list__time_registers.html.twig',
+                    'template' => 'Admin/Cells/show__time_registers.html.twig',
                 )
             )
             ->end()
-            ->with('admin.deliverynote.observations', $this->getFormMdSuccessBoxArray(8))
+            ->with('admin.deliverynote.observations', $this->getFormMdSuccessBoxArray(6))
             ->add(
                 'observations',
                 null,
