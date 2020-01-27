@@ -244,12 +244,12 @@ class DeliveryNotePdfBuilderService
         $this->tcpdf->SetFont('', 'B', 7);
         $this->tcpdf->Cell(22, 5, $this->ts->trans('admin.deliverynote.pdf.windfarm'), 1, 0, 'L', false);
         $this->tcpdf->SetFont('', '', 7);
-        $this->tcpdf->Cell(80, 5, $dn->getWorkOrder()->getWindfarm()->getName(), 1, 1, 'L', false);
+        $this->tcpdf->Cell(80, 5, $dn->getWindfarm()->getName(), 1, 1, 'L', false);
         $this->tcpdf->SetX(self::PDF_MARGIN_LEFT + self::H_DIVISOR);
         $this->tcpdf->SetFont('', 'B', 7);
         $this->tcpdf->Cell(22, 5, $this->ts->trans('admin.deliverynote.pdf.city'), 1, 0, 'L', false);
         $this->tcpdf->SetFont('', '', 7);
-        $this->tcpdf->Cell(80, 5, $dn->getWorkOrder()->getWindfarm()->getCity(), 1, 1, 'L', false);
+        $this->tcpdf->Cell(80, 5, $dn->getWindfarm()->getCity(), 1, 1, 'L', false);
         $this->tcpdf->SetX(self::PDF_MARGIN_LEFT + self::H_DIVISOR);
         $this->tcpdf->Cell(102, 5, '', 0, 1, 'C', false);
 
@@ -260,7 +260,7 @@ class DeliveryNotePdfBuilderService
         $this->tcpdf->SetX(self::PDF_MARGIN_LEFT + self::H_DIVISOR);
         $this->tcpdf->Cell(22, 5, $this->ts->trans('Aerogenerador'), 1, 0, 'L', false);
         $this->tcpdf->SetFont('', '', 7);
-        $this->tcpdf->Cell(80, 5, '---', 1, 1, 'L', false);
+        $this->tcpdf->Cell(80, 5, $dn->getWindmill(), 1, 1, 'L', false);
         $this->tcpdf->SetX(self::PDF_MARGIN_LEFT + self::H_DIVISOR);
         $this->tcpdf->SetFont('', 'B', 7);
         $this->tcpdf->Cell(22, 5, $this->ts->trans('admin.deliverynote.pdf.work_in'), 1, 0, 'L', false);
@@ -270,12 +270,12 @@ class DeliveryNotePdfBuilderService
         $this->tcpdf->SetFont('', 'B', 7);
         $this->tcpdf->Cell(22, 5, $this->ts->trans('admin.deliverynote.pdf.blade_number'), 1, 0, 'L', false);
         $this->tcpdf->SetFont('', '', 7);
-        $this->tcpdf->Cell(80, 5, '---'/* TODO */, 1, 1, 'L', false);
+        $this->tcpdf->Cell(80, 5, $dn->getBladesString(), 1, 1, 'L', false);
         $this->tcpdf->SetX(self::PDF_MARGIN_LEFT + self::H_DIVISOR);
         $this->tcpdf->SetFont('', 'B', 7);
         $this->tcpdf->Cell(22, 5, $this->ts->trans('admin.deliverynote.pdf.serial_number'), 1, 0, 'L', false);
         $this->tcpdf->SetFont('', '', 7);
-        $this->tcpdf->Cell(80, 5, '---'/* TODO */, 1, 1, 'L', false);
+        $this->tcpdf->Cell(80, 5, $dn->getWindmill()->getBladeType()->getModel(), 1, 1, 'L', false);
         $this->tcpdf->SetX(self::PDF_MARGIN_LEFT + self::H_DIVISOR);
         $this->tcpdf->Cell(102, 5, '', 0, 1, 'C', false);
 

@@ -189,6 +189,18 @@ class DeliveryNote extends AbstractBase
      */
 
     /**
+     * @param int|null $id
+     *
+     * @return DeliveryNote
+     */
+    public function setId(?int $id): DeliveryNote
+    {
+        $this->id = $id;
+
+        return $this;
+    }
+
+    /**
      * @return WorkOrder|null
      */
     public function getWorkOrder(): ?WorkOrder
