@@ -67,6 +67,23 @@ class DeliveryNoteAdmin extends AbstractBaseAdmin
                     'format' => 'd/M/y',
                 )
             )
+        ;
+        // edit mode
+        if ($this->id($this->getSubject())) {
+            $formMapper
+                ->add(
+                    'id',
+                    null,
+                    array(
+                        'label' => 'admin.workorder.project_number_short',
+                        'attr' => array(
+                            'disabled' => 'disabled',
+                        ),
+                    )
+                )
+            ;
+        }
+        $formMapper
             ->add(
                 'workOrder',
                 EntityType::class,
@@ -77,19 +94,73 @@ class DeliveryNoteAdmin extends AbstractBaseAdmin
                     'required' => true,
                 )
             )
+            ->end()
+            ->with('admin.deliverynote.pdf.customer_data', $this->getFormMdSuccessBoxArray(4))
+        ;
+        // edit mode
+        if ($this->id($this->getSubject())) {
+            $formMapper
+                ->add(
+                    'workOrder.customer',
+                    EntityType::class,
+                    array(
+                        'label' => 'admin.customer.title',
+                        'class' => Customer::class,
+                        'query_builder' => $this->cr->findAllSortedByNameQB(),
+                        'attr' => array(
+                            'disabled' => 'disabled',
+                        ),
+                    )
+                )
+            ;
+        }
+        $formMapper
+            ->add(
+                'windfarm',
+                EntityType::class,
+                array(
+                    'label' => 'admin.windfarm.title',
+                    'class' => Windfarm::class,
+                    'query_builder' => $this->wfr->findAllSortedByNameQB(),
+                )
+            )
+        ;
+        $formMapper
+            ->end()
+            ->with('admin.deliverynote.pdf.windfarm_data', $this->getFormMdSuccessBoxArray(4))
+            ->add(
+                'windmill',
+                EntityType::class,
+                array(
+                    'label' => 'admin.windmill.title',
+                    'class' => Windmill::class,
+                    'query_builder' => $this->wmr->findEnabledSortedByCustomerWindfarmAndWindmillCodeQB(),
+                )
+            )
             ->add(
                 'repairWindmillSections',
                 ChoiceType::class,
                 array(
-                    'label' => 'admin.deliverynote.repair_windmill_sections',
+                    'label' => 'admin.deliverynote.pdf.work_in',
                     'choices' => RepairWindmillSectionEnum::getEnumArray(),
                     'multiple' => true,
                     'expanded' => false,
                     'required' => true,
                 )
             )
+            ->add(
+                'blades',
+                ChoiceType::class,
+                array(
+                    'label' => 'admin.deliverynote.pdf.blade_number',
+                    'choices' => BladeEnum::getLongTextEnumArray(),
+                    'multiple' => true,
+                    'expanded' => false,
+                    'required' => true,
+                )
+            )
             ->end()
-            ->with('admin.deliverynote.team', $this->getFormMdSuccessBoxArray(4))
+            ->with('admin.deliverynote.pdf.business_data', $this->getFormMdSuccessBoxArray(4))
             ->add(
                 'teamLeader',
                 EntityType::class,

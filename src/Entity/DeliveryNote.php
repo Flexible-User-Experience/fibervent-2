@@ -189,9 +189,9 @@ class DeliveryNote extends AbstractBase
      */
 
     /**
-     * @return WorkOrder
+     * @return WorkOrder|null
      */
-    public function getWorkOrder(): WorkOrder
+    public function getWorkOrder(): ?WorkOrder
     {
         return $this->workOrder;
     }
