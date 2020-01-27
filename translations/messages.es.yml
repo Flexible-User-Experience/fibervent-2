@@ -178,6 +178,7 @@ enum:
     work: Trabajo
   time_register_shift:
     morning: 'Mañana'
+    morning_lower: 'mañana'
     afternoon: Tarde
     night: Noche
   non_standard_used_material_item:
