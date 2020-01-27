@@ -534,18 +534,57 @@ class DeliveryNoteAdmin extends AbstractBaseAdmin
         $showMapper
             ->with('admin.common.general', $this->getFormMdSuccessBoxArray(4))
             ->add(
+                'date',
+                null,
+                array(
+                    'label' => 'admin.deliverynote.date',
+                    'format' => 'd/m/Y',
+                )
+            )
+            ->add(
+                'id',
+                null,
+                array(
+                    'label' => 'admin.workorder.project_number_short',
+                )
+            )
+            ->add(
                 'workOrder',
                 null,
                 array(
                     'label' => 'admin.workorder.title',
                 )
             )
+            ->end()
+            ->with('admin.deliverynote.pdf.customer_data', $this->getFormMdSuccessBoxArray(4))
             ->add(
-                'date',
+                'workOrder.customer',
                 null,
                 array(
-                    'label' => 'admin.deliverynote.date',
-                    'format' => 'd/m/Y',
+                    'label' => 'admin.customer.title',
+                )
+            )
+            ->add(
+                'windfarm',
+                null,
+                array(
+                    'label' => 'admin.windfarm.title',
+                )
+            )
+            ->add(
+                'windfarm.city',
+                null,
+                array(
+                    'label' => 'admin.customer.city',
+                )
+            )
+            ->end()
+            ->with('admin.deliverynote.pdf.windfarm_data', $this->getFormMdSuccessBoxArray(4))
+            ->add(
+                'windmill',
+                null,
+                array(
+                    'label' => 'admin.windmill.title',
                 )
             )
             ->add(
@@ -556,8 +595,22 @@ class DeliveryNoteAdmin extends AbstractBaseAdmin
                     'template' => 'Admin/Cells/show__repair_windmill_sections.html.twig',
                 )
             )
+//            ->add(
+//                'windmill.blade.model',
+//                null,
+//                array(
+//                    'label' => 'admin.deliverynote.pdf.blade_number',
+//                )
+//            )
+            ->add(
+                'windmill.blade.model',
+                null,
+                array(
+                    'label' => 'admin.deliverynote.pdf.serial_number',
+                )
+            )
             ->end()
-            ->with('admin.deliverynote.team', $this->getFormMdSuccessBoxArray(4))
+            ->with('admin.deliverynote.pdf.business_data', $this->getFormMdSuccessBoxArray(4))
             ->add(
                 'teamLeader',
                 null,
@@ -603,6 +656,14 @@ class DeliveryNoteAdmin extends AbstractBaseAdmin
             ->end()
             ->with('admin.deliverynote.repair_access_types', $this->getFormMdSuccessBoxArray(4))
             ->add(
+                'repairAccessTypes',
+                null,
+                array(
+                    'label' => 'admin.workorder.repair_access_types',
+                    'template' => 'Admin/Cells/show__extends_repair_access_type.html.twig',
+                )
+            )
+            ->add(
                 'craneCompany',
                 null,
                 array(
@@ -616,12 +677,15 @@ class DeliveryNoteAdmin extends AbstractBaseAdmin
                     'label' => 'admin.deliverynote.crane_driver',
                 )
             )
+            ->end()
+            // TODO insert here "Descripcion del trabajo realizado"
+            ->with('admin.nonstandardusedmaterial.title', $this->getFormMdSuccessBoxArray(4))
             ->add(
-                'repairAccessTypes',
+                'nonStandardUsedMaterials',
                 null,
                 array(
-                    'label' => 'admin.workorder.repair_access_types',
-                    'template' => 'Admin/Cells/show__extends_repair_access_type.html.twig',
+                    'label' => 'admin.nonstandardusedmaterial.title',
+                    'template' => 'Admin/Cells/list__non_standard_used_materials.html.twig',
                 )
             )
             ->end()
@@ -632,16 +696,6 @@ class DeliveryNoteAdmin extends AbstractBaseAdmin
                 array(
                     'label' => 'admin.deliverynote.repair_windmill_sections',
                     'template' => 'Admin/Cells/list__time_registers.html.twig',
-                )
-            )
-            ->end()
-            ->with('admin.nonstandardusedmaterial.title', $this->getFormMdSuccessBoxArray(6))
-            ->add(
-                'nonStandardUsedMaterials',
-                null,
-                array(
-                    'label' => 'admin.nonstandardusedmaterial.title',
-                    'template' => 'Admin/Cells/list__non_standard_used_materials.html.twig',
                 )
             )
             ->end()

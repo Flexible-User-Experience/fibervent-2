@@ -183,7 +183,7 @@ class DeliveryNote extends AbstractBase
     /**
      * @return WorkOrder
      */
-    public function getWorkOrder()
+    public function getWorkOrder(): WorkOrder
     {
         return $this->workOrder;
     }
@@ -201,19 +201,19 @@ class DeliveryNote extends AbstractBase
     }
 
     /**
-     * @return Windfarm
+     * @return Windfarm|null
      */
-    public function getWindfarm(): Windfarm
+    public function getWindfarm(): ?Windfarm
     {
         return $this->windfarm;
     }
 
     /**
-     * @param Windfarm $windfarm
+     * @param Windfarm|null $windfarm
      *
      * @return $this
      */
-    public function setWindfarm(Windfarm $windfarm): DeliveryNote
+    public function setWindfarm(?Windfarm $windfarm): DeliveryNote
     {
         $this->windfarm = $windfarm;
 
@@ -221,19 +221,19 @@ class DeliveryNote extends AbstractBase
     }
 
     /**
-     * @return Windmill
+     * @return Windmill|null
      */
-    public function getWindmill(): Windmill
+    public function getWindmill(): ?Windmill
     {
         return $this->windmill;
     }
 
     /**
-     * @param Windmill $windmill
+     * @param Windmill|null $windmill
      *
      * @return $this
      */
-    public function setWindmill(Windmill $windmill): DeliveryNote
+    public function setWindmill(?Windmill $windmill): DeliveryNote
     {
         $this->windmill = $windmill;
 
