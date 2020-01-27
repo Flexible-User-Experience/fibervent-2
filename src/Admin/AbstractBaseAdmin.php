@@ -15,6 +15,7 @@ use App\Repository\VehicleRepository;
 use App\Repository\WindfarmRepository;
 use App\Repository\WindmillBladeRepository;
 use App\Repository\WindmillRepository;
+use App\Repository\WorkOrderRepository;
 use App\Service\RepositoriesService;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Route\RouteCollection;
@@ -106,6 +107,11 @@ abstract class AbstractBaseAdmin extends AbstractAdmin
     protected VehicleRepository $vr;
 
     /**
+     * @var WorkOrderRepository
+     */
+    protected WorkOrderRepository $wor;
+
+    /**
      * @var UploaderHelper
      */
     protected UploaderHelper $vus;
@@ -147,6 +153,7 @@ abstract class AbstractBaseAdmin extends AbstractAdmin
         $this->wbr = $rs->getWbr();
         $this->bdr = $rs->getBdr();
         $this->vr = $rs->getVr();
+        $this->wor = $rs->getWor();
         $this->vus = $vus;
         $this->lis = $lis;
     }
