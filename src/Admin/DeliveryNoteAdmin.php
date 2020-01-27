@@ -2,10 +2,15 @@
 
 namespace App\Admin;
 
+use App\Entity\Customer;
 use App\Entity\DeliveryNote;
 use App\Entity\DeliveryNoteTimeRegister;
 use App\Entity\User;
 use App\Entity\Vehicle;
+use App\Entity\Windfarm;
+use App\Entity\Windmill;
+use App\Entity\WorkOrder;
+use App\Enum\BladeEnum;
 use App\Enum\RepairAccessTypeEnum;
 use App\Enum\RepairWindmillSectionEnum;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
@@ -64,9 +69,11 @@ class DeliveryNoteAdmin extends AbstractBaseAdmin
             )
             ->add(
                 'workOrder',
-                null,
+                EntityType::class,
                 array(
                     'label' => 'admin.workorder.title',
+                    'class' => WorkOrder::class,
+                    'query_builder' => $this->wor->findAllSortedByProjectNumberQB(),
                     'required' => true,
                 )
             )
@@ -274,13 +281,61 @@ class DeliveryNoteAdmin extends AbstractBaseAdmin
                 null,
                 array(
                     'label' => 'admin.workorder.title',
+                ),
+                EntityType::class,
+                array(
+                    'class' => WorkOrder::class,
+                    'query_builder' => $this->wor->findAllSortedByProjectNumberQB(),
+                )
+            )
+            ->add(
+                'workOrder.customer',
+                null,
+                array(
+                    'label' => 'admin.customer.title',
+                ),
+                EntityType::class,
+                array(
+                    'class' => Customer::class,
+                    'query_builder' => $this->cr->findAllSortedByNameQB(),
+                )
+            )
+            ->add(
+                'windfarm',
+                null,
+                array(
+                    'label' => 'admin.windfarm.title',
+                ),
+                EntityType::class,
+                array(
+                    'class' => Windfarm::class,
+                    'query_builder' => $this->wfr->findAllSortedByNameQB(),
+                )
+            )
+            ->add(
+                'windfarm.city',
+                null,
+                array(
+                    'label' => 'admin.deliverynote.pdf.city',
+                )
+            )
+            ->add(
+                'windmill',
+                null,
+                array(
+                    'label' => 'admin.windmill.title',
+                ),
+                EntityType::class,
+                array(
+                    'class' => Windmill::class,
+                    'query_builder' => $this->wmr->findEnabledSortedByCustomerWindfarmAndWindmillCodeQB(),
                 )
             )
             ->add(
                 'repairWindmillSections',
                 null,
                 array(
-                    'label' => 'admin.deliverynote.repair_windmill_sections_short',
+                    'label' => 'admin.deliverynote.pdf.work_in',
                 ),
                 ChoiceType::class,
                 array(
@@ -288,6 +343,27 @@ class DeliveryNoteAdmin extends AbstractBaseAdmin
                     'multiple' => false,
                     'expanded' => false,
                     'required' => false,
+                )
+            )
+            ->add(
+                'blades',
+                null,
+                array(
+                    'label' => 'admin.deliverynote.pdf.blade_number',
+                ),
+                ChoiceType::class,
+                array(
+                    'choices' => BladeEnum::getLongTextEnumArray(),
+                    'multiple' => false,
+                    'expanded' => false,
+                    'required' => false,
+                )
+            )
+            ->add(
+                'windmill.bladeType.model',
+                null,
+                array(
+                    'label' => 'admin.deliverynote.pdf.serial_number',
                 )
             )
             ->add(
@@ -368,20 +444,6 @@ class DeliveryNoteAdmin extends AbstractBaseAdmin
                 )
             )
             ->add(
-                'craneCompany',
-                null,
-                array(
-                    'label' => 'admin.deliverynote.crane_company',
-                )
-            )
-            ->add(
-                'craneDriver',
-                null,
-                array(
-                    'label' => 'admin.deliverynote.crane_driver',
-                )
-            )
-            ->add(
                 'repairAccessTypes',
                 null,
                 array(
@@ -393,6 +455,20 @@ class DeliveryNoteAdmin extends AbstractBaseAdmin
                     'multiple' => false,
                     'expanded' => false,
                     'required' => false,
+                )
+            )
+            ->add(
+                'craneCompany',
+                null,
+                array(
+                    'label' => 'admin.deliverynote.crane_company',
+                )
+            )
+            ->add(
+                'craneDriver',
+                null,
+                array(
+                    'label' => 'admin.deliverynote.crane_driver',
                 )
             )
             ->add(
@@ -614,7 +690,7 @@ class DeliveryNoteAdmin extends AbstractBaseAdmin
                 )
             )
             ->add(
-                'windmill.blade.model',
+                'windmill.bladeType.model',
                 null,
                 array(
                     'label' => 'admin.deliverynote.pdf.serial_number',
