@@ -133,6 +133,7 @@ pdf_workorder:
     manufacturer: 'Fabricante'
     blade: 'Pala'
     blade_model: 'Modelo pala'
+    blade_material: 'Material pala'
     sumary_external_damages_to_repair: 'RESUMEN DE DAÑOS A REPARAR EN'
     repair: 'REPARACIÓN CON'
   table_header:
