@@ -4,7 +4,10 @@ namespace App\Entity;
 
 use App\Enum\TimeRegisterShiftEnum;
 use App\Enum\TimeRegisterTypeEnum;
+use App\Manager\DeliveryNoteTimeRegisterManager;
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
+use Exception;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
@@ -16,7 +19,6 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
  *
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="App\Repository\DeliveryNoteTimeRegisterRepository")
- * @ORM\Cache(usage="NONSTRICT_READ_WRITE")
  * @Gedmo\SoftDeleteable(fieldName="removedAt", timeAware=false)
  */
 class DeliveryNoteTimeRegister extends AbstractBase
@@ -36,31 +38,39 @@ class DeliveryNoteTimeRegister extends AbstractBase
     private $shift;
 
     /**
-     * @var \DateTime
+     * @var DateTime
      *
      * @ORM\Column(type="time")
+     * @Assert\Time
      */
     private $begin;
 
     /**
-     * @var \DateTime
+     * @var DateTime
      *
      * @ORM\Column(type="time")
+     * @Assert\Time
      */
     private $end;
 
     /**
-     * @var float
+     * @var float|null
      *
      * @ORM\Column(type="float", nullable=true)
      */
     private $totalHours;
 
     /**
-     * @var DeliveryNote
+     * @var string|null
+     *
+     * @ORM\Column(type="string", nullable=true)
+     */
+    private $comment;
+
+    /**
+     * @var DeliveryNote|null
      *
      * @ORM\ManyToOne(targetEntity="DeliveryNote", inversedBy="timeRegisters", cascade={"persist"})
-     * @ORM\Cache(usage="NONSTRICT_READ_WRITE")
      */
     private $deliveryNote;
 
@@ -125,7 +135,7 @@ class DeliveryNoteTimeRegister extends AbstractBase
     }
 
     /**
-     * @return \DateTime
+     * @return DateTime
      */
     public function getBegin()
     {
@@ -133,11 +143,19 @@ class DeliveryNoteTimeRegister extends AbstractBase
     }
 
     /**
-     * @param \DateTime $begin
+     * @return string
+     */
+    public function getBeginString()
+    {
+        return $this->getBegin()->format('H:i');
+    }
+
+    /**
+     * @param DateTime $begin
      *
      * @return DeliveryNoteTimeRegister
      */
-    public function setBegin(\DateTime $begin): DeliveryNoteTimeRegister
+    public function setBegin(DateTime $begin): DeliveryNoteTimeRegister
     {
         $this->begin = $begin;
 
@@ -145,7 +163,7 @@ class DeliveryNoteTimeRegister extends AbstractBase
     }
 
     /**
-     * @return \DateTime
+     * @return DateTime
      */
     public function getEnd()
     {
@@ -153,11 +171,19 @@ class DeliveryNoteTimeRegister extends AbstractBase
     }
 
     /**
-     * @param \DateTime $end
+     * @return string
+     */
+    public function getEndString()
+    {
+        return $this->getEnd()->format('H:i');
+    }
+
+    /**
+     * @param DateTime $end
      *
      * @return DeliveryNoteTimeRegister
      */
-    public function setEnd(\DateTime $end): DeliveryNoteTimeRegister
+    public function setEnd(DateTime $end): DeliveryNoteTimeRegister
     {
         $this->end = $end;
 
@@ -165,7 +191,7 @@ class DeliveryNoteTimeRegister extends AbstractBase
     }
 
     /**
-     * @return float
+     * @return float|null
      */
     public function getTotalHours()
     {
@@ -173,32 +199,34 @@ class DeliveryNoteTimeRegister extends AbstractBase
     }
 
     /**
-     * @return string
-     *
-     * @throws \Exception
+     * @return float
      */
-    public function getTotalHoursString()
+    public function getDifferenceBetweenEndAndBeginHoursInSeconds()
     {
-        $result = '---';
-        $hours = $this->getTotalHours();
-        if (!is_null($hours)) {
-            if (is_integer($hours) || is_float($hours)) {
-                $whole = floor($hours);
-                $fraction = $hours - $whole;
-                $minutes = 0;
-                if (0.25 == $fraction) {
-                    $minutes = 15;
-                } elseif (0.5 == $fraction) {
-                    $minutes = 30;
-                } elseif (0.75 == $fraction) {
-                    $minutes = 45;
-                }
-                $interval = new \DateInterval(sprintf('PT%dH%dM', intval($hours), $minutes));
-                $result = $interval->format('%H:%I');
-            }
+        $result = 0.0;
+        if ($this->getBegin() && $this->getEnd()) {
+            $result = floatval($this->getEnd()->getTimestamp() - $this->getBegin()->getTimestamp());
         }
 
         return $result;
+    }
+
+    /**
+     * @return float
+     */
+    public function getDifferenceBetweenEndAndBeginHoursInDecimalHours()
+    {
+        return $this->getDifferenceBetweenEndAndBeginHoursInSeconds() / 60 / 60;
+    }
+
+    /**
+     * @return string
+     *
+     * @throws Exception
+     */
+    public function getTotalHoursString()
+    {
+        return DeliveryNoteTimeRegisterManager::getTotalHoursHumanizedString($this->getTotalHours());
     }
 
     /**
@@ -209,6 +237,26 @@ class DeliveryNoteTimeRegister extends AbstractBase
     public function setTotalHours(?float $totalHours): DeliveryNoteTimeRegister
     {
         $this->totalHours = $totalHours;
+
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getComment(): ?string
+    {
+        return $this->comment;
+    }
+
+    /**
+     * @param string|null $comment
+     *
+     * @return $this
+     */
+    public function setComment(?string $comment): DeliveryNoteTimeRegister
+    {
+        $this->comment = $comment;
 
         return $this;
     }
@@ -240,22 +288,22 @@ class DeliveryNoteTimeRegister extends AbstractBase
      */
     public function validate(ExecutionContextInterface $context)
     {
-        if (!is_null($this->getBegin()) && !is_null($this->getEnd())) {
-            if ($this->getBegin() instanceof \DateTime && $this->getEnd() instanceof \DateTime) {
-                if ($this->getBegin()->format('H:i') >= $this->getEnd()->format('H:i')) {
-                    $context->buildViolation('Hora inicial mayor o igual que hora final!')
-                        ->atPath('begin')
-                        ->addViolation()
-                    ;
-                }
-            }
+        if ($this->getBegin() && !$this->getEnd()) {
+            $context->buildViolation('Falta hora de fin!')
+                ->atPath('end')
+                ->addViolation();
+        }
+        if ($this->getBegin() && $this->getEnd() && $this->getBegin()->format('H:i') >= $this->getEnd()->format('H:i')) {
+            $context->buildViolation('La hora de fin no puede ser menor o igual que la hora inicio!')
+                ->atPath('end')
+                ->addViolation();
         }
     }
 
     /**
      * @return string
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function __toString()
     {

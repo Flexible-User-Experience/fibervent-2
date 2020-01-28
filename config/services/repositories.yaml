@@ -2,91 +2,114 @@ services:
     # Service repositories
     app.state_repository:
         class: App\Repository\StateRepository
-        factory: [ "@doctrine", getRepository ]
+        factory: [ '@doctrine', getRepository ]
         arguments:
             - App:State
     app.turbine_repository:
         class: App\Repository\TurbineRepository
-        factory: [ "@doctrine", getRepository ]
+        factory: [ '@doctrine', getRepository ]
         arguments:
             - App:Turbine
     app.blade_repository:
         class: App\Repository\BladeRepository
-        factory: [ "@doctrine", getRepository ]
+        factory: [ '@doctrine', getRepository ]
         arguments:
             - App:Blade
     app.blade_damage_repository:
         public: true
         class: App\Repository\BladeDamageRepository
-        factory: [ "@doctrine", getRepository ]
+        factory: [ '@doctrine', getRepository ]
         arguments:
             - App:BladeDamage
     app.windfarm_repository:
+        public: true
         class: App\Repository\WindfarmRepository
-        factory: [ "@doctrine", getRepository ]
+        factory: [ '@doctrine', getRepository ]
         arguments:
             - App:Windfarm
     app.windmill_repository:
+        public: true
         class: App\Repository\WindmillRepository
-        factory: [ "@doctrine", getRepository ]
+        factory: [ '@doctrine', getRepository ]
         arguments:
             - App:Windmill
     app.user_repository:
         public: true
         class: App\Repository\UserRepository
-        factory: [ "@doctrine", getRepository ]
+        factory: [ '@doctrine', getRepository ]
         arguments:
             - App:User
     app.customer_repository:
         public: true
         class: App\Repository\CustomerRepository
-        factory: [ "@doctrine", getRepository ]
+        factory: [ '@doctrine', getRepository ]
         arguments:
             - App:Customer
     app.damage_repository:
         class: App\Repository\DamageRepository
-        factory: [ "@doctrine", getRepository ]
+        factory: [ '@doctrine', getRepository ]
         arguments:
             - App:Damage
     app.damage_category_repository:
         public: true
         class: App\Repository\DamageCategoryRepository
-        factory: [ "@doctrine", getRepository ]
+        factory: [ '@doctrine', getRepository ]
         arguments:
             - App:DamageCategory
     app.audit_repository:
         class: App\Repository\AuditRepository
-        factory: [ "@doctrine", getRepository ]
+        factory: [ '@doctrine', getRepository ]
         arguments:
             - App:Audit
     app.windmill_blade_repository:
+        public: true
         class: App\Repository\WindmillBladeRepository
-        factory: [ "@doctrine", getRepository ]
+        factory: [ '@doctrine', getRepository ]
         arguments:
             - App:WindmillBlade
     app.observation_repository:
         class: App\Repository\ObservationRepository
-        factory: [ "@doctrine", getRepository ]
+        factory: [ '@doctrine', getRepository ]
         arguments:
             - App:Observation
     app.precense_monitoring_repository:
         public: true
         class: App\Repository\PresenceMonitoringRepository
-        factory: [ "@doctrine", getRepository ]
+        factory: [ '@doctrine', getRepository ]
         arguments:
             - App:PresenceMonitoring
+    app.vehicle_repository:
+        public: true
+        class: App\Repository\VehicleRepository
+        factory: [ '@doctrine', getRepository ]
+        arguments:
+            - App:Vehicle
+    app.delivery_note_time_register_repository:
+        public: true
+        class: App\Repository\DeliveryNoteTimeRegisterRepository
+        factory: [ '@doctrine', getRepository ]
+        arguments:
+            - App:DeliveryNoteTimeRegister
+    app.work_order_repository:
+        public: true
+        class: App\Repository\WorkOrderRepository
+        factory: [ '@doctrine', getRepository ]
+        arguments:
+            - App:WorkOrder
     app.repositories_service:
         class: App\Service\RepositoriesService
         arguments:
-            - "@app.customer_repository"
-            - "@app.user_repository"
-            - "@app.windmill_repository"
-            - "@app.windfarm_repository"
-            - "@app.blade_repository"
-            - "@app.turbine_repository"
-            - "@app.state_repository"
-            - "@app.damage_repository"
-            - "@app.damage_category_repository"
-            - "@app.audit_repository"
-            - "@app.windmill_blade_repository"
-            - "@app.blade_damage_repository"
+            - '@app.customer_repository'
+            - '@app.user_repository'
+            - '@app.windmill_repository'
+            - '@app.windfarm_repository'
+            - '@app.blade_repository'
+            - '@app.turbine_repository'
+            - '@app.state_repository'
+            - '@app.damage_repository'
+            - '@app.damage_category_repository'
+            - '@app.audit_repository'
+            - '@app.windmill_blade_repository'
+            - '@app.blade_damage_repository'
+            - '@app.vehicle_repository'
+            - '@app.work_order_repository'

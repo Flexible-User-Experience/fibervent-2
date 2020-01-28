@@ -11,64 +11,64 @@ sonata_admin:
     security:
         handler: sonata.admin.security.handler.role
     templates:
-        layout: "Admin/layout.html.twig"
-        edit:   "Admin/edit.html.twig"
+        layout: 'Admin/layout.html.twig'
+        edit:   'Admin/edit.html.twig'
     dashboard:
         groups:
             Client:
-                icon:  "<i class='fa fa-users' aria-hidden='true'></i>"
-                label: "Clientes"
+                icon:  '<i class="fa fa-users" aria-hidden="true"></i>'
+                label: 'Clientes'
             Windfarm:
-                icon:  "<i class='fa fa-recycle' aria-hidden='true'></i>"
-                label: "Parques Eólicos"
+                icon:  '<i class="fa fa-recycle" aria-hidden="true"></i>'
+                label: 'Parques Eólicos'
             Audit:
-                icon:  "<i class='fa fa-eye' aria-hidden='true'></i>"
-                label: "Inspecciones"
+                icon:  '<i class="fa fa-eye" aria-hidden="true"></i>'
+                label: 'Inspecciones'
             WorkOrder:
-                icon:  "<i class='fa fa-list-alt' aria-hidden='true'></i>"
-                label: "Proyectos"
+                icon:  '<i class="fa fa-list-alt" aria-hidden="true"></i>'
+                label: 'Proyectos'
             PresenceMonitoring:
-                icon:  "<i class='fa fa-clock-o' aria-hidden='true'></i>"
-                label: "Registro horario"
+                icon:  '<i class="fa fa-clock-o" aria-hidden="true"></i>'
+                label: 'Registros horarios'
         blocks:
             -
                 position: top
                 type: sonata.block.service.text
-                class: "col-md-12"
+                class: 'col-md-12'
                 settings:
                     content: >
-                        <h1 class="text-center" style="margin:0 0 25px 0">%project_web_title%</h1>
+                        <h1 class='text-center' style='margin:0 0 25px 0'>%project_web_title%</h1>
             -
                 position: top
                 type: sonata.admin.block.admin_list
-                class: "col-lg-4 col-md-6 col-sm-12"
+                class: 'col-lg-4 col-md-6 col-sm-12'
                 settings:
                     groups: [ Client ]
             -
                 position: top
                 type: sonata.admin.block.admin_list
-                class: "col-lg-4 col-md-6 col-sm-12"
+                class: 'col-lg-4 col-md-6 col-sm-12'
                 settings:
                     groups: [ Windfarm ]
             -
                 position: top
                 type: sonata.admin.block.admin_list
-                class: "col-lg-4 col-md-6 col-sm-12"
+                class: 'col-lg-4 col-md-6 col-sm-12'
                 settings:
                     groups: [ Audit ]
             -
                 position: top
                 type: sonata.admin.block.admin_list
-                class: "col-lg-4 col-md-6 col-sm-12"
+                class: 'col-lg-4 col-md-6 col-sm-12'
                 settings:
                     groups: [ WorkOrder ]
             -
                 position: top
                 type: sonata.admin.block.admin_list
-                class: "col-lg-4 col-md-6 col-sm-12"
+                class: 'col-lg-4 col-md-6 col-sm-12'
                 settings:
                     groups: [ PresenceMonitoring ]
             -
                 position: top
                 type: admin.block.audits
-                class: "col-lg-4 col-md-6 col-sm-12"
+                class: 'col-lg-4 col-md-6 col-sm-12'

@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Entity\Traits\ObservationsTrait;
 use App\Enum\AuditTypeEnum;
+use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
@@ -24,32 +25,32 @@ class Audit extends AbstractBase
     use ObservationsTrait;
 
     /**
-     * @var \DateTime
+     * @var DateTime
      *
      * @ORM\Column(type="datetime", nullable=true)
      */
-    protected $beginDate;
+    private $beginDate;
 
     /**
-     * @var \DateTime
+     * @var DateTime
      *
      * @ORM\Column(type="datetime", nullable=true)
      */
-    protected $endDate;
+    private $endDate;
 
     /**
      * @var int
      *
      * @ORM\Column(type="integer")
      */
-    protected $status;
+    private $status;
 
     /**
      * @var int
      *
      * @ORM\Column(type="integer", options={"default"=1})
      */
-    protected $diagramType = 1;
+    private $diagramType = 1;
 
     /**
      * @var int
@@ -114,7 +115,7 @@ class Audit extends AbstractBase
      *
      * @ORM\Column(type="integer", options={"default"=0})
      */
-    protected $language = 0;
+    private $language = 0;
 
     /**
      * @var WorkOrder
@@ -146,7 +147,7 @@ class Audit extends AbstractBase
     }
 
     /**
-     * @return \DateTime
+     * @return DateTime
      */
     public function getBeginDate()
     {
@@ -162,11 +163,11 @@ class Audit extends AbstractBase
     }
 
     /**
-     * @param \DateTime $beginDate
+     * @param DateTime $beginDate
      *
      * @return Audit
      */
-    public function setBeginDate(\DateTime $beginDate)
+    public function setBeginDate(DateTime $beginDate)
     {
         $this->beginDate = $beginDate;
 
@@ -174,7 +175,7 @@ class Audit extends AbstractBase
     }
 
     /**
-     * @return \DateTime
+     * @return DateTime
      */
     public function getEndDate()
     {
@@ -190,7 +191,7 @@ class Audit extends AbstractBase
     }
 
     /**
-     * @param \DateTime|null $endDate
+     * @param DateTime|null $endDate
      *
      * @return Audit
      */

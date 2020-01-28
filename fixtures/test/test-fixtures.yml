@@ -319,3 +319,8 @@ App\Entity\PresenceMonitoring:
     totalHours: <randomFloat(2, 0, 9)>
     normalHours: <randomFloat(2, 0, 7)>
     extraHours: <randomFloat(2, 0, 2)>
+
+# Repair
+App\Entity\Repair:
+  repair{1..2}:
+    name: <word()>

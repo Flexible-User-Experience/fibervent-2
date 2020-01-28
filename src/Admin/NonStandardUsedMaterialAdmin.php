@@ -60,19 +60,19 @@ class NonStandardUsedMaterialAdmin extends AbstractBaseAdmin
         $formMapper
             ->with('admin.common.general', $this->getFormMdSuccessBoxArray(3))
             ->add(
+                'quantity',
+                null,
+                array(
+                    'label' => 'admin.nonstandardusedmaterial.quantity',
+                )
+            )
+            ->add(
                 'item',
                 ChoiceType::class,
                 array(
                     'label' => 'admin.nonstandardusedmaterial.item',
                     'choices' => NonStandardUsedMaterialItemEnum::getEnumArray(),
                     'multiple' => false,
-                )
-            )
-            ->add(
-                'quantity',
-                null,
-                array(
-                    'label' => 'admin.nonstandardusedmaterial.quantity',
                 )
             )
             ->add(

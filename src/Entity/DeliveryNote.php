@@ -2,8 +2,10 @@
 
 namespace App\Entity;
 
+use App\Enum\BladeEnum;
 use App\Enum\RepairAccessTypeEnum;
 use App\Enum\RepairWindmillSectionEnum;
+use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
@@ -16,7 +18,6 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="App\Repository\DeliveryNoteRepository")
- * @ORM\Cache(usage="NONSTRICT_READ_WRITE")
  * @Gedmo\SoftDeleteable(fieldName="removedAt", timeAware=false)
  */
 class DeliveryNote extends AbstractBase
@@ -25,12 +26,32 @@ class DeliveryNote extends AbstractBase
      * @var WorkOrder
      *
      * @ORM\ManyToOne(targetEntity="WorkOrder", inversedBy="deliveryNotes", cascade={"persist"})
-     * @ORM\Cache(usage="NONSTRICT_READ_WRITE")
      */
     private $workOrder;
 
     /**
-     * @var \DateTime
+     * @var Windfarm
+     *
+     * @ORM\ManyToOne(targetEntity="App\Entity\Windfarm")
+     */
+    private $windfarm;
+
+    /**
+     * @var Windmill
+     *
+     * @ORM\ManyToOne(targetEntity="App\Entity\Windmill")
+     */
+    private $windmill;
+
+    /**
+     * @var array
+     *
+     * @ORM\Column(name="blades", type="json_array", nullable=true)
+     */
+    private $blades = [];
+
+    /**
+     * @var DateTime
      *
      * @ORM\Column(type="datetime")
      */
@@ -48,7 +69,6 @@ class DeliveryNote extends AbstractBase
      *
      * @ORM\ManyToOne(targetEntity="User")
      * @ORM\JoinColumn(name="admin_user_id", referencedColumnName="id", nullable=false)
-     * @ORM\Cache(usage="NONSTRICT_READ_WRITE")
      */
     private $teamLeader;
 
@@ -57,7 +77,6 @@ class DeliveryNote extends AbstractBase
      *
      * @ORM\ManyToOne(targetEntity="User")
      * @ORM\JoinColumn(name="team_technician_1_user_id", referencedColumnName="id", nullable=true)
-     * @ORM\Cache(usage="NONSTRICT_READ_WRITE")
      */
     private $teamTechnician1;
 
@@ -66,7 +85,6 @@ class DeliveryNote extends AbstractBase
      *
      * @ORM\ManyToOne(targetEntity="User")
      * @ORM\JoinColumn(name="team_technician_2_user_id", referencedColumnName="id", nullable=true)
-     * @ORM\Cache(usage="NONSTRICT_READ_WRITE")
      */
     private $teamTechnician2;
 
@@ -75,7 +93,6 @@ class DeliveryNote extends AbstractBase
      *
      * @ORM\ManyToOne(targetEntity="User")
      * @ORM\JoinColumn(name="team_technician_3_user_id", referencedColumnName="id", nullable=true)
-     * @ORM\Cache(usage="NONSTRICT_READ_WRITE")
      */
     private $teamTechnician3;
 
@@ -84,7 +101,6 @@ class DeliveryNote extends AbstractBase
      *
      * @ORM\ManyToOne(targetEntity="User")
      * @ORM\JoinColumn(name="team_technician_4_user_id", referencedColumnName="id", nullable=true)
-     * @ORM\Cache(usage="NONSTRICT_READ_WRITE")
      */
     private $teamTechnician4;
 
@@ -93,7 +109,6 @@ class DeliveryNote extends AbstractBase
      *
      * @ORM\ManyToOne(targetEntity="Vehicle")
      * @ORM\JoinColumn(name="vehicle_id", referencedColumnName="id", nullable=true)
-     * @ORM\Cache(usage="NONSTRICT_READ_WRITE")
      */
     private $vehicle;
 
@@ -129,7 +144,6 @@ class DeliveryNote extends AbstractBase
      * @var DeliveryNoteTimeRegister[]|ArrayCollection
      *
      * @ORM\OneToMany(targetEntity="DeliveryNoteTimeRegister", mappedBy="deliveryNote", cascade={"persist", "remove"}, orphanRemoval=true)
-     * @ORM\Cache(usage="NONSTRICT_READ_WRITE")
      * @Assert\Valid
      */
     private $timeRegisters;
@@ -138,7 +152,6 @@ class DeliveryNote extends AbstractBase
      * @var NonStandardUsedMaterial[]|ArrayCollection
      *
      * @ORM\OneToMany(targetEntity="NonStandardUsedMaterial", mappedBy="deliveryNote", cascade={"persist", "remove"}, orphanRemoval=true)
-     * @ORM\Cache(usage="NONSTRICT_READ_WRITE")
      * @Assert\Valid
      */
     private $nonStandardUsedMaterials;
@@ -147,7 +160,6 @@ class DeliveryNote extends AbstractBase
      * @var WorkOrderTask[]|ArrayCollection
      *
      * @ORM\ManyToMany(targetEntity="WorkOrderTask", mappedBy="deliveryNotes", cascade={"persist"})
-     * @ORM\Cache(usage="NONSTRICT_READ_WRITE")
      */
     private $workOrderTasks;
 
@@ -177,9 +189,21 @@ class DeliveryNote extends AbstractBase
      */
 
     /**
-     * @return WorkOrder
+     * @param int|null $id
+     *
+     * @return DeliveryNote
      */
-    public function getWorkOrder()
+    public function setId(?int $id): DeliveryNote
+    {
+        $this->id = $id;
+
+        return $this;
+    }
+
+    /**
+     * @return WorkOrder|null
+     */
+    public function getWorkOrder(): ?WorkOrder
     {
         return $this->workOrder;
     }
@@ -197,7 +221,47 @@ class DeliveryNote extends AbstractBase
     }
 
     /**
-     * @return \DateTime
+     * @return Windfarm|null
+     */
+    public function getWindfarm(): ?Windfarm
+    {
+        return $this->windfarm;
+    }
+
+    /**
+     * @param Windfarm|null $windfarm
+     *
+     * @return $this
+     */
+    public function setWindfarm(?Windfarm $windfarm): DeliveryNote
+    {
+        $this->windfarm = $windfarm;
+
+        return $this;
+    }
+
+    /**
+     * @return Windmill|null
+     */
+    public function getWindmill(): ?Windmill
+    {
+        return $this->windmill;
+    }
+
+    /**
+     * @param Windmill|null $windmill
+     *
+     * @return $this
+     */
+    public function setWindmill(?Windmill $windmill): DeliveryNote
+    {
+        $this->windmill = $windmill;
+
+        return $this;
+    }
+
+    /**
+     * @return DateTime
      */
     public function getDate()
     {
@@ -205,13 +269,95 @@ class DeliveryNote extends AbstractBase
     }
 
     /**
-     * @param \DateTime $date
+     * @return string
+     */
+    public function getDateString()
+    {
+        return $this->getDate()->format('d/m/Y');
+    }
+
+    /**
+     * @param DateTime $date
      *
      * @return DeliveryNote
      */
-    public function setDate(\DateTime $date): DeliveryNote
+    public function setDate(DateTime $date): DeliveryNote
     {
         $this->date = $date;
+
+        return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public function getBlades()
+    {
+        return $this->blades;
+    }
+
+    /**
+     * @return string
+     */
+    public function getBladesString(): string
+    {
+        $bladesString = [];
+        foreach ($this->getBlades() as $blade) {
+            $bladesString[] = BladeEnum::getTranslatedDecodedStringFromType($blade);
+        }
+
+        return join(', ', $bladesString);
+    }
+
+    /**
+     * @return array
+     */
+    public function getBladesStringsArray(): array
+    {
+        $bladesString = [];
+        foreach ($this->getBlades() as $blase) {
+            $bladesString[] = BladeEnum::getDecodedStringFromType($blase);
+        }
+
+        return $bladesString;
+    }
+
+    /**
+     * @param array $blades
+     *
+     * @return DeliveryNote
+     */
+    public function setBlades(array $blades): DeliveryNote
+    {
+        $this->blades = $blades;
+
+        return $this;
+    }
+
+    /**
+     * @param int $blade
+     *
+     * @return DeliveryNote
+     */
+    public function addBlade(int $blade): DeliveryNote
+    {
+        if (false === ($key = array_search($blade, $this->blades))) {
+            $this->blades[] = $blade;
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param int $blade
+     *
+     * @return DeliveryNote
+     */
+    public function removeBlade(int $blade): DeliveryNote
+    {
+        if (false !== ($key = array_search($blade, $this->blades))) {
+            unset($this->blades[$key]);
+        }
 
         return $this;
     }
@@ -225,13 +371,25 @@ class DeliveryNote extends AbstractBase
     }
 
     /**
+     * @return string
+     */
+    public function getRepairWindmillSectionsString(): string
+    {
+        $repairWindmillSectionsString = [];
+        foreach ($this->getRepairWindmillSections() as $repairWindmillSection) {
+            $repairWindmillSectionsString[] = RepairWindmillSectionEnum::getTranslatedDecodedStringFromType($repairWindmillSection);
+        }
+
+        return join(', ', $repairWindmillSectionsString);
+    }
+
+    /**
      * @return array
      */
-    public function getRepairWindmillSectionsString(): array
+    public function getRepairWindmillSectionsStringsArray(): array
     {
-        $repairWindmillSections = $this->getRepairWindmillSections();
         $repairWindmillSectionsString = [];
-        foreach ($repairWindmillSections as $repairWindmillSection) {
+        foreach ($this->getRepairWindmillSections() as $repairWindmillSection) {
             $repairWindmillSectionsString[] = RepairWindmillSectionEnum::getDecodedStringFromType($repairWindmillSection);
         }
 
@@ -487,13 +645,25 @@ class DeliveryNote extends AbstractBase
     }
 
     /**
+     * @return string
+     */
+    public function getRepairAccessTypesString(): string
+    {
+        $repairAccessTypesString = [];
+        foreach ($this->getRepairAccessTypes() as $repairAccessType) {
+            $repairAccessTypesString[] = RepairAccessTypeEnum::getTranslatedDecodedStringFromType($repairAccessType);
+        }
+
+        return join(', ', $repairAccessTypesString);
+    }
+
+    /**
      * @return array
      */
-    public function getRepairAccessTypesString(): array
+    public function getRepairAccessTypesStringsArray(): array
     {
-        $repairAccessTypes = $this->getRepairAccessTypes();
         $repairAccessTypesString = [];
-        foreach ($repairAccessTypes as $repairAccessType) {
+        foreach ($this->getRepairAccessTypes() as $repairAccessType) {
             $repairAccessTypesString[] = RepairAccessTypeEnum::getDecodedStringFromType($repairAccessType);
         }
 

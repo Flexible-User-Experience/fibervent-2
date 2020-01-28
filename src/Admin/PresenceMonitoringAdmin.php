@@ -2,6 +2,7 @@
 
 namespace App\Admin;
 
+use App\Entity\PresenceMonitoring;
 use App\Enum\MinutesEnum;
 use App\Enum\PresenceMonitoringCategoryEnum;
 use App\Entity\User;
@@ -104,24 +105,45 @@ class PresenceMonitoringAdmin extends AbstractBaseAdmin
             ->end()
             ->with('admin.common.totals', $this->getFormMdSuccessBoxArray(4))
             ->add(
-                'totalHours',
-                null,
-                array(
-                    'label' => 'admin.presencemonitoring.total_hours',
-                )
-            )
-            ->add(
                 'normalHours',
-                null,
+                ChoiceType::class,
                 array(
                     'label' => 'admin.presencemonitoring.normal_hours',
+                    'choices' => MinutesEnum::getChoicesQuartersEnumArray(),
+                    'multiple' => false,
+                    'expanded' => false,
+                    'required' => true,
+                    'attr' => array(
+                        'disabled' => true,
+                    ),
                 )
             )
             ->add(
                 'extraHours',
-                null,
+                ChoiceType::class,
                 array(
                     'label' => 'admin.presencemonitoring.extra_hours',
+                    'choices' => MinutesEnum::getChoicesQuartersEnumArray(),
+                    'multiple' => false,
+                    'expanded' => false,
+                    'required' => true,
+                    'attr' => array(
+                        'disabled' => true,
+                    ),
+                )
+            )
+            ->add(
+                'totalHours',
+                ChoiceType::class,
+                array(
+                    'label' => 'admin.presencemonitoring.total_hours',
+                    'choices' => MinutesEnum::getChoicesQuartersEnumArray(),
+                    'multiple' => false,
+                    'expanded' => false,
+                    'required' => true,
+                    'attr' => array(
+                        'disabled' => true,
+                    ),
                 )
             )
             ->end()
@@ -261,20 +283,11 @@ class PresenceMonitoringAdmin extends AbstractBaseAdmin
                 )
             )
             ->add(
-                'totalHours',
-                null,
-                array(
-                    'label' => 'admin.presencemonitoring.total_hours',
-                    'editable' => false,
-                    'header_class' => 'text-right',
-                    'row_align' => 'right',
-                )
-            )
-            ->add(
                 'normalHours',
                 null,
                 array(
                     'label' => 'admin.presencemonitoring.normal_hours',
+                    'template' => 'Admin/Cells/list__cell_presence_monitoring_normal_hours.html.twig',
                     'editable' => false,
                     'header_class' => 'text-right',
                     'row_align' => 'right',
@@ -285,6 +298,18 @@ class PresenceMonitoringAdmin extends AbstractBaseAdmin
                 null,
                 array(
                     'label' => 'admin.presencemonitoring.extra_hours',
+                    'template' => 'Admin/Cells/list__cell_presence_monitoring_extra_hours.html.twig',
+                    'editable' => false,
+                    'header_class' => 'text-right',
+                    'row_align' => 'right',
+                )
+            )
+            ->add(
+                'totalHours',
+                null,
+                array(
+                    'label' => 'admin.presencemonitoring.total_hours',
+                    'template' => 'Admin/Cells/list__cell_presence_monitoring_total_hours.html.twig',
                     'editable' => false,
                     'header_class' => 'text-right',
                     'row_align' => 'right',
@@ -303,6 +328,34 @@ class PresenceMonitoringAdmin extends AbstractBaseAdmin
                     ),
                 )
             )
+        ;
+    }
+
+    /**
+     * @param object|PresenceMonitoring $object
+     */
+    function prePersist($object)
+    {
+        $this->commonUpdates($object);
+    }
+
+    /**
+     * @param object|PresenceMonitoring $object
+     */
+    function preUpdate($object)
+    {
+        $this->commonUpdates($object);
+    }
+
+    /**
+     * @param PresenceMonitoring $object
+     */
+    private function commonUpdates($object)
+    {
+        $object
+            ->setTotalHours($object->getDifferenceBetweenEndAndBeginHoursInDecimalHours())
+            ->setNormalHours($object->getNormalHoursDifferenceFromTotal())
+            ->setExtraHours($object->getExtraHoursDifferenceFromTotal())
         ;
     }
 }

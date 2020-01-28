@@ -61,3 +61,10 @@ services:
         arguments:
             - '@translator'
             - '@app.smart_assets_helper'
+    app.delivery_note_pdf_builder:
+        public: true
+        class: App\Service\DeliveryNotePdfBuilderService
+        arguments:
+            - '@translator'
+            - '@app.smart_assets_helper'
+            - '@app.manager_delivery_note_time_register'

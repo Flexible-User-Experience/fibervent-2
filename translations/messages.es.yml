@@ -22,7 +22,7 @@ pdf:
   intro:
     1_title: '1. INTRODUCCIÓN'
     2_description: 'Este informe es el resultado de la inspección visual realizada con telescopio desde suelo en el Parque Eólico "%windfarm%". El equipo, propiedad de FIBERVENT, y utilizado para la inspección es el siguiente:'
-    3_list: 'CÁMARAS<ul><li>Canon Eos 5D MARK II // Canon Eos 70D</li></ul>LENTES<ul><li>Canon zoom lens EF 24-105 mm. 1:4 L IS USM</li><li>Canon zoom lens EF 100-400 mm. 1:4.5-5.6 L IS USM</li><li>Canon lens EF 500 mm. F4 L IS USM</li><li>Canon extender EF 1.4x II // EF 2x II</li></ul>TRÍPODE<ul><li>Trípode Feisol Tournament Carbon CT-3342</li></ul>'
+    3_list: 'CÁMARAS<ul><li>Canon Eos 5D MARK II // Canon Eos 70D // Canon Eos 5DS</li></ul>LENTES<ul><li>Canon zoom lens EF 24-105 mm. 1:4 L IS USM</li><li>Canon zoom lens EF 100-400 mm. 1:4.5-5.6 L IS USM</li><li>Canon lens EF 500 mm. F4 L IS USM</li><li>Canon extender EF 1.4x II // EF 2x II</li></ul>TRÍPODE<ul><li>Trípode Feisol Tournament Carbon CT-3342</li></ul>'
   damage_catalog:
     1_title: '2. CATALOGACIÓN DE DAÑOS'
     2_subtitle: 'Los daños encontrados se han categorizado según los siguientes criterios:'
@@ -177,7 +177,8 @@ enum:
     stop: Parada
     work: Trabajo
   time_register_shift:
-    morning: Mañana
+    morning: 'Mañana'
+    morning_lower: 'mañana'
     afternoon: Tarde
     night: Noche
   non_standard_used_material_item:
@@ -195,6 +196,7 @@ enum:
     leave: Baja
 admin:
   common:
+    name: Nombre
     general: General
     controls: Controles
     action: Acciones
@@ -206,6 +208,8 @@ admin:
     details: Detalle
     totals: Totales
     print: Imprimir
+    edit: Editar
+    add: Añadir
   audit:
     title: Inspección
     title_list: Inspección
@@ -233,7 +237,13 @@ admin:
       subject_placeholder: Resultado inspección Fibervent
       message: Mensaje
       send: Enviar email
-    create_workorder: Crear proyecto
+    batch:
+      create_workorder: Crear proyecto
+      select_option_damage_category_level_1: para todos los tipos de categoria de daño
+      select_option_damage_category_level_2: para las categorias de daño mayor o igual que 2
+      select_option_damage_category_level_3: para las categorias de daño mayor o igual que 3
+      select_option_damage_category_level_4: para las categorias de daño mayor o igual que 4
+      select_option_damage_category_level_5: para la categoria de daño 5
   auditwindmillblade:
     title: Auditoría Pala Aerogenerador
     title_list: Auditoría Pala Aerogenerador
@@ -406,6 +416,7 @@ admin:
     title_create: Crear
     date: Fecha
     project_number: Número de proyecto
+    project_number_short: Número
     certifying_company_name: Compañía certificadora
     certifying_company_contact_person: Persona de contacto (certificadora)
     certifying_company_contact_person_short: Persona de contacto
@@ -414,7 +425,9 @@ admin:
     certifying_company_phone: Teléfono (certificadora)
     certifying_company_phone_short: Teléfono
     is_from_audit: Proviene de auditoría
+    is_from_audit_short: Proviene auditoría
     repair_access_types: Tipos de acceso
+    windfarms: Parques eólicos
   workordertask:
     title: Tareas
     title_list: Tareas
@@ -439,6 +452,8 @@ admin:
     active: Activo
   deliverynote:
     id: Número
+    new: Añadir albarán
+    no_records: 'No existen albaranes asociados.'
     title: Albarán
     title_list: Albarán
     title_create: Crear
@@ -449,6 +464,7 @@ admin:
     crane_driver: Conductor grua
     repair_access_types: Tipo de acceso
     observations: Observaciones
+    observations_long: 'Observaciones / Causas de parada por ajenas'
     total_trip_hours: Total horas de desplazamiento
     total_work_hours: Total horas de trabajo
     total_stop_hours: Total horas de parada
@@ -458,6 +474,19 @@ admin:
     team_technician_2: Técnico 2
     team_technician_3: Técnico 3
     team_technician_4: Técnico 4
+    pdf:
+      customer_data: 'Datos cliente'
+      business_data: 'Datos empresa'
+      windfarm_data: 'Datos parque'
+      windfarm: 'Parque'
+      city: 'Localidad'
+      work_in: 'Trabajo en'
+      blade_number: 'Nº pala'
+      serial_number: 'Nº serie'
+      job_description: 'Descripción del trabajo realizado'
+      customer_sing_box: 'El cliente (firma autorizada)'
+      fibervent_sing_box: 'Firma responsable Fibervent'
+      dni_sing_box: 'DNI:'
   deliverynotetimeregister:
     title: Fichajes
     title_list: Fichajes
@@ -465,8 +494,10 @@ admin:
     type: Tipo
     shift: Turno
     begin: Inicio
+    stop: Paro
     end: Fin
     total_hours: Total horas
+    comment: Comentario
   nonstandardusedmaterial:
     title: Materiales no estándar utilizados
     title_list: Materiales no estándar utilizados
@@ -489,8 +520,8 @@ admin:
     title_list: Registro horario
     title_create: Crear
     worker: Empleado
-    morning_hour_begin: Hora entrada mañana
-    morning_hour_end: Hora salida mañana
+    morning_hour_begin: 'Hora entrada mañana'
+    morning_hour_end: 'Hora salida mañana'
     afternoon_hour_begin: Hora entrada tarde
     afternoon_hour_end: Hora salida tarde
     total_hours: Total horas
@@ -500,11 +531,13 @@ admin:
     extra_hours: Total horas extra
     extra_hours_short: Horas extra
     category: Categoría
+    hour: Hora
     day: Dia
-    morning: Mañana
+    morning: 'Mañana'
     afternoon: Tarde
     begin: Entrada
     end: Salida
+    arrival: Llegada
     sign: Firma
     brand: empresa
     brand_title: 'Razón social'
@@ -514,13 +547,15 @@ admin:
     operator_nif: 'NIF'
     total: TOTAL MES
     legal: 'En cumplimineto de la obligación establecida en el Artículo 35.5 del Real Decreto Legislativo 2/2015 del 23 de Octubre, por el que se aprueba el texto refundido de la Ley del Estatuto de los Trabajadores'
-    head_line_1: 'REGISTRO DIARIO DE JORNADA DE TRABAJADORES A TIEMPO COMPLETO'
+    head_line_1: 'REGISTRO DIARIO DE JORNADA DE TRABAJADORES'
     head_line_2: 'Periodo de liquidación'
     head_line_3: 'Fecha'
     form:
       year: Año
       month: Mes
       send: Generar PDF
+  repair:
+    name: Reparación
 month:
   january: Enero
   febraury: Febrero
@@ -537,6 +572,11 @@ month:
 fibervent:
   name: 'Fibervent, SL'
   cif: 'B55572580'
+  address_1: 'Pol. Industrial Pla de Solans, Parcela 2'
+  address_2: '43519 El Perelló (Tarragona)'
+  tel: 'Tel. +34 977 490 713'
+  email: 'info@fibervent.com'
+  web: 'www.fibervent.com'
 gmap:
   general: ubicación general
 # Admin defaults

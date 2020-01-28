@@ -30,6 +30,7 @@ class WorkOrderTaskAdmin extends AbstractBaseAdmin
     protected function configureFormFields(FormMapper $formMapper)
     {
         if ($this->getRootCode() == $this->getCode()) {
+            // not embeded
             $formMapper
                 ->with('admin.common.general', $this->getFormMdSuccessBoxArray(3))
                 ->add(
@@ -42,6 +43,7 @@ class WorkOrderTaskAdmin extends AbstractBaseAdmin
                 ->end()
             ;
         } else {
+            // embeded
             $formMapper
                 ->with('admin.common.general', $this->getFormMdSuccessBoxArray(3))
                 ->add(
@@ -137,7 +139,7 @@ class WorkOrderTaskAdmin extends AbstractBaseAdmin
                             'btn_add' => false,
                             'required' => false,
                             'property' => 'code',
-                            'query' => $this->wmr->findEnabledandWindfarmSortedByCustomerWindfarmAndWindmillCodeQB($windfarm),
+//                            'query' => $this->wmr->findEnabledandWindfarmSortedByCustomerWindfarmAndWindmillCodeQB($windfarm),
                         )
                     )
                     ->add('windmillBlade',

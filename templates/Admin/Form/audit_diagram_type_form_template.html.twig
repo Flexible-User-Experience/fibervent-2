@@ -1,13 +1,11 @@
 {% block audit_diagram_type_widget %}
-    {% spaceless %}
-        <ul class="list-inline">
-            {% for child in form %}
-                <li>
-                    <img class="media-object" src="{{ asset('build/tubrine_diagrams/' ~ loop.index ~ '.jpg') | imagine_filter('200x146') }}" alt="...">
-                    {{ form_widget(child) }}
-                    {{ form_label(child) }}
-                </li>
-            {% endfor %}
-        </ul>
-    {% endspaceless %}
+    <ul class="list-inline">
+        {% for child in form %}
+            <li>
+                <img class="media-object" src="{{ asset('build/turbine_diagrams/' ~ loop.index ~ '.jpg') | imagine_filter('200x146') }}" alt="turbine diagram {{ loop.index }}">
+                {{ form_widget(child) }}
+                {{ form_label(child) }}
+            </li>
+        {% endfor %}
+    </ul>
 {% endblock %}

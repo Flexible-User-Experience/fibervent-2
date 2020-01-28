@@ -4,14 +4,12 @@ namespace App\Admin\Block;
 
 use App\Enum\AuditStatusEnum;
 use App\Service\AuthCustomerService;
-use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Sonata\BlockBundle\Block\Service\AbstractBlockService;
 use Sonata\BlockBundle\Block\BlockContextInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Templating\EngineInterface;
-use Twig\Environment;
 
 /**
  * Class AuditsBlock.
@@ -21,14 +19,14 @@ use Twig\Environment;
 class AuditsBlock extends AbstractBlockService
 {
     /**
-     * @var EntityManager
+     * @var EntityManagerInterface
      */
-    private $em;
+    private EntityManagerInterface $em;
 
     /**
      * @var AuthCustomerService
      */
-    private $acs;
+    private AuthCustomerService $acs;
 
     /**
      * Methods.

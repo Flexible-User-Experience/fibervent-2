@@ -15,11 +15,17 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="App\Repository\WorkOrderRepository")
- * @ORM\Cache(usage="NONSTRICT_READ_WRITE")
  * @Gedmo\SoftDeleteable(fieldName="removedAt", timeAware=false)
  */
 class WorkOrder extends AbstractBase
 {
+    /**
+     * @var int
+     *
+     * @ORM\Column(type="integer", nullable=true, options={"default": 0})
+     */
+    private $status;
+
     /**
      * @var string
      *
@@ -39,7 +45,6 @@ class WorkOrder extends AbstractBase
      *
      * @ORM\ManyToOne(targetEntity="Customer")
      * @ORM\JoinColumn(name="customer_id", referencedColumnName="id", nullable=false)
-     * @ORM\Cache(usage="NONSTRICT_READ_WRITE")
      */
     private $customer;
 
@@ -48,15 +53,23 @@ class WorkOrder extends AbstractBase
      *
      * @ORM\ManyToOne(targetEntity="Windfarm")
      * @ORM\JoinColumn(name="windfarm_id", referencedColumnName="id", nullable=true)
-     * @ORM\Cache(usage="NONSTRICT_READ_WRITE")
      */
     private $windfarm;
+
+    /**
+     * @var Windfarm[]|ArrayCollection|array
+     *
+     * @ORM\ManyToMany(targetEntity="Windfarm")
+     * @ORM\JoinTable(name="work_orders_windfarms",
+     *      joinColumns={@ORM\JoinColumn(name="work_order_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="windfarm_id", referencedColumnName="id")})
+     */
+    private $windfarms;
 
     /**
      * @var Audit[]|ArrayCollection
      *
      * @ORM\OneToMany(targetEntity="Audit", mappedBy="workOrder")
-     * @ORM\Cache(usage="NONSTRICT_READ_WRITE")
      */
     private $audits;
 
@@ -99,7 +112,6 @@ class WorkOrder extends AbstractBase
      * @var WorkOrderTask[]|ArrayCollection
      *
      * @ORM\OneToMany(targetEntity="WorkOrderTask", mappedBy="workOrder", cascade={"persist", "remove"}, orphanRemoval=true)
-     * @ORM\Cache(usage="NONSTRICT_READ_WRITE")
      * @Assert\Valid
      */
     private $workOrderTasks;
@@ -108,7 +120,6 @@ class WorkOrder extends AbstractBase
      * @var DeliveryNote[]|ArrayCollection
      *
      * @ORM\OneToMany(targetEntity="DeliveryNote", mappedBy="workOrder", cascade={"persist", "remove"}, orphanRemoval=true)
-     * @ORM\Cache(usage="NONSTRICT_READ_WRITE")
      * @Assert\Valid
      */
     private $deliveryNotes;
@@ -118,11 +129,39 @@ class WorkOrder extends AbstractBase
      */
 
     /**
+     * WorkOrder constructor.
+     */
+    public function __construct()
+    {
+        $this->windfarms = new ArrayCollection();
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getStatus(): ?int
+    {
+        return $this->status;
+    }
+
+    /**
+     * @param int|null $status
+     *
+     * @return $this
+     */
+    public function setStatus(?int $status): WorkOrder
+    {
+        $this->status = $status;
+
+        return $this;
+    }
+
+    /**
      * @return string
      */
     public function getProjectNumber()
     {
-        return $this->getId();
+        return $this->projectNumber;
     }
 
     /**
@@ -166,11 +205,11 @@ class WorkOrder extends AbstractBase
     }
 
     /**
-     * @param Customer $customer
+     * @param Customer|null $customer
      *
      * @return WorkOrder
      */
-    public function setCustomer(Customer $customer): WorkOrder
+    public function setCustomer(?Customer $customer): WorkOrder
     {
         $this->customer = $customer;
 
@@ -193,6 +232,54 @@ class WorkOrder extends AbstractBase
     public function setWindfarm(Windfarm $windfarm): WorkOrder
     {
         $this->windfarm = $windfarm;
+
+        return $this;
+    }
+
+    /**
+     * @return Windfarm[]|array|ArrayCollection
+     */
+    public function getWindfarms()
+    {
+        return $this->windfarms;
+    }
+
+    /**
+     * @param Windfarm[]|array|ArrayCollection $windfarms
+     *
+     * @return WorkOrder
+     */
+    public function setWindfarms($windfarms): WorkOrder
+    {
+        $this->windfarms = $windfarms;
+
+        return $this;
+    }
+
+    /**
+     * @param Windfarm $windfarm
+     *
+     * @return WorkOrder
+     */
+    public function addWindfarm(Windfarm $windfarm): WorkOrder
+    {
+        if (!$this->windfarms->contains($windfarm)) {
+            $this->windfarms->add($windfarm);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param Windfarm $windfarm
+     *
+     * @return WorkOrder
+     */
+    public function removeWindfarm(Windfarm $windfarm): WorkOrder
+    {
+        if ($this->windfarms->contains($windfarm)) {
+            $this->windfarms->removeElement($windfarm);
+        }
 
         return $this;
     }
@@ -333,6 +420,19 @@ class WorkOrder extends AbstractBase
         $repairAccessTypes = $this->getRepairAccessTypes();
         $repairAccessTypesString = [];
         foreach ($repairAccessTypes as $repairAccessType) {
+            $repairAccessTypesString[] = RepairAccessTypeEnum::getDecodedStringFromType($repairAccessType);
+        }
+
+        return $repairAccessTypesString;
+    }
+
+    /**
+     * @return array
+     */
+    public function getRepairAccessTypesStringsArray(): array
+    {
+        $repairAccessTypesString = [];
+        foreach ($this->getRepairAccessTypes() as $repairAccessType) {
             $repairAccessTypesString[] = RepairAccessTypeEnum::getDecodedStringFromType($repairAccessType);
         }
 

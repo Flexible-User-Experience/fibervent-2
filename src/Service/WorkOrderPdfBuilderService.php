@@ -6,7 +6,8 @@ use App\Entity\WorkOrder;
 use App\Entity\WorkOrderTask;
 use App\Enum\AuditLanguageEnum;
 use App\Enum\WindfarmLanguageEnum;
-use Symfony\Bundle\FrameworkBundle\Translation\Translator;
+use Symfony\Contracts\Translation\TranslatorInterface;
+use TCPDF;
 
 /**
  * Class WorkOrder Pdf Builder Service.
@@ -16,24 +17,24 @@ use Symfony\Bundle\FrameworkBundle\Translation\Translator;
 class WorkOrderPdfBuilderService
 {
     /**
-     * @var \TCPDF $tcpdf
+     * @var TCPDF
      */
-    private $tcpdf;
+    private TCPDF $tcpdf;
 
     /**
-     * @var Translator
+     * @var TranslatorInterface
      */
-    private $ts;
+    private TranslatorInterface $ts;
 
     /**
      * @var string
      */
-    private $locale;
+    private string $locale;
 
     /**
      * @var SmartAssetsHelperService
      */
-    private $sahs;
+    private SmartAssetsHelperService $sahs;
 
     /**
      * Methods.
@@ -42,12 +43,12 @@ class WorkOrderPdfBuilderService
     /**
      * WorkOrderPdfBuilderService constructor.
      *
-     * @param Translator $ts
+     * @param TranslatorInterface      $ts
      * @param SmartAssetsHelperService $sahs
      */
-    public function __construct(Translator $ts, SmartAssetsHelperService $sahs)
+    public function __construct(TranslatorInterface $ts, SmartAssetsHelperService $sahs)
     {
-        $this->tcpdf = new \TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
+        $this->tcpdf = new TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
         $this->ts = $ts;
         $this->sahs = $sahs;
     }
@@ -55,7 +56,7 @@ class WorkOrderPdfBuilderService
     /**
      * @param WorkOrder $workOrder
      *
-     * @return \TCPDF
+     * @return TCPDF
      */
     public function build(WorkOrder $workOrder) {
         $this->locale = AuditLanguageEnum::DEFAULT_LANGUAGE_STRING;
