@@ -57,6 +57,14 @@ class BladeAdmin extends AbstractBaseAdmin
                     'sonata_help' => 'm',
                 )
             )
+            ->add(
+                'material',
+                null,
+                array(
+                    'label' => 'admin.blade.material',
+                    'required' => false,
+                )
+            )
             ->end();
     }
 
@@ -78,6 +86,13 @@ class BladeAdmin extends AbstractBaseAdmin
                 null,
                 array(
                     'label' => 'admin.blade.length',
+                )
+            )
+            ->add(
+                'material',
+                null,
+                array(
+                    'label' => 'admin.blade.material',
                 )
             )
             ->add(
@@ -109,6 +124,14 @@ class BladeAdmin extends AbstractBaseAdmin
                 null,
                 array(
                     'label' => 'admin.blade.length',
+                    'editable' => true,
+                )
+            )
+            ->add(
+                'material',
+                null,
+                array(
+                    'label' => 'admin.blade.material',
                     'editable' => true,
                 )
             )
