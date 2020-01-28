@@ -100,10 +100,13 @@ class WorkOrderTaskAdmin extends AbstractBaseAdmin
                     )
                     ->add(
                         'position',
-                        null,
+                        ChoiceType::class,
                         array(
                             'label' => 'admin.bladedamage.position',
                             'disabled' => true,
+                            'choices' => BladeDamagePositionEnum::getEnumArray(),
+                            'multiple' => false,
+                            'expanded' => false,
                         )
                     )
                     ->add(
@@ -227,9 +230,12 @@ class WorkOrderTaskAdmin extends AbstractBaseAdmin
                 )
                 ->add(
                     'position',
-                    null,
+                    ChoiceType::class,
                     array(
                         'label' => 'admin.bladedamage.position',
+                        'choices' => BladeDamagePositionEnum::getEnumArray(),
+                        'multiple' => false,
+                        'expanded' => false,
                     )
                 )
                 ->add(
