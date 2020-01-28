@@ -174,7 +174,7 @@ class WorkOrderPdfBuilderService
                 $this->tcpdf->SetFont('', 'B', 7);
                 $this->tcpdf->Cell(20, 5, $this->ts->trans('pdf_workorder.header.blade_material'), 1, 0, 'L', 0);
                 $this->tcpdf->SetFont('');
-                $this->tcpdf->Cell(35, 5, '', 1, 0, 'C', 0);
+                $this->tcpdf->Cell(35, 5, $turbineModel['windmill']->getBladeType()->getMaterial(), 1, 0, 'C', 0);
                 $this->tcpdf->SetFont('', 'B', 7);
                 $this->tcpdf->Cell(30, 5, $this->ts->trans('admin.customer.email'), 1, 0, 'L', 0);
                 $this->tcpdf->SetFont('');
