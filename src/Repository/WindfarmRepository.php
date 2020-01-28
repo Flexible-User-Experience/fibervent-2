@@ -221,7 +221,9 @@ class WindfarmRepository extends ServiceEntityRepository
     {
         $query = $this
             ->createQueryBuilder('w')
-            ->andWhere('w.customer = :customer')
+//            ->select('w.name, w.id')
+//            ->from('')
+            ->where('w.customer = :customer')
             ->setParameter('customer', $workOrder->getCustomer())
             ->orderBy('w.name', 'ASC')
         ;
@@ -231,7 +233,7 @@ class WindfarmRepository extends ServiceEntityRepository
             foreach ($workOrder->getWindfarms() as $windfarm) {
                 $wfia[] = $windfarm->getId();
             }
-            $query->andWhere($query->expr()->in('w.id',$wfia));
+            $query->andWhere($query->expr()->in('w.id', $wfia));
         }
 
         return $query;

@@ -4,3 +4,4 @@ fos_js_routing:
         - 'admin_app_workorder_getWindfarmsFromCustomerId'
         - 'admin_app_workorder_getWindmillbladesFromWindmillId'
         - 'admin_app_workorder_getWindmillsFromWindfarmsName'
+        - 'admin_app_deliverynote_getWindfarmsFromWorkOrderId'

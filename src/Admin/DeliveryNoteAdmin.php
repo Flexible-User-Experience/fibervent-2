@@ -47,8 +47,9 @@ class DeliveryNoteAdmin extends AbstractBaseAdmin
     protected function configureRoutes(RouteCollection $collection)
     {
         $collection
-            ->add('pdf', $this->getRouterIdParameter().'/pdf')
             ->remove('batch')
+            ->add('getWindfarmsFromWorkOrderId', $this->getRouterIdParameter().'/get-windfarms-from-work-order-id')
+            ->add('pdf', $this->getRouterIdParameter().'/pdf')
         ;
     }
 

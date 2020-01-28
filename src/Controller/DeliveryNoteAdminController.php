@@ -2,8 +2,15 @@
 
 namespace App\Controller;
 
+use App\Entity\Customer;
 use App\Entity\DeliveryNote;
+use App\Entity\WorkOrder;
+use App\Model\AjaxResponse;
+use App\Repository\CustomerRepository;
+use App\Repository\WindfarmRepository;
+use App\Repository\WorkOrderRepository;
 use App\Service\DeliveryNotePdfBuilderService;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -15,6 +22,29 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
  */
 class DeliveryNoteAdminController extends AbstractBaseAdminController
 {
+    /**
+     * @param int $id WorkOrder ID
+     *
+     * @return JsonResponse
+     */
+    public function getWindfarmsFromWorkOrderIdAction($id)
+    {
+        $ajaxResponse = new AjaxResponse();
+        /** @var WorkOrderRepository $wor */
+        $wor = $this->container->get('app.work_order_repository');
+        /** @var WindfarmRepository $wfr */
+        $wfr = $this->container->get('app.windfarm_repository');
+        /** @var WorkOrder $workOrder */
+        $workOrder = $wor->find($id);
+        if (!$workOrder) {
+            return new JsonResponse($ajaxResponse);
+        }
+        $ajaxResponse->setData($wfr->findOnlyRelatedWithAWorkOrderSortedByName($workOrder));
+        $jsonEncodedResult = $ajaxResponse->getJsonEncodedResult();
+
+        return new JsonResponse($jsonEncodedResult);
+    }
+
     /**
      * Export DeliveryNote in PDF format action.
      *
