@@ -250,6 +250,7 @@ admin:
     title_list:
     model:
     length:
+    material:
   bladedamage:
     title:
     title_list:
