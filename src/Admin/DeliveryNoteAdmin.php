@@ -112,8 +112,8 @@ class DeliveryNoteAdmin extends AbstractBaseAdmin
                     'label' => 'admin.deliverynote.pdf.work_in',
                     'choices' => RepairWindmillSectionEnum::getEnumArray(),
                     'multiple' => true,
-                    'expanded' => false,
-                    'required' => true,
+                    'expanded' => true,
+                    'required' => false,
                 )
             )
             ->add(
@@ -123,8 +123,8 @@ class DeliveryNoteAdmin extends AbstractBaseAdmin
                     'label' => 'admin.deliverynote.pdf.blade_number',
                     'choices' => BladeEnum::getLongTextEnumArray(),
                     'multiple' => true,
-                    'expanded' => false,
-                    'required' => true,
+                    'expanded' => true,
+                    'required' => false,
                 )
             )
             ->end()
@@ -202,8 +202,8 @@ class DeliveryNoteAdmin extends AbstractBaseAdmin
                     'label' => 'admin.deliverynote.repair_access_types',
                     'choices' => RepairAccessTypeEnum::getEnumArray(),
                     'multiple' => true,
-                    'expanded' => false,
-                    'required' => true,
+                    'expanded' => true,
+                    'required' => false,
                 )
             )
             ->add(
