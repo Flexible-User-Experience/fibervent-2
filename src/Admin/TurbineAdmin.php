@@ -70,6 +70,14 @@ class TurbineAdmin extends AbstractBaseAdmin
                     'label' => 'admin.turbine.power',
                 )
             )
+            ->add(
+                'manufacturer',
+                null,
+                array(
+                    'label' => 'admin.blade.manufacturer',
+                    'required' => false,
+                )
+            )
             ->end();
     }
 
@@ -106,7 +114,15 @@ class TurbineAdmin extends AbstractBaseAdmin
                 array(
                     'label' => 'admin.turbine.power',
                 )
-            );
+            )
+            ->add(
+                'manufacturer',
+                null,
+                array(
+                    'label' => 'admin.blade.manufacturer',
+                )
+            )
+        ;
     }
 
     /**
@@ -151,6 +167,14 @@ class TurbineAdmin extends AbstractBaseAdmin
                     'editable' => true,
                     'header_class' => 'text-right',
                     'row_align' => 'right',
+                )
+            )
+            ->add(
+                'manufacturer',
+                null,
+                array(
+                    'label' => 'admin.blade.manufacturer',
+                    'editable' => true,
                 )
             )
             ->add(

@@ -129,6 +129,11 @@ pdf_workorder:
     customer_data: 'DATOS CLIENTE'
     windmill_data: 'DATOS AEROS'
     certifying_company_data: 'DATOS CERTIFICADORA'
+    turbine_model: 'Modelo aero'
+    manufacturer: 'Fabricante'
+    blade: 'Pala'
+    blade_model: 'Modelo pala'
+    blade_material: 'Material pala'
     sumary_external_damages_to_repair: 'RESUMEN DE DAÑOS A REPARAR EN'
     repair: 'REPARACIÓN CON'
   table_header:
@@ -263,6 +268,8 @@ admin:
     title_create: Crear
     model: Modelo
     length: Longitud
+    material: Material
+    manufacturer: Fabricante
   bladedamage:
     title: Daño Pala
     title_list: Daño Pala

@@ -129,6 +129,11 @@ pdf_workorder:
     customer_data:
     windmill_data:
     certifying_company_data:
+    turbine_model:
+    manufacturer:
+    blade:
+    blade_model:
+    blade_material:
     sumary_external_damages_to_repair:
     repair:
   table_header:
@@ -245,6 +250,8 @@ admin:
     title_list:
     model:
     length:
+    material:
+    manufacturer:
   bladedamage:
     title:
     title_list:
