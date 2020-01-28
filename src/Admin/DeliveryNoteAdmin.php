@@ -67,8 +67,6 @@ class DeliveryNoteAdmin extends AbstractBaseAdmin
                     'format' => 'd/M/y',
                 )
             )
-        ;
-        $formMapper
             ->add(
                 'workOrder',
                 EntityType::class,
@@ -82,6 +80,13 @@ class DeliveryNoteAdmin extends AbstractBaseAdmin
             ->end()
             ->with('admin.deliverynote.pdf.customer_data', $this->getFormMdSuccessBoxArray(4))
         ;
+        if ($this->id($this->getSubject())) {
+            // edit
+            $wfqb = $this->wfr->findOnlyRelatedWithAWorkOrderSortedByNameQB($this->getSubject()->getWorkOrder());
+        } else {
+            // new
+            $wfqb = $this->wfr->findAllSortedByNameQB();
+        }
         $formMapper
             ->add(
                 'windfarm',
@@ -89,7 +94,7 @@ class DeliveryNoteAdmin extends AbstractBaseAdmin
                 array(
                     'label' => 'admin.windfarm.title',
                     'class' => Windfarm::class,
-                    'query_builder' => $this->wfr->findAllSortedByNameQB(),
+                    'query_builder' => $wfqb,
                 )
             )
         ;
