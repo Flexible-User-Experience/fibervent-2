@@ -269,6 +269,7 @@ admin:
     model: Modelo
     length: Longitud
     material: Material
+    manufacturer: Fabricante
   bladedamage:
     title: Daño Pala
     title_list: Daño Pala

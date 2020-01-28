@@ -251,6 +251,7 @@ admin:
     model:
     length:
     material:
+    manufacturer:
   bladedamage:
     title:
     title_list:
