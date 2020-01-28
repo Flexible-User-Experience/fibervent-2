@@ -53,6 +53,13 @@ class Turbine extends AbstractBase
     private $windmills;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(type="string", length=45, nullable=true)
+     */
+    private $manufacturer;
+
+    /**
      * Methods.
      */
 
@@ -158,5 +165,25 @@ class Turbine extends AbstractBase
     public function __toString()
     {
         return $this->getModel() ? $this->getModel().' ('.$this->getPower().'MW) '.$this->getTowerHeight().'m' : '---';
+    }
+
+    /**
+     * @return string
+     */
+    public function getManufacturer()
+    {
+        return $this->manufacturer;
+    }
+
+    /**
+     * @param string $manufacturer
+     *
+     * @return Turbine
+     */
+    public function setManufacturer(string $manufacturer): Turbine
+    {
+        $this->manufacturer = $manufacturer;
+
+        return $this;
     }
 }

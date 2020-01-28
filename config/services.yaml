@@ -15,6 +15,7 @@ parameters:
 
 services:
     _defaults:
+        public: false
         autowire: true
         autoconfigure: true
         bind:
@@ -84,3 +85,8 @@ services:
         class: App\Service\NotificationService
         arguments:
             - '@app.courier'
+    # Uncomment any lines below to activate that Twig extension
+    #Twig\Extensions\ArrayExtension: null
+    #Twig\Extensions\DateExtension: null
+    #Twig\Extensions\IntlExtension: null
+    #Twig\Extensions\TextExtension: null

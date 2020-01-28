@@ -1,0 +1,7 @@
+{% extends 'SonataAdminBundle:CRUD:base_show_field.html.twig' %}
+
+{% block field %}
+    {% for blade in object.getBladesStringsArray %}
+        <span class="label label-default"{% if loop.index > 1%} style="margin-left:5px"{% endif %}>{{ blade | trans }}</span>
+    {% endfor %}
+{% endblock %}

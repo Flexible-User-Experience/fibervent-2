@@ -32,6 +32,13 @@ class Blade extends AbstractBase
     private $length;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(type="string", length=45, nullable=true)
+     */
+    private $material;
+
+    /**
      * Methods.
      */
 
@@ -111,5 +118,25 @@ class Blade extends AbstractBase
     public function __toString()
     {
         return $this->getModel() ? $this->getModel().' ('.$this->getLength().'m)' : '---';
+    }
+
+    /**
+     * @return string
+     */
+    public function getMaterial()
+    {
+        return $this->material;
+    }
+
+    /**
+     * @param string $material
+     *
+     * @return Blade
+     */
+    public function setMaterial(string $material): Blade
+    {
+        $this->material = $material;
+
+        return $this;
     }
 }
