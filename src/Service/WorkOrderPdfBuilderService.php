@@ -79,7 +79,10 @@ class WorkOrderPdfBuilderService
                 if ($workOrderTask->getWindmill()->getWindfarm()->getId() == $windfarm->getId()) {
                     $turbineModel = $workOrderTask->getWindmill()->getTurbine()->getModel();
                     if (!in_array($turbineModel, $turbineModels)) {
-                        $turbineModels[] = $turbineModel;
+                        $turbineModels[] = ([
+                            'turbineModel' => $turbineModel,
+                            'windmill' => $workOrderTask->getWindmill(),
+                        ]);
                     }
                 }
             }
@@ -143,7 +146,7 @@ class WorkOrderPdfBuilderService
                 $this->tcpdf->SetFont('', 'B', 7);
                 $this->tcpdf->Cell(20, 5, $this->ts->trans('pdf_workorder.header.turbine_model'), 1, 0, 'L', 0);
                 $this->tcpdf->SetFont('');
-                $this->tcpdf->Cell(35, 5, '', 1, 0, 'C', 0);
+                $this->tcpdf->Cell(35, 5, $turbineModel['turbineModel'], 1, 0, 'C', 0);
                 $this->tcpdf->SetFont('', 'B', 7);
                 $this->tcpdf->Cell(30, 5, $this->ts->trans('admin.customer.contact'), 1, 0, 'L', 0);
                 $this->tcpdf->SetFont('');
@@ -157,7 +160,7 @@ class WorkOrderPdfBuilderService
                 $this->tcpdf->SetFont('', 'B', 7);
                 $this->tcpdf->Cell(20, 5, $this->ts->trans('pdf_workorder.header.blade'), 1, 0, 'L', 0);
                 $this->tcpdf->SetFont('');
-                $this->tcpdf->Cell(35, 5, '-', 1, 0, 'C', 0);
+                $this->tcpdf->Cell(35, 5, $turbineModel['windmill']->getBladeType()->getModel(), 1, 0, 'C', 0);
                 $this->tcpdf->SetFont('', 'B', 7);
                 $this->tcpdf->Cell(30, 5, $this->ts->trans('admin.customer.phone'), 1, 0, 'L', 0);
                 $this->tcpdf->SetFont('');
@@ -169,9 +172,9 @@ class WorkOrderPdfBuilderService
                 $this->tcpdf->SetFont('');
                 $this->tcpdf->Cell(35, 5, $windfarm->getName(), 1, 0, 'C', 0);
                 $this->tcpdf->SetFont('', 'B', 7);
-                $this->tcpdf->Cell(20, 5, $this->ts->trans('pdf_workorder.header.blade_model'), 1, 0, 'L', 0);
+                $this->tcpdf->Cell(20, 5, $this->ts->trans('pdf_workorder.header.blade_material'), 1, 0, 'L', 0);
                 $this->tcpdf->SetFont('');
-                $this->tcpdf->Cell(35, 5, '-', 1, 0, 'C', 0);
+                $this->tcpdf->Cell(35, 5, '', 1, 0, 'C', 0);
                 $this->tcpdf->SetFont('', 'B', 7);
                 $this->tcpdf->Cell(30, 5, $this->ts->trans('admin.customer.email'), 1, 0, 'L', 0);
                 $this->tcpdf->SetFont('');
@@ -219,7 +222,7 @@ class WorkOrderPdfBuilderService
                 $windmillBlade = 0;
                 /** @var WorkOrderTask $workOrderTask */
                 foreach ($workOrder->getWorkOrderTasks() as $workOrderTask) {
-                    if (($workOrderTask->getWindmill()->getWindfarm()->getId() == $windfarm->getId()) and ($workOrderTask->getWindmill()->getTurbine()->getModel() == $turbineModel)) {
+                    if (($workOrderTask->getWindmill()->getWindfarm()->getId() == $windfarm->getId()) and ($workOrderTask->getWindmill()->getTurbine()->getModel() == $turbineModel['turbineModel'])) {
                         $this->tcpdf->SetAbsX(10);
                         if (1 == $workOrderTask->getWindmillBlade()->getOrder()) {
                             $fillBlade = 1;
