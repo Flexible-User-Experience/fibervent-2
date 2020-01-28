@@ -106,7 +106,7 @@ class WorkOrderPdfBuilderService
         $this->tcpdf->SetFont('');
         $this->tcpdf->Cell(35, 5, $workOrder->getCustomer()->getName(), 1, 0, 'C', 0);
         $this->tcpdf->SetFont('', 'B', 7);
-        $this->tcpdf->Cell(20, 5, 'Fabricante', 1, 0, 'L', 0);
+        $this->tcpdf->Cell(20, 5,  $this->ts->trans('pdf_workorder.header.manufacturer'), 1, 0, 'L', 0);
         $this->tcpdf->SetFont('');
         $this->tcpdf->Cell(35, 5, '-', 1, 0, 'C', 0);
         $this->tcpdf->SetFont('', 'B', 7);
@@ -120,7 +120,7 @@ class WorkOrderPdfBuilderService
         $this->tcpdf->SetFont('');
         $this->tcpdf->Cell(35, 5, $workOrder->getCustomer()->getContacts()->first(), 1, 0, 'C', 0);
         $this->tcpdf->SetFont('', 'B', 7);
-        $this->tcpdf->Cell(20, 5, $this->ts->trans('admin.windmill.bladetype'), 1, 0, 'L', 0);
+        $this->tcpdf->Cell(20, 5, $this->ts->trans('pdf_workorder.header.turbine_model'), 1, 0, 'L', 0);
         $this->tcpdf->SetFont('');
         $this->tcpdf->Cell(35, 5, '-', 1, 0, 'C', 0);
         $this->tcpdf->SetFont('', 'B', 7);
@@ -134,7 +134,7 @@ class WorkOrderPdfBuilderService
         $this->tcpdf->SetFont('');
         $this->tcpdf->Cell(35, 5, $workOrder->getCustomer()->getPhone(), 1, 0, 'C', 0);
         $this->tcpdf->SetFont('', 'B', 7);
-        $this->tcpdf->Cell(20, 5, 'Material', 1, 0, 'L', 0);
+        $this->tcpdf->Cell(20, 5, $this->ts->trans('pdf_workorder.header.blade'), 1, 0, 'L', 0);
         $this->tcpdf->SetFont('');
         $this->tcpdf->Cell(35, 5, '-', 1, 0, 'C', 0);
         $this->tcpdf->SetFont('', 'B', 7);
@@ -148,7 +148,7 @@ class WorkOrderPdfBuilderService
         $this->tcpdf->SetFont('');
         $this->tcpdf->Cell(35, 5, $workOrder->getWindfarm()->getName(), 1, 0, 'C', 0);
         $this->tcpdf->SetFont('', 'B', 7);
-        $this->tcpdf->Cell(20, 5, 'Altura buje', 1, 0, 'L', 0);
+        $this->tcpdf->Cell(20, 5, $this->ts->trans('pdf_workorder.header.blade_model'), 1, 0, 'L', 0);
         $this->tcpdf->SetFont('');
         $this->tcpdf->Cell(35, 5, '-', 1, 0, 'C', 0);
         $this->tcpdf->SetFont('', 'B', 7);
@@ -162,9 +162,9 @@ class WorkOrderPdfBuilderService
         $this->tcpdf->SetFont('');
         $this->tcpdf->Cell(35, 5, $workOrder->getWindfarm()->getCity(), 1, 0, 'C', 0);
         $this->tcpdf->SetFont('', 'B', 7);
-        $this->tcpdf->Cell(20, 5, 'Anticaidas', 1, 0, 'L', 0);
+        $this->tcpdf->Cell(20, 5, '', 1, 0, 'L', 0);
         $this->tcpdf->SetFont('');
-        $this->tcpdf->Cell(35, 5, '-:', 1, 0, 'C', 0);
+        $this->tcpdf->Cell(35, 5, '', 1, 0, 'C', 0);
         $this->tcpdf->SetFont('', 'B', 7);
         $this->tcpdf->Cell(30, 5, '', 1, 0, 'C', 0);
         $this->tcpdf->SetFont('');
