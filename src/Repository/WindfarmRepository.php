@@ -183,7 +183,7 @@ class WindfarmRepository extends ServiceEntityRepository
     public function findCustomerEnabledSortedByNameAjaxQB(Customer $customer, $limit = null, $order = 'ASC')
     {
         return $this->findEnabledSortedByNameQB($limit, $order)
-            ->select('w.name, w.id')
+            ->select('w.name AS text, w.id')
             ->andWhere('w.customer = :customer')
             ->setParameter('customer', $customer);
     }

@@ -136,10 +136,10 @@ class AjaxResponse
                     $this->htmlOptionStringData .= sprintf('<option value="%s">%s</option>', (string) $data['id'], $data['text']);
                 }
             }
-            $pos = strpos($this->getHtmlOptionStringData(), '<option value="');
-            if (false !== $pos) {
-                $this->htmlOptionStringData = substr_replace($this->htmlOptionStringData, '<option selected="selected" value="', $pos, 15);
-            }
+//            $pos = strpos($this->getHtmlOptionStringData(), '<option value="');
+//            if (false !== $pos) {
+//                $this->htmlOptionStringData = substr_replace($this->htmlOptionStringData, '<option selected="selected" value="', $pos, 15);
+//            }
         }
         $result = array(
             'code' => $this->getCode(),

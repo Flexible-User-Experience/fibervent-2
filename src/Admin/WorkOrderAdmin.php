@@ -113,7 +113,7 @@ class WorkOrderAdmin extends AbstractBaseAdmin
                         'choices' => RepairAccessTypeEnum::getEnumArray(),
                         'multiple' => true,
                         'expanded' => true,
-                        'required' => true,
+                        'required' => false,
                     )
                 )
                 ->end()
@@ -239,8 +239,8 @@ class WorkOrderAdmin extends AbstractBaseAdmin
                         'label' => 'admin.workorder.repair_access_types',
                         'choices' => RepairAccessTypeEnum::getEnumArray(),
                         'multiple' => true,
-                        'expanded' => false,
-                        'required' => true,
+                        'expanded' => true,
+                        'required' => false,
                     )
                 )
                 ->end()
@@ -329,6 +329,20 @@ class WorkOrderAdmin extends AbstractBaseAdmin
                 )
             )
             ->add(
+                'repairAccessTypes',
+                null,
+                array(
+                    'label' => 'admin.workorder.repair_access_types',
+                ),
+                ChoiceType::class,
+                array(
+                    'choices' => RepairAccessTypeEnum::getDatagridFilterEnumArray(),
+                    'multiple' => false,
+                    'expanded' => false,
+                    'required' => false,
+                )
+            )
+            ->add(
                 'certifyingCompanyName',
                 null,
                 array(
@@ -354,13 +368,6 @@ class WorkOrderAdmin extends AbstractBaseAdmin
                 null,
                 array(
                     'label' => 'admin.workorder.certifying_company_email',
-                )
-            )
-            ->add(
-                'repairAccessTypes',
-                null,
-                array(
-                    'label' => 'admin.workorder.repair_access_types',
                 )
             )
             ->add(

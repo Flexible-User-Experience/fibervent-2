@@ -8,6 +8,11 @@
     <script type="text/javascript">
         jQuery(document).ready(function() {
             let workOrderNode = jQuery('#sonata-ba-field-container-{{ form.workOrder.vars.id }}');
+            let won = jQuery('#{{ form.workOrder.vars.id }}');
+            won.on('select2:select', function (e) {
+                console.log('won select2:select');
+                console.log(e);
+            });
             console.log(workOrderNode);
             workOrderNode.change(function(event) {
                 let workOrderId = event.val;
