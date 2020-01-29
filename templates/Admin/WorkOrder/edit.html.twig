@@ -30,7 +30,7 @@
             {% if admin.id(object) %}
                 {# edit mode #}
                 {% if not object.isFromAudit %}
-                    windfarmsNode.select2('enable', false);
+                    // windfarmsNode.select2('enable', false);
                 {% endif %}
                 {% if object.workOrderTasks | length > 0 %}
                     let bor = jQuery('#field_widget_{{ form.workOrderTasks.vars.id }}')[0].children[0].children[0].children[0];

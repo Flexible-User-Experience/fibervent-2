@@ -99,10 +99,11 @@ class WorkOrderAdmin extends AbstractBaseAdmin
                     'windfarms',
                     EntityType::class,
                     array(
-                        'class' => Windfarm::class,
                         'label' => 'admin.workorder.windfarms',
+                        'class' => Windfarm::class,
+                        'query_builder' => $this->wfr->findCustomerEnabledSortedByNameQB($this->getSubject()->getCustomer()),
+                        'required' => true,
                         'multiple' => true,
-                        'disabled' => true,
                     )
                 )
                 ->add(
@@ -516,17 +517,17 @@ class WorkOrderAdmin extends AbstractBaseAdmin
                 )
             )
             ->add(
-                'isFromAudit',
-                null,
-                array(
-                    'label' => 'admin.workorder.is_from_audit_short',
-                )
-            )
-            ->add(
                 'audits',
                 null,
                 array(
                     'label' => 'admin.audit.title',
+                )
+            )
+            ->add(
+                'isFromAudit',
+                null,
+                array(
+                    'label' => 'admin.workorder.is_from_audit_short',
                 )
             )
             ->end()
@@ -543,7 +544,7 @@ class WorkOrderAdmin extends AbstractBaseAdmin
                 null,
                 array(
                     'label' => 'admin.workorder.repair_access_types',
-                    'template' => 'Admin/Cells/show__repair_access_type.html.twig',
+                    'template' => 'Admin/Cells/show__extends_repair_access_type.html.twig',
                 )
             )
             ->end()
