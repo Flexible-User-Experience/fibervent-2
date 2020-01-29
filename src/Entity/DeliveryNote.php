@@ -2,8 +2,10 @@
 
 namespace App\Entity;
 
+use App\Enum\BladeEnum;
 use App\Enum\RepairAccessTypeEnum;
 use App\Enum\RepairWindmillSectionEnum;
+use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
@@ -28,7 +30,28 @@ class DeliveryNote extends AbstractBase
     private $workOrder;
 
     /**
-     * @var \DateTime
+     * @var Windfarm
+     *
+     * @ORM\ManyToOne(targetEntity="App\Entity\Windfarm")
+     */
+    private $windfarm;
+
+    /**
+     * @var Windmill
+     *
+     * @ORM\ManyToOne(targetEntity="App\Entity\Windmill")
+     */
+    private $windmill;
+
+    /**
+     * @var array
+     *
+     * @ORM\Column(name="blades", type="json_array", nullable=true)
+     */
+    private $blades = [];
+
+    /**
+     * @var DateTime
      *
      * @ORM\Column(type="datetime")
      */
@@ -166,9 +189,21 @@ class DeliveryNote extends AbstractBase
      */
 
     /**
-     * @return WorkOrder
+     * @param int|null $id
+     *
+     * @return DeliveryNote
      */
-    public function getWorkOrder()
+    public function setId(?int $id): DeliveryNote
+    {
+        $this->id = $id;
+
+        return $this;
+    }
+
+    /**
+     * @return WorkOrder|null
+     */
+    public function getWorkOrder(): ?WorkOrder
     {
         return $this->workOrder;
     }
@@ -186,7 +221,47 @@ class DeliveryNote extends AbstractBase
     }
 
     /**
-     * @return \DateTime
+     * @return Windfarm|null
+     */
+    public function getWindfarm(): ?Windfarm
+    {
+        return $this->windfarm;
+    }
+
+    /**
+     * @param Windfarm|null $windfarm
+     *
+     * @return $this
+     */
+    public function setWindfarm(?Windfarm $windfarm): DeliveryNote
+    {
+        $this->windfarm = $windfarm;
+
+        return $this;
+    }
+
+    /**
+     * @return Windmill|null
+     */
+    public function getWindmill(): ?Windmill
+    {
+        return $this->windmill;
+    }
+
+    /**
+     * @param Windmill|null $windmill
+     *
+     * @return $this
+     */
+    public function setWindmill(?Windmill $windmill): DeliveryNote
+    {
+        $this->windmill = $windmill;
+
+        return $this;
+    }
+
+    /**
+     * @return DateTime
      */
     public function getDate()
     {
@@ -202,13 +277,87 @@ class DeliveryNote extends AbstractBase
     }
 
     /**
-     * @param \DateTime $date
+     * @param DateTime $date
      *
      * @return DeliveryNote
      */
-    public function setDate(\DateTime $date): DeliveryNote
+    public function setDate(DateTime $date): DeliveryNote
     {
         $this->date = $date;
+
+        return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public function getBlades()
+    {
+        return $this->blades;
+    }
+
+    /**
+     * @return string
+     */
+    public function getBladesString(): string
+    {
+        $bladesString = [];
+        foreach ($this->getBlades() as $blade) {
+            $bladesString[] = BladeEnum::getTranslatedDecodedStringFromType($blade);
+        }
+
+        return join(', ', $bladesString);
+    }
+
+    /**
+     * @return array
+     */
+    public function getBladesStringsArray(): array
+    {
+        $bladesString = [];
+        foreach ($this->getBlades() as $blase) {
+            $bladesString[] = BladeEnum::getDecodedStringFromType($blase);
+        }
+
+        return $bladesString;
+    }
+
+    /**
+     * @param array $blades
+     *
+     * @return DeliveryNote
+     */
+    public function setBlades(array $blades): DeliveryNote
+    {
+        $this->blades = $blades;
+
+        return $this;
+    }
+
+    /**
+     * @param int $blade
+     *
+     * @return DeliveryNote
+     */
+    public function addBlade(int $blade): DeliveryNote
+    {
+        if (false === ($key = array_search($blade, $this->blades))) {
+            $this->blades[] = $blade;
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param int $blade
+     *
+     * @return DeliveryNote
+     */
+    public function removeBlade(int $blade): DeliveryNote
+    {
+        if (false !== ($key = array_search($blade, $this->blades))) {
+            unset($this->blades[$key]);
+        }
 
         return $this;
     }
@@ -241,10 +390,7 @@ class DeliveryNote extends AbstractBase
     {
         $repairWindmillSectionsString = [];
         foreach ($this->getRepairWindmillSections() as $repairWindmillSection) {
-            $repairWindmillSectionsString[] = RepairWindmillSectionEnum::getDecodedStringFromType(
-                $repairWindmillSection
-            );
-
+            $repairWindmillSectionsString[] = RepairWindmillSectionEnum::getDecodedStringFromType($repairWindmillSection);
         }
 
         return $repairWindmillSectionsString;

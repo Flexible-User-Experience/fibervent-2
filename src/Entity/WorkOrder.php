@@ -205,11 +205,11 @@ class WorkOrder extends AbstractBase
     }
 
     /**
-     * @param Customer $customer
+     * @param Customer|null $customer
      *
      * @return WorkOrder
      */
-    public function setCustomer(Customer $customer): WorkOrder
+    public function setCustomer(?Customer $customer): WorkOrder
     {
         $this->customer = $customer;
 

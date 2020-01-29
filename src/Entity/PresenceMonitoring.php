@@ -5,7 +5,6 @@ namespace App\Entity;
 use App\Enum\PresenceMonitoringCategoryEnum;
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
-use Exception;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
@@ -21,6 +20,8 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
  */
 class PresenceMonitoring extends AbstractBase
 {
+    const NORMAL_HOURS_AMOUNT = 8.0;
+
     /**
      * @var DateTime
      *
@@ -290,6 +291,22 @@ class PresenceMonitoring extends AbstractBase
     public function getDifferenceBetweenEndAndBeginHoursInDecimalHours()
     {
         return $this->getDifferenceBetweenEndAndBeginHoursInSeconds() / 60 / 60;
+    }
+
+    /**
+     * @return float
+     */
+    public function getNormalHoursDifferenceFromTotal()
+    {
+        return $this->getTotalHours() <= self::NORMAL_HOURS_AMOUNT ? $this->getTotalHours() : self::NORMAL_HOURS_AMOUNT;
+    }
+
+    /**
+     * @return float
+     */
+    public function getExtraHoursDifferenceFromTotal()
+    {
+        return $this->getTotalHours() > self::NORMAL_HOURS_AMOUNT ? $this->getTotalHours() - self::NORMAL_HOURS_AMOUNT : 0.0;
     }
 
     /**

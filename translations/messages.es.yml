@@ -129,6 +129,11 @@ pdf_workorder:
     customer_data: 'DATOS CLIENTE'
     windmill_data: 'DATOS AEROS'
     certifying_company_data: 'DATOS CERTIFICADORA'
+    turbine_model: 'Modelo aero'
+    manufacturer: 'Fabricante'
+    blade: 'Pala'
+    blade_model: 'Modelo pala'
+    blade_material: 'Material pala'
     sumary_external_damages_to_repair: 'RESUMEN DE DAÑOS A REPARAR EN'
     repair: 'REPARACIÓN CON'
   table_header:
@@ -177,7 +182,8 @@ enum:
     stop: Parada
     work: Trabajo
   time_register_shift:
-    morning: Mañana
+    morning: 'Mañana'
+    morning_lower: 'mañana'
     afternoon: Tarde
     night: Noche
   non_standard_used_material_item:
@@ -207,6 +213,8 @@ admin:
     details: Detalle
     totals: Totales
     print: Imprimir
+    edit: Editar
+    add: Añadir
   audit:
     title: Inspección
     title_list: Inspección
@@ -260,6 +268,8 @@ admin:
     title_create: Crear
     model: Modelo
     length: Longitud
+    material: Material
+    manufacturer: Fabricante
   bladedamage:
     title: Daño Pala
     title_list: Daño Pala
@@ -517,8 +527,8 @@ admin:
     title_list: Registro horario
     title_create: Crear
     worker: Empleado
-    morning_hour_begin: Hora entrada mañana
-    morning_hour_end: Hora salida mañana
+    morning_hour_begin: 'Hora entrada mañana'
+    morning_hour_end: 'Hora salida mañana'
     afternoon_hour_begin: Hora entrada tarde
     afternoon_hour_end: Hora salida tarde
     total_hours: Total horas
@@ -530,7 +540,7 @@ admin:
     category: Categoría
     hour: Hora
     day: Dia
-    morning: Mañana
+    morning: 'Mañana'
     afternoon: Tarde
     begin: Entrada
     end: Salida

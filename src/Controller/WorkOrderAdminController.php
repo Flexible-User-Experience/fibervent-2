@@ -44,7 +44,7 @@ class WorkOrderAdminController extends AbstractBaseAdminController
             return new JsonResponse($ajaxResponse);
         }
         $ajaxResponse->setData($wfr->findCustomerEnabledSortedByNameAjax($customer));
-        $jsonEncodedResult = $ajaxResponse->getJsonEncodedResult();
+        $jsonEncodedResult = $ajaxResponse->getJsonEncodedResultWithoutFirstOptionSelected();
 
         return new JsonResponse($jsonEncodedResult);
     }

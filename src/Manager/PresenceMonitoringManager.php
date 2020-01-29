@@ -42,7 +42,19 @@ class PresenceMonitoringManager
      *
      * @return array|PresenceMonitoring[]
      */
-    public function getItemsByOperatorYearAndMonthSortedByDate(User $operator, $year, $month)
+    public function getAllItemsByOperatorYearAndMonthSortedByDate(User $operator, $year, $month)
+    {
+        return $this->pmr->findAllDaysByOperatorYearAndMonthSortedByDate($operator, $year, $month);
+    }
+
+    /**
+     * @param User $operator
+     * @param int  $year
+     * @param int  $month
+     *
+     * @return array|PresenceMonitoring[]
+     */
+    public function getWorkdaysByOperatorYearAndMonthSortedByDate(User $operator, $year, $month)
     {
         return $this->pmr->findWorkdaysByOperatorYearAndMonthSortedByDate($operator, $year, $month);
     }
@@ -58,7 +70,7 @@ class PresenceMonitoringManager
     public function createFullMonthItemsListByOperatorYearAndMonth(User $operator, $year, $month)
     {
         $result = array();
-        $items = $this->getItemsByOperatorYearAndMonthSortedByDate($operator, $year, $month);
+        $items = $this->getAllItemsByOperatorYearAndMonthSortedByDate($operator, $year, $month);
         $currentItem = array_shift($items);
         $daysInMonth = cal_days_in_month(CAL_GREGORIAN, $month , $year);
         $day = new DateTime();
@@ -69,11 +81,13 @@ class PresenceMonitoringManager
             $day = new DateTime();
             $day->setDate($year, $month, $dayNumber);
             if ($currentItem && $currentItem->getDateString() == $day->format('d/m/Y')) {
-                $totalItem
-                    ->setTotalHours($totalItem->getTotalHours() + $currentItem->getTotalHours())
-                    ->setNormalHours($totalItem->getNormalHours() + $currentItem->getNormalHours())
-                    ->setExtraHours($totalItem->getExtraHours() + $currentItem->getExtraHours())
-                ;
+                if ($currentItem->getCategory() == PresenceMonitoringCategoryEnum::WORKDAY) {
+                    $totalItem
+                        ->setTotalHours($totalItem->getTotalHours() + $currentItem->getTotalHours())
+                        ->setNormalHours($totalItem->getNormalHours() + $currentItem->getNormalHours())
+                        ->setExtraHours($totalItem->getExtraHours() + $currentItem->getExtraHours())
+                    ;
+                }
                 array_push($result, $currentItem);
                 $currentItem = array_shift($items);
             } else {

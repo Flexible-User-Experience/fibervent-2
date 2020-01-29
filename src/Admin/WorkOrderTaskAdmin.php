@@ -4,11 +4,13 @@ namespace App\Admin;
 
 use App\Entity\Windfarm;
 use App\Entity\WorkOrder;
+use App\Enum\BladeDamagePositionEnum;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Form\Type\ModelAutocompleteType;
 use Sonata\AdminBundle\Form\Type\ModelType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 /**
  * Class WorkOrderTaskAdmin.
@@ -98,10 +100,13 @@ class WorkOrderTaskAdmin extends AbstractBaseAdmin
                     )
                     ->add(
                         'position',
-                        null,
+                        ChoiceType::class,
                         array(
                             'label' => 'admin.bladedamage.position',
                             'disabled' => true,
+                            'choices' => BladeDamagePositionEnum::getEnumArray(),
+                            'multiple' => false,
+                            'expanded' => false,
                         )
                     )
                     ->add(
@@ -161,9 +166,12 @@ class WorkOrderTaskAdmin extends AbstractBaseAdmin
                     )
                     ->add(
                         'position',
-                        null,
+                        ChoiceType::class,
                         array(
                             'label' => 'admin.bladedamage.position',
+                            'choices' => BladeDamagePositionEnum::getEnumArray(),
+                            'multiple' => false,
+                            'expanded' => false,
                         )
                     )
                     ->add(
@@ -222,9 +230,12 @@ class WorkOrderTaskAdmin extends AbstractBaseAdmin
                 )
                 ->add(
                     'position',
-                    null,
+                    ChoiceType::class,
                     array(
                         'label' => 'admin.bladedamage.position',
+                        'choices' => BladeDamagePositionEnum::getEnumArray(),
+                        'multiple' => false,
+                        'expanded' => false,
                     )
                 )
                 ->add(

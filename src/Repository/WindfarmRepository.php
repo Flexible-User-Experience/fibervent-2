@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Customer;
 use App\Entity\Windfarm;
+use App\Entity\WorkOrder;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry as RegistryInterface;
 use Doctrine\ORM\Query;
@@ -182,7 +183,7 @@ class WindfarmRepository extends ServiceEntityRepository
     public function findCustomerEnabledSortedByNameAjaxQB(Customer $customer, $limit = null, $order = 'ASC')
     {
         return $this->findEnabledSortedByNameQB($limit, $order)
-            ->select('w.name, w.id')
+            ->select('w.name AS text, w.id')
             ->andWhere('w.customer = :customer')
             ->setParameter('customer', $customer);
     }
@@ -209,5 +210,52 @@ class WindfarmRepository extends ServiceEntityRepository
     public function findCustomerEnabledSortedByNameAjax(Customer $customer, $limit = null, $order = 'ASC')
     {
         return $this->findCustomerEnabledSortedByNameAjaxQ($customer, $limit, $order)->getResult();
+    }
+
+    /**
+     * @param WorkOrder $workOrder
+     *
+     * @return QueryBuilder
+     */
+    public function findOnlyRelatedWithAWorkOrderSortedByNameQB(WorkOrder $workOrder)
+    {
+        $query = $this
+            ->createQueryBuilder('w')
+//            ->select('w.name, w.id')
+//            ->from('')
+            ->where('w.customer = :customer')
+            ->setParameter('customer', $workOrder->getCustomer())
+            ->orderBy('w.name', 'ASC')
+        ;
+        if (count($workOrder->getWindfarms()) > 0) {
+            $wfia = array();
+            /** @var Windfarm $windfarm */
+            foreach ($workOrder->getWindfarms() as $windfarm) {
+                $wfia[] = $windfarm->getId();
+            }
+            $query->andWhere($query->expr()->in('w.id', $wfia));
+        }
+
+        return $query;
+    }
+
+    /**
+     * @param WorkOrder $workOrder
+     *
+     * @return Query
+     */
+    public function findOnlyRelatedWithAWorkOrderSortedByNameQ(WorkOrder $workOrder)
+    {
+        return $this->findOnlyRelatedWithAWorkOrderSortedByNameQB($workOrder)->getQuery();
+    }
+
+    /**
+     * @param WorkOrder $workOrder
+     *
+     * @return array
+     */
+    public function findOnlyRelatedWithAWorkOrderSortedByName(WorkOrder $workOrder)
+    {
+        return $this->findOnlyRelatedWithAWorkOrderSortedByNameQ($workOrder)->getResult();
     }
 }
