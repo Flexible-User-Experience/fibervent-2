@@ -29,11 +29,12 @@
             customerNode.on('change', function(event) {updateWindfarmNodeByCustomer(event.val);});
             {% if admin.id(object) %}
                 {# edit mode #}
-                {% if not object.isFromAudit %}
+{#                {% if not object.isFromAudit %}#}
                     // windfarmsNode.select2('enable', false);
-                {% endif %}
+{#                {% endif %}#}
                 {% if object.workOrderTasks | length > 0 %}
                     let bor = jQuery('#field_widget_{{ form.workOrderTasks.vars.id }}')[0].children[0].children[0].children[0];
+                    console.log(bor);
                     // bor.children[1].width = '30%';
                     bor.children[2].width = '5%';
                     bor.children[3].width = '5%';
@@ -58,17 +59,19 @@
                 {% endif %}
                 jQuery(document).on('sonata.add_element', function(event, elementId, objectId, uniqid) {
                     // TODO Update only the new object
-                    let workOrderTasks = jQuery('#field_widget_{{  form.workOrderTasks.vars.id }}')[0].children[0].children[1].childElementCount;
+                    let workOrderTasks = jQuery('#field_widget_{{ form.workOrderTasks.vars.id }}')[0].children[0].children[1].childElementCount;
                     let windmillNodes = [];
-                    let windfarmNode = jQuery('#s2id_{{ form.windfarms.vars.id }}');
-                    let windfarmsName = [];
-                    for (let i = 0; i < windfarmNode[0].children[0].children.length - 1; i++) {
-                        windfarmsName[i] = windfarmNode[0].children[0].children[i].innerText;
-                    }
+                    let windfarmsNode = jQuery('#{{ form.windfarms.vars.id }}');
+                    console.log('windfarmsNode', windfarmsNode.val());
+                    {#let windfarmNode = jQuery('#s2id_{{ form.windfarms.vars.id }}');#}
+                    // let windfarmsName = [];
+                    // for (let i = 0; i < windfarmNode[0].children[0].children.length - 1; i++) {
+                    //     windfarmsName[i] = windfarmNode[0].children[0].children[i].innerText;
+                    // }
                     for (let i = 0; i < workOrderTasks; i++) {
                         windmillNodes[i] = jQuery('#{{ form.workOrderTasks.vars.id }}_' + i + '_windmill');
                         console.log(windmillNodes[i]);
-                        updateWindmillNodeByWindfarms(windfarmsName, windmillNodes[i]);
+                        updateWindmillNodeByWindfarmsBySelectedWindfarmsIds(windfarmsNode.val(), windmillNodes[i]);
                         windmillNodes[i].change((function() {
                             let k = i;
                             return function (event) {
@@ -114,25 +117,13 @@
                 {% endif %}
             });
         }
-        function updateWindmillNodeByWindfarms(windfarmsName, windmillNode) {
-            console.log(windfarmsName);
-            jQuery.post(Routing.generate('admin_app_workorder_getWindmillsFromWindfarmsName', windfarmsName)).done(function (response) {
+        function updateWindmillNodeByWindfarmsBySelectedWindfarmsIds(selectedWindfarmsIds, windmillNode) {
+            console.log('updateWindmillNodeByWindfarmsBySelectedWindfarmsIds', selectedWindfarmsIds);
+            let windfarmsNode = jQuery('#{{ form.windfarms.vars.id }}');
+            jQuery.post(Routing.generate('admin_app_workorder_getWindmillsFromSelectedWindfarmsIds', selectedWindfarmsIds)).done(function (response) {
                 let jsonResponse = jQuery.parseJSON(response);
-//                console.log(windmillNode);
-//                console.log(jsonResponse,'jsonresponse');
-//                console.log(response,'response');
-                // TODO be careful in EDIT mode (previously Audit maybe selected when WorkOrder is from Audit)
-                while (windmillNode[0].firstChild) {
-                    windmillNode[0].removeChild(windmillNode[0].firstChild);
-                }
-                if (jsonResponse.data.length > 0) {
-                    for (let i = 0; i < jsonResponse.data.length; i++) {
-                        let option = document.createElement("option");
-                        option.innerText = jsonResponse.data[i].text;
-                        option.value = jsonResponse.data[i].id;
-                        windmillNode[0].appendChild(option);
-                    }
-                }
+                console.log('updateWindmillNodeByWindfarmsBySelectedWindfarmsIds ajax response', jsonResponse);
+                windmillNode.empty().html(jsonResponse.htmlOptionStringData);
             });
         }
     </script>

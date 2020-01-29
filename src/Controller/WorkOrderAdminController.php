@@ -43,7 +43,7 @@ class WorkOrderAdminController extends AbstractBaseAdminController
         if (!$customer) {
             return new JsonResponse($ajaxResponse);
         }
-        $ajaxResponse->setData($wfr->findCustomerEnabledSortedByNameAjax($customer));
+        $ajaxResponse->setData($wfr->findMultipleByWindfarmsIdsArrayAjax($customer));
         $jsonEncodedResult = $ajaxResponse->getJsonEncodedResultWithoutFirstOptionSelected();
 
         return new JsonResponse($jsonEncodedResult);
@@ -54,37 +54,14 @@ class WorkOrderAdminController extends AbstractBaseAdminController
      *
      * @return JsonResponse
      */
-    public function getWindmillsFromWindfarmsNameAction(Request $request) {
-        $windmfarmsName = $request->query->all();
+    public function getWindmillsFromSelectedWindfarmsIdsAction(Request $request) {
+        $data = [];
+        $windmfarmsIds = $request->query->all();
         $ajaxResponse = new AjaxResponse();
-        /** @var WindfarmRepository $wmr */
-        $wfr = $this->container->get('app.windfarm_repository');
         /** @var WindmillRepository $wmbr */
         $wmr = $this->container->get('app.windmill_repository');
-        /** @var Windfarm[] $windfarms */
-        $windfarms = [];
-        foreach ($windmfarmsName as $windfarmName) {
-            $windfarmsResults = $wfr->findEnabledSortedByNameQB()->andWhere('w.name = :wfn')->setParameter('wfn',$windfarmName)->getQuery()->getResult();
-            foreach ($windfarmsResults as $windfarmsResult) {
-                $windfarms[] =$windfarmsResult;
-            }
-        }
-        if (!$windfarms) {
-            return new JsonResponse($ajaxResponse);
-        }
-        /** @var Windmill[] $data */
-        $data = [];
-        /** @var Windfarm $windfarm */
-        foreach ($windfarms as $windfarm) {
-            $windmillResults = $wmr->findEnabledandWindfarmSortedByCustomerWindfarmAndWindmillCode($windfarm);
-            /** @var Windmill $windmillResult */
-            foreach ($windmillResults as $windmillResult) {
-                $result = array(
-                    'id' => $windmillResult->getId(),
-                    'text' => $windmillResult->getCode()
-                );
-                $data[] = $result;
-            }
+        if (count($windmfarmsIds) > 0) {
+            $data = $wmr->findMultipleByWindfarmsIdsArrayAjax($windmfarmsIds);
         }
         $ajaxResponse->setData($data);
         $jsonEncodedResult = $ajaxResponse->getJsonEncodedResult();

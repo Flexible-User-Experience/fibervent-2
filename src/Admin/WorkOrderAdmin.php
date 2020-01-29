@@ -43,7 +43,7 @@ class WorkOrderAdmin extends AbstractBaseAdmin
             ->remove('batch')
             ->add('getWindfarmsFromCustomerId', $this->getRouterIdParameter().'/get-windfarms-from-customer-id')
             ->add('getWindmillbladesFromWindmillId', $this->getRouterIdParameter().'/get-windmillblades-from-windmill-id')
-            ->add('getWindmillsFromWindfarmsName', 'get-windmills-from-windfarms-name')
+            ->add('getWindmillsFromSelectedWindfarmsIds', 'get-windmills-from-selected-windfarms-ids')
             ->add('pdf', $this->getRouterIdParameter().'/pdf')
         ;
     }
@@ -229,7 +229,7 @@ class WorkOrderAdmin extends AbstractBaseAdmin
                         'label' => 'admin.workorder.windfarms',
                         'class' => Windfarm::class,
                         'query_builder' => $this->wfr->findEnabledSortedByNameQB(),
-                        'required' => false,
+                        'required' => true,
                         'multiple' => true,
                     )
                 )
