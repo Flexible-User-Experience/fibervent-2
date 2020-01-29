@@ -112,7 +112,7 @@ class WorkOrderAdmin extends AbstractBaseAdmin
                         'label' => 'admin.workorder.repair_access_types',
                         'choices' => RepairAccessTypeEnum::getEnumArray(),
                         'multiple' => true,
-                        'expanded' => false,
+                        'expanded' => true,
                         'required' => true,
                     )
                 )
