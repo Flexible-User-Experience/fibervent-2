@@ -99,10 +99,11 @@ class WorkOrderAdmin extends AbstractBaseAdmin
                     'windfarms',
                     EntityType::class,
                     array(
-                        'class' => Windfarm::class,
                         'label' => 'admin.workorder.windfarms',
+                        'class' => Windfarm::class,
+                        'query_builder' => $this->wfr->findCustomerEnabledSortedByNameQB($this->getSubject()->getCustomer()),
+                        'required' => true,
                         'multiple' => true,
-                        'disabled' => true,
                     )
                 )
                 ->add(
@@ -112,8 +113,8 @@ class WorkOrderAdmin extends AbstractBaseAdmin
                         'label' => 'admin.workorder.repair_access_types',
                         'choices' => RepairAccessTypeEnum::getEnumArray(),
                         'multiple' => true,
-                        'expanded' => false,
-                        'required' => true,
+                        'expanded' => true,
+                        'required' => false,
                     )
                 )
                 ->end()
@@ -239,8 +240,8 @@ class WorkOrderAdmin extends AbstractBaseAdmin
                         'label' => 'admin.workorder.repair_access_types',
                         'choices' => RepairAccessTypeEnum::getEnumArray(),
                         'multiple' => true,
-                        'expanded' => false,
-                        'required' => true,
+                        'expanded' => true,
+                        'required' => false,
                     )
                 )
                 ->end()
@@ -329,6 +330,20 @@ class WorkOrderAdmin extends AbstractBaseAdmin
                 )
             )
             ->add(
+                'repairAccessTypes',
+                null,
+                array(
+                    'label' => 'admin.workorder.repair_access_types',
+                ),
+                ChoiceType::class,
+                array(
+                    'choices' => RepairAccessTypeEnum::getDatagridFilterEnumArray(),
+                    'multiple' => false,
+                    'expanded' => false,
+                    'required' => false,
+                )
+            )
+            ->add(
                 'certifyingCompanyName',
                 null,
                 array(
@@ -354,13 +369,6 @@ class WorkOrderAdmin extends AbstractBaseAdmin
                 null,
                 array(
                     'label' => 'admin.workorder.certifying_company_email',
-                )
-            )
-            ->add(
-                'repairAccessTypes',
-                null,
-                array(
-                    'label' => 'admin.workorder.repair_access_types',
                 )
             )
             ->add(
@@ -509,17 +517,17 @@ class WorkOrderAdmin extends AbstractBaseAdmin
                 )
             )
             ->add(
-                'isFromAudit',
-                null,
-                array(
-                    'label' => 'admin.workorder.is_from_audit_short',
-                )
-            )
-            ->add(
                 'audits',
                 null,
                 array(
                     'label' => 'admin.audit.title',
+                )
+            )
+            ->add(
+                'isFromAudit',
+                null,
+                array(
+                    'label' => 'admin.workorder.is_from_audit_short',
                 )
             )
             ->end()
@@ -536,7 +544,7 @@ class WorkOrderAdmin extends AbstractBaseAdmin
                 null,
                 array(
                     'label' => 'admin.workorder.repair_access_types',
-                    'template' => 'Admin/Cells/show__repair_access_type.html.twig',
+                    'template' => 'Admin/Cells/show__extends_repair_access_type.html.twig',
                 )
             )
             ->end()

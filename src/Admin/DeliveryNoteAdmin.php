@@ -47,8 +47,9 @@ class DeliveryNoteAdmin extends AbstractBaseAdmin
     protected function configureRoutes(RouteCollection $collection)
     {
         $collection
-            ->add('pdf', $this->getRouterIdParameter().'/pdf')
             ->remove('batch')
+            ->add('getWindfarmsFromWorkOrderId', $this->getRouterIdParameter().'/get-windfarms-from-work-order-id')
+            ->add('pdf', $this->getRouterIdParameter().'/pdf')
         ;
     }
 
@@ -67,8 +68,6 @@ class DeliveryNoteAdmin extends AbstractBaseAdmin
                     'format' => 'd/M/y',
                 )
             )
-        ;
-        $formMapper
             ->add(
                 'workOrder',
                 EntityType::class,
@@ -82,6 +81,13 @@ class DeliveryNoteAdmin extends AbstractBaseAdmin
             ->end()
             ->with('admin.deliverynote.pdf.customer_data', $this->getFormMdSuccessBoxArray(4))
         ;
+        if ($this->id($this->getSubject())) {
+            // edit
+            $wfqb = $this->wfr->findOnlyRelatedWithAWorkOrderSortedByNameQB($this->getSubject()->getWorkOrder());
+        } else {
+            // new
+            $wfqb = $this->wfr->findAllSortedByNameQB();
+        }
         $formMapper
             ->add(
                 'windfarm',
@@ -89,7 +95,7 @@ class DeliveryNoteAdmin extends AbstractBaseAdmin
                 array(
                     'label' => 'admin.windfarm.title',
                     'class' => Windfarm::class,
-                    'query_builder' => $this->wfr->findAllSortedByNameQB(),
+                    'query_builder' => $wfqb,
                 )
             )
         ;
@@ -112,8 +118,8 @@ class DeliveryNoteAdmin extends AbstractBaseAdmin
                     'label' => 'admin.deliverynote.pdf.work_in',
                     'choices' => RepairWindmillSectionEnum::getEnumArray(),
                     'multiple' => true,
-                    'expanded' => false,
-                    'required' => true,
+                    'expanded' => true,
+                    'required' => false,
                 )
             )
             ->add(
@@ -123,8 +129,8 @@ class DeliveryNoteAdmin extends AbstractBaseAdmin
                     'label' => 'admin.deliverynote.pdf.blade_number',
                     'choices' => BladeEnum::getLongTextEnumArray(),
                     'multiple' => true,
-                    'expanded' => false,
-                    'required' => true,
+                    'expanded' => true,
+                    'required' => false,
                 )
             )
             ->end()
@@ -202,8 +208,8 @@ class DeliveryNoteAdmin extends AbstractBaseAdmin
                     'label' => 'admin.deliverynote.repair_access_types',
                     'choices' => RepairAccessTypeEnum::getEnumArray(),
                     'multiple' => true,
-                    'expanded' => false,
-                    'required' => true,
+                    'expanded' => true,
+                    'required' => false,
                 )
             )
             ->add(
