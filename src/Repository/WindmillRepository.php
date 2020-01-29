@@ -186,12 +186,10 @@ class WindmillRepository extends ServiceEntityRepository
      */
     public function findMultipleByWindfarmsIdsArrayAjaxQB(array $ids)
     {
-        $query = $this
-            ->createQueryBuilder('wm')
-            ->join('wm.windfarm', 'wf')
+        $query = $this->createQueryBuilder('wm')
             ->select('wm.code AS text, wm.id')
             ->orderBy('wm.code', 'ASC');
-        $query->where($query->expr()->in('wf.id', $ids));
+        $query->where($query->expr()->in('wm.windfarm', $ids));
 
         return $query;
     }
