@@ -65,8 +65,10 @@ class WorkOrderTaskAdmin extends AbstractBaseAdmin
             /** @var Windfarm $windfarm */
             $windfarm = $workOrder->getWindfarm();
         }
-        if ($this->id($this->getSubject())) { // is edit mode, disable on new subjects
+        if ($this->id($this->getSubject())) {
+            // is in edit mode
             if ($this->getSubject()->isFromAudit()) {
+                // is in edit mode from audit
                 $formMapper
                     ->with('admin.bladedamage.title', $this->getFormMdSuccessBoxArray(5))
                     ->add('windmill',
@@ -135,6 +137,7 @@ class WorkOrderTaskAdmin extends AbstractBaseAdmin
                     )
                     ->end();
             } else {
+                // is in edit mode NOT from audit
                 $formMapper
                     ->with('admin.bladedamage.title', $this->getFormMdSuccessBoxArray(5))
                     ->add('windmill',
@@ -162,6 +165,7 @@ class WorkOrderTaskAdmin extends AbstractBaseAdmin
                             'label' => 'admin.bladedamage.title',
                             'disabled' => true,
                             'property' => 'damage.code',
+                            'required' => true,
                         )
                     )
                     ->add(
@@ -172,6 +176,7 @@ class WorkOrderTaskAdmin extends AbstractBaseAdmin
                             'choices' => BladeDamagePositionEnum::getEnumArray(),
                             'multiple' => false,
                             'expanded' => false,
+                            'required' => true,
                         )
                     )
                     ->add(
@@ -179,6 +184,7 @@ class WorkOrderTaskAdmin extends AbstractBaseAdmin
                         null,
                         array(
                             'label' => 'admin.bladedamage.radius',
+                            'required' => true,
                         )
                     )
                     ->add(
@@ -186,6 +192,7 @@ class WorkOrderTaskAdmin extends AbstractBaseAdmin
                         null,
                         array(
                             'label' => 'admin.bladedamage.distance',
+                            'required' => true,
                         )
                     )
                     ->add(
@@ -193,12 +200,14 @@ class WorkOrderTaskAdmin extends AbstractBaseAdmin
                         null,
                         array(
                             'label' => 'admin.bladedamage.size',
+                            'required' => true,
                         )
                     )
                     ->end()
                 ;
             }
         } else {
+            // is in create or new mode
             $formMapper
                 ->with('admin.bladedamage.title', $this->getFormMdSuccessBoxArray(5))
                 ->add('windmill',
@@ -236,6 +245,7 @@ class WorkOrderTaskAdmin extends AbstractBaseAdmin
                         'choices' => BladeDamagePositionEnum::getEnumArray(),
                         'multiple' => false,
                         'expanded' => false,
+                        'required' => true,
                     )
                 )
                 ->add(
@@ -243,6 +253,7 @@ class WorkOrderTaskAdmin extends AbstractBaseAdmin
                     null,
                     array(
                         'label' => 'admin.bladedamage.radius',
+                        'required' => true,
                     )
                 )
                 ->add(
@@ -250,6 +261,7 @@ class WorkOrderTaskAdmin extends AbstractBaseAdmin
                     null,
                     array(
                         'label' => 'admin.bladedamage.distance',
+                        'required' => true,
                     )
                 )
                 ->add(
@@ -257,6 +269,7 @@ class WorkOrderTaskAdmin extends AbstractBaseAdmin
                     null,
                     array(
                         'label' => 'admin.bladedamage.size',
+                        'required' => true,
                     )
                 )
                 ->end();
