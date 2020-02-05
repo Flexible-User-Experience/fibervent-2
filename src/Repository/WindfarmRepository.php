@@ -264,7 +264,7 @@ class WindfarmRepository extends ServiceEntityRepository
      *
      * @return QueryBuilder
      */
-    public function findMultipleByIdsArrayAjaxQB(array $ids)
+    public function getMultipleByIdsArrayAjaxQB(array $ids)
     {
         $query = $this->createQueryBuilder('w')->select('w.name AS text, w.id')->orderBy('w.name', 'ASC');
         $query->where($query->expr()->in('w.id', $ids));
@@ -277,9 +277,9 @@ class WindfarmRepository extends ServiceEntityRepository
      *
      * @return Query
      */
-    public function findMultipleByIdsArrayAjaxQ(array $ids)
+    public function getMultipleByIdsArrayAjaxQ(array $ids)
     {
-        return $this->findMultipleByIdsArrayAjaxQB($ids)->getQuery();
+        return $this->getMultipleByIdsArrayAjaxQB($ids)->getQuery();
     }
 
     /**
@@ -287,8 +287,8 @@ class WindfarmRepository extends ServiceEntityRepository
      *
      * @return array
      */
-    public function findMultipleByIdsArrayAjax(array $ids)
+    public function getMultipleByIdsArrayAjax(array $ids)
     {
-        return $this->findMultipleByIdsArrayAjaxQ($ids)->getResult();
+        return $this->getMultipleByIdsArrayAjaxQ($ids)->getResult();
     }
 }

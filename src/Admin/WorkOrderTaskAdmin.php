@@ -237,7 +237,7 @@ class WorkOrderTaskAdmin extends AbstractBaseAdmin
                         'label' => 'admin.windmillblade.title',
                         'btn_add' => false,
                         'required' => false,
-                        'query' => $this->wbr->findEmptyResultQB(),
+                        'property' => 'order',
                     )
                 )
                 ->add(
@@ -289,19 +289,23 @@ class WorkOrderTaskAdmin extends AbstractBaseAdmin
         }
         $formMapper
             ->with('admin.common.general', $this->getFormMdSuccessBoxArray(7))
-            ->add('description',
+            ->add(
+                'description',
                 null,
                 array(
                     'label' => 'admin.workordertask.description',
+                    'required' => true,
                 )
             )
-            ->add('isCompleted',
+            ->add(
+                'isCompleted',
                 null,
                 array(
                     'label' => 'admin.workordertask.is_completed',
                 )
             )
-            ->add('isFromAudit',
+            ->add(
+                'isFromAudit',
                 null,
                 array(
                     'label' => 'admin.workorder.is_from_audit',

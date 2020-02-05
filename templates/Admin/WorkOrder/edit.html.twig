@@ -58,10 +58,8 @@
                     let workOrderTasks = jQuery('#field_widget_{{ form.workOrderTasks.vars.id }}')[0].children[0].children[1].childElementCount;
                     let windmillNodes = [];
                     let windfarmsNode = jQuery('#{{ form.windfarms.vars.id }}');
-                    console.log('windfarmsNode', windfarmsNode.val());
                     for (let i = 0; i < workOrderTasks; i++) {
                         windmillNodes[i] = jQuery('#{{ form.workOrderTasks.vars.id }}_' + i + '_windmill');
-                        console.log(windmillNodes[i]);
                         updateWindmillNodeByWindfarmsBySelectedWindfarmsIds(windfarmsNode.val(), windmillNodes[i]);
                         windmillNodes[i].change((function() {
                             let k = i;
@@ -77,7 +75,6 @@
                     jQuery.get(Routing.generate('admin_app_workorder_getWindmillbladesFromWindmillId', {id: windmillBladeId})).done(function (response) {
                         let jsonResponse = jQuery.parseJSON(response);
                         let windmillBladeNode = jQuery('#{{ form.workOrderTasks.vars.id }}_'+i+'_windmillBlade');
-                        console.log('updateWindmillBladeNodeByWindmill ajax response', jsonResponse);
                         windmillBladeNode.empty().html(jsonResponse.htmlOptionStringData);
                     })
                 }

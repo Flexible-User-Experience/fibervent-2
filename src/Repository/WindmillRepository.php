@@ -222,7 +222,7 @@ class WindmillRepository extends ServiceEntityRepository
      *
      * @return QueryBuilder
      */
-    public function findMultipleByWindfarmsIdsArrayAjaxQB(array $ids)
+    public function getMultipleByWindfarmsIdsArrayAjaxQB(array $ids)
     {
         $query = $this->createQueryBuilder('wm')
             ->select('wm.code AS text, wm.id')
@@ -237,9 +237,9 @@ class WindmillRepository extends ServiceEntityRepository
      *
      * @return Query
      */
-    public function findMultipleByWindfarmsIdsArrayAjaxQ(array $ids)
+    public function getMultipleByWindfarmsIdsArrayAjaxQ(array $ids)
     {
-        return $this->findMultipleByWindfarmsIdsArrayAjaxQB($ids)->getQuery();
+        return $this->getMultipleByWindfarmsIdsArrayAjaxQB($ids)->getQuery();
     }
 
     /**
@@ -247,8 +247,8 @@ class WindmillRepository extends ServiceEntityRepository
      *
      * @return array
      */
-    public function findMultipleByWindfarmsIdsArrayAjax(array $ids)
+    public function getMultipleByWindfarmsIdsArrayAjax(array $ids)
     {
-        return $this->findMultipleByWindfarmsIdsArrayAjaxQ($ids)->getResult();
+        return $this->getMultipleByWindfarmsIdsArrayAjaxQ($ids)->getResult();
     }
 }

@@ -5,6 +5,8 @@ namespace App\Admin;
 use App\Entity\Audit;
 use App\Entity\Customer;
 use App\Entity\Windfarm;
+use App\Entity\WorkOrder;
+use App\Entity\WorkOrderTask;
 use App\Enum\RepairAccessTypeEnum;
 use App\Enum\WorkOrderStatusEnum;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
@@ -599,5 +601,42 @@ class WorkOrderAdmin extends AbstractBaseAdmin
             )
             ->end()
         ;
+    }
+
+    /**
+     * Fix problem with empty WorkOrderTask descriptions.
+     *
+     * @param WorkOrder $object
+     */
+    public function prePersist($object)
+    {
+        $this->commonPreEvents($object);
+    }
+
+    /**
+     * Fix problem with empty WorkOrderTask descriptions.
+     *
+     * @param WorkOrder $object
+     */
+    public function preUpdate($object)
+    {
+        $this->commonPreEvents($object);
+    }
+
+    /**
+     * Fix problem with empty WorkOrderTask descriptions.
+     *
+     * @param WorkOrder $object
+     */
+    private function commonPreEvents(&$object)
+    {
+        if (count($object->getWorkOrderTasks()) > 0) {
+            /** @var WorkOrderTask $workOrderTask */
+            foreach ($object->getWorkOrderTasks() as $workOrderTask) {
+                if (!$workOrderTask->getDescription()) {
+                    $workOrderTask->setDescription('---');
+                }
+            }
+        }
     }
 }

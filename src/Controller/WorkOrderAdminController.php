@@ -43,7 +43,7 @@ class WorkOrderAdminController extends AbstractBaseAdminController
         if (!$customer) {
             return new JsonResponse($ajaxResponse);
         }
-        $ajaxResponse->setData($wfr->findMultipleByWindfarmsIdsArrayAjax($customer));
+        $ajaxResponse->setData($wfr->findCustomerEnabledSortedByNameAjax($customer));
         $jsonEncodedResult = $ajaxResponse->getJsonEncodedResultWithoutFirstOptionSelected();
 
         return new JsonResponse($jsonEncodedResult);
@@ -61,7 +61,7 @@ class WorkOrderAdminController extends AbstractBaseAdminController
         /** @var WindmillRepository $wmbr */
         $wmr = $this->container->get('app.windmill_repository');
         if (count($windmfarmsIds) > 0) {
-            $data = $wmr->findMultipleByWindfarmsIdsArrayAjax($windmfarmsIds);
+            $data = $wmr->getMultipleByWindfarmsIdsArrayAjax($windmfarmsIds);
         }
         $ajaxResponse->setData($data);
         $jsonEncodedResult = $ajaxResponse->getJsonEncodedResult();
