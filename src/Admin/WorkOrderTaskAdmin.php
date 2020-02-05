@@ -237,6 +237,7 @@ class WorkOrderTaskAdmin extends AbstractBaseAdmin
                         'label' => 'admin.windmillblade.title',
                         'btn_add' => false,
                         'required' => false,
+                        'query' => $this->wbr->findEmptyResultQB(),
                     )
                 )
                 ->add(

@@ -114,4 +114,28 @@ class WindmillBladeRepository extends ServiceEntityRepository
     {
         return $this->findWindmillSortedByCodeAjaxQ($windmill, $limit, $order)->getResult();
     }
+
+    /**
+     * @return QueryBuilder
+     */
+    public function findEmptyResultQB()
+    {
+        return $this->createQueryBuilder('wb')->where('wb.id < 0');
+    }
+
+    /**
+     * @return Query
+     */
+    public function findEmptyResultQ()
+    {
+        return $this->findEmptyResultQB()->getQuery();
+    }
+
+    /**
+     * @return array
+     */
+    public function findEmptyResult()
+    {
+        return $this->findEmptyResultQ()->getResult();
+    }
 }
