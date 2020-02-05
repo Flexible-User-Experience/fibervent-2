@@ -4,6 +4,7 @@ namespace App\Admin;
 
 use App\Entity\Windfarm;
 use App\Entity\WorkOrder;
+use App\Entity\WorkOrderTask;
 use App\Enum\BladeDamagePositionEnum;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
@@ -64,6 +65,8 @@ class WorkOrderTaskAdmin extends AbstractBaseAdmin
             $workOrder = $this->getRoot()->getSubject();
             /** @var Windfarm[]|array $windfarms */
             $windfarms = $workOrder->getWindfarms();
+            /** @var WorkOrderTask $workOrderTask */
+            $workOrderTask = $this->getSubject();
         }
         if ($this->id($this->getSubject())) {
             // is in edit mode
@@ -84,13 +87,13 @@ class WorkOrderTaskAdmin extends AbstractBaseAdmin
                     )
                     ->add(
                         'windmillBlade',
-                        ModelAutocompleteType::class,
+                        ModelType::class,
                         array(
                             'label' => 'admin.windmillblade.title',
                             'btn_add' => false,
                             'required' => false,
-                            'property' => 'code',
                             'disabled' => true,
+                            'query' => $this->wbr->findWindmillSortedByCodeQB($workOrderTask->getWindmill()),
                         )
                     )
                     ->add(
@@ -161,6 +164,7 @@ class WorkOrderTaskAdmin extends AbstractBaseAdmin
                             'label' => 'admin.windmillblade.title',
                             'btn_add' => false,
                             'required' => false,
+                            'query' => $this->wbr->findWindmillSortedByCodeQB($workOrderTask->getWindmill()),
                         )
                     )
                     ->add(

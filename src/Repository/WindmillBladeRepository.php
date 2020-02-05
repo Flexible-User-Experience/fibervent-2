@@ -33,6 +33,50 @@ class WindmillBladeRepository extends ServiceEntityRepository
      *
      * @return QueryBuilder
      */
+    public function findWindmillSortedByCodeQB(Windmill $windmill, $limit = null, $order = 'ASC')
+    {
+        $query = $this->createQueryBuilder('wb')
+            ->where('wb.windmill = :windmill')
+            ->setParameter('windmill', $windmill)
+            ->orderBy('wb.order', $order);
+        if (!is_null($limit)) {
+            $query->setMaxResults($limit);
+        }
+
+        return $query;
+    }
+
+    /**
+     * @param Windmill $windmill
+     * @param null     $limit
+     * @param string   $order
+     *
+     * @return Query
+     */
+    public function findWindmillSortedByCodeQ(Windmill $windmill, $limit = null, $order = 'ASC')
+    {
+        return $this->findWindmillSortedByCodeQB($windmill, $limit, $order)->getQuery();
+    }
+
+    /**
+     * @param Windmill $windmill
+     * @param null     $limit
+     * @param string   $order
+     *
+     * @return array
+     */
+    public function findWindmillSortedByCode(Windmill $windmill, $limit = null, $order = 'ASC')
+    {
+        return $this->findWindmillSortedByCodeQ($windmill, $limit, $order)->getResult();
+    }
+
+    /**
+     * @param Windmill $windmill
+     * @param null     $limit
+     * @param string   $order
+     *
+     * @return QueryBuilder
+     */
     public function findWindmillSortedByCodeAjaxQB(Windmill $windmill, $limit = null, $order = 'ASC')
     {
         $query = $this->createQueryBuilder('wb')
