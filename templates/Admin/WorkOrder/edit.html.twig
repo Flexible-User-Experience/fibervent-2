@@ -46,9 +46,9 @@
                         windmillNodes[i].change((function() {
                             let k = i;
                             return function (event) {
-                                let windmillBladeId = event.val;
+                                let windmillId = event.val;
                                 let windmillNode = windmillNodes[k];
-                                updateWindmillBladeNodeByWindmill(windmillBladeId, windmillNode, k);
+                                updateWindmillBladeNodeByWindmill(windmillId, windmillNode, k);
                             }
                         })());
                     }
@@ -64,19 +64,21 @@
                         windmillNodes[i].change((function() {
                             let k = i;
                             return function (event) {
-                                let windmillBladeId = event.val;
+                                let windmillId = event.val;
                                 let windmillNode = windmillNodes[k];
-                                updateWindmillBladeNodeByWindmill(windmillBladeId, windmillNode, k);
+                                updateWindmillBladeNodeByWindmill(windmillId, windmillNode, k);
                             }
                         })());
                     }
                 });
-                function updateWindmillBladeNodeByWindmill(windmillBladeId, windmillNode, i) {
-                    jQuery.get(Routing.generate('admin_app_workorder_getWindmillbladesFromWindmillId', {id: windmillBladeId})).done(function (response) {
+                function updateWindmillBladeNodeByWindmill(windmillId, windmillNode, nodeIndex) {
+                    jQuery.get(Routing.generate('admin_app_workorder_getWindmillbladesFromWindmillId', {id: windmillId})).done(function (response) {
                         let jsonResponse = jQuery.parseJSON(response);
-                        let windmillBladeNode = jQuery('#{{ form.workOrderTasks.vars.id }}_'+i+'_windmillBlade');
+                        let windmillBladeNode = jQuery('#{{ form.workOrderTasks.vars.id }}_' + nodeIndex + '_windmillBlade');
                         windmillBladeNode.empty().html(jsonResponse.htmlOptionStringData);
-                        console.log('updateWindmillBladeNodeByWindmill', jsonResponse);
+                        {% if admin.id(object) %}
+                            windmillBladeNode.select2('val', '');
+                        {% endif %}
                     })
                 }
             {% else %}

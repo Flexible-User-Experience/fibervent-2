@@ -630,7 +630,7 @@ class WorkOrderAdmin extends AbstractBaseAdmin
      */
     private function commonPreEvents(&$object)
     {
-        if (count($object->getWorkOrderTasks()) > 0) {
+        if ($object->getWorkOrderTasks() && count($object->getWorkOrderTasks()) > 0) {
             /** @var WorkOrderTask $workOrderTask */
             foreach ($object->getWorkOrderTasks() as $workOrderTask) {
                 if (!$workOrderTask->getDescription()) {

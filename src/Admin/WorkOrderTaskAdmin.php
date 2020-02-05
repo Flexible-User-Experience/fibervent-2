@@ -96,7 +96,7 @@ class WorkOrderTaskAdmin extends AbstractBaseAdmin
                             'disabled' => true,
                             'property' => 'order',
                             // 'query' => $this->wbr->findWindmillSortedByCodeQB($workOrderTask->getWindmill()),
-                            'query' => $this->wbr->getAllSortedByWindmillAndOrderQB(),
+                            'query' => $isEmbed ? $this->wbr->findMultipleByWindfarmsArrayQB($windfarms): $this->wbr->getAllSortedByWindmillAndOrderQB(),
                         )
                     )
                     ->add(
@@ -169,7 +169,7 @@ class WorkOrderTaskAdmin extends AbstractBaseAdmin
                             'required' => false,
                             'property' => 'order',
                             // 'query' => $this->wbr->findWindmillSortedByCodeQB($workOrderTask->getWindmill()),
-                            'query' => $this->wbr->getAllSortedByWindmillAndOrderQB(),
+                            'query' => $isEmbed ? $this->wbr->findMultipleByWindfarmsArrayQB($windfarms): $this->wbr->getAllSortedByWindmillAndOrderQB(),
                         )
                     )
                     ->add(
@@ -243,7 +243,7 @@ class WorkOrderTaskAdmin extends AbstractBaseAdmin
                         'btn_add' => false,
                         'required' => false,
                         'property' => 'order',
-                        'query' => $this->wbr->getAllSortedByWindmillAndOrderQB(),
+                        'query' => $isEmbed ? $this->wbr->findMultipleByWindfarmsArrayQB($windfarms): $this->wbr->getAllSortedByWindmillAndOrderQB(),
                     )
                 )
                 ->add(
@@ -317,7 +317,7 @@ class WorkOrderTaskAdmin extends AbstractBaseAdmin
                     'isFromAudit',
                     null,
                     array(
-                        'label' => 'admin.workorder.is_from_audit',
+                        'label' => 'admin.auditwindmillblade.audit',
                         'disabled' => true,
                         'attr' => array(
                             'hidden' => true,
@@ -332,7 +332,7 @@ class WorkOrderTaskAdmin extends AbstractBaseAdmin
                     'isFromAudit',
                     null,
                     array(
-                        'label' => 'admin.workorder.is_from_audit',
+                        'label' => 'admin.auditwindmillblade.audit',
                         'disabled' => true,
                     )
                 )

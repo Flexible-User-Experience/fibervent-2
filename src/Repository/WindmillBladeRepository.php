@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Entity\Windfarm;
 use App\Entity\Windmill;
 use App\Entity\WindmillBlade;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
@@ -164,5 +165,46 @@ class WindmillBladeRepository extends ServiceEntityRepository
     public function getAllSortedByWindmillAndOrder()
     {
         return $this->getAllSortedByWindmillAndOrderQ()->getResult();
+    }
+
+    /**
+     * @param array $windfarms
+     *
+     * @return QueryBuilder
+     */
+    public function findMultipleByWindfarmsArrayQB($windfarms)
+    {
+        $ids = [];
+        /** @var Windfarm $windfarm */
+        foreach ($windfarms as $windfarm) {
+            $ids[] = $windfarm->getId();
+        }
+        $query = $this->createQueryBuilder('wb')
+            ->join('wb.windmill', 'wm')
+            ->orderBy('wb.order', 'ASC')
+        ;
+        $query->where($query->expr()->in('wm.windfarm', $ids));
+
+        return $query;
+    }
+
+    /**
+     * @param array $windfarms
+     *
+     * @return Query
+     */
+    public function findMultipleByWindfarmsArrayQ($windfarms)
+    {
+        return $this->findMultipleByWindfarmsArrayQB($windfarms)->getQuery();
+    }
+
+    /**
+     * @param array $windfarms
+     *
+     * @return array
+     */
+    public function findMultipleByWindfarmsArray($windfarms)
+    {
+        return $this->findMultipleByWindfarmsArrayQ($windfarms)->getResult();
     }
 }
