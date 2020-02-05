@@ -80,7 +80,7 @@ class WindmillBladeRepository extends ServiceEntityRepository
     public function findWindmillSortedByCodeAjaxQB(Windmill $windmill, $limit = null, $order = 'ASC')
     {
         $query = $this->createQueryBuilder('wb')
-            ->select('wb.id, wb.code, wb.order')
+            ->select('wb.id, wb.code, wb.order AS text')
             ->where('wb.windmill = :windmill')
             ->setParameter('windmill', $windmill)
             ->orderBy('wb.order', $order);

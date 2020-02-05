@@ -28,19 +28,17 @@
             customerNode.on('change', function(event) {updateWindfarmNodeByCustomer(event.val);});
             {% if admin.id(object) %}
                 {# edit mode #}
-{#                {% if not object.isFromAudit %}#}
-                    // windfarmsNode.select2('enable', false);
-{#                {% endif %}#}
                 {% if object.workOrderTasks | length > 0 %}
                     let bor = jQuery('#field_widget_{{ form.workOrderTasks.vars.id }}')[0].children[0].children[0].children[0];
-                    console.log('bor', bor);
-                    // bor.children[1].width = '30%';
+                    bor.children[0].width = '5%';
+                    bor.children[3].width = '5%';
                     bor.children[4].width = '5%';
                     bor.children[5].width = '5%';
                     bor.children[6].width = '5%';
                     bor.children[7].width = '5%';
                     bor.children[8].width = '5%';
-                    // bor.children[9].width = '30%';
+                    bor.children[10].width = '5%';
+                    bor.children[11].width = '5%';
                     let workOrderTasks = jQuery('#field_widget_{{  form.workOrderTasks.vars.id }}')[0].children[0].children[1].childElementCount;
                     let windmillNodes = [];
                     for (let i = 0; i < workOrderTasks; i++) {
@@ -61,11 +59,6 @@
                     let windmillNodes = [];
                     let windfarmsNode = jQuery('#{{ form.windfarms.vars.id }}');
                     console.log('windfarmsNode', windfarmsNode.val());
-                    {#let windfarmNode = jQuery('#s2id_{{ form.windfarms.vars.id }}');#}
-                    // let windfarmsName = [];
-                    // for (let i = 0; i < windfarmNode[0].children[0].children.length - 1; i++) {
-                    //     windfarmsName[i] = windfarmNode[0].children[0].children[i].innerText;
-                    // }
                     for (let i = 0; i < workOrderTasks; i++) {
                         windmillNodes[i] = jQuery('#{{ form.workOrderTasks.vars.id }}_' + i + '_windmill');
                         console.log(windmillNodes[i]);
@@ -84,18 +77,8 @@
                     jQuery.get(Routing.generate('admin_app_workorder_getWindmillbladesFromWindmillId', {id: windmillBladeId})).done(function (response) {
                         let jsonResponse = jQuery.parseJSON(response);
                         let windmillBladeNode = jQuery('#{{ form.workOrderTasks.vars.id }}_'+i+'_windmillBlade');
-                        // TODO be careful in EDIT mode (previously Audit maybe selected when WorkOrder is from Audit)
-                        while (windmillBladeNode[0].firstChild) {
-                            windmillBladeNode[0].removeChild(windmillBladeNode[0].firstChild);
-                        }
-                        if (jsonResponse.data.length > 0) {
-                            for (let j = 0; j < jsonResponse.data.length; j++) {
-                                let option = document.createElement("option");
-                                option.innerText = jsonResponse.data[j].order + '(id: ' + jsonResponse.data[j].id + ')';
-                                option.value = jsonResponse.data[j].id;
-                                windmillBladeNode[0].appendChild(option);
-                            }
-                        }
+                        console.log('updateWindmillBladeNodeByWindmill ajax response', jsonResponse);
+                        windmillBladeNode.empty().html(jsonResponse.htmlOptionStringData);
                     })
                 }
             {% else %}
@@ -108,7 +91,6 @@
             let windfarmsNode = jQuery('#{{ form.windfarms.vars.id }}');
             jQuery.get(Routing.generate('admin_app_workorder_getWindfarmsFromCustomerId', {id: customerId})).done(function (response) {
                 let jsonResponse = jQuery.parseJSON(response);
-                // console.log('updateWindfarmNodeByCustomer', jsonResponse);
                 windfarmsNode.empty().html(jsonResponse.htmlOptionStringData);
                 {% if not admin.id(object) %}
                     windfarmsNode.select2('val', '');
@@ -116,10 +98,8 @@
             });
         }
         function updateWindmillNodeByWindfarmsBySelectedWindfarmsIds(selectedWindfarmsIds, windmillNode) {
-            console.log('updateWindmillNodeByWindfarmsBySelectedWindfarmsIds', selectedWindfarmsIds);
             jQuery.post(Routing.generate('admin_app_workorder_getWindmillsFromSelectedWindfarmsIds', selectedWindfarmsIds)).done(function (response) {
                 let jsonResponse = jQuery.parseJSON(response);
-                console.log('updateWindmillNodeByWindfarmsBySelectedWindfarmsIds ajax response', jsonResponse);
                 windmillNode.empty().html(jsonResponse.htmlOptionStringData);
             });
         }
