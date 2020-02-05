@@ -10,8 +10,7 @@
             let workOrderNode = jQuery('#{{ form.workOrder.vars.id }}');
             workOrderNode.change(function(event) {
                 let workOrderId = event.val;
-                console.log(workOrderId, 'change');
-                updateWindfarmNodeByWorkOrder(workOrderId);
+                updateWindfarmNodeBySelectedWorkOrderId(workOrderId);
             });
             {% if admin.id(object) %}
                 {# edit mode #}
@@ -22,14 +21,18 @@
                 {% endif %}
             {% endif %}
         });
-        function updateWindfarmNodeByWorkOrder(workOrderId) {
+        function updateWindfarmNodeBySelectedWorkOrderId(workOrderId) {
             let windfarmNode = jQuery('#{{ form.windfarm.vars.id }}');
-            console.log('updateWindfarmNodeByWorkOrder', windfarmNode);
             jQuery.get(Routing.generate('admin_app_workorder_getWindfarmsFromCustomerId', {id: workOrderId})).done(function (response) {
                 let jsonResponse = jQuery.parseJSON(response);
                 windfarmNode.empty().html(jsonResponse.htmlOptionStringData);
                 windfarmNode.select2('val', '');
-                console.log(jsonResponse);
+            });
+        }
+        function updateWindmillNodeBySelectedWindfarmId(selectedWindfarmId) {
+            jQuery.post(Routing.generate('admin_app_workorder_getWindmillsFromSelectedWindfarmsIds', selectedWindfarmsIds)).done(function (response) {
+                let jsonResponse = jQuery.parseJSON(response);
+                windmillNode.empty().html(jsonResponse.htmlOptionStringData);
             });
         }
     </script>

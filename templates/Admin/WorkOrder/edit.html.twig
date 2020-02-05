@@ -25,7 +25,7 @@
     <script type="text/javascript">
         jQuery(document).ready(function() {
             let customerNode = jQuery('#{{ form.customer.vars.id }}');
-            customerNode.on('change', function(event) {updateWindfarmNodeByCustomer(event.val);});
+            customerNode.on('change', function(event) {updateWindfarmNodeBySelectedCustomerId(event.val);});
             {% if admin.id(object) %}
                 {# edit mode #}
                 {% if object.workOrderTasks | length > 0 %}
@@ -48,7 +48,7 @@
                             return function (event) {
                                 let windmillId = event.val;
                                 let windmillNode = windmillNodes[k];
-                                updateWindmillBladeNodeByWindmill(windmillId, windmillNode, k);
+                                updateWindmillBladeNodeBySelectedWindmillId(windmillId, windmillNode, k);
                             }
                         })());
                     }
@@ -60,18 +60,18 @@
                     let windfarmsNode = jQuery('#{{ form.windfarms.vars.id }}');
                     for (let i = 0; i < workOrderTasks; i++) {
                         windmillNodes[i] = jQuery('#{{ form.workOrderTasks.vars.id }}_' + i + '_windmill');
-                        updateWindmillNodeByWindfarmsBySelectedWindfarmsIds(windfarmsNode.val(), windmillNodes[i]);
+                        updateWindmillNodeBySelectedWindfarmsIds(windfarmsNode.val(), windmillNodes[i]);
                         windmillNodes[i].change((function() {
                             let k = i;
                             return function (event) {
                                 let windmillId = event.val;
                                 let windmillNode = windmillNodes[k];
-                                updateWindmillBladeNodeByWindmill(windmillId, windmillNode, k);
+                                updateWindmillBladeNodeBySelectedWindmillId(windmillId, windmillNode, k);
                             }
                         })());
                     }
                 });
-                function updateWindmillBladeNodeByWindmill(windmillId, windmillNode, nodeIndex) {
+                function updateWindmillBladeNodeBySelectedWindmillId(windmillId, windmillNode, nodeIndex) {
                     jQuery.get(Routing.generate('admin_app_workorder_getWindmillbladesFromWindmillId', {id: windmillId})).done(function (response) {
                         let jsonResponse = jQuery.parseJSON(response);
                         let windmillBladeNode = jQuery('#{{ form.workOrderTasks.vars.id }}_' + nodeIndex + '_windmillBlade');
@@ -84,10 +84,10 @@
             {% else %}
                 {# create mode (new) #}
                 let selectedFirstOptionCustomerId = parseInt(jQuery('#{{ form.customer.vars.id }} option:eq(0)').prop('value'), 10);
-                updateWindfarmNodeByCustomer(selectedFirstOptionCustomerId);
+                updateWindfarmNodeBySelectedCustomerId(selectedFirstOptionCustomerId);
             {% endif %}
         });
-        function updateWindfarmNodeByCustomer(customerId) {
+        function updateWindfarmNodeBySelectedCustomerId(customerId) {
             let windfarmsNode = jQuery('#{{ form.windfarms.vars.id }}');
             jQuery.get(Routing.generate('admin_app_workorder_getWindfarmsFromCustomerId', {id: customerId})).done(function (response) {
                 let jsonResponse = jQuery.parseJSON(response);
@@ -97,7 +97,7 @@
                 {% endif %}
             });
         }
-        function updateWindmillNodeByWindfarmsBySelectedWindfarmsIds(selectedWindfarmsIds, windmillNode) {
+        function updateWindmillNodeBySelectedWindfarmsIds(selectedWindfarmsIds, windmillNode) {
             jQuery.post(Routing.generate('admin_app_workorder_getWindmillsFromSelectedWindfarmsIds', selectedWindfarmsIds)).done(function (response) {
                 let jsonResponse = jQuery.parseJSON(response);
                 windmillNode.empty().html(jsonResponse.htmlOptionStringData);
