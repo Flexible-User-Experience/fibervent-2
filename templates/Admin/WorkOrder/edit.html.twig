@@ -76,6 +76,7 @@
                         let jsonResponse = jQuery.parseJSON(response);
                         let windmillBladeNode = jQuery('#{{ form.workOrderTasks.vars.id }}_'+i+'_windmillBlade');
                         windmillBladeNode.empty().html(jsonResponse.htmlOptionStringData);
+                        console.log('updateWindmillBladeNodeByWindmill', jsonResponse);
                     })
                 }
             {% else %}
