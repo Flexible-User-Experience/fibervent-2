@@ -33,14 +33,13 @@
 {#                {% endif %}#}
                 {% if object.workOrderTasks | length > 0 %}
                     let bor = jQuery('#field_widget_{{ form.workOrderTasks.vars.id }}')[0].children[0].children[0].children[0];
-                    console.log(bor);
-                    bor.children[1].width = '30%';
-                    bor.children[2].width = '5%';
-                    bor.children[3].width = '5%';
+                    console.log('bor', bor);
+                    // bor.children[1].width = '30%';
                     bor.children[4].width = '5%';
                     bor.children[5].width = '5%';
                     bor.children[6].width = '5%';
                     bor.children[7].width = '5%';
+                    bor.children[8].width = '5%';
                     // bor.children[9].width = '30%';
                     let workOrderTasks = jQuery('#field_widget_{{  form.workOrderTasks.vars.id }}')[0].children[0].children[1].childElementCount;
                     let windmillNodes = [];

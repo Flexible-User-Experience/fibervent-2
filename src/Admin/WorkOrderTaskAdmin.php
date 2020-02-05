@@ -62,8 +62,8 @@ class WorkOrderTaskAdmin extends AbstractBaseAdmin
             ;
             /** @var WorkOrder $workOrder */
             $workOrder = $this->getRoot()->getSubject();
-            /** @var Windfarm $windfarm */
-            $windfarm = $workOrder->getWindfarm();
+            /** @var Windfarm[]|array $windfarms */
+            $windfarms = $workOrder->getWindfarms();
         }
         if ($this->id($this->getSubject())) {
             // is in edit mode
@@ -71,17 +71,19 @@ class WorkOrderTaskAdmin extends AbstractBaseAdmin
                 // is in edit mode from audit
                 $formMapper
                     ->with('admin.bladedamage.title', $this->getFormMdSuccessBoxArray(5))
-                    ->add('windmill',
-                        ModelAutocompleteType::class,
+                    ->add(
+                        'windmill',
+                        ModelType::class,
                         array(
                             'label' => 'admin.windmill.title',
                             'btn_add' => false,
                             'required' => false,
-                            'property' => 'code',
                             'disabled' => true,
+                            'query' => $this->wmr->findMultipleByWindfarmsArrayQB($windfarms),
                         )
                     )
-                    ->add('windmillBlade',
+                    ->add(
+                        'windmillBlade',
                         ModelAutocompleteType::class,
                         array(
                             'label' => 'admin.windmillblade.title',
@@ -135,22 +137,25 @@ class WorkOrderTaskAdmin extends AbstractBaseAdmin
                             'disabled' => true,
                         )
                     )
-                    ->end();
+                    ->end()
+                ;
             } else {
                 // is in edit mode NOT from audit
                 $formMapper
                     ->with('admin.bladedamage.title', $this->getFormMdSuccessBoxArray(5))
-                    ->add('windmill',
+                    ->add(
+                        'windmill',
                         ModelType::class,
                         array(
                             'label' => 'admin.windmill.title',
                             'btn_add' => false,
                             'required' => false,
                             'property' => 'code',
-//                            'query' => $this->wmr->findEnabledandWindfarmSortedByCustomerWindfarmAndWindmillCodeQB($windfarm),
+                            'query' => $this->wmr->findMultipleByWindfarmsArrayQB($windfarms),
                         )
                     )
-                    ->add('windmillBlade',
+                    ->add(
+                        'windmillBlade',
                         ModelType::class,
                         array(
                             'label' => 'admin.windmillblade.title',
@@ -210,7 +215,8 @@ class WorkOrderTaskAdmin extends AbstractBaseAdmin
             // is in create or new mode
             $formMapper
                 ->with('admin.bladedamage.title', $this->getFormMdSuccessBoxArray(5))
-                ->add('windmill',
+                ->add(
+                    'windmill',
                     ModelType::class,
                     array(
                         'label' => 'admin.windmill.title',
@@ -220,7 +226,8 @@ class WorkOrderTaskAdmin extends AbstractBaseAdmin
                         'query' => $this->wmr->findEnabledSortedByCustomerWindfarmAndWindmillCodeQB(),
                     )
                 )
-                ->add('windmillBlade',
+                ->add(
+                    'windmillBlade',
                     ModelType::class,
                     array(
                         'label' => 'admin.windmillblade.title',
@@ -272,7 +279,8 @@ class WorkOrderTaskAdmin extends AbstractBaseAdmin
                         'required' => true,
                     )
                 )
-                ->end();
+                ->end()
+            ;
         }
         $formMapper
             ->with('admin.common.general', $this->getFormMdSuccessBoxArray(7))

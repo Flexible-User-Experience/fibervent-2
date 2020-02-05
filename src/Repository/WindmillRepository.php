@@ -180,6 +180,44 @@ class WindmillRepository extends ServiceEntityRepository
     }
 
     /**
+     * @param array $windfarms
+     *
+     * @return QueryBuilder
+     */
+    public function findMultipleByWindfarmsArrayQB($windfarms)
+    {
+        $ids = [];
+        /** @var Windfarm $windfarm */
+        foreach ($windfarms as $windfarm) {
+            $ids[] = $windfarm->getId();
+        }
+        $query = $this->createQueryBuilder('wm')->orderBy('wm.code', 'ASC');
+        $query->where($query->expr()->in('wm.windfarm', $ids));
+
+        return $query;
+    }
+
+    /**
+     * @param array $windfarms
+     *
+     * @return Query
+     */
+    public function findMultipleByWindfarmsArrayQ($windfarms)
+    {
+        return $this->findMultipleByWindfarmsArrayQB($windfarms)->getQuery();
+    }
+
+    /**
+     * @param array $windfarms
+     *
+     * @return array
+     */
+    public function findMultipleByWindfarmsArray($windfarms)
+    {
+        return $this->findMultipleByWindfarmsArrayQ($windfarms)->getResult();
+    }
+
+    /**
      * @param array $ids
      *
      * @return QueryBuilder
