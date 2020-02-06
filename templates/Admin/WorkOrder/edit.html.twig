@@ -96,6 +96,18 @@
                             autoQueue: true
                         });
                     }
+                    let bor = jQuery('#field_widget_{{ form.workOrderTasks.vars.id }}')[0].children[0].children[0].children[0];
+                    bor.children[0].width = '5%';
+                    bor.children[3].width = '5%';
+                    bor.children[4].width = '5%';
+                    bor.children[5].width = '5%';
+                    bor.children[6].width = '5%';
+                    bor.children[7].width = '5%';
+                    bor.children[8].width = '5%';
+                    bor.children[11].width = '5%';
+                    if (bor.children[12]) {
+                        bor.children[12].width = '5%';
+                    }
                 });
                 function updateWindmillBladeNodeBySelectedWindmillId(windmillId, windmillNode, nodeIndex, needWindmillBladeSetToNull) {
                     jQuery.get(Routing.generate('admin_app_workorder_getWindmillbladesFromWindmillId', {id: windmillId})).done(function (response) {
@@ -109,7 +121,6 @@
                             windmillBladeNode.val(windmillBladeNodeVal);
                             windmillBladeNode.change();
                         }
-                        console.log('updateWindmillBladeNodeBySelectedWindmillId', nodeIndex, jsonResponse)
                     })
                 }
             {% else %}
