@@ -12,6 +12,9 @@ use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Form\Type\ModelAutocompleteType;
 use Sonata\AdminBundle\Form\Type\ModelType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\FormType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 /**
  * Class WorkOrderTaskAdmin.
@@ -303,6 +306,24 @@ class WorkOrderTaskAdmin extends AbstractBaseAdmin
                     'required' => true,
                 )
             )
+        ;
+        if ($isEmbed) {
+            $formMapper
+                ->add(
+                    'multifiles',
+                    FormType::class,
+                    array(
+                        'label' => 'admin.photo.title',
+                        'required' => false,
+                        'mapped' => false,
+                        'attr' => array(
+                            'class' => 'dropzone',
+                        ),
+                    )
+                )
+            ;
+        }
+        $formMapper
             ->add(
                 'isCompleted',
                 null,

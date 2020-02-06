@@ -23,6 +23,7 @@
     <script src="{{ asset('bundles/fosjsrouting/js/router.min.js') }}"></script>
     <script src="{{ path('fos_js_routing_js', {callback: 'fos.Router.setData'}) }}"></script>
     <script type="text/javascript">
+        Dropzone.autoDiscover = false;
         jQuery(document).ready(function() {
             let customerNode = jQuery('#{{ form.customer.vars.id }}');
             customerNode.on('change', function(event) {updateWindfarmNodeBySelectedCustomerId(event.val);});
@@ -51,6 +52,17 @@
                                 updateWindmillBladeNodeBySelectedWindmillId(windmillId, windmillNode, k);
                             }
                         })());
+                        let myDropzone = new Dropzone('#{{ form.workOrderTasks.vars.id }}_' + i + '_multifiles', {
+                            url: '/file/post',
+                            uploadMultiple: true,
+                            maxFiles: 5,
+                            thumbnailWidth: 80,
+                            thumbnailHeight: 80,
+                            parallelUploads: 20,
+                            addRemoveLinks: true,
+                            dictDefaultMessage: 'Arrastra aquí tus archivos.',
+                            autoQueue: true
+                        });
                     }
                 {% endif %}
                 jQuery(document).on('sonata.add_element', function(event, elementId, objectId, uniqid) {
@@ -69,6 +81,40 @@
                                 updateWindmillBladeNodeBySelectedWindmillId(windmillId, windmillNode, k);
                             }
                         })());
+                        let myDropzone = new Dropzone('#{{ form.workOrderTasks.vars.id }}_' + i + '_multifiles', {
+                            url: '/file/post',
+                            uploadMultiple: true,
+                            maxFiles: 5,
+                            thumbnailWidth: 80,
+                            thumbnailHeight: 80,
+                            parallelUploads: 20,
+                            addRemoveLinks: true,
+                            dictDefaultMessage: 'Arrastra aquí tus archivos.',
+                            autoQueue: true
+                        });
+
+                        myDropzone.on("addedfile", function(file) {
+                            // Hookup the start button
+                            file.previewElement.querySelector(".start").onclick = function() { myDropzone.enqueueFile(file); };
+                        });
+
+                        // Update the total progress bar
+                        myDropzone.on("totaluploadprogress", function(progress) {
+                            document.querySelector("#total-progress .progress-bar").style.width = progress + "%";
+                        });
+
+                        myDropzone.on("sending", function(file) {
+                            // Show the total progress bar when upload starts
+                            document.querySelector("#total-progress").style.opacity = "1";
+                            // And disable the start button
+                            file.previewElement.querySelector(".start").setAttribute("disabled", "disabled");
+                        });
+
+                        // Hide the total progress bar when nothing's uploading anymore
+                        myDropzone.on("queuecomplete", function(progress) {
+                            document.querySelector("#total-progress").style.opacity = "0";
+                        });
+
                     }
                 });
                 function updateWindmillBladeNodeBySelectedWindmillId(windmillId, windmillNode, nodeIndex) {
