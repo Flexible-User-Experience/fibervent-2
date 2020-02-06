@@ -22,10 +22,15 @@
             {% if admin.id(object) %}
                 {# edit mode #}
                 {% if object.nonStandardUsedMaterials | length > 0 %}
-                    let bnsum = jQuery('#field_widget_{{ form.workOrderTasks.vars.id }}')[0].children[0].children[0].children[0];
+                    let bnsum = jQuery('#field_widget_{{ form.nonStandardUsedMaterials.vars.id }}')[0].children[0].children[0].children[0];
                     bnsum.children[0].width = '5%';
                     bnsum.children[2].width = '5%';
                 {% endif %}
+                jQuery(document).on('sonata.add_element', function(event, elementId, objectId, uniqid) {
+                    let bnsum = jQuery('#field_widget_{{ form.nonStandardUsedMaterials.vars.id }}')[0].children[0].children[0].children[0];
+                    bnsum.children[0].width = '5%';
+                    bnsum.children[2].width = '5%';
+                });
             {% endif %}
         });
         function updateWindfarmNodeBySelectedWorkOrderId(workOrderId) {
