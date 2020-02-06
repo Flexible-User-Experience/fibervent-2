@@ -186,7 +186,7 @@ class WindmillRepository extends ServiceEntityRepository
      */
     public function findMultipleByWindfarmsArrayQB($windfarms)
     {
-        $ids = [];
+        $ids = [0];
         /** @var Windfarm $windfarm */
         foreach ($windfarms as $windfarm) {
             $ids[] = $windfarm->getId();

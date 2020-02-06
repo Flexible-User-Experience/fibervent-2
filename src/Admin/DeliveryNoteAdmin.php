@@ -74,7 +74,7 @@ class DeliveryNoteAdmin extends AbstractBaseAdmin
                 array(
                     'label' => 'admin.workorder.title',
                     'class' => WorkOrder::class,
-                    'query_builder' => $this->wor->findAllSortedByProjectNumberQB(),
+                    'query_builder' => $this->wor->findAvailableSortedByProjectNumberQB(),
                     'required' => true,
                 )
             )

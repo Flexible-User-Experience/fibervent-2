@@ -12,9 +12,7 @@ use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Form\Type\ModelAutocompleteType;
 use Sonata\AdminBundle\Form\Type\ModelType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 /**
  * Class WorkOrderTaskAdmin.
@@ -70,7 +68,7 @@ class WorkOrderTaskAdmin extends AbstractBaseAdmin
             /** @var Windfarm[]|array $windfarms */
             $windfarms = $workOrder->getWindfarms();
             /** @var WorkOrderTask $workOrderTask */
-            $workOrderTask = $this->getSubject();
+            $isParentObjectFromAudit = $workOrder->isFromAudit();
         }
         if ($this->id($this->getSubject())) {
             // is in edit mode
@@ -183,6 +181,7 @@ class WorkOrderTaskAdmin extends AbstractBaseAdmin
                             'disabled' => true,
                             'property' => 'damage.code',
                             'required' => true,
+                            'attr' => !$isParentObjectFromAudit ? ['hidden' => true] : [],
                         )
                     )
                     ->add(

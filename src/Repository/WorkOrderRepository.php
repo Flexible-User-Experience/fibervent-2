@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\WorkOrder;
+use App\Enum\WorkOrderStatusEnum;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry as RegistryInterface;
 use Doctrine\ORM\Query;
@@ -61,5 +62,43 @@ class WorkOrderRepository extends ServiceEntityRepository
     public function findAllSortedByName($limit = null, $order = 'ASC')
     {
         return $this->findAllSortedByProjectNumberQ($limit, $order)->getResult();
+    }
+
+    /**
+     * @param null   $limit
+     * @param string $order
+     *
+     * @return QueryBuilder
+     */
+    public function findAvailableSortedByProjectNumberQB($limit = null, $order = 'ASC')
+    {
+        return $this->findAllSortedByProjectNumberQB($limit, $order)
+            ->where('t.status = :pending')
+            ->orWhere('t.status = :doing')
+            ->setParameter('pending', WorkOrderStatusEnum::PENDING)
+            ->setParameter('doing', WorkOrderStatusEnum::DOING)
+        ;
+    }
+
+    /**
+     * @param null   $limit
+     * @param string $order
+     *
+     * @return Query
+     */
+    public function findAvailableSortedByProjectNumberQ($limit = null, $order = 'ASC')
+    {
+        return $this->findAvailableSortedByProjectNumberQB($limit, $order)->getQuery();
+    }
+
+    /**
+     * @param null   $limit
+     * @param string $order
+     *
+     * @return array
+     */
+    public function findAvailableSortedByName($limit = null, $order = 'ASC')
+    {
+        return $this->findAvailableSortedByProjectNumberQ($limit, $order)->getResult();
     }
 }
