@@ -5,6 +5,8 @@ namespace App\Admin;
 use App\Entity\Audit;
 use App\Entity\Customer;
 use App\Entity\Windfarm;
+use App\Entity\WorkOrder;
+use App\Entity\WorkOrderTask;
 use App\Enum\RepairAccessTypeEnum;
 use App\Enum\WorkOrderStatusEnum;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
@@ -43,8 +45,9 @@ class WorkOrderAdmin extends AbstractBaseAdmin
             ->remove('batch')
             ->add('getWindfarmsFromCustomerId', $this->getRouterIdParameter().'/get-windfarms-from-customer-id')
             ->add('getWindmillbladesFromWindmillId', $this->getRouterIdParameter().'/get-windmillblades-from-windmill-id')
-            ->add('getWindmillsFromWindfarmsName', 'get-windmills-from-windfarms-name')
+            ->add('getWindmillsFromSelectedWindfarmsIds', 'get-windmills-from-selected-windfarms-ids')
             ->add('pdf', $this->getRouterIdParameter().'/pdf')
+            ->add('uploadWorkOrderTaskFile', $this->getRouterIdParameter().'/upload-work-order-task-files')
         ;
     }
 
@@ -229,7 +232,7 @@ class WorkOrderAdmin extends AbstractBaseAdmin
                         'label' => 'admin.workorder.windfarms',
                         'class' => Windfarm::class,
                         'query_builder' => $this->wfr->findEnabledSortedByNameQB(),
-                        'required' => false,
+                        'required' => true,
                         'multiple' => true,
                     )
                 )
@@ -599,5 +602,42 @@ class WorkOrderAdmin extends AbstractBaseAdmin
             )
             ->end()
         ;
+    }
+
+    /**
+     * Fix problem with empty WorkOrderTask descriptions.
+     *
+     * @param WorkOrder $object
+     */
+    public function prePersist($object)
+    {
+        $this->commonPreEvents($object);
+    }
+
+    /**
+     * Fix problem with empty WorkOrderTask descriptions.
+     *
+     * @param WorkOrder $object
+     */
+    public function preUpdate($object)
+    {
+        $this->commonPreEvents($object);
+    }
+
+    /**
+     * Fix problem with empty WorkOrderTask descriptions.
+     *
+     * @param WorkOrder $object
+     */
+    private function commonPreEvents(&$object)
+    {
+        if ($object->getWorkOrderTasks() && count($object->getWorkOrderTasks()) > 0) {
+            /** @var WorkOrderTask $workOrderTask */
+            foreach ($object->getWorkOrderTasks() as $workOrderTask) {
+                if (!$workOrderTask->getDescription()) {
+                    $workOrderTask->setDescription('---');
+                }
+            }
+        }
     }
 }

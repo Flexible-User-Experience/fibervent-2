@@ -178,4 +178,77 @@ class WindmillRepository extends ServiceEntityRepository
     {
         return $this->findEnabledandWindfarmSortedByCustomerWindfarmAndWindmillCodeQ($windfarm, $limit, $order)->getResult();
     }
+
+    /**
+     * @param array $windfarms
+     *
+     * @return QueryBuilder
+     */
+    public function findMultipleByWindfarmsArrayQB($windfarms)
+    {
+        $ids = [];
+        /** @var Windfarm $windfarm */
+        foreach ($windfarms as $windfarm) {
+            $ids[] = $windfarm->getId();
+        }
+        $query = $this->createQueryBuilder('wm')->orderBy('wm.code', 'ASC');
+        $query->where($query->expr()->in('wm.windfarm', $ids));
+
+        return $query;
+    }
+
+    /**
+     * @param array $windfarms
+     *
+     * @return Query
+     */
+    public function findMultipleByWindfarmsArrayQ($windfarms)
+    {
+        return $this->findMultipleByWindfarmsArrayQB($windfarms)->getQuery();
+    }
+
+    /**
+     * @param array $windfarms
+     *
+     * @return array
+     */
+    public function findMultipleByWindfarmsArray($windfarms)
+    {
+        return $this->findMultipleByWindfarmsArrayQ($windfarms)->getResult();
+    }
+
+    /**
+     * @param array $ids
+     *
+     * @return QueryBuilder
+     */
+    public function getMultipleByWindfarmsIdsArrayAjaxQB(array $ids)
+    {
+        $query = $this->createQueryBuilder('wm')
+            ->select('wm.code AS text, wm.id')
+            ->orderBy('wm.code', 'ASC');
+        $query->where($query->expr()->in('wm.windfarm', $ids));
+
+        return $query;
+    }
+
+    /**
+     * @param array $ids
+     *
+     * @return Query
+     */
+    public function getMultipleByWindfarmsIdsArrayAjaxQ(array $ids)
+    {
+        return $this->getMultipleByWindfarmsIdsArrayAjaxQB($ids)->getQuery();
+    }
+
+    /**
+     * @param array $ids
+     *
+     * @return array
+     */
+    public function getMultipleByWindfarmsIdsArrayAjax(array $ids)
+    {
+        return $this->getMultipleByWindfarmsIdsArrayAjaxQ($ids)->getResult();
+    }
 }

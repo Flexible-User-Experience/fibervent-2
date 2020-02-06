@@ -151,13 +151,13 @@ class AjaxResponse
             /** @var array $data */
             foreach ($this->getData() as $data) {
                 if (is_array($data) && array_key_exists('id', $data) && array_key_exists('text', $data)) {
-                    $this->htmlOptionStringData .= sprintf('<option value="%s">%s</option>', (string) $data['id'], $data['text']);
+                    $this->htmlOptionStringData .= sprintf("<option value='%s'>%s</option>", (string) $data['id'], $data['text']);
                 }
             }
             if ($markFirstOptionAsSelected) {
-                $pos = strpos($this->getHtmlOptionStringData(), '<option value="');
+                $pos = strpos($this->getHtmlOptionStringData(), "<option value='");
                 if (false !== $pos) {
-                    $this->htmlOptionStringData = substr_replace($this->htmlOptionStringData, '<option selected="selected" value="', $pos, 15);
+                    $this->htmlOptionStringData = substr_replace($this->htmlOptionStringData, "<option selected='selected' value='", $pos, 15);
                 }
             }
         }

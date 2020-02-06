@@ -258,4 +258,37 @@ class WindfarmRepository extends ServiceEntityRepository
     {
         return $this->findOnlyRelatedWithAWorkOrderSortedByNameQ($workOrder)->getResult();
     }
+
+    /**
+     * @param array $ids
+     *
+     * @return QueryBuilder
+     */
+    public function getMultipleByIdsArrayAjaxQB(array $ids)
+    {
+        $query = $this->createQueryBuilder('w')->select('w.name AS text, w.id')->orderBy('w.name', 'ASC');
+        $query->where($query->expr()->in('w.id', $ids));
+
+        return $query;
+    }
+
+    /**
+     * @param array $ids
+     *
+     * @return Query
+     */
+    public function getMultipleByIdsArrayAjaxQ(array $ids)
+    {
+        return $this->getMultipleByIdsArrayAjaxQB($ids)->getQuery();
+    }
+
+    /**
+     * @param array $ids
+     *
+     * @return array
+     */
+    public function getMultipleByIdsArrayAjax(array $ids)
+    {
+        return $this->getMultipleByIdsArrayAjaxQ($ids)->getResult();
+    }
 }
