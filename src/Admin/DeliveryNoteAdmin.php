@@ -58,6 +58,7 @@ class DeliveryNoteAdmin extends AbstractBaseAdmin
      */
     protected function configureFormFields(FormMapper $formMapper)
     {
+        $isNewRecord = $this->id($this->getSubject()) ? false : true;
         $formMapper
             ->with('admin.common.general', $this->getFormMdSuccessBoxArray(4))
             ->add(
@@ -80,26 +81,15 @@ class DeliveryNoteAdmin extends AbstractBaseAdmin
             )
             ->end()
             ->with('admin.deliverynote.pdf.customer_data', $this->getFormMdSuccessBoxArray(4))
-        ;
-        if ($this->id($this->getSubject())) {
-            // edit
-            $wfqb = $this->wfr->findOnlyRelatedWithAWorkOrderSortedByNameQB($this->getSubject()->getWorkOrder());
-        } else {
-            // new
-            $wfqb = $this->wfr->findAllSortedByNameQB();
-        }
-        $formMapper
             ->add(
                 'windfarm',
                 EntityType::class,
                 array(
                     'label' => 'admin.windfarm.title',
                     'class' => Windfarm::class,
-                    'query_builder' => $wfqb,
+                    'query_builder' => $isNewRecord ? $this->wfr->findAllSortedByNameQB() : $this->wfr->findOnlyRelatedWithAWorkOrderSortedByNameQB($this->getSubject()->getWorkOrder()),
                 )
             )
-        ;
-        $formMapper
             ->end()
             ->with('admin.deliverynote.pdf.windfarm_data', $this->getFormMdSuccessBoxArray(4))
             ->add(
@@ -127,7 +117,7 @@ class DeliveryNoteAdmin extends AbstractBaseAdmin
                 ChoiceType::class,
                 array(
                     'label' => 'admin.deliverynote.pdf.blade_number',
-                    'choices' => BladeEnum::getLongTextEnumArray(),
+                    'choices' => BladeEnum::getEnumArray(),
                     'multiple' => true,
                     'expanded' => true,
                     'required' => false,
@@ -227,71 +217,75 @@ class DeliveryNoteAdmin extends AbstractBaseAdmin
                 )
             )
             ->end()
-            ->with('admin.workordertask.title', $this->getFormMdSuccessBoxArray(4))
-            ->add(
-                'workOrderTasks',
-                ModelType::class,
-                array(
-                    'label' => 'admin.workordertask.title',
-                    'multiple' => true,
-                    'expanded' => false,
-                    'required' => false,
-                    'btn_add' => false,
-                )
-            )
-            ->end()
-            ->with('admin.deliverynotetimeregister.title', $this->getFormMdSuccessBoxArray(12))
-            ->add(
-                'timeRegisters',
-                CollectionType::class,
-                array(
-                    'label' => ' ',
-                    'required' => false,
-                    'btn_add' => true,
-                    'error_bubbling' => true,
-                    'type_options' => array(
-                        'delete' => true,
-                    ),
-                ),
-                array(
-                    'edit' => 'inline',
-                    'inline' => 'table',
-                )
-            )
-            ->end()
-            ->with('admin.nonstandardusedmaterial.title', $this->getFormMdSuccessBoxArray(8))
-            ->add(
-                'nonStandardUsedMaterials',
-                CollectionType::class,
-                array(
-                    'label' => ' ',
-                    'required' => false,
-                    'btn_add' => true,
-                    'error_bubbling' => true,
-                    'type_options' => array(
-                        'delete' => true,
-                    ),
-                ),
-                array(
-                    'edit' => 'inline',
-                    'inline' => 'table',
-                )
-            )
-            ->end()
-            ->with('admin.deliverynote.observations', $this->getFormMdSuccessBoxArray(4))
-            ->add(
-                'observations',
-                TextareaType::class,
-                array(
-                    'label' => 'admin.deliverynote.observations',
-                    'required' => false,
-                    'attr' => array(
-                        'rows' => 6,
-                    ),
-                )
-            )
-            ->end()
         ;
+        if (!$isNewRecord) {
+            $formMapper
+                ->with('admin.workordertask.title', $this->getFormMdSuccessBoxArray(4))
+                ->add(
+                    'workOrderTasks',
+                    ModelType::class,
+                    array(
+                        'label' => 'admin.workordertask.title',
+                        'multiple' => true,
+                        'expanded' => false,
+                        'required' => false,
+                        'btn_add' => false,
+                    )
+                )
+                ->end()
+                ->with('admin.deliverynotetimeregister.title', $this->getFormMdSuccessBoxArray(12))
+                ->add(
+                    'timeRegisters',
+                    CollectionType::class,
+                    array(
+                        'label' => ' ',
+                        'required' => false,
+                        'btn_add' => true,
+                        'error_bubbling' => true,
+                        'type_options' => array(
+                            'delete' => true,
+                        ),
+                    ),
+                    array(
+                        'edit' => 'inline',
+                        'inline' => 'table',
+                    )
+                )
+                ->end()
+                ->with('admin.nonstandardusedmaterial.title', $this->getFormMdSuccessBoxArray(8))
+                ->add(
+                    'nonStandardUsedMaterials',
+                    CollectionType::class,
+                    array(
+                        'label' => ' ',
+                        'required' => false,
+                        'btn_add' => true,
+                        'error_bubbling' => true,
+                        'type_options' => array(
+                            'delete' => true,
+                        ),
+                    ),
+                    array(
+                        'edit' => 'inline',
+                        'inline' => 'table',
+                    )
+                )
+                ->end()
+                ->with('admin.deliverynote.observations', $this->getFormMdSuccessBoxArray(4))
+                ->add(
+                    'observations',
+                    TextareaType::class,
+                    array(
+                        'label' => 'admin.deliverynote.observations',
+                        'required' => false,
+                        'attr' => array(
+                            'rows' => 6,
+                        ),
+                    )
+                )
+            ;
+        }
+        $formMapper->end();
     }
 
     /**
