@@ -96,6 +96,12 @@ services:
         factory: [ '@doctrine', getRepository ]
         arguments:
             - App:WorkOrder
+    app.work_order_task_repository:
+        public: true
+        class: App\Repository\WorkOrderTaskRepository
+        factory: [ '@doctrine', getRepository ]
+        arguments:
+            - App:WorkOrderTask
     app.repositories_service:
         class: App\Service\RepositoriesService
         arguments:
@@ -113,3 +119,4 @@ services:
             - '@app.blade_damage_repository'
             - '@app.vehicle_repository'
             - '@app.work_order_repository'
+            - '@app.work_order_task_repository'

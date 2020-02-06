@@ -87,7 +87,7 @@ class DeliveryNoteAdmin extends AbstractBaseAdmin
                 array(
                     'label' => 'admin.windfarm.title',
                     'class' => Windfarm::class,
-                    'query_builder' => $isNewRecord ? $this->wfr->findAllSortedByNameQB() : $this->wfr->findOnlyRelatedWithAWorkOrderSortedByNameQB($this->getSubject()->getWorkOrder()),
+                    'query_builder' => $this->wfr->findAllSortedByNameQB(),
                 )
             )
             ->end()
@@ -227,9 +227,10 @@ class DeliveryNoteAdmin extends AbstractBaseAdmin
                     array(
                         'label' => 'admin.workordertask.title',
                         'multiple' => true,
-                        'expanded' => false,
+                        'expanded' => true,
                         'required' => false,
                         'btn_add' => false,
+                        'query' => $this->wotr->findItemsByWorkOrderSortedByIdQB($this->getSubject()->getWorkOrder()),
                     )
                 )
                 ->end()
