@@ -8,10 +8,16 @@
     <script type="text/javascript">
         jQuery(document).ready(function() {
             let workOrderNode = jQuery('#{{ form.workOrder.vars.id }}');
+            let windfarmNode = jQuery('#{{ form.windfarm.vars.id }}');
             workOrderNode.change(function(event) {
                 let workOrderId = event.val;
                 console.log('workOrderNode.change', workOrderId);
                 updateWindfarmNodeBySelectedWorkOrderId(workOrderId);
+            });
+            windfarmNode.change(function(event) {
+                let windfarmId = event.val;
+                console.log('windfarm.change', windfarmId);
+                updateWindmillNodeBySelectedWindfarmId(windfarmId);
             });
             {% if admin.id(object) %}
                 {# edit mode #}
@@ -28,13 +34,19 @@
                 let jsonResponse = jQuery.parseJSON(response);
                 windfarmNode.empty().html(jsonResponse.htmlOptionStringData);
                 console.log('updateWindfarmNodeBySelectedWorkOrderId response', jsonResponse);
-                windfarmNode.select2('val', '');
+                windfarmNode.select2('val', jsonResponse.data[0].id);
+                updateWindmillNodeBySelectedWindfarmId(jsonResponse.data[0].id);
             });
         }
         function updateWindmillNodeBySelectedWindfarmId(selectedWindfarmId) {
+            let selectedWindfarmsIds = [];
+            selectedWindfarmsIds.push(selectedWindfarmId);
+            let windmillNode = jQuery('#{{ form.windmill.vars.id }}');
             jQuery.post(Routing.generate('admin_app_workorder_getWindmillsFromSelectedWindfarmsIds', selectedWindfarmsIds)).done(function (response) {
                 let jsonResponse = jQuery.parseJSON(response);
+                console.log('updateWindmillNodeBySelectedWindfarmId response', jsonResponse);
                 windmillNode.empty().html(jsonResponse.htmlOptionStringData);
+                windmillNode.select2('val', jsonResponse.data[0].id);
             });
         }
     </script>

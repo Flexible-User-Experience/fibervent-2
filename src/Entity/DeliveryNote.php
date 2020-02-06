@@ -189,6 +189,14 @@ class DeliveryNote extends AbstractBase
      */
 
     /**
+     * DeliveryNote constructor.
+     */
+    public function __construct()
+    {
+        $this->timeRegisters = new ArrayCollection();
+    }
+
+    /**
      * @param int|null $id
      *
      * @return DeliveryNote
@@ -281,7 +289,7 @@ class DeliveryNote extends AbstractBase
      *
      * @return DeliveryNote
      */
-    public function setDate(DateTime $date): DeliveryNote
+    public function setDate(?DateTime $date): DeliveryNote
     {
         $this->date = $date;
 
@@ -327,7 +335,7 @@ class DeliveryNote extends AbstractBase
      *
      * @return DeliveryNote
      */
-    public function setBlades(array $blades): DeliveryNote
+    public function setBlades(?array $blades): DeliveryNote
     {
         $this->blades = $blades;
 
@@ -401,7 +409,7 @@ class DeliveryNote extends AbstractBase
      *
      * @return DeliveryNote
      */
-    public function setRepairWindmillSections(array $repairWindmillSections): DeliveryNote
+    public function setRepairWindmillSections(?array $repairWindmillSections): DeliveryNote
     {
         $this->repairWindmillSections = $repairWindmillSections;
 
@@ -449,7 +457,7 @@ class DeliveryNote extends AbstractBase
      *
      * @return DeliveryNote
      */
-    public function setTeamLeader(User $teamLeader): DeliveryNote
+    public function setTeamLeader(?User $teamLeader): DeliveryNote
     {
         $this->teamLeader = $teamLeader;
 
@@ -469,7 +477,7 @@ class DeliveryNote extends AbstractBase
      *
      * @return DeliveryNote
      */
-    public function setTeamTechnician1(User $teamTechnician1): DeliveryNote
+    public function setTeamTechnician1(?User $teamTechnician1): DeliveryNote
     {
         $this->teamTechnician1 = $teamTechnician1;
 
@@ -489,7 +497,7 @@ class DeliveryNote extends AbstractBase
      *
      * @return DeliveryNote
      */
-    public function setTeamTechnician2(User $teamTechnician2): DeliveryNote
+    public function setTeamTechnician2(?User $teamTechnician2): DeliveryNote
     {
         $this->teamTechnician2 = $teamTechnician2;
 
@@ -509,7 +517,7 @@ class DeliveryNote extends AbstractBase
      *
      * @return DeliveryNote
      */
-    public function setTeamTechnician3(User $teamTechnician3): DeliveryNote
+    public function setTeamTechnician3(?User $teamTechnician3): DeliveryNote
     {
         $this->teamTechnician3 = $teamTechnician3;
 
@@ -529,7 +537,7 @@ class DeliveryNote extends AbstractBase
      *
      * @return DeliveryNote
      */
-    public function setTeamTechnician4(User $teamTechnician4): DeliveryNote
+    public function setTeamTechnician4(?User $teamTechnician4): DeliveryNote
     {
         $this->teamTechnician4 = $teamTechnician4;
 
@@ -549,7 +557,7 @@ class DeliveryNote extends AbstractBase
      *
      * @return DeliveryNote
      */
-    public function setVehicle(Vehicle $vehicle): DeliveryNote
+    public function setVehicle(?Vehicle $vehicle): DeliveryNote
     {
         $this->vehicle = $vehicle;
 
@@ -569,7 +577,7 @@ class DeliveryNote extends AbstractBase
      *
      * @return DeliveryNote
      */
-    public function setCraneCompany(string $craneCompany): DeliveryNote
+    public function setCraneCompany(?string $craneCompany): DeliveryNote
     {
         $this->craneCompany = $craneCompany;
 
@@ -589,7 +597,7 @@ class DeliveryNote extends AbstractBase
      *
      * @return DeliveryNote
      */
-    public function setCraneDriver(string $craneDriver): DeliveryNote
+    public function setCraneDriver(?string $craneDriver): DeliveryNote
     {
         $this->craneDriver = $craneDriver;
 
@@ -609,7 +617,7 @@ class DeliveryNote extends AbstractBase
      *
      * @return $this
      */
-    public function setRepairAccessTypes(array $repairAccessTypes): DeliveryNote
+    public function setRepairAccessTypes(?array $repairAccessTypes): DeliveryNote
     {
         $this->repairAccessTypes = $repairAccessTypes;
 
@@ -683,7 +691,7 @@ class DeliveryNote extends AbstractBase
      *
      * @return DeliveryNote
      */
-    public function setObservations(string $observations): DeliveryNote
+    public function setObservations(?string $observations): DeliveryNote
     {
         $this->observations = $observations;
 
