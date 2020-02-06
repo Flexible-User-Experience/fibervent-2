@@ -12,9 +12,7 @@ use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Form\Type\ModelAutocompleteType;
 use Sonata\AdminBundle\Form\Type\ModelType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 /**
  * Class WorkOrderTaskAdmin.
@@ -183,6 +181,9 @@ class WorkOrderTaskAdmin extends AbstractBaseAdmin
                             'disabled' => true,
                             'property' => 'damage.code',
                             'required' => true,
+                            'attr' => array(
+                                'hidden' => true,
+                            ),
                         )
                     )
                     ->add(

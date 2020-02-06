@@ -3,7 +3,6 @@
 namespace App\Controller;
 
 use App\Entity\Customer;
-use App\Entity\Windfarm;
 use App\Entity\Windmill;
 use App\Entity\WorkOrder;
 use App\Model\AjaxResponse;
