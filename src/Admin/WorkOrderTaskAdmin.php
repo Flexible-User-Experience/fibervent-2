@@ -4,6 +4,7 @@ namespace App\Admin;
 
 use App\Entity\Windfarm;
 use App\Entity\WorkOrder;
+use App\Entity\WorkOrderTask;
 use App\Enum\BladeDamagePositionEnum;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
@@ -11,6 +12,9 @@ use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Form\Type\ModelAutocompleteType;
 use Sonata\AdminBundle\Form\Type\ModelType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\FormType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 /**
  * Class WorkOrderTaskAdmin.
@@ -31,7 +35,8 @@ class WorkOrderTaskAdmin extends AbstractBaseAdmin
      */
     protected function configureFormFields(FormMapper $formMapper)
     {
-        if ($this->getRootCode() == $this->getCode()) {
+        $isEmbed = $this->getRootCode() != $this->getCode();
+        if (!$isEmbed) {
             // not embeded
             $formMapper
                 ->with('admin.common.general', $this->getFormMdSuccessBoxArray(3))
@@ -62,31 +67,39 @@ class WorkOrderTaskAdmin extends AbstractBaseAdmin
             ;
             /** @var WorkOrder $workOrder */
             $workOrder = $this->getRoot()->getSubject();
-            /** @var Windfarm $windfarm */
-            $windfarm = $workOrder->getWindfarm();
+            /** @var Windfarm[]|array $windfarms */
+            $windfarms = $workOrder->getWindfarms();
+            /** @var WorkOrderTask $workOrderTask */
+            $workOrderTask = $this->getSubject();
         }
-        if ($this->id($this->getSubject())) { // is edit mode, disable on new subjects
+        if ($this->id($this->getSubject())) {
+            // is in edit mode
             if ($this->getSubject()->isFromAudit()) {
+                // is in edit mode from audit
                 $formMapper
                     ->with('admin.bladedamage.title', $this->getFormMdSuccessBoxArray(5))
-                    ->add('windmill',
-                        ModelAutocompleteType::class,
+                    ->add(
+                        'windmill',
+                        ModelType::class,
                         array(
                             'label' => 'admin.windmill.title',
                             'btn_add' => false,
                             'required' => false,
-                            'property' => 'code',
                             'disabled' => true,
+                            'query' => $this->wmr->findMultipleByWindfarmsArrayQB($windfarms),
                         )
                     )
-                    ->add('windmillBlade',
-                        ModelAutocompleteType::class,
+                    ->add(
+                        'windmillBlade',
+                        ModelType::class,
                         array(
-                            'label' => 'admin.windmillblade.title',
+                            'label' => 'admin.blade.title',
                             'btn_add' => false,
                             'required' => false,
-                            'property' => 'code',
                             'disabled' => true,
+                            'property' => 'order',
+                            // 'query' => $this->wbr->findWindmillSortedByCodeQB($workOrderTask->getWindmill()),
+                            'query' => $isEmbed ? $this->wbr->findMultipleByWindfarmsArrayQB($windfarms): $this->wbr->getAllSortedByWindmillAndOrderQB(),
                         )
                     )
                     ->add(
@@ -133,26 +146,33 @@ class WorkOrderTaskAdmin extends AbstractBaseAdmin
                             'disabled' => true,
                         )
                     )
-                    ->end();
+                    ->end()
+                ;
             } else {
+                // is in edit mode NOT from audit
                 $formMapper
                     ->with('admin.bladedamage.title', $this->getFormMdSuccessBoxArray(5))
-                    ->add('windmill',
+                    ->add(
+                        'windmill',
                         ModelType::class,
                         array(
                             'label' => 'admin.windmill.title',
                             'btn_add' => false,
                             'required' => false,
                             'property' => 'code',
-//                            'query' => $this->wmr->findEnabledandWindfarmSortedByCustomerWindfarmAndWindmillCodeQB($windfarm),
+                            'query' => $this->wmr->findMultipleByWindfarmsArrayQB($windfarms),
                         )
                     )
-                    ->add('windmillBlade',
+                    ->add(
+                        'windmillBlade',
                         ModelType::class,
                         array(
-                            'label' => 'admin.windmillblade.title',
+                            'label' => 'admin.blade.title',
                             'btn_add' => false,
                             'required' => false,
+                            'property' => 'order',
+                            // 'query' => $this->wbr->findWindmillSortedByCodeQB($workOrderTask->getWindmill()),
+                            'query' => $isEmbed ? $this->wbr->findMultipleByWindfarmsArrayQB($windfarms): $this->wbr->getAllSortedByWindmillAndOrderQB(),
                         )
                     )
                     ->add(
@@ -162,6 +182,7 @@ class WorkOrderTaskAdmin extends AbstractBaseAdmin
                             'label' => 'admin.bladedamage.title',
                             'disabled' => true,
                             'property' => 'damage.code',
+                            'required' => true,
                         )
                     )
                     ->add(
@@ -172,6 +193,7 @@ class WorkOrderTaskAdmin extends AbstractBaseAdmin
                             'choices' => BladeDamagePositionEnum::getEnumArray(),
                             'multiple' => false,
                             'expanded' => false,
+                            'required' => true,
                         )
                     )
                     ->add(
@@ -179,6 +201,7 @@ class WorkOrderTaskAdmin extends AbstractBaseAdmin
                         null,
                         array(
                             'label' => 'admin.bladedamage.radius',
+                            'required' => true,
                         )
                     )
                     ->add(
@@ -186,6 +209,7 @@ class WorkOrderTaskAdmin extends AbstractBaseAdmin
                         null,
                         array(
                             'label' => 'admin.bladedamage.distance',
+                            'required' => true,
                         )
                     )
                     ->add(
@@ -193,15 +217,18 @@ class WorkOrderTaskAdmin extends AbstractBaseAdmin
                         null,
                         array(
                             'label' => 'admin.bladedamage.size',
+                            'required' => true,
                         )
                     )
                     ->end()
                 ;
             }
         } else {
+            // is in create or new mode
             $formMapper
                 ->with('admin.bladedamage.title', $this->getFormMdSuccessBoxArray(5))
-                ->add('windmill',
+                ->add(
+                    'windmill',
                     ModelType::class,
                     array(
                         'label' => 'admin.windmill.title',
@@ -211,12 +238,15 @@ class WorkOrderTaskAdmin extends AbstractBaseAdmin
                         'query' => $this->wmr->findEnabledSortedByCustomerWindfarmAndWindmillCodeQB(),
                     )
                 )
-                ->add('windmillBlade',
+                ->add(
+                    'windmillBlade',
                     ModelType::class,
                     array(
-                        'label' => 'admin.windmillblade.title',
+                        'label' => 'admin.blade.title',
                         'btn_add' => false,
                         'required' => false,
+                        'property' => 'order',
+                        'query' => $isEmbed ? $this->wbr->findMultipleByWindfarmsArrayQB($windfarms): $this->wbr->getAllSortedByWindmillAndOrderQB(),
                     )
                 )
                 ->add(
@@ -236,6 +266,7 @@ class WorkOrderTaskAdmin extends AbstractBaseAdmin
                         'choices' => BladeDamagePositionEnum::getEnumArray(),
                         'multiple' => false,
                         'expanded' => false,
+                        'required' => true,
                     )
                 )
                 ->add(
@@ -243,6 +274,7 @@ class WorkOrderTaskAdmin extends AbstractBaseAdmin
                     null,
                     array(
                         'label' => 'admin.bladedamage.radius',
+                        'required' => true,
                     )
                 )
                 ->add(
@@ -250,6 +282,7 @@ class WorkOrderTaskAdmin extends AbstractBaseAdmin
                     null,
                     array(
                         'label' => 'admin.bladedamage.distance',
+                        'required' => true,
                     )
                 )
                 ->add(
@@ -257,33 +290,77 @@ class WorkOrderTaskAdmin extends AbstractBaseAdmin
                     null,
                     array(
                         'label' => 'admin.bladedamage.size',
+                        'required' => true,
                     )
                 )
-                ->end();
+                ->end()
+            ;
         }
         $formMapper
             ->with('admin.common.general', $this->getFormMdSuccessBoxArray(7))
-            ->add('description',
+            ->add(
+                'description',
                 null,
                 array(
                     'label' => 'admin.workordertask.description',
+                    'required' => true,
                 )
             )
-            ->add('isCompleted',
+        ;
+        if ($isEmbed) {
+            $formMapper
+                ->add(
+                    'multifiles',
+                    FormType::class,
+                    array(
+                        'label' => 'admin.photo.title',
+                        'required' => false,
+                        'mapped' => false,
+                        'attr' => array(
+                            'class' => 'dropzone',
+                        ),
+                    )
+                )
+            ;
+        }
+        $formMapper
+            ->add(
+                'isCompleted',
                 null,
                 array(
                     'label' => 'admin.workordertask.is_completed',
                 )
             )
-            ->add('isFromAudit',
-                null,
-                array(
-                    'label' => 'admin.workorder.is_from_audit',
-                    'disabled' => true,
-                )
-            )
-            ->end()
         ;
+        if ($isEmbed && !$workOrder->isFromAudit()) {
+            $formMapper
+                ->add(
+                    'isFromAudit',
+                    null,
+                    array(
+                        'label' => 'admin.auditwindmillblade.audit',
+                        'disabled' => true,
+                        'attr' => array(
+                            'hidden' => true,
+                        ),
+                    )
+                )
+                ->end()
+            ;
+        } else {
+            $formMapper
+                ->add(
+                    'isFromAudit',
+                    null,
+                    array(
+                        'label' => 'admin.auditwindmillblade.audit',
+                        'disabled' => true,
+                    )
+                )
+                ->end()
+            ;
+        }
+        $formMapper->end();
     }
 
     /**
@@ -311,7 +388,7 @@ class WorkOrderTaskAdmin extends AbstractBaseAdmin
             ->add('windmillBlade',
                 null,
                 array(
-                    'label' => 'admin.windmillblade.title',
+                    'label' => 'admin.blade.title',
                 )
             )
             ->add('windmill',
@@ -393,7 +470,7 @@ class WorkOrderTaskAdmin extends AbstractBaseAdmin
             ->add('windmillBlade',
                 null,
                 array(
-                    'label' => 'admin.windmillblade.title',
+                    'label' => 'admin.blade.title',
                     'sortable' => true,
                     'sort_field_mapping' => array('fieldName' => 'code'),
                     'sort_parent_association_mappings' => array(array('fieldName' => 'windmillBlade')),

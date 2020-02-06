@@ -2,6 +2,7 @@ fos_js_routing:
     routes_to_expose:
         - 'admin_app_customer_getAuditsFromCustomerId'
         - 'admin_app_workorder_getWindfarmsFromCustomerId'
+        - 'admin_app_workorder_getWindmillsFromSelectedWindfarmsIds'
         - 'admin_app_workorder_getWindmillbladesFromWindmillId'
-        - 'admin_app_workorder_getWindmillsFromWindfarmsName'
+        - 'admin_app_workorder_uploadWorkOrderTaskFile'
         - 'admin_app_deliverynote_getWindfarmsFromWorkOrderId'
