@@ -68,7 +68,7 @@ class WorkOrderTaskAdmin extends AbstractBaseAdmin
             /** @var Windfarm[]|array $windfarms */
             $windfarms = $workOrder->getWindfarms();
             /** @var WorkOrderTask $workOrderTask */
-            $workOrderTask = $this->getSubject();
+            $isParentObjectFromAudit = $workOrder->isFromAudit();
         }
         if ($this->id($this->getSubject())) {
             // is in edit mode
@@ -181,9 +181,7 @@ class WorkOrderTaskAdmin extends AbstractBaseAdmin
                             'disabled' => true,
                             'property' => 'damage.code',
                             'required' => true,
-                            'attr' => array(
-                                'hidden' => true,
-                            ),
+                            'attr' => !$isParentObjectFromAudit ? ['hidden' => true] : [],
                         )
                     )
                     ->add(
