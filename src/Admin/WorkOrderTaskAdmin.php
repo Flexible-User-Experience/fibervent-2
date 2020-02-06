@@ -33,331 +33,146 @@ class WorkOrderTaskAdmin extends AbstractBaseAdmin
      */
     protected function configureFormFields(FormMapper $formMapper)
     {
-        $isEmbed = $this->getRootCode() != $this->getCode();
-        if (!$isEmbed) {
-            // not embeded
-            $formMapper
-                ->with('admin.common.general', $this->getFormMdSuccessBoxArray(3))
-                ->add(
-                    'workOrder',
-                    null,
-                    array(
-                        'label' => 'admin.workorder.title',
-                    )
-                )
-                ->end()
-            ;
+        /** @var WorkOrderTask $workOrderTask */
+        $workOrderTask = $this->getSubject();
+        /** @var WorkOrder $workOrder */
+        $workOrder = $this->getRoot()->getSubject();
+        /** @var Windfarm[]|array $windfarms */
+        $windfarms = $workOrder->getWindfarms();
+        $isParentObjectFromAudit = $workOrder->isFromAudit();
+        $hiddenAttrArray = ['hidden' => true];
+        $isNewRecord = $this->id($this->getSubject()) ? false : true;
+        if ($isNewRecord) {
+            $isObjectFromAudit = false;
         } else {
-            // embeded
-            $formMapper
-                ->with('admin.common.general', $this->getFormMdSuccessBoxArray(3))
-                ->add(
-                    'workOrder',
-                    null,
-                    array(
-                        'label' => 'admin.workorder.title',
-                        'attr' => array(
-                            'hidden' => true,
-                        ),
-                    )
-                )
-                ->end()
-            ;
-            /** @var WorkOrder $workOrder */
-            $workOrder = $this->getRoot()->getSubject();
-            /** @var Windfarm[]|array $windfarms */
-            $windfarms = $workOrder->getWindfarms();
-            /** @var WorkOrderTask $workOrderTask */
-            $isParentObjectFromAudit = $workOrder->isFromAudit();
-        }
-        if ($this->id($this->getSubject())) {
-            // is in edit mode
-            if ($this->getSubject()->isFromAudit()) {
-                // is in edit mode from audit
-                $formMapper
-                    ->with('admin.bladedamage.title', $this->getFormMdSuccessBoxArray(5))
-                    ->add(
-                        'windmill',
-                        ModelType::class,
-                        array(
-                            'label' => 'admin.windmill.title',
-                            'btn_add' => false,
-                            'required' => false,
-                            'disabled' => true,
-                            'query' => $this->wmr->findMultipleByWindfarmsArrayQB($windfarms),
-                        )
-                    )
-                    ->add(
-                        'windmillBlade',
-                        ModelType::class,
-                        array(
-                            'label' => 'admin.blade.title',
-                            'btn_add' => false,
-                            'required' => false,
-                            'disabled' => true,
-                            'property' => 'order',
-                            // 'query' => $this->wbr->findWindmillSortedByCodeQB($workOrderTask->getWindmill()),
-                            'query' => $isEmbed ? $this->wbr->findMultipleByWindfarmsArrayQB($windfarms): $this->wbr->getAllSortedByWindmillAndOrderQB(),
-                        )
-                    )
-                    ->add(
-                        'bladeDamage',
-                        ModelAutocompleteType::class,
-                        array(
-                            'label' => 'admin.bladedamage.title',
-                            'disabled' => true,
-                            'property' => 'damage.code',
-                        )
-                    )
-                    ->add(
-                        'position',
-                        ChoiceType::class,
-                        array(
-                            'label' => 'admin.bladedamage.position',
-                            'disabled' => true,
-                            'choices' => BladeDamagePositionEnum::getEnumArray(),
-                            'multiple' => false,
-                            'expanded' => false,
-                        )
-                    )
-                    ->add(
-                        'radius',
-                        null,
-                        array(
-                            'label' => 'admin.bladedamage.radius',
-                            'disabled' => true,
-                        )
-                    )
-                    ->add(
-                        'distance',
-                        null,
-                        array(
-                            'label' => 'admin.bladedamage.distance',
-                            'disabled' => true,
-                        )
-                    )
-                    ->add(
-                        'size',
-                        null,
-                        array(
-                            'label' => 'admin.bladedamage.size',
-                            'disabled' => true,
-                        )
-                    )
-                    ->end()
-                ;
-            } else {
-                // is in edit mode NOT from audit
-                $formMapper
-                    ->with('admin.bladedamage.title', $this->getFormMdSuccessBoxArray(5))
-                    ->add(
-                        'windmill',
-                        ModelType::class,
-                        array(
-                            'label' => 'admin.windmill.title',
-                            'btn_add' => false,
-                            'required' => false,
-                            'property' => 'code',
-                            'query' => $this->wmr->findMultipleByWindfarmsArrayQB($windfarms),
-                        )
-                    )
-                    ->add(
-                        'windmillBlade',
-                        ModelType::class,
-                        array(
-                            'label' => 'admin.blade.title',
-                            'btn_add' => false,
-                            'required' => false,
-                            'property' => 'order',
-                            // 'query' => $this->wbr->findWindmillSortedByCodeQB($workOrderTask->getWindmill()),
-                            'query' => $isEmbed ? $this->wbr->findMultipleByWindfarmsArrayQB($windfarms): $this->wbr->getAllSortedByWindmillAndOrderQB(),
-                        )
-                    )
-                    ->add(
-                        'bladeDamage',
-                        ModelAutocompleteType::class,
-                        array(
-                            'label' => 'admin.bladedamage.title',
-                            'disabled' => true,
-                            'property' => 'damage.code',
-                            'required' => true,
-                            'attr' => !$isParentObjectFromAudit ? ['hidden' => true] : [],
-                        )
-                    )
-                    ->add(
-                        'position',
-                        ChoiceType::class,
-                        array(
-                            'label' => 'admin.bladedamage.position',
-                            'choices' => BladeDamagePositionEnum::getEnumArray(),
-                            'multiple' => false,
-                            'expanded' => false,
-                            'required' => true,
-                        )
-                    )
-                    ->add(
-                        'radius',
-                        null,
-                        array(
-                            'label' => 'admin.bladedamage.radius',
-                            'required' => true,
-                        )
-                    )
-                    ->add(
-                        'distance',
-                        null,
-                        array(
-                            'label' => 'admin.bladedamage.distance',
-                            'required' => true,
-                        )
-                    )
-                    ->add(
-                        'size',
-                        null,
-                        array(
-                            'label' => 'admin.bladedamage.size',
-                            'required' => true,
-                        )
-                    )
-                    ->end()
-                ;
-            }
-        } else {
-            // is in create or new mode
-            $formMapper
-                ->with('admin.bladedamage.title', $this->getFormMdSuccessBoxArray(5))
-                ->add(
-                    'windmill',
-                    ModelType::class,
-                    array(
-                        'label' => 'admin.windmill.title',
-                        'btn_add' => false,
-                        'required' => false,
-                        'property' => 'code',
-                        'query' => $this->wmr->findEnabledSortedByCustomerWindfarmAndWindmillCodeQB(),
-                    )
-                )
-                ->add(
-                    'windmillBlade',
-                    ModelType::class,
-                    array(
-                        'label' => 'admin.blade.title',
-                        'btn_add' => false,
-                        'required' => false,
-                        'property' => 'order',
-                        'query' => $isEmbed ? $this->wbr->findMultipleByWindfarmsArrayQB($windfarms): $this->wbr->getAllSortedByWindmillAndOrderQB(),
-                    )
-                )
-                ->add(
-                    'bladeDamage',
-                    ModelAutocompleteType::class,
-                    array(
-                        'label' => 'admin.bladedamage.title',
-                        'disabled' => true,
-                        'property' => 'damage.code',
-                    )
-                )
-                ->add(
-                    'position',
-                    ChoiceType::class,
-                    array(
-                        'label' => 'admin.bladedamage.position',
-                        'choices' => BladeDamagePositionEnum::getEnumArray(),
-                        'multiple' => false,
-                        'expanded' => false,
-                        'required' => true,
-                    )
-                )
-                ->add(
-                    'radius',
-                    null,
-                    array(
-                        'label' => 'admin.bladedamage.radius',
-                        'required' => true,
-                    )
-                )
-                ->add(
-                    'distance',
-                    null,
-                    array(
-                        'label' => 'admin.bladedamage.distance',
-                        'required' => true,
-                    )
-                )
-                ->add(
-                    'size',
-                    null,
-                    array(
-                        'label' => 'admin.bladedamage.size',
-                        'required' => true,
-                    )
-                )
-                ->end()
-            ;
+            $isObjectFromAudit = $workOrderTask->isFromAudit();
         }
         $formMapper
-            ->with('admin.common.general', $this->getFormMdSuccessBoxArray(7))
+            ->with('admin.common.general', $this->getFormMdSuccessBoxArray(3))
+            ->add(
+                'workOrder',
+                null,
+                array(
+                    'label' => 'admin.workorder.title',
+                    'required' => true,
+                    'attr' => $hiddenAttrArray,
+                )
+            )
+            ->add(
+                'windmill',
+                ModelType::class,
+                array(
+                    'label' => 'admin.windmill.title',
+                    'property' => 'code',
+                    'query' => $this->wmr->findMultipleByWindfarmsArrayQB($windfarms),
+                    'btn_add' => false,
+                    'required' => true,
+                    'disabled' => $isObjectFromAudit,
+                )
+            )
+            ->add(
+                'windmillBlade',
+                ModelType::class,
+                array(
+                    'label' => 'admin.blade.title',
+                    'property' => 'order',
+                    'query' => $this->wbr->findMultipleByWindfarmsArrayQB($windfarms),
+                    'btn_add' => false,
+                    'required' => false,
+                    'disabled' => $isObjectFromAudit,
+                )
+            )
+            ->add(
+                'bladeDamage',
+                ModelAutocompleteType::class,
+                array(
+                    'label' => 'admin.bladedamage.title',
+                    'property' => 'damage.code',
+                    'disabled' => $isObjectFromAudit,
+                )
+            )
+            ->add(
+                'position',
+                ChoiceType::class,
+                array(
+                    'label' => 'admin.bladedamage.position',
+                    'choices' => BladeDamagePositionEnum::getEnumArray(),
+                    'multiple' => false,
+                    'expanded' => false,
+                    'required' => false,
+                    'disabled' => $isObjectFromAudit,
+                )
+            )
+            ->add(
+                'radius',
+                null,
+                array(
+                    'label' => 'admin.bladedamage.radius',
+                    'required' => false,
+                    'disabled' => $isObjectFromAudit,
+                )
+            )
+            ->add(
+                'distance',
+                null,
+                array(
+                    'label' => 'admin.bladedamage.distance',
+                    'required' => false,
+                    'disabled' => $isObjectFromAudit,
+                )
+            )
+            ->add(
+                'size',
+                null,
+                array(
+                    'label' => 'admin.bladedamage.size',
+                    'required' => false,
+                    'disabled' => $isObjectFromAudit,
+                )
+            )
             ->add(
                 'description',
                 null,
                 array(
                     'label' => 'admin.workordertask.description',
                     'required' => true,
+                    'disabled' => $isObjectFromAudit,
                 )
             )
-        ;
-        if ($isEmbed) {
-            $formMapper
-                ->add(
-                    'multifiles',
-                    FormType::class,
-                    array(
-                        'label' => 'admin.photo.title',
-                        'required' => false,
-                        'mapped' => false,
-                        'attr' => array(
-                            'class' => 'dropzone',
-                        ),
-                    )
+            ->add(
+                'multifiles',
+                FormType::class,
+                array(
+                    'label' => 'admin.auditwindmillblade.photos',
+                    'mapped' => false,
+                    'required' => false,
+                    'disabled' => false,
+                    'attr' => ['class' => 'dropzone'],
                 )
-            ;
-        }
-        $formMapper
+            )
             ->add(
                 'isCompleted',
                 null,
                 array(
                     'label' => 'admin.workordertask.is_completed',
+                    'required' => false,
+                    'disabled' => false,
                 )
             )
         ;
-        if ($isEmbed && !$workOrder->isFromAudit()) {
+        if ($isParentObjectFromAudit) {
             $formMapper
                 ->add(
                     'isFromAudit',
                     null,
                     array(
                         'label' => 'admin.auditwindmillblade.audit',
-                        'disabled' => true,
-                        'attr' => array(
-                            'hidden' => true,
-                        ),
-                    )
-                )
-                ->end()
-            ;
-        } else {
-            $formMapper
-                ->add(
-                    'isFromAudit',
-                    null,
-                    array(
-                        'label' => 'admin.auditwindmillblade.audit',
+                        'required' => false,
                         'disabled' => true,
                     )
                 )
-                ->end()
             ;
+
         }
         $formMapper->end();
     }

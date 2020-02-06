@@ -8,31 +8,62 @@
     <script type="text/javascript">
         jQuery(document).ready(function() {
             let workOrderNode = jQuery('#{{ form.workOrder.vars.id }}');
+            let windfarmNode = jQuery('#{{ form.windfarm.vars.id }}');
             workOrderNode.change(function(event) {
                 let workOrderId = event.val;
-                updateWindfarmNodeBySelectedWorkOrderId(workOrderId);
+                console.log('workOrderNode.change', workOrderId);
+                updateWindfarmNodeBySelectedWorkOrderId(workOrderId, false);
+            });
+            windfarmNode.change(function(event) {
+                let windfarmId = event.val;
+                console.log('windfarm.change', windfarmId);
+                updateWindmillNodeBySelectedWindfarmId(windfarmId, false);
             });
             {% if admin.id(object) %}
                 {# edit mode #}
                 {% if object.nonStandardUsedMaterials | length > 0 %}
-                    let bnsum = jQuery('#field_widget_{{ form.workOrderTasks.vars.id }}')[0].children[0].children[0].children[0];
+                    let bnsum = jQuery('#field_widget_{{ form.nonStandardUsedMaterials.vars.id }}')[0].children[0].children[0].children[0];
                     bnsum.children[0].width = '5%';
                     bnsum.children[2].width = '5%';
                 {% endif %}
+                jQuery(document).on('sonata.add_element', function(event, elementId, objectId, uniqid) {
+                    let bnsum = jQuery('#field_widget_{{ form.nonStandardUsedMaterials.vars.id }}')[0].children[0].children[0].children[0];
+                    bnsum.children[0].width = '5%';
+                    bnsum.children[2].width = '5%';
+                });
+                updateWindfarmNodeBySelectedWorkOrderId(workOrderNode.val(), true);
             {% endif %}
         });
-        function updateWindfarmNodeBySelectedWorkOrderId(workOrderId) {
+        function updateWindfarmNodeBySelectedWorkOrderId(workOrderId, setPreviousSelectedValue) {
             let windfarmNode = jQuery('#{{ form.windfarm.vars.id }}');
-            jQuery.get(Routing.generate('admin_app_workorder_getWindfarmsFromCustomerId', {id: workOrderId})).done(function (response) {
+            jQuery.get(Routing.generate('admin_app_deliverynote_getWindfarmsFromWorkOrderId', {id: workOrderId})).done(function (response) {
                 let jsonResponse = jQuery.parseJSON(response);
+                let windfarmNode = jQuery('#{{ form.windfarm.vars.id }}');
+                let windfarmNodeVal = parseInt(windfarmNode.val());
                 windfarmNode.empty().html(jsonResponse.htmlOptionStringData);
-                windfarmNode.select2('val', '');
+                console.log('updateWindfarmNodeBySelectedWorkOrderId response', jsonResponse);
+                if (setPreviousSelectedValue) {
+                    windfarmNode.select2('val', windfarmNodeVal);
+                } else {
+                    windfarmNode.select2('val', jsonResponse.data[0].id);
+                }
+                updateWindmillNodeBySelectedWindfarmId(jsonResponse.data[0].id, true);
             });
         }
-        function updateWindmillNodeBySelectedWindfarmId(selectedWindfarmId) {
+        function updateWindmillNodeBySelectedWindfarmId(selectedWindfarmId, setPreviousSelectedValue) {
+            let selectedWindfarmsIds = [];
+            selectedWindfarmsIds.push(selectedWindfarmId);
             jQuery.post(Routing.generate('admin_app_workorder_getWindmillsFromSelectedWindfarmsIds', selectedWindfarmsIds)).done(function (response) {
                 let jsonResponse = jQuery.parseJSON(response);
+                let windmillNode = jQuery('#{{ form.windmill.vars.id }}');
+                let windmillNodeVal = parseInt(windmillNode.val());
+                console.log('updateWindmillNodeBySelectedWindfarmId response', jsonResponse);
                 windmillNode.empty().html(jsonResponse.htmlOptionStringData);
+                if (setPreviousSelectedValue) {
+                    windmillNode.select2('val', windmillNodeVal);
+                } else {
+                    windmillNode.select2('val', jsonResponse.data[0].id);
+                }
             });
         }
     </script>

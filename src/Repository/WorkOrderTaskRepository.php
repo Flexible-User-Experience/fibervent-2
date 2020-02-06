@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Entity\WorkOrder;
 use App\Entity\WorkOrderTask;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry as RegistryInterface;
@@ -61,5 +62,38 @@ class WorkOrderTaskRepository extends ServiceEntityRepository
     public function findAllSortedById($limit = null, $order = 'ASC')
     {
         return $this->findAllSortedByIdQ($limit, $order)->getResult();
+    }
+
+    /**
+     * @param WorkOrder $workOrder
+     *
+     * @return QueryBuilder
+     */
+    public function findItemsByWorkOrderSortedByIdQB(WorkOrder $workOrder)
+    {
+        return $this->findAllSortedByIdQB()
+            ->where('t.workOrder = :workOrder')
+            ->setParameter('workOrder', $workOrder)
+        ;
+    }
+
+    /**
+     * @param WorkOrder $workOrder
+     *
+     * @return Query
+     */
+    public function findItemsByWorkOrderSortedByIdQ(WorkOrder $workOrder)
+    {
+        return $this->findItemsByWorkOrderSortedByIdQB($workOrder)->getQuery();
+    }
+
+    /**
+     * @param WorkOrder $workOrder
+     *
+     * @return array
+     */
+    public function findItemsByWorkOrderSortedById(WorkOrder $workOrder)
+    {
+        return $this->findItemsByWorkOrderSortedByIdQ($workOrder)->getResult();
     }
 }

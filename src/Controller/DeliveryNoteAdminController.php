@@ -39,7 +39,7 @@ class DeliveryNoteAdminController extends AbstractBaseAdminController
         if (!$workOrder) {
             return new JsonResponse($ajaxResponse);
         }
-        $ajaxResponse->setData($wfr->findOnlyRelatedWithAWorkOrderSortedByName($workOrder));
+        $ajaxResponse->setData($wfr->findOnlyRelatedWithAWorkOrderSortedByNameAjax($workOrder));
         $jsonEncodedResult = $ajaxResponse->getJsonEncodedResult();
 
         return new JsonResponse($jsonEncodedResult);
