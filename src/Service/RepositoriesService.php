@@ -16,6 +16,7 @@ use App\Repository\WindfarmRepository;
 use App\Repository\WindmillBladeRepository;
 use App\Repository\WindmillRepository;
 use App\Repository\WorkOrderRepository;
+use App\Repository\WorkOrderTaskRepository;
 
 /**
  * Class RepositoriesService.
@@ -95,6 +96,11 @@ class RepositoriesService
     private WorkOrderRepository $wor;
 
     /**
+     * @var WorkOrderTaskRepository
+     */
+    private WorkOrderTaskRepository $wotr;
+
+    /**
      * Methods.
      */
 
@@ -115,8 +121,9 @@ class RepositoriesService
      * @param BladeDamageRepository    $bdr
      * @param VehicleRepository        $vr
      * @param WorkOrderRepository      $wor
+     * @param WorkOrderTaskRepository  $wotr
      */
-    public function __construct(CustomerRepository $cr, UserRepository $ur, WindmillRepository $wmr, WindfarmRepository $wfr, BladeRepository $br, TurbineRepository $tr, StateRepository $sr, DamageRepository $dr, DamageCategoryRepository $dcr, AuditRepository $ar, WindmillBladeRepository $wbr, BladeDamageRepository $bdr, VehicleRepository $vr, WorkOrderRepository $wor)
+    public function __construct(CustomerRepository $cr, UserRepository $ur, WindmillRepository $wmr, WindfarmRepository $wfr, BladeRepository $br, TurbineRepository $tr, StateRepository $sr, DamageRepository $dr, DamageCategoryRepository $dcr, AuditRepository $ar, WindmillBladeRepository $wbr, BladeDamageRepository $bdr, VehicleRepository $vr, WorkOrderRepository $wor, WorkOrderTaskRepository $wotr)
     {
         $this->cr = $cr;
         $this->ur = $ur;
@@ -132,6 +139,7 @@ class RepositoriesService
         $this->bdr = $bdr;
         $this->vr = $vr;
         $this->wor = $wor;
+        $this->wotr = $wotr;
     }
 
     /**
@@ -244,5 +252,13 @@ class RepositoriesService
     public function getWor()
     {
         return $this->wor;
+    }
+
+    /**
+     * @return WorkOrderTaskRepository
+     */
+    public function getWotr()
+    {
+        return $this->wotr;
     }
 }

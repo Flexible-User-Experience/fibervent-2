@@ -248,7 +248,7 @@ class WorkOrderTask extends AbstractBase
      *
      * @return WorkOrderTask
      */
-    public function setPosition(int $position): WorkOrderTask
+    public function setPosition(?int $position): WorkOrderTask
     {
         $this->position = $position;
 
@@ -268,7 +268,7 @@ class WorkOrderTask extends AbstractBase
      *
      * @return WorkOrderTask
      */
-    public function setRadius(int $radius): WorkOrderTask
+    public function setRadius(?int $radius): WorkOrderTask
     {
         $this->radius = $radius;
 
@@ -288,7 +288,7 @@ class WorkOrderTask extends AbstractBase
      *
      * @return WorkOrderTask
      */
-    public function setDistance(int $distance): WorkOrderTask
+    public function setDistance(?int $distance): WorkOrderTask
     {
         $this->distance = $distance;
 
@@ -308,7 +308,7 @@ class WorkOrderTask extends AbstractBase
      *
      * @return WorkOrderTask
      */
-    public function setSize(int $size): WorkOrderTask
+    public function setSize(?int $size): WorkOrderTask
     {
         $this->size = $size;
 
@@ -336,7 +336,7 @@ class WorkOrderTask extends AbstractBase
      *
      * @return WorkOrderTask
      */
-    public function setEdge(int $edge): WorkOrderTask
+    public function setEdge(?int $edge): WorkOrderTask
     {
         $this->edge = $edge;
 
