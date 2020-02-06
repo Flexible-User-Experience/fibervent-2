@@ -112,6 +112,11 @@ class WorkOrderAdminController extends AbstractBaseAdminController
         return new Response($pdf->Output('informe_proyecto_'.$object->getId().'.pdf', 'I'), 200, array('Content-type' => 'application/pdf'));
     }
 
+    public function uploadWorkOrderTaskFileAction()
+    {
+
+    }
+
     /**
      * @return WorkOrder
      * @throws NotFoundHttpException
