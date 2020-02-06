@@ -123,7 +123,10 @@ class WorkOrderManager
         /** @var Audit $audit */
         foreach ($audits as $audit) {
             $auditWindmillBlades = $audit->getAuditWindmillBlades();
-            $workOrder->addAudit($audit);
+            $workOrder
+                ->addAudit($audit)
+                ->addWindfarm($audit->getWindfarm())
+            ;
             if (!$audit->isHasWorkOrder()) {
                 $audit->setHasWorkOrder(true);
                 $this->em->persist($audit);
