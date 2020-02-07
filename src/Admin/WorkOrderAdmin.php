@@ -511,6 +511,7 @@ class WorkOrderAdmin extends AbstractBaseAdmin
                 null,
                 array(
                     'label' => 'admin.audit.status',
+                    'template' => 'Admin/Cells/show__work_order_status.html.twig',
                 )
             )
             ->add(
