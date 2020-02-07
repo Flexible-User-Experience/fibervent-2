@@ -4321,16 +4321,16 @@
         },
         {
             "name": "sonata-project/exporter",
-            "version": "2.0.1",
+            "version": "2.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sonata-project/exporter.git",
-                "reference": "9e84fd03ef0c696b9b4e9617b73cb6defaf3b476"
+                "reference": "018474961b03bce8c24280520f8f8ed7e0a69cb1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sonata-project/exporter/zipball/9e84fd03ef0c696b9b4e9617b73cb6defaf3b476",
-                "reference": "9e84fd03ef0c696b9b4e9617b73cb6defaf3b476",
+                "url": "https://api.github.com/repos/sonata-project/exporter/zipball/018474961b03bce8c24280520f8f8ed7e0a69cb1",
+                "reference": "018474961b03bce8c24280520f8f8ed7e0a69cb1",
                 "shasum": ""
             },
             "require": {
@@ -4340,19 +4340,18 @@
                 "doctrine/dbal": "^2.5",
                 "doctrine/orm": "^2.4.5",
                 "matthiasnoback/symfony-config-test": "^4.0",
-                "matthiasnoback/symfony-dependency-injection-test": "^3.0",
+                "matthiasnoback/symfony-dependency-injection-test": "^4.0",
                 "propel/propel1": "^1.6",
                 "symfony/config": "^3.4 || ^4.0",
                 "symfony/dependency-injection": "^3.4 || ^4.0",
                 "symfony/http-foundation": "^3.4 || ^4.0",
                 "symfony/http-kernel": "^3.4 || ^4.0",
-                "symfony/phpunit-bridge": "^4.1",
+                "symfony/phpunit-bridge": "^4.3.8",
                 "symfony/property-access": "^3.4 || ^4.0",
                 "symfony/routing": "^3.4 || ^4.0"
             },
             "suggest": {
-                "ext-curl": "*",
-                "propel/propel1": "^1.6",
+                "propel/propel1": "To export propel collections",
                 "symfony/property-access": "To be able to export from database entities",
                 "symfony/routing": "To be able to export the routes of a Symfony app"
             },
@@ -4387,7 +4386,7 @@
                 "export",
                 "xls"
             ],
-            "time": "2019-01-26T10:32:20+00:00"
+            "time": "2020-02-06T19:17:41+00:00"
         },
         {
             "name": "sonata-project/user-bundle",
