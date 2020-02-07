@@ -159,7 +159,7 @@ class DeliveryNote extends AbstractBase
     /**
      * @var WorkOrderTask[]|ArrayCollection
      *
-     * @ORM\ManyToMany(targetEntity="WorkOrderTask", mappedBy="deliveryNotes", cascade={"persist"})
+     * @ORM\ManyToMany(targetEntity="WorkOrderTask", mappedBy="deliveryNotes", cascade={"persist", "remove"}, orphanRemoval=true)
      */
     private $workOrderTasks;
 
@@ -194,6 +194,7 @@ class DeliveryNote extends AbstractBase
     public function __construct()
     {
         $this->timeRegisters = new ArrayCollection();
+        $this->workOrderTasks = new ArrayCollection();
     }
 
     /**
@@ -779,7 +780,10 @@ class DeliveryNote extends AbstractBase
      */
     public function addWorkOrderTask(WorkOrderTask $workOrderTask)
     {
-        $this->workOrderTasks->add($workOrderTask);
+        if (!$this->workOrderTasks->contains($workOrderTask)) {
+            $this->workOrderTasks->add($workOrderTask);
+            $workOrderTask->addDeliveryNote($this);
+        }
 
         return $this;
     }
@@ -791,7 +795,10 @@ class DeliveryNote extends AbstractBase
      */
     public function removeWorkOrderTask(WorkOrderTask $workOrderTask)
     {
-        $this->workOrderTasks->removeElement($workOrderTask);
+        if ($this->workOrderTasks->contains($workOrderTask)) {
+            $this->workOrderTasks->removeElement($workOrderTask);
+            $workOrderTask->removeDeliveryNote($this);
+        }
 
         return $this;
     }
