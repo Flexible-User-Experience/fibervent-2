@@ -450,6 +450,7 @@ admin:
     size: Dimensión
     team: Equipo
     is_from_audit: Inspección
+    no_records: 'No existen tareas asociadas.'
   vehicle:
     title: Vehículo
     title_list: Vehículos
