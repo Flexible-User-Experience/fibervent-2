@@ -229,7 +229,7 @@ class DeliveryNoteAdmin extends AbstractBaseAdmin
                         'multiple' => true,
                         'expanded' => true,
                         'required' => false,
-                        'btn_add' => false,
+                        'by_reference' => false,
                         'query' => $this->wotr->findItemsByWorkOrderSortedByIdQB($this->getSubject()->getWorkOrder()),
                     )
                 )
