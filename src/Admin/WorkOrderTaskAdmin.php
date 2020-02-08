@@ -37,9 +37,13 @@ class WorkOrderTaskAdmin extends AbstractBaseAdmin
         $workOrderTask = $this->getSubject();
         /** @var WorkOrder $workOrder */
         $workOrder = $this->getRoot()->getSubject();
-        /** @var Windfarm[]|array $windfarms */
-        $windfarms = $workOrder->getWindfarms();
-        $isParentObjectFromAudit = $workOrder->isFromAudit();
+        $windfarms = [];
+        $isParentObjectFromAudit = false;
+        if ($workOrder instanceof WorkOrder) {
+            /** @var Windfarm[]|array $windfarms */
+            $windfarms = $workOrder->getWindfarms();
+            $isParentObjectFromAudit = $workOrder->isFromAudit();
+        }
         $hiddenAttrArray = ['hidden' => true];
         $isNewRecord = $this->id($this->getSubject()) ? false : true;
         if ($isNewRecord) {
