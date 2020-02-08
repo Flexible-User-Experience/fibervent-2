@@ -35,9 +35,10 @@
                     fixWorkOrderTasksColumnWidths();
                     let workOrderTasksAmount = jQuery('#field_widget_{{  form.workOrderTasks.vars.id }}')[0].children[0].children[1].childElementCount;
                     let windmillNodes = [];
-                    console.log('edit mode', workOrderTasksAmount);
                     for (let i = 0; i < workOrderTasksAmount; i++) {
                         windmillNodes[i] = jQuery('#{{ form.workOrderTasks.vars.id }}_' + i + '_windmill');
+                        updateWindmillBladeNodeBySelectedWindmillId(windmillNodes[i].val(), windmillNodes[i], i, false);
+                        setDropzone(i);
                         windmillNodes[i].change((function() {
                             let k = i;
                             return function (event) {
@@ -46,19 +47,16 @@
                                 updateWindmillBladeNodeBySelectedWindmillId(windmillId, windmillNode, k, true);
                             }
                         })());
-                        updateWindmillBladeNodeBySelectedWindmillId(windmillNodes[i].val(), windmillNodes[i], i, false);
-                        setDropzone(i); // TODO replace 1 by ID
                     }
                 {% endif %}
                 jQuery(document).on('sonata.add_element', function(/*event, elementId, objectId, uniqid*/) {
                     fixWorkOrderTasksColumnWidths();
                     let workOrderTasksAmount = jQuery('#field_widget_{{ form.workOrderTasks.vars.id }}')[0].children[0].children[1].childElementCount;
                     let windmillNodes = [];
-                    let windfarmsNode = jQuery('#{{ form.windfarms.vars.id }}');
-                    console.log('sonata.add_element', workOrderTasksAmount);
                     for (let i = 0; i < workOrderTasksAmount; i++) {
                         windmillNodes[i] = jQuery('#{{ form.workOrderTasks.vars.id }}_' + i + '_windmill');
-                        updateWindmillNodeBySelectedWindfarmsIds(windfarmsNode.val(), windmillNodes[i]);
+                        updateWindmillBladeNodeBySelectedWindmillId(windmillNodes[i].val(), windmillNodes[i], i, false);
+                        setDropzone(i);
                         windmillNodes[i].change((function() {
                             let k = i;
                             return function (event) {
@@ -67,8 +65,6 @@
                                 updateWindmillBladeNodeBySelectedWindmillId(windmillId, windmillNode, k, true);
                             }
                         })());
-                        updateWindmillBladeNodeBySelectedWindmillId(windmillNodes[i].val(), windmillNodes[i], i, false);
-                        setDropzone(i); // TODO replace 1 by ID
                     }
                 });
                 function updateWindmillBladeNodeBySelectedWindmillId(windmillId, windmillNode, nodeIndex, needWindmillBladeSetToNull) {
@@ -80,8 +76,7 @@
                         if (needWindmillBladeSetToNull) {
                             windmillBladeNode.select2('val', '');
                         } else {
-                            windmillBladeNode.val(windmillBladeNodeVal);
-                            windmillBladeNode.change();
+                            windmillBladeNode.select2('val', windmillBladeNodeVal);
                         }
                     })
                 }
@@ -92,19 +87,13 @@
             {% endif %}
         });
         function updateWindfarmNodeBySelectedCustomerId(customerId) {
-            let windfarmsNode = jQuery('#{{ form.windfarms.vars.id }}');
             jQuery.get(Routing.generate('admin_app_workorder_getWindfarmsFromCustomerId', {id: customerId})).done(function (response) {
                 let jsonResponse = jQuery.parseJSON(response);
+                let windfarmsNode = jQuery('#{{ form.windfarms.vars.id }}');
                 windfarmsNode.empty().html(jsonResponse.htmlOptionStringData);
                 {% if not admin.id(object) %}
                     windfarmsNode.select2('val', '');
                 {% endif %}
-            });
-        }
-        function updateWindmillNodeBySelectedWindfarmsIds(selectedWindfarmsIds, windmillNode) {
-            jQuery.post(Routing.generate('admin_app_workorder_getWindmillsFromSelectedWindfarmsIds', selectedWindfarmsIds)).done(function (response) {
-                let jsonResponse = jQuery.parseJSON(response);
-                windmillNode.empty().html(jsonResponse.htmlOptionStringData);
             });
         }
         function fixWorkOrderTasksColumnWidths() {
