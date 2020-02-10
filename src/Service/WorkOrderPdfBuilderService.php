@@ -28,14 +28,14 @@ class WorkOrderPdfBuilderService
     private TranslatorInterface $ts;
 
     /**
-     * @var string
-     */
-    private string $locale;
-
-    /**
      * @var SmartAssetsHelperService
      */
     private SmartAssetsHelperService $sahs;
+
+    /**
+     * @var string
+     */
+    private string $locale;
 
     /**
      * Methods.
@@ -52,6 +52,7 @@ class WorkOrderPdfBuilderService
         $this->tcpdf = new TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
         $this->ts = $ts;
         $this->sahs = $sahs;
+        $this->locale = AuditLanguageEnum::DEFAULT_LANGUAGE_STRING;
     }
 
     /**
@@ -60,27 +61,24 @@ class WorkOrderPdfBuilderService
      * @return TCPDF
      */
     public function build(WorkOrder $workOrder) {
-        $this->locale = AuditLanguageEnum::DEFAULT_LANGUAGE_STRING;
-        if ($workOrder->getWindfarm() && $workOrder->getWindfarm()->getLanguage() >= AuditLanguageEnum::SPANISH && $workOrder->getWindfarm()->getLanguage() <= AuditLanguageEnum::ITALIAN) {
-            $this->locale = WindfarmLanguageEnum::getReversedEnumArray()[$workOrder->getWindfarm()->getLanguage()];
-        }
         $this->ts->setLocale($this->locale);
-        $windfarms = [];
         /** @var Windfarm $windfarm */
         foreach ($workOrder->getWindfarms() as $windfarm) {
-            if (!in_array($windfarm, $windfarms)) {
-                $windfarms[]= $windfarm;
+            // setup intial language according to first locale not equal to spain found
+            if ($windfarm->getLanguage() != WindfarmLanguageEnum::SPANISH) {
+                $this->locale = WindfarmLanguageEnum::getReversedEnumArray()[$workOrder->getWindfarm()->getLanguage()];
             }
         }
-        foreach ($windfarms as $windfarm) {
+        /** @var Windfarm $windfarm */
+        foreach ($workOrder->getWindfarms() as $windfarm) {
             $turbineModels = [];
             /** @var WorkOrderTask $workOrderTask */
             foreach ($workOrder->getWorkOrderTasks() as $workOrderTask) {
                 if ($workOrderTask->getWindmill()->getWindfarm()->getId() == $windfarm->getId()) {
-                    $turbineModel = $workOrderTask->getWindmill()->getTurbine()->getModel();
-                    if (!in_array($turbineModel, $turbineModels)) {
-                        $turbineModels[] = ([
-                            'turbineModel' => $turbineModel,
+                    $turbineId = $workOrderTask->getWindmill()->getTurbine()->getId();
+                    if (!array_key_exists($turbineId, $turbineModels)) {
+                        $turbineModels[$turbineId] = ([
+                            'turbineModel' => $workOrderTask->getWindmill()->getTurbine()->getModel(),
                             'turbine' => $workOrderTask->getWindmill()->getTurbine(),
                             'windmill' => $workOrderTask->getWindmill(),
                         ]);
