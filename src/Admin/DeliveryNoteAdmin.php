@@ -59,6 +59,14 @@ class DeliveryNoteAdmin extends AbstractBaseAdmin
     protected function configureFormFields(FormMapper $formMapper)
     {
         $isNewRecord = $this->id($this->getSubject()) ? false : true;
+        if (!$isNewRecord) {
+            /** @var DeliveryNote $deliveryNote */
+            $deliveryNote = $this->getSubject();
+            /** @var WorkOrder $workOrder */
+            $workOrder = $deliveryNote->getWorkOrder();
+            /** @var Windfarm $windfarm */
+            $windfarm = $deliveryNote->getWindfarm();
+        }
         $formMapper
             ->with('admin.common.general', $this->getFormMdSuccessBoxArray(4))
             ->add(
@@ -87,7 +95,7 @@ class DeliveryNoteAdmin extends AbstractBaseAdmin
                 array(
                     'label' => 'admin.windfarm.title',
                     'class' => Windfarm::class,
-                    'query_builder' => $this->wfr->findAllSortedByNameQB(),
+                    'query_builder' => $isNewRecord ? $this->wfr->findAllSortedByNameQB() : $this->wfr->findOnlyRelatedWithAWorkOrderSortedByNameQB($workOrder),
                 )
             )
             ->end()
@@ -98,7 +106,7 @@ class DeliveryNoteAdmin extends AbstractBaseAdmin
                 array(
                     'label' => 'admin.windmill.title',
                     'class' => Windmill::class,
-                    'query_builder' => $this->wmr->findEnabledSortedByCustomerWindfarmAndWindmillCodeQB(),
+                    'query_builder' => $isNewRecord ? $this->wmr->findEnabledSortedByCustomerWindfarmAndWindmillCodeQB() : $this->wmr->findEnabledandWindfarmSortedByCustomerWindfarmAndWindmillCodeQB($windfarm),
                 )
             )
             ->add(
@@ -230,7 +238,7 @@ class DeliveryNoteAdmin extends AbstractBaseAdmin
                         'expanded' => true,
                         'required' => false,
                         'by_reference' => false,
-                        'query' => $this->wotr->findItemsByWorkOrderSortedByIdQB($this->getSubject()->getWorkOrder()),
+                        'query' => $this->wotr->findItemsByWorkOrderSortedByIdQB($workOrder),
                     )
                 )
                 ->end()

@@ -3,13 +3,16 @@
 namespace App\Controller;
 
 use App\Entity\Customer;
+use App\Entity\Windfarm;
 use App\Entity\Windmill;
 use App\Entity\WorkOrder;
+use App\Entity\WorkOrderTask;
 use App\Model\AjaxResponse;
 use App\Repository\CustomerRepository;
 use App\Repository\WindfarmRepository;
 use App\Repository\WindmillBladeRepository;
 use App\Repository\WindmillRepository;
+use App\Repository\WorkOrderRepository;
 use App\Service\WorkOrderPdfBuilderService;
 use Exception;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -61,6 +64,47 @@ class WorkOrderAdminController extends AbstractBaseAdminController
         $wmr = $this->container->get('app.windmill_repository');
         if (count($windmfarmsIds) > 0) {
             $data = $wmr->getMultipleByWindfarmsIdsArrayAjax($windmfarmsIds);
+        }
+        $ajaxResponse->setData($data);
+        $jsonEncodedResult = $ajaxResponse->getJsonEncodedResult();
+
+        return new JsonResponse($jsonEncodedResult);
+    }
+
+    /**
+     * @param int $woid WorOrder ID
+     * @param int $wfid Windfarm ID
+     *
+     * @return JsonResponse
+     */
+    public function getWindmillsFromWorkOrderIdAndWindfarmIdAction($woid, $wfid) {
+        $data = [];
+        $ajaxResponse = new AjaxResponse();
+        if ($woid && $wfid) {
+            /** @var WorkOrderRepository $wor */
+            $wor = $this->container->get('app.work_order_repository');
+            /** @var WorkOrder $workOrder */
+            $workOrder = $wor->find($woid);
+            /** @var WindmillRepository $wfr */
+            $wfr = $this->container->get('app.windfarm_repository');
+            /** @var Windfarm $windfarm */
+            $windfarm = $wfr->find($wfid);
+            if ($workOrder && $windfarm) {
+                $windmfarmsIds = [];
+                $windmfarmsIds[] = $windfarm->getId();
+                /** @var WindmillRepository $wmbr */
+                $wmr = $this->container->get('app.windmill_repository');
+                $results = $wmr->getMultipleByWindfarmsIdsArrayAjax($windmfarmsIds);
+                /** @var WorkOrderTask $workOrderTask */
+                foreach ($workOrder->getWorkOrderTasks() as $workOrderTask) {
+                    /** @var array $result */
+                    foreach ($results as $result) {
+                        if ($workOrderTask->getWindmill()->getId() == $result['id']) {
+                            $data[] = $result;
+                        }
+                    }
+                }
+            }
         }
         $ajaxResponse->setData($data);
         $jsonEncodedResult = $ajaxResponse->getJsonEncodedResult();
