@@ -72,3 +72,4 @@ sonata_admin:
                 position: top
                 type: admin.block.audits
                 class: 'col-lg-4 col-md-6 col-sm-12'
+                roles: [ 'ROLE_ADMIN' ]

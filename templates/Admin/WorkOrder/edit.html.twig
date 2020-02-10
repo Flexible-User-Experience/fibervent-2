@@ -26,26 +26,19 @@
         Dropzone.autoDiscover = false;
         jQuery(document).ready(function() {
             let customerNode = jQuery('#{{ form.customer.vars.id }}');
-            customerNode.on('change', function(event) {updateWindfarmNodeBySelectedCustomerId(event.val);});
+            customerNode.on('change', function(event) {
+                updateWindfarmNodeBySelectedCustomerId(event.val);
+            });
             {% if admin.id(object) %}
                 {# edit mode #}
                 {% if object.workOrderTasks | length > 0 %}
-                    let bor = jQuery('#field_widget_{{ form.workOrderTasks.vars.id }}')[0].children[0].children[0].children[0];
-                    bor.children[0].width = '5%';
-                    bor.children[3].width = '5%';
-                    bor.children[4].width = '5%';
-                    bor.children[5].width = '5%';
-                    bor.children[6].width = '5%';
-                    bor.children[7].width = '5%';
-                    bor.children[8].width = '5%';
-                    bor.children[11].width = '5%';
-                    if (bor.children[12]) {
-                        bor.children[12].width = '5%';
-                    }
-                    let workOrderTasks = jQuery('#field_widget_{{  form.workOrderTasks.vars.id }}')[0].children[0].children[1].childElementCount;
+                    fixWorkOrderTasksColumnWidths();
+                    let workOrderTasksAmount = jQuery('#field_widget_{{  form.workOrderTasks.vars.id }}')[0].children[0].children[1].childElementCount;
                     let windmillNodes = [];
-                    for (let i = 0; i < workOrderTasks; i++) {
+                    for (let i = 0; i < workOrderTasksAmount; i++) {
                         windmillNodes[i] = jQuery('#{{ form.workOrderTasks.vars.id }}_' + i + '_windmill');
+                        updateWindmillBladeNodeBySelectedWindmillId(windmillNodes[i].val(), windmillNodes[i], i, false);
+                        setDropzone(i);
                         windmillNodes[i].change((function() {
                             let k = i;
                             return function (event) {
@@ -54,27 +47,16 @@
                                 updateWindmillBladeNodeBySelectedWindmillId(windmillId, windmillNode, k, true);
                             }
                         })());
-                        updateWindmillBladeNodeBySelectedWindmillId(windmillNodes[i].val(), windmillNodes[i], i, false);
-                        let myDropzone = new Dropzone('#{{ form.workOrderTasks.vars.id }}_' + i + '_multifiles', {
-                            url: Routing.generate('admin_app_deliverynote_getWindfarmsFromWorkOrderId', {id: 1}),
-                            uploadMultiple: true,
-                            maxFiles: 5,
-                            thumbnailWidth: 80,
-                            thumbnailHeight: 80,
-                            parallelUploads: 20,
-                            addRemoveLinks: true,
-                            dictDefaultMessage: '<i class="fa fa-cloud-upload"></i> Arrastra aquí tus archivos.',
-                            autoQueue: true
-                        });
                     }
                 {% endif %}
-                jQuery(document).on('sonata.add_element', function(event, elementId, objectId, uniqid) {
-                    let workOrderTasks = jQuery('#field_widget_{{ form.workOrderTasks.vars.id }}')[0].children[0].children[1].childElementCount;
+                jQuery(document).on('sonata.add_element', function(/*event, elementId, objectId, uniqid*/) {
+                    fixWorkOrderTasksColumnWidths();
+                    let workOrderTasksAmount = jQuery('#field_widget_{{ form.workOrderTasks.vars.id }}')[0].children[0].children[1].childElementCount;
                     let windmillNodes = [];
-                    let windfarmsNode = jQuery('#{{ form.windfarms.vars.id }}');
-                    for (let i = 0; i < workOrderTasks; i++) {
+                    for (let i = 0; i < workOrderTasksAmount; i++) {
                         windmillNodes[i] = jQuery('#{{ form.workOrderTasks.vars.id }}_' + i + '_windmill');
-                        updateWindmillNodeBySelectedWindfarmsIds(windfarmsNode.val(), windmillNodes[i]);
+                        updateWindmillBladeNodeBySelectedWindmillId(windmillNodes[i].val(), windmillNodes[i], i, false);
+                        setDropzone(i);
                         windmillNodes[i].change((function() {
                             let k = i;
                             return function (event) {
@@ -83,30 +65,6 @@
                                 updateWindmillBladeNodeBySelectedWindmillId(windmillId, windmillNode, k, true);
                             }
                         })());
-                        updateWindmillBladeNodeBySelectedWindmillId(windmillNodes[i].val(), windmillNodes[i], i, false);
-                        let myDropzone = new Dropzone('#{{ form.workOrderTasks.vars.id }}_' + i + '_multifiles', {
-                            url: Routing.generate('admin_app_deliverynote_getWindfarmsFromWorkOrderId', {id: 1}),
-                            uploadMultiple: true,
-                            maxFiles: 5,
-                            thumbnailWidth: 80,
-                            thumbnailHeight: 80,
-                            parallelUploads: 20,
-                            addRemoveLinks: true,
-                            dictDefaultMessage: '<i class="fa fa-cloud-upload"></i> Arrastra aquí tus archivos.',
-                            autoQueue: true
-                        });
-                    }
-                    let bor = jQuery('#field_widget_{{ form.workOrderTasks.vars.id }}')[0].children[0].children[0].children[0];
-                    bor.children[0].width = '5%';
-                    bor.children[3].width = '5%';
-                    bor.children[4].width = '5%';
-                    bor.children[5].width = '5%';
-                    bor.children[6].width = '5%';
-                    bor.children[7].width = '5%';
-                    bor.children[8].width = '5%';
-                    bor.children[11].width = '5%';
-                    if (bor.children[12]) {
-                        bor.children[12].width = '5%';
                     }
                 });
                 function updateWindmillBladeNodeBySelectedWindmillId(windmillId, windmillNode, nodeIndex, needWindmillBladeSetToNull) {
@@ -118,8 +76,7 @@
                         if (needWindmillBladeSetToNull) {
                             windmillBladeNode.select2('val', '');
                         } else {
-                            windmillBladeNode.val(windmillBladeNodeVal);
-                            windmillBladeNode.change();
+                            windmillBladeNode.select2('val', windmillBladeNodeVal);
                         }
                     })
                 }
@@ -130,20 +87,45 @@
             {% endif %}
         });
         function updateWindfarmNodeBySelectedCustomerId(customerId) {
-            let windfarmsNode = jQuery('#{{ form.windfarms.vars.id }}');
             jQuery.get(Routing.generate('admin_app_workorder_getWindfarmsFromCustomerId', {id: customerId})).done(function (response) {
                 let jsonResponse = jQuery.parseJSON(response);
+                let windfarmsNode = jQuery('#{{ form.windfarms.vars.id }}');
                 windfarmsNode.empty().html(jsonResponse.htmlOptionStringData);
                 {% if not admin.id(object) %}
                     windfarmsNode.select2('val', '');
                 {% endif %}
             });
         }
-        function updateWindmillNodeBySelectedWindfarmsIds(selectedWindfarmsIds, windmillNode) {
-            jQuery.post(Routing.generate('admin_app_workorder_getWindmillsFromSelectedWindfarmsIds', selectedWindfarmsIds)).done(function (response) {
-                let jsonResponse = jQuery.parseJSON(response);
-                windmillNode.empty().html(jsonResponse.htmlOptionStringData);
-            });
+        function fixWorkOrderTasksColumnWidths() {
+            {% if object.workOrderTasks | length > 0 %}
+                let bor = jQuery('#field_widget_{{ form.workOrderTasks.vars.id }}')[0].children[0].children[0].children[0];
+                bor.children[0].width = '5%';
+                bor.children[3].width = '5%';
+                bor.children[4].width = '5%';
+                bor.children[5].width = '5%';
+                bor.children[6].width = '5%';
+                bor.children[7].width = '5%';
+                bor.children[8].width = '5%';
+                bor.children[11].width = '5%';
+                if (bor.children[12]) {
+                    bor.children[12].width = '5%';
+                }
+            {% endif %}
+        }
+        function setDropzone(index) {
+            {% if object.workOrderTasks | length > 0 %}
+                let myDropzone = new Dropzone('#{{ form.workOrderTasks.vars.id }}_' + index + '_multifiles', {
+                    url: Routing.generate('admin_app_deliverynote_getWindfarmsFromWorkOrderId', {id: index}),
+                    uploadMultiple: true,
+                    maxFiles: 5,
+                    thumbnailWidth: 80,
+                    thumbnailHeight: 80,
+                    parallelUploads: 20,
+                    addRemoveLinks: true,
+                    dictDefaultMessage: '<i class="fa fa-cloud-upload"></i> Arrastra aquí tus archivos.',
+                    autoQueue: true
+                });
+            {% endif %}
         }
     </script>
 {% endblock %}

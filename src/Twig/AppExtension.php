@@ -6,11 +6,14 @@ use App\Entity\AuditWindmillBlade;
 use App\Entity\Damage;
 use App\Entity\DamageCategory;
 use App\Entity\PresenceMonitoring;
+use App\Entity\WorkOrder;
 use App\Enum\AuditTypeEnum;
 use App\Enum\PresenceMonitoringCategoryEnum;
+use App\Enum\WorkOrderStatusEnum;
 use App\Factory\WindmillBladesDamagesHelperFactory;
 use App\Manager\DeliveryNoteTimeRegisterManager;
 use App\Repository\DamageRepository;
+use Doctrine\ORM\NonUniqueResultException;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
@@ -69,6 +72,7 @@ class AppExtension extends AbstractExtension
             new TwigFilter('humanized_audit_type', array($this, 'filterHumanizedAuditType')),
             new TwigFilter('get_humanized_total_hours', array($this, 'getHumanizedTotalHours')),
             new TwigFilter('draw_presence_monitory_category_label', array($this, 'drawPresenceMonitoryCategoryLabel')),
+            new TwigFilter('draw_work_order_status_label', array($this, 'drawWorkOrderStatusLabel')),
         );
     }
 
@@ -115,6 +119,24 @@ class AppExtension extends AbstractExtension
     }
 
     /**
+     * @param WorkOrder $wo
+     *
+     * @return string
+     */
+    public function drawWorkOrderStatusLabel(WorkOrder $wo) {
+        $cssClass = 'default';
+        if ($wo->getStatus() == WorkOrderStatusEnum::PENDING) {
+            $cssClass = 'danger';
+        } elseif ($wo->getStatus() == WorkOrderStatusEnum::DOING) {
+            $cssClass = 'warning';
+        } elseif ($wo->getStatus() == WorkOrderStatusEnum::DONE) {
+            $cssClass = 'info';
+        }
+
+        return '<span class="label label-'.$cssClass.'">'.$this->ts->trans(WorkOrderStatusEnum::getEnumArray()[$wo->getStatus()]).'</span>';
+    }
+
+    /**
      * Functions.
      */
 
@@ -135,7 +157,7 @@ class AppExtension extends AbstractExtension
      * @param string $locale
      *
      * @return string
-     * @throws \Doctrine\ORM\NonUniqueResultException
+     * @throws NonUniqueResultException
      */
     public function getlocalizedDescription(Damage $object, $locale)
     {

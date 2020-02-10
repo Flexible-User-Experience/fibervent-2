@@ -484,7 +484,8 @@ class WorkOrderAdmin extends AbstractBaseAdmin
                     'actions' => array(
                         'edit' => array('template' => 'Admin/Buttons/list__action_edit_button.html.twig'),
                         'show' => array('template' => 'Admin/Buttons/list__action_show_button.html.twig'),
-                        'pdf' => array('template' => 'Admin/Buttons/list__action_pdf_button.html.twig'),
+                        'pdf' => array('template' => 'Admin/Buttons/list__action_pdf_work_order_button.html.twig'),
+                        'delete' => array('template' => 'Admin/Buttons/list__action_super_admin_delete_button.html.twig'),
                     ),
                 )
             )
@@ -510,6 +511,7 @@ class WorkOrderAdmin extends AbstractBaseAdmin
                 null,
                 array(
                     'label' => 'admin.audit.status',
+                    'template' => 'Admin/Cells/show__work_order_status.html.twig',
                 )
             )
             ->add(

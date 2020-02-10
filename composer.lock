@@ -2926,16 +2926,16 @@
         },
         {
             "name": "ocramius/proxy-manager",
-            "version": "2.6.1",
+            "version": "2.7.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Ocramius/ProxyManager.git",
-                "reference": "dec37bfb3c3594440ee4fa263494189344787d22"
+                "reference": "e77928e8f11ea36b388f87e75c993d05f5da6bf1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Ocramius/ProxyManager/zipball/dec37bfb3c3594440ee4fa263494189344787d22",
-                "reference": "dec37bfb3c3594440ee4fa263494189344787d22",
+                "url": "https://api.github.com/repos/Ocramius/ProxyManager/zipball/e77928e8f11ea36b388f87e75c993d05f5da6bf1",
+                "reference": "e77928e8f11ea36b388f87e75c993d05f5da6bf1",
                 "shasum": ""
             },
             "require": {
@@ -2953,14 +2953,12 @@
                 "doctrine/coding-standard": "^6.0.0",
                 "ext-phar": "*",
                 "infection/infection": "^0.15.0",
-                "mikey179/vfsstream": "^1.6.8",
                 "nikic/php-parser": "^4.3.0",
-                "phpbench/phpbench": "^0.16.10",
-                "phpunit/phpunit": "^8.5.1",
+                "phpbench/phpbench": "^0.17.0",
+                "phpunit/phpunit": "^8.5.2",
                 "slevomat/coding-standard": "^5.0.4",
-                "squizlabs/php_codesniffer": "^3.5.3",
-                "symfony/console": "^4.4.2",
-                "vimeo/psalm": "3.7.0"
+                "squizlabs/php_codesniffer": "^3.5.4",
+                "vimeo/psalm": "^3.8.5"
             },
             "suggest": {
                 "laminas/laminas-json": "To have the JsonRpc adapter (Remote Object feature)",
@@ -2999,7 +2997,7 @@
                 "proxy pattern",
                 "service proxies"
             ],
-            "time": "2020-01-27T09:25:51+00:00"
+            "time": "2020-02-08T19:22:03+00:00"
         },
         {
             "name": "phpdocumentor/reflection-common",
@@ -3693,16 +3691,16 @@
         },
         {
             "name": "sonata-project/admin-bundle",
-            "version": "3.58.0",
+            "version": "3.59.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sonata-project/SonataAdminBundle.git",
-                "reference": "9f7d8505c1cbea7a94563fe5f3eff94b66daf9c4"
+                "reference": "ad355443f99af87ae68115d095a9112a73fedcfe"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sonata-project/SonataAdminBundle/zipball/9f7d8505c1cbea7a94563fe5f3eff94b66daf9c4",
-                "reference": "9f7d8505c1cbea7a94563fe5f3eff94b66daf9c4",
+                "url": "https://api.github.com/repos/sonata-project/SonataAdminBundle/zipball/ad355443f99af87ae68115d095a9112a73fedcfe",
+                "reference": "ad355443f99af87ae68115d095a9112a73fedcfe",
                 "shasum": ""
             },
             "require": {
@@ -3711,7 +3709,7 @@
                 "knplabs/knp-menu-bundle": "^2.2.2",
                 "php": "^7.1",
                 "sonata-project/block-bundle": "^3.18",
-                "sonata-project/core-bundle": "^3.17.0",
+                "sonata-project/core-bundle": "^3.18.0",
                 "sonata-project/exporter": "^1.11.0 || ^2.0",
                 "symfony/asset": "^4.3",
                 "symfony/config": "^4.3",
@@ -3749,7 +3747,7 @@
             },
             "require-dev": {
                 "jms/translation-bundle": "^1.4",
-                "matthiasnoback/symfony-dependency-injection-test": "^3.1",
+                "matthiasnoback/symfony-dependency-injection-test": "^4.1",
                 "sonata-project/intl-bundle": "^2.4",
                 "symfony/browser-kit": "^4.3",
                 "symfony/css-selector": "^4.3",
@@ -3798,7 +3796,7 @@
                 "bootstrap",
                 "sonata"
             ],
-            "time": "2020-01-26T12:07:36+00:00"
+            "time": "2020-02-10T06:52:16+00:00"
         },
         {
             "name": "sonata-project/block-bundle",
