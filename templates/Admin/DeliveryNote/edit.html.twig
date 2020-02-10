@@ -32,6 +32,14 @@
                     bnsum.children[2].width = '5%';
                 });
                 updateWindfarmNodeBySelectedWorkOrderId(workOrderNode.val(), true);
+            {% else %}
+                {# new record mode, maybe user wants to add a new delivery note from a previos work order (add action in show view) #}
+                let forWorkOrderId = getUrlParameter('for_work_order');
+                if (forWorkOrderId !== undefined) {
+                    console.log(getUrlParameter('for_work_order'));
+                    workOrderNode.select2('val', forWorkOrderId);
+                    updateWindfarmNodeBySelectedWorkOrderId(forWorkOrderId, false);
+                }
             {% endif %}
         });
         function updateWindfarmNodeBySelectedWorkOrderId(workOrderId, setPreviousSelectedValue) {
@@ -65,6 +73,19 @@
                     windmillNode.select2('val', jsonResponse.data[0].id);
                 }
             });
+        }
+        function getUrlParameter(sParam) {
+            let sPageURL = window.location.search.substring(1),
+                sURLVariables = sPageURL.split('&'),
+                sParameterName,
+                i;
+            for (i = 0; i < sURLVariables.length; i++) {
+                sParameterName = sURLVariables[i].split('=');
+
+                if (sParameterName[0] === sParam) {
+                    return sParameterName[1] === undefined ? true : decodeURIComponent(sParameterName[1]);
+                }
+            }
         }
     </script>
 {% endblock %}
