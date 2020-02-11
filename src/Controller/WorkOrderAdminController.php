@@ -99,7 +99,7 @@ class WorkOrderAdminController extends AbstractBaseAdminController
                 foreach ($workOrder->getWorkOrderTasks() as $workOrderTask) {
                     /** @var array $result */
                     foreach ($results as $result) {
-                        if ($workOrderTask->getWindmill()->getId() == $result['id']) {
+                        if ($workOrderTask->getWindmill()->getId() == $result['id'] && $this->isNewElement($data, $result['id'])) {
                             $data[] = $result;
                         }
                     }
@@ -110,6 +110,26 @@ class WorkOrderAdminController extends AbstractBaseAdminController
         $jsonEncodedResult = $ajaxResponse->getJsonEncodedResult();
 
         return new JsonResponse($jsonEncodedResult);
+    }
+
+    /**
+     * @param array $data
+     * @param int   $id
+     *
+     * @return bool
+     */
+    private function isNewElement($data, $id)
+    {
+        $isNew = true;
+        /** @var array $item */
+        foreach ($data as $item) {
+            if ($item['id'] == $id) {
+                $isNew = false;
+                break;
+            }
+        }
+
+        return $isNew;
     }
 
     /**

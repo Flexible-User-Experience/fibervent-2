@@ -60,6 +60,8 @@ class DeliveryNoteAdmin extends AbstractBaseAdmin
     {
         /** @var WorkOrder[]|array $availableWorkOrders */
         $availableWorkOrders = $this->wor->findAvailableSortedByProjectNumber();
+        /** @var Windfarm[]|array $availableWindfarms */
+        $availableWindfarms = $this->wfr->findMultipleRelatedWithAWorkOrdersArraySortedByName($availableWorkOrders);
         $isNewRecord = $this->id($this->getSubject()) ? false : true;
         if (!$isNewRecord) {
             /** @var DeliveryNote $deliveryNote */
@@ -68,7 +70,6 @@ class DeliveryNoteAdmin extends AbstractBaseAdmin
             $workOrder = $deliveryNote->getWorkOrder();
             /** @var Windfarm $windfarm */
             $windfarm = $deliveryNote->getWindfarm();
-
         }
         $formMapper
             ->with('admin.common.general', $this->getFormMdSuccessBoxArray(4))
@@ -109,7 +110,7 @@ class DeliveryNoteAdmin extends AbstractBaseAdmin
                 array(
                     'label' => 'admin.windmill.title',
                     'class' => Windmill::class,
-                    'query_builder' => $isNewRecord ? $this->wmr->findEnabledSortedByCustomerWindfarmAndWindmillCodeQB() : $this->wmr->findEnabledandWindfarmSortedByCustomerWindfarmAndWindmillCodeQB($windfarm),
+                    'query_builder' => $this->wmr->findMultipleByWindfarmsArrayQB($availableWindfarms), //$isNewRecord ? $this->wmr->findEnabledSortedByCustomerWindfarmAndWindmillCodeQB() : $this->wmr->findEnabledAndWindfarmSortedByCustomerWindfarmAndWindmillCodeQB($windfarm),
                 )
             )
             ->add(

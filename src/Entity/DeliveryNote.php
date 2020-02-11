@@ -880,6 +880,6 @@ class DeliveryNote extends AbstractBase
      */
     public function __toString()
     {
-        return $this->workOrder.' / '.($this->date ? $this->date->format('d/m/Y') : '');
+        return $this->workOrder ? ($this->getWorkOrder()->getProjectNumber().' · '.($this->date ? $this->getDateString() : '--/--/----').' · '.$this->getWorkOrder()->getCustomer()).' · '.$this->getWindfarm() : '---';
     }
 }
