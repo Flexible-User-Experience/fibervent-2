@@ -58,19 +58,11 @@ class DeliveryNoteAdmin extends AbstractBaseAdmin
      */
     protected function configureFormFields(FormMapper $formMapper)
     {
+        $isNewRecord = $this->id($this->getSubject()) ? false : true;
         /** @var WorkOrder[]|array $availableWorkOrders */
         $availableWorkOrders = $this->wor->findAvailableSortedByProjectNumber();
         /** @var Windfarm[]|array $availableWindfarms */
         $availableWindfarms = $this->wfr->findMultipleRelatedWithAWorkOrdersArraySortedByName($availableWorkOrders);
-        $isNewRecord = $this->id($this->getSubject()) ? false : true;
-        if (!$isNewRecord) {
-            /** @var DeliveryNote $deliveryNote */
-            $deliveryNote = $this->getSubject();
-            /** @var WorkOrder $workOrder */
-            $workOrder = $deliveryNote->getWorkOrder();
-            /** @var Windfarm $windfarm */
-            $windfarm = $deliveryNote->getWindfarm();
-        }
         $formMapper
             ->with('admin.common.general', $this->getFormMdSuccessBoxArray(4))
             ->add(
@@ -231,6 +223,12 @@ class DeliveryNoteAdmin extends AbstractBaseAdmin
             ->end()
         ;
         if (!$isNewRecord) {
+            /** @var DeliveryNote $deliveryNote */
+            $deliveryNote = $this->getSubject();
+            /** @var WorkOrder $workOrder */
+            $workOrder = $deliveryNote->getWorkOrder();
+            /** @var Windmill $windmill */
+            $windmill = $deliveryNote->getWindmill();
             $formMapper
                 ->with('admin.workordertask.title', $this->getFormMdSuccessBoxArray(4))
                 ->add(
@@ -242,7 +240,8 @@ class DeliveryNoteAdmin extends AbstractBaseAdmin
                         'expanded' => true,
                         'required' => false,
                         'by_reference' => false,
-                        'query' => $this->wotr->findItemsByWorkOrderSortedByIdQB($workOrder),
+                        'property' => 'getLongDescriptionForEmbedForm',
+                        'query' => $this->wotr->findItemsByWorkOrderAndWindmillSortedByIdQB($workOrder, $windmill),
                     )
                 )
                 ->end()

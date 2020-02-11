@@ -638,7 +638,7 @@ class WorkOrderAdmin extends AbstractBaseAdmin
             /** @var WorkOrderTask $workOrderTask */
             foreach ($object->getWorkOrderTasks() as $workOrderTask) {
                 if (!$workOrderTask->getDescription()) {
-                    $workOrderTask->setDescription('---');
+                    $workOrderTask->setDescription(WorkOrderTask::DEFAULT_DESCRIPTION);
                 }
             }
         }
