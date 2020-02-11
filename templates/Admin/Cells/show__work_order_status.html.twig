@@ -1,0 +1,5 @@
+{% extends 'SonataAdminBundle:CRUD:base_show_field.html.twig' %}
+
+{% block field %}
+    {{ object | draw_work_order_status_label | raw }}
+{% endblock %}

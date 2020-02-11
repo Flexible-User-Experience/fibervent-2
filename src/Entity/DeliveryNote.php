@@ -159,7 +159,7 @@ class DeliveryNote extends AbstractBase
     /**
      * @var WorkOrderTask[]|ArrayCollection
      *
-     * @ORM\ManyToMany(targetEntity="WorkOrderTask", mappedBy="deliveryNotes", cascade={"persist", "remove"}, orphanRemoval=true)
+     * @ORM\ManyToMany(targetEntity="WorkOrderTask", mappedBy="deliveryNotes")
      */
     private $workOrderTasks;
 
@@ -880,6 +880,6 @@ class DeliveryNote extends AbstractBase
      */
     public function __toString()
     {
-        return $this->workOrder.' / '.($this->date ? $this->date->format('d/m/Y') : '');
+        return $this->workOrder ? ($this->getId().' · '.$this->getWorkOrder()->getProjectNumber().' · '.($this->date ? $this->getDateString() : '--/--/----').' · '.$this->getWorkOrder()->getCustomer().' · '.$this->getWindfarm()) : '---';
     }
 }

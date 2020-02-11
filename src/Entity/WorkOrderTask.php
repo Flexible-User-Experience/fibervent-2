@@ -21,6 +21,8 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  */
 class WorkOrderTask extends AbstractBase
 {
+    const DEFAULT_DESCRIPTION = '---';
+
     /**
      * @var WorkOrder
      *
@@ -118,6 +120,27 @@ class WorkOrderTask extends AbstractBase
     /**
      * Methods.
      */
+
+    /**
+     * @return string
+     */
+    public function getLongDescriptionForEmbedForm()
+    {
+        $result = '';
+        if ($this->getWindmillBlade()) {
+            $result = 'Pala '.$this->getWindmillBlade()->getOrder();
+        }
+        if ($this->getBladeDamage()) {
+            $result .= ' · Daño '.$this->getBladeDamage()->getCalculatedNumberByRadius();
+            if ($this->getDescription() != self::DEFAULT_DESCRIPTION) {
+                $result .= ' · '.$this->getDescription();
+            }
+        } else {
+            $result .= ' · '.$this->getDescription();
+        }
+
+        return $result;
+    }
 
     /**
      * @return WorkOrder

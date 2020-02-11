@@ -46,6 +46,7 @@ class WorkOrderAdmin extends AbstractBaseAdmin
             ->add('getWindfarmsFromCustomerId', $this->getRouterIdParameter().'/get-windfarms-from-customer-id')
             ->add('getWindmillbladesFromWindmillId', $this->getRouterIdParameter().'/get-windmillblades-from-windmill-id')
             ->add('getWindmillsFromSelectedWindfarmsIds', 'get-windmills-from-selected-windfarms-ids')
+            ->add('getWindmillsFromWorkOrderIdAndWindfarmId', 'get-windmills-from-work-order/{woid}/and-windfarm/{wfid}')
             ->add('pdf', $this->getRouterIdParameter().'/pdf')
             ->add('uploadWorkOrderTaskFile', $this->getRouterIdParameter().'/upload-work-order-task-files')
         ;
@@ -484,7 +485,8 @@ class WorkOrderAdmin extends AbstractBaseAdmin
                     'actions' => array(
                         'edit' => array('template' => 'Admin/Buttons/list__action_edit_button.html.twig'),
                         'show' => array('template' => 'Admin/Buttons/list__action_show_button.html.twig'),
-                        'pdf' => array('template' => 'Admin/Buttons/list__action_pdf_button.html.twig'),
+                        'pdf' => array('template' => 'Admin/Buttons/list__action_pdf_work_order_button.html.twig'),
+                        'delete' => array('template' => 'Admin/Buttons/list__action_super_admin_delete_button.html.twig'),
                     ),
                 )
             )
@@ -510,6 +512,7 @@ class WorkOrderAdmin extends AbstractBaseAdmin
                 null,
                 array(
                     'label' => 'admin.audit.status',
+                    'template' => 'Admin/Cells/show__work_order_status.html.twig',
                 )
             )
             ->add(
@@ -635,7 +638,7 @@ class WorkOrderAdmin extends AbstractBaseAdmin
             /** @var WorkOrderTask $workOrderTask */
             foreach ($object->getWorkOrderTasks() as $workOrderTask) {
                 if (!$workOrderTask->getDescription()) {
-                    $workOrderTask->setDescription('---');
+                    $workOrderTask->setDescription(WorkOrderTask::DEFAULT_DESCRIPTION);
                 }
             }
         }

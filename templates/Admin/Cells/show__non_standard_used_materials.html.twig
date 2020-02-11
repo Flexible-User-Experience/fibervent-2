@@ -1,18 +1,26 @@
-<table class="table">
-    <thead>
-        <tr>
-            <th class="text-right">{{ 'admin.nonstandardusedmaterial.quantity' | trans }}</th>
-            <th>{{ 'admin.nonstandardusedmaterial.item' | trans }}</th>
-            <th>{{ 'admin.nonstandardusedmaterial.description' | trans }}</th>
-        </tr>
-    </thead>
-    <tbody>
-    {% for nonStandardUsedMaterial in object.nonStandardUsedMaterials %}
-        <tr>
-            <td class="text-right">{{ nonStandardUsedMaterial.quantity }}</td>
-            <td>{{ nonStandardUsedMaterial.itemString | trans }}</td>
-            <td>{{ nonStandardUsedMaterial.description }}</td>
-        </tr>
-    {% endfor %}
-    </tbody>
-</table>
+{% if object.nonStandardUsedMaterials | length > 0 %}
+    <table class="table">
+        <thead>
+            <tr>
+                <th class="text-right">{{ 'admin.nonstandardusedmaterial.quantity' | trans }}</th>
+                <th>{{ 'admin.nonstandardusedmaterial.item' | trans }}</th>
+                <th>{{ 'admin.nonstandardusedmaterial.description' | trans }}</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for nonStandardUsedMaterial in object.nonStandardUsedMaterials %}
+            <tr>
+                <td class="text-right">{{ nonStandardUsedMaterial.quantity }}</td>
+                <td>{{ nonStandardUsedMaterial.itemString | trans }}</td>
+                <td>{{ nonStandardUsedMaterial.description }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <div class="box-body">
+        <div class="alert alert-warning" role="alert">
+            <i class="fa fa-warning"></i> {{ 'admin.nonstandardusedmaterial.no_records' | trans }}
+        </div>
+    </div>
+{% endif %}

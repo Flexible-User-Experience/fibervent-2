@@ -5,7 +5,7 @@ namespace App\Admin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
-use Sonata\AdminBundle\Show\ShowMapper;
+use Sonata\AdminBundle\Route\RouteCollection;
 
 /**
  * Class WorkOrderTaskAdmin.
@@ -20,6 +20,16 @@ class WorkerTimesheetAdmin extends AbstractBaseAdmin
         '_sort_by' => 'id',
         '_sort_order' => 'desc',
     );
+
+    /**
+     * Configure route collection.
+     *
+     * @param RouteCollection $collection
+     */
+    protected function configureRoutes(RouteCollection $collection)
+    {
+        $collection->remove('show');
+    }
 
     /**
      * @param FormMapper $formMapper
@@ -196,74 +206,10 @@ class WorkerTimesheetAdmin extends AbstractBaseAdmin
                     'row_align' => 'right',
                     'actions' => array(
                         'edit' => array('template' => 'Admin/Buttons/list__action_edit_button.html.twig'),
-                        // 'show' => array('template' => 'Admin/Buttons/list__action_show_button.html.twig'),
+                        'delete' => array('template' => 'Admin/Buttons/list__action_super_admin_delete_button.html.twig'),
                     ),
                 )
             )
-        ;
-    }
-
-
-
-    /**
-     * @param ShowMapper $showMapper
-     */
-    protected function configureShowFields(ShowMapper $showMapper)
-    {
-        $showMapper
-            ->with('admin.common.general', $this->getFormMdSuccessBoxArray(4))
-            ->add(
-                'deliveryNote',
-                null,
-                array(
-                    'label' => 'admin.deliverynote.title',
-                )
-            )
-            ->add(
-                'worker',
-                null,
-                array(
-                    'label' => 'admin.workertimesheet.worker',
-                )
-            )
-            ->add(
-                'workDescription',
-                null,
-                array(
-                    'label' => 'admin.workertimesheet.work_description',
-                )
-            )
-            ->end()
-            ->with('admin.common.details', $this->getFormMdSuccessBoxArray(4))
-            ->add(
-                'totalNormalHours',
-                null,
-                array(
-                    'label' => 'admin.workertimesheet.total_normal_hours',
-                )
-            )
-            ->add(
-                'totalVerticalHours',
-                null,
-                array(
-                    'label' => 'admin.workertimesheet.total_vertical_hours',
-                )
-            )
-            ->add(
-                'totalInclementWeatherHours',
-                null,
-                array(
-                    'label' => 'admin.workertimesheet.total_inclement_weather_hours',
-                )
-            )
-            ->add(
-                'totalTripHours',
-                null,
-                array(
-                    'label' => 'admin.workertimesheet.total_trip_hours',
-                )
-            )
-            ->end()
         ;
     }
 }

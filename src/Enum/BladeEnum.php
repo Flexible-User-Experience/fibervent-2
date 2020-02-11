@@ -74,6 +74,6 @@ class BladeEnum
      */
     public static function getTranslatedDecodedStringFromType(int $type)
     {
-        return self::getReversedLongTextEnumArray()[$type];
+        return self::getReversedEnumArray()[$type];
     }
 }

@@ -147,7 +147,7 @@ class WindmillRepository extends ServiceEntityRepository
      *
      * @return QueryBuilder
      */
-    public function findEnabledandWindfarmSortedByCustomerWindfarmAndWindmillCodeQB(Windfarm $windfarm, $limit = null, $order = 'ASC')
+    public function findEnabledAndWindfarmSortedByCustomerWindfarmAndWindmillCodeQB(Windfarm $windfarm, $limit = null, $order = 'ASC')
     {
         return $this->findAllSortedByCustomerWindfarmAndWindmillCodeQB()
             ->where('windmill.enabled = true')
@@ -162,9 +162,9 @@ class WindmillRepository extends ServiceEntityRepository
      *
      * @return Query
      */
-    public function findEnabledandWindfarmSortedByCustomerWindfarmAndWindmillCodeQ(Windfarm $windfarm, $limit = null, $order = 'ASC')
+    public function findEnabledAndWindfarmSortedByCustomerWindfarmAndWindmillCodeQ(Windfarm $windfarm, $limit = null, $order = 'ASC')
     {
-        return $this->findEnabledandWindfarmSortedByCustomerWindfarmAndWindmillCodeQB($windfarm, $limit, $order)->getQuery();
+        return $this->findEnabledAndWindfarmSortedByCustomerWindfarmAndWindmillCodeQB($windfarm, $limit, $order)->getQuery();
     }
 
     /**
@@ -174,9 +174,9 @@ class WindmillRepository extends ServiceEntityRepository
      *
      * @return array
      */
-    public function findEnabledandWindfarmSortedByCustomerWindfarmAndWindmillCode(Windfarm $windfarm, $limit = null, $order = 'ASC')
+    public function findEnabledAndWindfarmSortedByCustomerWindfarmAndWindmillCode(Windfarm $windfarm, $limit = null, $order = 'ASC')
     {
-        return $this->findEnabledandWindfarmSortedByCustomerWindfarmAndWindmillCodeQ($windfarm, $limit, $order)->getResult();
+        return $this->findEnabledAndWindfarmSortedByCustomerWindfarmAndWindmillCodeQ($windfarm, $limit, $order)->getResult();
     }
 
     /**

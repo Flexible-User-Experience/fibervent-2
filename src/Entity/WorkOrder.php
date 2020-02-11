@@ -69,7 +69,7 @@ class WorkOrder extends AbstractBase
     /**
      * @var Audit[]|ArrayCollection
      *
-     * @ORM\OneToMany(targetEntity="Audit", mappedBy="workOrder")
+     * @ORM\OneToMany(targetEntity="Audit", mappedBy="workOrder", orphanRemoval=false)
      */
     private $audits;
 

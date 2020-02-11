@@ -1,3 +1,3 @@
-{% if admin.isGranted('VIEW', object) and admin.hasRoute('pdf') %}
+{% if admin.isGranted('VIEW', object) and admin.hasRoute('pdf') and object.workOrderTasks | length > 0 %}
     <a target="_blank" href="{{ admin.generateObjectUrl('pdf', object) }}" class="btn btn-sm btn-default edit_link" title="PDF"><i class="fa fa-file-pdf-o"></i></a>
 {% endif %}

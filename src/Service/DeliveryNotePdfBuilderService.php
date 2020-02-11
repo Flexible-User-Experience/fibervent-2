@@ -5,6 +5,7 @@ namespace App\Service;
 use App\Entity\DeliveryNote;
 use App\Entity\DeliveryNoteTimeRegister;
 use App\Entity\NonStandardUsedMaterial;
+use App\Entity\WorkOrderTask;
 use App\Enum\AuditLanguageEnum;
 use App\Enum\TimeRegisterShiftEnum;
 use App\Enum\TimeRegisterTypeEnum;
@@ -260,7 +261,7 @@ class DeliveryNotePdfBuilderService
         $this->tcpdf->SetX(self::PDF_MARGIN_LEFT + self::H_DIVISOR);
         $this->tcpdf->Cell(22, 5, $this->ts->trans('Aerogenerador'), 1, 0, 'L', false);
         $this->tcpdf->SetFont('', '', 7);
-        $this->tcpdf->Cell(80, 5, $dn->getWindmill(), 1, 1, 'L', false);
+        $this->tcpdf->Cell(80, 5, $dn->getWindmill()->getCode(), 1, 1, 'L', false);
         $this->tcpdf->SetX(self::PDF_MARGIN_LEFT + self::H_DIVISOR);
         $this->tcpdf->SetFont('', 'B', 7);
         $this->tcpdf->Cell(22, 5, $this->ts->trans('admin.deliverynote.pdf.work_in'), 1, 0, 'L', false);
@@ -350,7 +351,10 @@ class DeliveryNotePdfBuilderService
         $this->tcpdf->Cell(102, 5, $this->ts->trans('admin.deliverynote.pdf.job_description'), 1, 1, 'C', true);
         $this->tcpdf->SetX(self::PDF_MARGIN_LEFT + self::H_DIVISOR);
         $this->tcpdf->SetFont('', '', 7);
-        $this->tcpdf->Cell(102, 5, '----'/* TODO iterations */, 1, 1, 'L', false);
+        /** @var WorkOrderTask $workOrderTask */
+        foreach ($dn->getWorkOrderTasks() as $workOrderTask) {
+            $this->tcpdf->Cell(102, 5, $workOrderTask->getLongDescriptionForEmbedForm(), 1, 1, 'L', false);
+        }
         $this->tcpdf->SetX(self::PDF_MARGIN_LEFT + self::H_DIVISOR);
         $this->tcpdf->Cell(102, 5, '', 0, 1, 'C', false);
 

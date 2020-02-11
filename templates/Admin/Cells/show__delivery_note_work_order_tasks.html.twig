@@ -5,15 +5,8 @@
                 <th>{{ 'admin.workordertask.wtg' | trans }}</th>
                 <th class="text-center">{{ 'admin.workordertask.blade' | trans }}</th>
                 <th class="text-center">{{ 'admin.workordertask.damage' | trans }}</th>
-                <th class="text-center">{{ 'admin.bladedamage.position' | trans }}</th>
-                <th class="text-right">{{ 'admin.workordertask.radius' | trans }}</th>
-                <th class="text-right">{{ 'admin.workordertask.distance' | trans }}</th>
-                <th class="text-right">{{ 'admin.workordertask.size' | trans }}</th>
                 <th>{{ 'admin.workordertask.description' | trans }}</th>
                 <th class="text-center">{{ 'admin.workordertask.is_completed' | trans }}</th>
-                {% if object.isFromAudit %}
-                    <th class="text-center">{{ 'admin.auditwindmillblade.audit' | trans }}</th>
-                {% endif %}
             </tr>
         </thead>
         <tbody>
@@ -22,10 +15,6 @@
                 <td>{{ workOrderTask.windmill.code }}</td>
                 <td class="text-center">{{ workOrderTask.windmillBlade }}</td>
                 <td class="text-center">{% if workOrderTask.bladeDamage %}{{ workOrderTask.bladeDamage }}{% else %}---{% endif %}</td>
-                <td class="text-center">{{ workOrderTask.positionString }}</td>
-                <td class="text-right">{{ workOrderTask.radius }} m</td>
-                <td class="text-right">{{ workOrderTask.distance }} cm</td>
-                <td class="text-right">{{ workOrderTask.size }} cm</td>
                 <td>{{ workOrderTask.description }}</td>
                 <td class="text-center">
                     {% if workOrderTask.isCompleted %}
@@ -34,16 +23,6 @@
                         <span class="label label-danger">No</span>
                     {% endif %}
                 </td>
-                {% if object.isFromAudit %}
-                    <td class="text-center">
-                        {% if workOrderTask.isFromAudit %}
-                            <span class="label label-success">Si</span>
-                        {% else %}
-                            <span class="label label-danger">No</span>
-                        {% endif %}
-                    </td>
-                {% endif %}
-                {# TODO render WorkOrderTask photos #}
             </tr>
         {% endfor %}
         </tbody>
