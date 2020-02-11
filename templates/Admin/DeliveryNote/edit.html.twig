@@ -11,12 +11,10 @@
             let windfarmNode = jQuery('#{{ form.windfarm.vars.id }}');
             workOrderNode.change(function(event) {
                 let workOrderId = event.val;
-                console.log('workOrderNode.change', workOrderId);
                 updateWindfarmNodeBySelectedWorkOrderId(workOrderId, false);
             });
             windfarmNode.change(function(event) {
                 let windfarmId = event.val;
-                console.log('windfarm.change', windfarmId, workOrderNode.val());
                 updateWindmillNodeBySelectedWorkOrderIdAndWindfarmId(workOrderNode.val(), windfarmId, false);
             });
             {% if admin.id(object) %}
@@ -36,7 +34,6 @@
                 {# new record mode, maybe user wants to add a new delivery note from a previos work order (add action in show view) #}
                 let forWorkOrderId = getUrlParameter('for_work_order');
                 if (forWorkOrderId !== undefined) {
-                    console.log(getUrlParameter('for_work_order'));
                     workOrderNode.select2('val', forWorkOrderId);
                     updateWindfarmNodeBySelectedWorkOrderId(forWorkOrderId, false);
                 }
@@ -44,7 +41,6 @@
             {% endif %}
         });
         function updateWindfarmNodeBySelectedWorkOrderId(workOrderId, setPreviousSelectedValue) {
-            console.log('updateWindfarmNodeBySelectedWorkOrderId', workOrderId, setPreviousSelectedValue);
             jQuery.get(Routing.generate('admin_app_deliverynote_getWindfarmsFromWorkOrderId', {id: workOrderId})).done(function (response) {
                 let jsonResponse = jQuery.parseJSON(response);
                 let workOrderNode = jQuery('#{{ form.workOrder.vars.id }}');
@@ -52,7 +48,6 @@
                 let windfarmNode = jQuery('#{{ form.windfarm.vars.id }}');
                 let windfarmNodeVal = parseInt(windfarmNode.val());
                 windfarmNode.empty().html(jsonResponse.htmlOptionStringData);
-                console.log('updateWindfarmNodeBySelectedWorkOrderId response', jsonResponse);
                 if (setPreviousSelectedValue) {
                     windfarmNode.select2('val', windfarmNodeVal);
                     updateWindmillNodeBySelectedWorkOrderIdAndWindfarmId(workOrderNodeVal, windfarmNodeVal, true);
@@ -63,12 +58,10 @@
             });
         }
         function updateWindmillNodeBySelectedWorkOrderIdAndWindfarmId(selectedWorkOrderId, selectedWindfarmId, setPreviousSelectedValue) {
-            console.log('updateWindmillNodeBySelectedWorkOrderIdAndWindfarmId', selectedWorkOrderId, selectedWindfarmId, setPreviousSelectedValue);
             jQuery.post(Routing.generate('admin_app_workorder_getWindmillsFromWorkOrderIdAndWindfarmId', {woid: selectedWorkOrderId, wfid: selectedWindfarmId})).done(function (response) {
                 let jsonResponse = jQuery.parseJSON(response);
                 let windmillNode = jQuery('#{{ form.windmill.vars.id }}');
                 let windmillNodeVal = parseInt(windmillNode.val());
-                console.log('updateWindmillNodeBySelectedWorkOrderIdAndWindfarmId response', jsonResponse);
                 windmillNode.empty().html(jsonResponse.htmlOptionStringData);
                 if (setPreviousSelectedValue) {
                     windmillNode.select2('val', windmillNodeVal);
@@ -84,7 +77,6 @@
                 i;
             for (i = 0; i < sURLVariables.length; i++) {
                 sParameterName = sURLVariables[i].split('=');
-
                 if (sParameterName[0] === sParam) {
                     return sParameterName[1] === undefined ? true : decodeURIComponent(sParameterName[1]);
                 }
