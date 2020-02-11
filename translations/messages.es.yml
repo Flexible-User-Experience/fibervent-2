@@ -506,6 +506,7 @@ admin:
     end: Fin
     total_hours: Total horas
     comment: Comentario
+    no_records: 'No existen fichajes asociados.'
   nonstandardusedmaterial:
     title: Materiales no estándar utilizados
     title_list: Materiales no estándar utilizados
@@ -513,6 +514,7 @@ admin:
     quantity: Cantidad
     item: Artículo
     description: Descripción
+    no_records: 'No existen materiales no estándar utilizados asociados.'
   workertimesheet:
     title: Partes de trabajo
     title_list: Partes de trabajo

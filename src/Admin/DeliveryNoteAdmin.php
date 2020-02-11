@@ -83,8 +83,6 @@ class DeliveryNoteAdmin extends AbstractBaseAdmin
                     'required' => true,
                 )
             )
-            ->end()
-            ->with('admin.deliverynote.pdf.customer_data', $this->getFormMdSuccessBoxArray(4))
             ->add(
                 'windfarm',
                 EntityType::class,
@@ -230,7 +228,7 @@ class DeliveryNoteAdmin extends AbstractBaseAdmin
             /** @var Windmill $windmill */
             $windmill = $deliveryNote->getWindmill();
             $formMapper
-                ->with('admin.workordertask.title', $this->getFormMdSuccessBoxArray(4))
+                ->with('admin.workordertask.title', $this->getFormMdSuccessBoxArray(8))
                 ->add(
                     'workOrderTasks',
                     ModelType::class,
@@ -693,8 +691,6 @@ class DeliveryNoteAdmin extends AbstractBaseAdmin
                     'format' => 'd/m/Y',
                 )
             )
-            ->end()
-            ->with('admin.deliverynote.pdf.customer_data', $this->getFormMdSuccessBoxArray(4))
             ->add(
                 'workOrder.customer',
                 null,
@@ -817,18 +813,17 @@ class DeliveryNoteAdmin extends AbstractBaseAdmin
                 )
             )
             ->end()
-            // TODO insert here "Descripcion del trabajo realizado"
-            ->with('admin.nonstandardusedmaterial.title', $this->getFormMdSuccessBoxArray(4))
+            ->with('admin.workordertask.title', $this->getFormMdSuccessBoxArray(8))
             ->add(
-                'nonStandardUsedMaterials',
+                'workOrderTasks',
                 null,
                 array(
-                    'label' => 'admin.nonstandardusedmaterial.title',
-                    'template' => 'Admin/Cells/show__non_standard_used_materials.html.twig',
+                    'label' => 'admin.workordertask.title',
+                    'template' => 'Admin/Cells/show__delivery_note_work_order_tasks.html.twig',
                 )
             )
             ->end()
-            ->with('admin.deliverynotetimeregister.title', $this->getFormMdSuccessBoxArray(8))
+            ->with('admin.deliverynotetimeregister.title', $this->getFormMdSuccessBoxArray(12))
             ->add(
                 'timeRegisters',
                 null,
@@ -838,7 +833,17 @@ class DeliveryNoteAdmin extends AbstractBaseAdmin
                 )
             )
             ->end()
-            ->with('admin.deliverynote.observations', $this->getFormMdSuccessBoxArray(4))
+            ->with('admin.nonstandardusedmaterial.title', $this->getFormMdSuccessBoxArray(6))
+            ->add(
+                'nonStandardUsedMaterials',
+                null,
+                array(
+                    'label' => 'admin.nonstandardusedmaterial.title',
+                    'template' => 'Admin/Cells/show__non_standard_used_materials.html.twig',
+                )
+            )
+            ->end()
+            ->with('admin.deliverynote.observations', $this->getFormMdSuccessBoxArray(6))
             ->add(
                 'observations',
                 null,
