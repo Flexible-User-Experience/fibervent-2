@@ -27,8 +27,8 @@ class WorkOrderRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param null   $limit
-     * @param string $order
+     * @param int|null $limit
+     * @param string   $order
      *
      * @return QueryBuilder
      */
@@ -43,8 +43,8 @@ class WorkOrderRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param null   $limit
-     * @param string $order
+     * @param int|null $limit
+     * @param string   $order
      *
      * @return Query
      */
@@ -54,19 +54,19 @@ class WorkOrderRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param null   $limit
-     * @param string $order
+     * @param int|null $limit
+     * @param string   $order
      *
      * @return array
      */
-    public function findAllSortedByName($limit = null, $order = 'ASC')
+    public function findAllSortedByProjectNumber($limit = null, $order = 'ASC')
     {
-        return $this->findAllSortedByProjectNumberQ($limit, $order)->getResult();
+        return $this->findAllSortedByProjectNumberQ($limit, $order)->getQuery();
     }
 
     /**
-     * @param null   $limit
-     * @param string $order
+     * @param int|null $limit
+     * @param string   $order
      *
      * @return QueryBuilder
      */
@@ -81,8 +81,8 @@ class WorkOrderRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param null   $limit
-     * @param string $order
+     * @param int|null $limit
+     * @param string   $order
      *
      * @return Query
      */
@@ -92,12 +92,12 @@ class WorkOrderRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param null   $limit
-     * @param string $order
+     * @param int|null $limit
+     * @param string   $order
      *
      * @return array
      */
-    public function findAvailableSortedByName($limit = null, $order = 'ASC')
+    public function findAvailableSortedByProjectNumber($limit = null, $order = 'ASC')
     {
         return $this->findAvailableSortedByProjectNumberQ($limit, $order)->getResult();
     }

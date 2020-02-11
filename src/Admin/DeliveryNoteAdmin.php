@@ -66,6 +66,8 @@ class DeliveryNoteAdmin extends AbstractBaseAdmin
             $workOrder = $deliveryNote->getWorkOrder();
             /** @var Windfarm $windfarm */
             $windfarm = $deliveryNote->getWindfarm();
+            /** @var WorkOrder[]|array $availableWorkOrders */
+            $availableWorkOrders = $this->wor->findAvailableSortedByProjectNumber();
         }
         $formMapper
             ->with('admin.common.general', $this->getFormMdSuccessBoxArray(4))
@@ -571,6 +573,13 @@ class DeliveryNoteAdmin extends AbstractBaseAdmin
                 null,
                 array(
                     'label' => 'admin.customer.title',
+                    'sortable' => true,
+                    'associated_property' => 'name',
+                    'sort_field_mapping' => array('fieldName' => 'name'),
+                    'sort_parent_association_mappings' => array(
+                        array('fieldName' => 'workOrder'),
+                        array('fieldName' => 'customer'),
+                    ),
                 )
             )
             ->add(
