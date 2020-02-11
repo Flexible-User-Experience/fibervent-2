@@ -58,6 +58,8 @@ class DeliveryNoteAdmin extends AbstractBaseAdmin
      */
     protected function configureFormFields(FormMapper $formMapper)
     {
+        /** @var WorkOrder[]|array $availableWorkOrders */
+        $availableWorkOrders = $this->wor->findAvailableSortedByProjectNumber();
         $isNewRecord = $this->id($this->getSubject()) ? false : true;
         if (!$isNewRecord) {
             /** @var DeliveryNote $deliveryNote */
@@ -66,8 +68,7 @@ class DeliveryNoteAdmin extends AbstractBaseAdmin
             $workOrder = $deliveryNote->getWorkOrder();
             /** @var Windfarm $windfarm */
             $windfarm = $deliveryNote->getWindfarm();
-            /** @var WorkOrder[]|array $availableWorkOrders */
-            $availableWorkOrders = $this->wor->findAvailableSortedByProjectNumber();
+
         }
         $formMapper
             ->with('admin.common.general', $this->getFormMdSuccessBoxArray(4))
@@ -97,7 +98,7 @@ class DeliveryNoteAdmin extends AbstractBaseAdmin
                 array(
                     'label' => 'admin.windfarm.title',
                     'class' => Windfarm::class,
-                    'query_builder' => $isNewRecord ? $this->wfr->findAllSortedByNameQB() : $this->wfr->findOnlyRelatedWithAWorkOrderSortedByNameQB($workOrder),
+                    'query_builder' => $this->wfr->findMultipleRelatedWithAWorkOrdersArraySortedByNameQB($availableWorkOrders),
                 )
             )
             ->end()
@@ -678,25 +679,18 @@ class DeliveryNoteAdmin extends AbstractBaseAdmin
         $showMapper
             ->with('admin.common.general', $this->getFormMdSuccessBoxArray(4))
             ->add(
+                'workOrder',
+                null,
+                array(
+                    'label' => 'admin.workorder.title',
+                )
+            )
+            ->add(
                 'date',
                 null,
                 array(
                     'label' => 'admin.deliverynote.date',
                     'format' => 'd/m/Y',
-                )
-            )
-            ->add(
-                'id',
-                null,
-                array(
-                    'label' => 'admin.workorder.project_number_short',
-                )
-            )
-            ->add(
-                'workOrder',
-                null,
-                array(
-                    'label' => 'admin.workorder.title',
                 )
             )
             ->end()
