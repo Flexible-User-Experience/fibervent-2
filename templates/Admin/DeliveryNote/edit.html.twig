@@ -55,7 +55,7 @@
                 console.log('updateWindfarmNodeBySelectedWorkOrderId response', jsonResponse);
                 if (setPreviousSelectedValue) {
                     windfarmNode.select2('val', windfarmNodeVal);
-                    updateWindmillNodeBySelectedWorkOrderIdAndWindfarmId(workOrderNodeVal, windfarmNodeVal, false);
+                    updateWindmillNodeBySelectedWorkOrderIdAndWindfarmId(workOrderNodeVal, windfarmNodeVal, true);
                 } else {
                     windfarmNode.select2('val', jsonResponse.data[0].id);
                     updateWindmillNodeBySelectedWorkOrderIdAndWindfarmId(workOrderNodeVal, jsonResponse.data[0].id, false);

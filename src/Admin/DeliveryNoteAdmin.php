@@ -110,7 +110,7 @@ class DeliveryNoteAdmin extends AbstractBaseAdmin
                 array(
                     'label' => 'admin.windmill.title',
                     'class' => Windmill::class,
-                    'query_builder' => $this->wmr->findMultipleByWindfarmsArrayQB($availableWindfarms), //$isNewRecord ? $this->wmr->findEnabledSortedByCustomerWindfarmAndWindmillCodeQB() : $this->wmr->findEnabledAndWindfarmSortedByCustomerWindfarmAndWindmillCodeQB($windfarm),
+                    'query_builder' => $this->wmr->findMultipleByWindfarmsArrayQB($availableWindfarms),
                 )
             )
             ->add(
@@ -720,7 +720,7 @@ class DeliveryNoteAdmin extends AbstractBaseAdmin
             ->end()
             ->with('admin.deliverynote.pdf.windfarm_data', $this->getFormMdSuccessBoxArray(4))
             ->add(
-                'windmill',
+                'windmill.code',
                 null,
                 array(
                     'label' => 'admin.windmill.title',
