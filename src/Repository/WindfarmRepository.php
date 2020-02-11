@@ -304,6 +304,51 @@ class WindfarmRepository extends ServiceEntityRepository
     }
 
     /**
+     * @param WorkOrder[]|array $workOrders
+     *
+     * @return QueryBuilder
+     */
+    public function findMultipleRelatedWithAWorkOrdersArraySortedByNameQB($workOrders)
+    {
+        $query = $this->createQueryBuilder('w')->orderBy('w.name', 'ASC');
+        if (count($workOrders) > 0) {
+            $wfia = [];
+            /** @var WorkOrder $workOrder */
+            foreach ($workOrders as $workOrder) {
+                if (count($workOrder->getWindfarms()) > 0) {
+                    /** @var Windfarm $windfarm */
+                    foreach ($workOrder->getWindfarms() as $windfarm) {
+                        $wfia[] = $windfarm->getId();
+                    }
+                }
+            }
+            $query->where($query->expr()->in('w.id', $wfia));
+        }
+
+        return $query;
+    }
+
+    /**
+     * @param WorkOrder[]|array $workOrders
+     *
+     * @return Query
+     */
+    public function findMultipleRelatedWithAWorkOrdersArraySortedByNameQ($workOrders)
+    {
+        return $this->findMultipleRelatedWithAWorkOrdersArraySortedByNameQB($workOrders)->getQuery();
+    }
+
+    /**
+     * @param WorkOrder[]|array $workOrders
+     *
+     * @return array
+     */
+    public function findMultipleRelatedWithAWorkOrdersArraySortedByName($workOrders)
+    {
+        return $this->findMultipleRelatedWithAWorkOrdersArraySortedByNameQ($workOrders)->getResult();
+    }
+
+    /**
      * @param array $ids
      *
      * @return QueryBuilder

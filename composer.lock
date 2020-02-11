@@ -3800,16 +3800,16 @@
         },
         {
             "name": "sonata-project/block-bundle",
-            "version": "3.18.3",
+            "version": "3.18.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sonata-project/SonataBlockBundle.git",
-                "reference": "3ed57dafb9ffee9541125fb2c38956b95021ba0d"
+                "reference": "5b5115a77fd3bc48e4a4ebc7da306fdc22e7c7e7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sonata-project/SonataBlockBundle/zipball/3ed57dafb9ffee9541125fb2c38956b95021ba0d",
-                "reference": "3ed57dafb9ffee9541125fb2c38956b95021ba0d",
+                "url": "https://api.github.com/repos/sonata-project/SonataBlockBundle/zipball/5b5115a77fd3bc48e4a4ebc7da306fdc22e7c7e7",
+                "reference": "5b5115a77fd3bc48e4a4ebc7da306fdc22e7c7e7",
                 "shasum": ""
             },
             "require": {
@@ -3884,7 +3884,7 @@
                 "block",
                 "sonata"
             ],
-            "time": "2019-12-30T20:00:08+00:00"
+            "time": "2020-02-10T18:54:10+00:00"
         },
         {
             "name": "sonata-project/cache",
@@ -6470,23 +6470,22 @@
         },
         {
             "name": "symfony/orm-pack",
-            "version": "v1.0.7",
+            "version": "v1.0.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/orm-pack.git",
-                "reference": "c57f5e05232ca40626eb9fa52a32bc8565e9231c"
+                "reference": "c9bcc08102061f406dc908192c0f33524a675666"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/orm-pack/zipball/c57f5e05232ca40626eb9fa52a32bc8565e9231c",
-                "reference": "c57f5e05232ca40626eb9fa52a32bc8565e9231c",
+                "url": "https://api.github.com/repos/symfony/orm-pack/zipball/c9bcc08102061f406dc908192c0f33524a675666",
+                "reference": "c9bcc08102061f406dc908192c0f33524a675666",
                 "shasum": ""
             },
             "require": {
-                "doctrine/doctrine-bundle": "^1.6.10|^2.0",
-                "doctrine/doctrine-migrations-bundle": "^1.3|^2.0",
-                "doctrine/orm": "^2.5.11",
-                "php": "^7.0"
+                "doctrine/doctrine-bundle": "*",
+                "doctrine/doctrine-migrations-bundle": "*",
+                "doctrine/orm": "*"
             },
             "type": "symfony-pack",
             "notification-url": "https://packagist.org/downloads/",
@@ -6494,7 +6493,7 @@
                 "MIT"
             ],
             "description": "A pack for the Doctrine ORM",
-            "time": "2019-10-18T05:41:09+00:00"
+            "time": "2020-02-10T18:03:48+00:00"
         },
         {
             "name": "symfony/polyfill-intl-grapheme",
@@ -8825,16 +8824,16 @@
         },
         {
             "name": "twig/twig",
-            "version": "v2.12.3",
+            "version": "v2.12.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/twigphp/Twig.git",
-                "reference": "97b6311585cae66a26833b14b33785f5797f7d39"
+                "reference": "822d57eac92f966cd1e3232539b3dbbfed21f754"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twigphp/Twig/zipball/97b6311585cae66a26833b14b33785f5797f7d39",
-                "reference": "97b6311585cae66a26833b14b33785f5797f7d39",
+                "url": "https://api.github.com/repos/twigphp/Twig/zipball/822d57eac92f966cd1e3232539b3dbbfed21f754",
+                "reference": "822d57eac92f966cd1e3232539b3dbbfed21f754",
                 "shasum": ""
             },
             "require": {
@@ -8886,7 +8885,7 @@
             "keywords": [
                 "templating"
             ],
-            "time": "2019-12-28T07:12:03+00:00"
+            "time": "2020-02-11T06:01:32+00:00"
         },
         {
             "name": "vich/uploader-bundle",

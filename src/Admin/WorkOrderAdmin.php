@@ -46,6 +46,7 @@ class WorkOrderAdmin extends AbstractBaseAdmin
             ->add('getWindfarmsFromCustomerId', $this->getRouterIdParameter().'/get-windfarms-from-customer-id')
             ->add('getWindmillbladesFromWindmillId', $this->getRouterIdParameter().'/get-windmillblades-from-windmill-id')
             ->add('getWindmillsFromSelectedWindfarmsIds', 'get-windmills-from-selected-windfarms-ids')
+            ->add('getWindmillsFromWorkOrderIdAndWindfarmId', 'get-windmills-from-work-order/{woid}/and-windfarm/{wfid}')
             ->add('pdf', $this->getRouterIdParameter().'/pdf')
             ->add('uploadWorkOrderTaskFile', $this->getRouterIdParameter().'/upload-work-order-task-files')
         ;
@@ -637,7 +638,7 @@ class WorkOrderAdmin extends AbstractBaseAdmin
             /** @var WorkOrderTask $workOrderTask */
             foreach ($object->getWorkOrderTasks() as $workOrderTask) {
                 if (!$workOrderTask->getDescription()) {
-                    $workOrderTask->setDescription('---');
+                    $workOrderTask->setDescription(WorkOrderTask::DEFAULT_DESCRIPTION);
                 }
             }
         }
