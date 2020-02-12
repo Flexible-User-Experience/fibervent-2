@@ -4,6 +4,7 @@ namespace App\Service;
 
 use Symfony\Component\Asset\UrlPackage;
 use Symfony\Component\Asset\VersionStrategy\EmptyVersionStrategy;
+use Symfony\Component\Asset\VersionStrategy\JsonManifestVersionStrategy;
 use Symfony\Component\HttpKernel\KernelInterface;
 
 /**
@@ -64,6 +65,23 @@ class SmartAssetsHelperService
         $package = new UrlPackage(self::HTTP_PROTOCOL.$this->mub.'/', new EmptyVersionStrategy());
 
         return $package->getUrl($assetPath);
+    }
+
+    /**
+     * Always return absolute URL path, even in CLI contexts.
+     *
+     * @param string $assetPath
+     *
+     * @return string
+     */
+    public function getAbsoluteAssetPathContextIndependentWithVersionStrategy($assetPath)
+    {
+        $package = new UrlPackage(
+            'file:/'.$this->kernel->getProjectDir().'/public',
+            new JsonManifestVersionStrategy($this->kernel->getProjectDir().'/public/build/manifest.json')
+        );
+
+        return substr($package->getUrl($assetPath), 6);
     }
 
     /**

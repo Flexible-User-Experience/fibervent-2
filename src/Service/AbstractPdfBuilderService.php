@@ -219,7 +219,7 @@ class AbstractPdfBuilderService
         $pdf->Write(0, $this->ts->trans('pdf.audit_description.2_description'), '', false, 'L', true);
         $pdf->Ln(self::SECTION_SPACER_V);
         // Audit description with windmill image schema
-        $pdf->Image($this->sahs->getAbsoluteAssetFilePath('/build/turbine_diagrams/'.$diagramType.'.jpg'), CustomTcpdf::PDF_MARGIN_LEFT + 50, $pdf->GetY(), null, 40);
+        $pdf->Image($this->sahs->getAbsoluteAssetPathContextIndependentWithVersionStrategy('build/turbine_diagrams/'.$diagramType.'.jpg'), CustomTcpdf::PDF_MARGIN_LEFT + 50, $pdf->GetY(), null, 40);
     }
 
     /**
