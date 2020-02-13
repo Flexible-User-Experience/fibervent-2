@@ -2,15 +2,15 @@
 
 namespace App\Controller;
 
-use App\Entity\Customer;
 use App\Entity\DeliveryNote;
 use App\Entity\WorkOrder;
 use App\Model\AjaxResponse;
-use App\Repository\CustomerRepository;
 use App\Repository\WindfarmRepository;
 use App\Repository\WorkOrderRepository;
+use App\Service\AuthCustomerService;
 use App\Service\DeliveryNotePdfBuilderService;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -22,6 +22,36 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
  */
 class DeliveryNoteAdminController extends AbstractBaseAdminController
 {
+    /**
+     * @param int|null $id
+     *
+     * @return RedirectResponse|Response
+     * @throws AccessDeniedHttpException
+     */
+    public function editAction($id = null)
+    {
+        if (!$this->getGuardian()->isDeliveryNoteOwnResource($this->getPersistedObject())) {
+            throw new AccessDeniedHttpException();
+        }
+
+        return parent::editAction($id);
+    }
+
+    /**
+     * @param int|null $id
+     *
+     * @return RedirectResponse|Response
+     * @throws AccessDeniedHttpException
+     */
+    public function showAction($id = null)
+    {
+        if (!$this->getGuardian()->isDeliveryNoteOwnResource($this->getPersistedObject())) {
+            throw new AccessDeniedHttpException();
+        }
+
+        return parent::showAction($id);
+    }
+
     /**
      * @param int $id WorkOrder ID
      *
@@ -58,6 +88,9 @@ class DeliveryNoteAdminController extends AbstractBaseAdminController
     {
         /** @var DeliveryNote $object */
         $object = $this->getPersistedObject();
+        if (!$this->getGuardian()->isDeliveryNoteOwnResource($object)) {
+            throw new AccessDeniedHttpException();
+        }
 
         /** @var DeliveryNotePdfBuilderService $dnpbs */
         $dnpbs = $this->get('app.delivery_note_pdf_builder');
@@ -82,5 +115,13 @@ class DeliveryNoteAdminController extends AbstractBaseAdminController
         }
 
         return $object;
+    }
+
+    /**
+     * @return AuthCustomerService
+     */
+    private function getGuardian()
+    {
+        return $this->get('app.auth_customer');
     }
 }

@@ -4,10 +4,10 @@ namespace App\Service;
 
 use App\Entity\Audit;
 use App\Entity\Customer;
+use App\Entity\DeliveryNote;
 use App\Entity\User;
 use App\Entity\Windfarm;
 use App\Enum\UserRolesEnum;
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationChecker;
 
@@ -21,12 +21,12 @@ class AuthCustomerService
     /**
      * @var AuthorizationChecker
      */
-    private $acs;
+    private AuthorizationChecker $acs;
 
     /**
-     * @var TokenStorage
+     * @var TokenStorageInterface
      */
-    private $tss;
+    private TokenStorageInterface $tss;
 
     /**
      * Methods.
@@ -103,6 +103,31 @@ class AuthCustomerService
     {
         return $this->getUser()->getCustomer();
     }
+
+    /**
+     * @param DeliveryNote $deliveryNote
+     *
+     * @return bool
+     */
+    public function isDeliveryNoteOwnResource(DeliveryNote $deliveryNote)
+    {
+        if ($this->acs->isGranted(UserRolesEnum::ROLE_ADMIN)) {
+            return true;
+        }
+
+        if ($this->acs->isGranted(UserRolesEnum::ROLE_TECHNICIAN) && (
+            ($deliveryNote->getTeamLeader() && $deliveryNote->getTeamLeader()->getId() == $this->getUser()->getId()) ||
+            ($deliveryNote->getTeamTechnician1() && $deliveryNote->getTeamTechnician1()->getId() == $this->getUser()->getId()) ||
+            ($deliveryNote->getTeamTechnician2() && $deliveryNote->getTeamTechnician2()->getId() == $this->getUser()->getId()) ||
+            ($deliveryNote->getTeamTechnician3() && $deliveryNote->getTeamTechnician3()->getId() == $this->getUser()->getId()) ||
+            ($deliveryNote->getTeamTechnician4() && $deliveryNote->getTeamTechnician4()->getId() == $this->getUser()->getId()))
+        ) {
+            return true;
+        }
+
+        return false;
+    }
+
 
     /**
      * @return User|object|string

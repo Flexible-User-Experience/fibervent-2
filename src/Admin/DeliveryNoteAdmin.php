@@ -13,6 +13,8 @@ use App\Entity\WorkOrder;
 use App\Enum\BladeEnum;
 use App\Enum\RepairAccessTypeEnum;
 use App\Enum\RepairWindmillSectionEnum;
+use App\Enum\UserRolesEnum;
+use Doctrine\ORM\QueryBuilder;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
@@ -51,6 +53,33 @@ class DeliveryNoteAdmin extends AbstractBaseAdmin
             ->add('getWindfarmsFromWorkOrderId', $this->getRouterIdParameter().'/get-windfarms-from-work-order-id')
             ->add('pdf', $this->getRouterIdParameter().'/pdf')
         ;
+    }
+
+    /**
+     * @param string $context
+     *
+     * @return QueryBuilder
+     */
+    public function createQuery($context = 'list')
+    {
+        /** @var User $user */
+        $user = $this->tss->getToken()->getUser();
+        /** @var QueryBuilder $query */
+        $query = parent::createQuery($context);
+        if ($user->hasRole(UserRolesEnum::ROLE_TECHNICIAN)) {
+            /** @var string $ra */
+            $ra = $query->getRootAliases()[0];
+            $query
+                ->andWhere($ra.'.teamLeader = :teamLeader OR '.$ra.'.teamTechnician1 = :teamTechnician1 OR '.$ra.'.teamTechnician2 = :teamTechnician2 OR '.$ra.'.teamTechnician3 = :teamTechnician3 OR '.$ra.'.teamTechnician4 = :teamTechnician4')
+                ->setParameter('teamLeader', $user)
+                ->setParameter('teamTechnician1', $user)
+                ->setParameter('teamTechnician2', $user)
+                ->setParameter('teamTechnician3', $user)
+                ->setParameter('teamTechnician4', $user)
+            ;
+        }
+
+        return $query;
     }
 
     /**
