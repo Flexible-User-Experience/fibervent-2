@@ -2,8 +2,3 @@ security:
     firewalls:
         admin:
             http_basic:  ~
-#            anonymous:   false
-#            switch_user: true
-#            pattern:     ^/admin
-#            context:     user
-#            security:    false
