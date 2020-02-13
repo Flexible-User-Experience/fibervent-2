@@ -8,6 +8,7 @@ use App\Repository\BladeRepository;
 use App\Repository\CustomerRepository;
 use App\Repository\DamageCategoryRepository;
 use App\Repository\DamageRepository;
+use App\Repository\DeliveryNoteRepository;
 use App\Repository\StateRepository;
 use App\Repository\TurbineRepository;
 use App\Repository\UserRepository;
@@ -118,6 +119,11 @@ abstract class AbstractBaseAdmin extends AbstractAdmin
     protected WorkOrderTaskRepository $wotr;
 
     /**
+     * @var DeliveryNoteRepository
+     */
+    protected DeliveryNoteRepository $dnr;
+
+    /**
      * @var UploaderHelper
      */
     protected UploaderHelper $vus;
@@ -161,6 +167,7 @@ abstract class AbstractBaseAdmin extends AbstractAdmin
         $this->vr = $rs->getVr();
         $this->wor = $rs->getWor();
         $this->wotr = $rs->getWotr();
+        $this->dnr = $rs->getDnr();
         $this->vus = $vus;
         $this->lis = $lis;
     }

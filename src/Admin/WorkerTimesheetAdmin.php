@@ -2,6 +2,7 @@
 
 namespace App\Admin;
 
+use App\Entity\DeliveryNote;
 use App\Entity\User;
 use App\Enum\UserRolesEnum;
 use Doctrine\ORM\QueryBuilder;
@@ -68,9 +69,13 @@ class WorkerTimesheetAdmin extends AbstractBaseAdmin
             ->with('admin.common.general', $this->getFormMdSuccessBoxArray(4))
             ->add(
                 'deliveryNote',
-                null,
+                EntityType::class,
                 array(
                     'label' => 'admin.deliverynote.title',
+                    'class' => DeliveryNote::class,
+                    'expanded' => false,
+                    'required' => true,
+                    'query_builder' => $this->dnr->findAllSortedByDateDescQB(),
                 )
             )
             ->add(
@@ -136,6 +141,11 @@ class WorkerTimesheetAdmin extends AbstractBaseAdmin
                 null,
                 array(
                     'label' => 'admin.deliverynote.title',
+                ),
+                EntityType::class,
+                array(
+                    'class' => DeliveryNote::class,
+                    'query_builder' => $this->dnr->findAllSortedByDateDescQB(),
                 )
             )
             ->add('worker',
