@@ -7,6 +7,7 @@ use App\Entity\Customer;
 use App\Entity\DeliveryNote;
 use App\Entity\User;
 use App\Entity\Windfarm;
+use App\Entity\WorkerTimesheet;
 use App\Enum\UserRolesEnum;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationChecker;
@@ -128,6 +129,23 @@ class AuthCustomerService
         return false;
     }
 
+    /**
+     * @param WorkerTimesheet $workerTimesheet
+     *
+     * @return bool
+     */
+    public function isWorkerTimesheetOwnResource(WorkerTimesheet $workerTimesheet)
+    {
+        if ($this->acs->isGranted(UserRolesEnum::ROLE_ADMIN)) {
+            return true;
+        }
+
+        if (($this->acs->isGranted(UserRolesEnum::ROLE_OPERATOR) || $this->acs->isGranted(UserRolesEnum::ROLE_TECHNICIAN)) && $workerTimesheet->getWorker()->getId() == $this->getUser()->getId()) {
+            return true;
+        }
+
+        return false;
+    }
 
     /**
      * @return User|object|string

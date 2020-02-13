@@ -116,12 +116,4 @@ class DeliveryNoteAdminController extends AbstractBaseAdminController
 
         return $object;
     }
-
-    /**
-     * @return AuthCustomerService
-     */
-    private function getGuardian()
-    {
-        return $this->get('app.auth_customer');
-    }
 }

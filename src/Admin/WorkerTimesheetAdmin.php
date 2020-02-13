@@ -2,6 +2,9 @@
 
 namespace App\Admin;
 
+use App\Entity\User;
+use App\Enum\UserRolesEnum;
+use Doctrine\ORM\QueryBuilder;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
@@ -29,6 +32,29 @@ class WorkerTimesheetAdmin extends AbstractBaseAdmin
     protected function configureRoutes(RouteCollection $collection)
     {
         $collection->remove('show');
+    }
+
+    /**
+     * @param string $context
+     *
+     * @return QueryBuilder
+     */
+    public function createQuery($context = 'list')
+    {
+        /** @var User $user */
+        $user = $this->tss->getToken()->getUser();
+        /** @var QueryBuilder $query */
+        $query = parent::createQuery($context);
+        if ($user->hasRole(UserRolesEnum::ROLE_OPERATOR) || $user->hasRole(UserRolesEnum::ROLE_TECHNICIAN)) {
+            /** @var string $ra */
+            $ra = $query->getRootAliases()[0];
+            $query
+                ->andWhere($ra.'.worker = :worker')
+                ->setParameter('worker', $user)
+            ;
+        }
+
+        return $query;
     }
 
     /**
@@ -132,6 +158,7 @@ class WorkerTimesheetAdmin extends AbstractBaseAdmin
                 null,
                 array(
                     'label' => 'admin.deliverynote.title',
+                    'associated_property' => 'id',
                     'sortable' => true,
                     'sort_field_mapping' => array('fieldName' => 'id'),
                     'sort_parent_association_mappings' => array(array('fieldName' => 'deliveryNote')),

@@ -121,7 +121,7 @@ services:
             - { name: sonata.admin, manager_type: orm, label: 'Materiales no est. utilizados', group: 'WorkOrder', label_translator_strategy: 'sonata.admin.label.strategy.noop', show_in_dashboard: false }
     admin.worker_timesheet:
         class: App\Admin\WorkerTimesheetAdmin
-        arguments: [~, App\Entity\WorkerTimesheet, ~, '@security.authorization_checker', '@security.token_storage', '@app.repositories_service', '@vich_uploader.templating.helper.uploader_helper', '@liip_imagine.cache.manager' ]
+        arguments: [~, App\Entity\WorkerTimesheet, App\Controller\WorkerTimesheetAdminController, '@security.authorization_checker', '@security.token_storage', '@app.repositories_service', '@vich_uploader.templating.helper.uploader_helper', '@liip_imagine.cache.manager' ]
         tags:
             - { name: sonata.admin, manager_type: orm, label: 'Partes de trabajo', group: 'WorkOrder', label_translator_strategy: 'sonata.admin.label.strategy.noop', show_in_dashboard: true }
     admin.presence_monitoring:
