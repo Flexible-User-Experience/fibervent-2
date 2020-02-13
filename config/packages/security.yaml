@@ -64,7 +64,7 @@ security:
         admin:
             anonymous:   true
             switch_user: false
-            pattern:     ^/admin(.*)
+            pattern:     ^/admin
             context:     user
             provider:    fos_userbundle
             form_login:
