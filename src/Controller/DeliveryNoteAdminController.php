@@ -7,8 +7,8 @@ use App\Entity\WorkOrder;
 use App\Model\AjaxResponse;
 use App\Repository\WindfarmRepository;
 use App\Repository\WorkOrderRepository;
-use App\Service\AuthCustomerService;
 use App\Service\DeliveryNotePdfBuilderService;
+use Exception;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -82,7 +82,7 @@ class DeliveryNoteAdminController extends AbstractBaseAdminController
      *
      * @throws NotFoundHttpException     If the object does not exist
      * @throws AccessDeniedHttpException If access is not granted
-     * @throws \Exception
+     * @throws Exception
      */
     public function pdfAction()
     {

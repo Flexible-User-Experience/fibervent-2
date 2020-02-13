@@ -1,0 +1,17 @@
+{% extends "Admin/edit.html.twig" %}
+
+{# override javascript includes #}
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript">
+        jQuery(document).ready(function() {
+            let workerMainNode = jQuery('#sonata-ba-field-container-{{ form.worker.vars.id }}');
+            let workerNode = jQuery('#{{ form.worker.vars.id }}');
+            console.log(workerNode);
+            {% if app.user.hasRole(constant('App\\Enum\\UserRolesEnum::ROLE_OPERATOR')) or app.user.hasRole(constant('App\\Enum\\UserRolesEnum::ROLE_TECHNICIAN')) %}
+                workerNode.select2('val', {{ app.user.id }});
+                workerMainNode.addClass('hidden');
+            {% endif %}
+        });
+    </script>
+{% endblock %}
