@@ -428,7 +428,9 @@ class AbstractPdfBuilderService
                 foreach ($auditWindmillBlade->getBladePhotos() as $photo) {
                     if ($photo->getImageName()) {
                         // Image($file, $x='', $y='', $w=0, $h=0, $type='', $link='', $align='', $resize=false, $dpi=300, $palign='', $ismask=false, $imgmask=false, $border=0, $fitbox=false, $hidden=false, $fitonpage=false)
-                        $pdf->Image($this->sahs->getAbsoluteLiipMediaCacheAssetFilePathByFilter($this->uh->asset($photo, 'imageFile'), '600x960'), CustomTcpdf::PDF_MARGIN_LEFT + (($i % 2) * 76) + 7, $pdf->GetY(), null, 115);
+//                        $pdf->Write(0, $this->sahs->getAbsoluteLiipMediaCacheAssetFilePathByFilterAndResolveItIfIsNecessary($this->uh->asset($photo, 'imageFile'), '600x960'), '', false, 'L', true);
+                        $pdf->Image($this->sahs->getAbsoluteLiipMediaCacheAssetFilePathByFilterAndResolveItIfIsNecessary($this->uh->asset($photo, 'imageFile'), '600x960'), CustomTcpdf::PDF_MARGIN_LEFT + (($i % 2) * 76) + 7, $pdf->GetY(), null, 115);
+//                        $pdf->Image($this->sahs->getAbsoluteLiipMediaCacheAssetFilePathByFilter($this->uh->asset($photo, 'imageFile'), '600x960'), CustomTcpdf::PDF_MARGIN_LEFT + (($i % 2) * 76) + 7, $pdf->GetY(), null, 115);
                         ++$i;
                         if (0 == $i % 2) {
                             $pdf->Ln(120);

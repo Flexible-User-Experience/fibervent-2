@@ -38,6 +38,9 @@ services:
         public: true
         class: App\Service\SmartAssetsHelperService
         arguments:
+            - '@liip_imagine.cache.manager'
+            - '@liip_imagine.data.manager'
+            - '@liip_imagine.filter.manager'
             - '@kernel'
             - '%project_url_base%'
     # Guardians

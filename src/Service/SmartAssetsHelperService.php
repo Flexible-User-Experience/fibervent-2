@@ -2,10 +2,14 @@
 
 namespace App\Service;
 
+use Liip\ImagineBundle\Imagine\Cache\CacheManager;
+use Liip\ImagineBundle\Imagine\Data\DataManager;
+use Liip\ImagineBundle\Imagine\Filter\FilterManager;
 use Symfony\Component\Asset\UrlPackage;
 use Symfony\Component\Asset\VersionStrategy\EmptyVersionStrategy;
 use Symfony\Component\Asset\VersionStrategy\JsonManifestVersionStrategy;
 use Symfony\Component\HttpKernel\KernelInterface;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 /**
  * Class SmartAssetsHelperService.
@@ -18,14 +22,29 @@ class SmartAssetsHelperService
     const PHP_SERVER_API_CLI_CONTEXT = 'cli';
 
     /**
+     * @var CacheManager
+     */
+    private CacheManager $cacheManager;
+
+    /**
+     * @var DataManager
+     */
+    private DataManager $dataManager;
+
+    /**
+     * @var FilterManager
+     */
+    private FilterManager $filterManager;
+
+    /**
      * @var KernelInterface
      */
-    private $kernel;
+    private KernelInterface $kernel;
 
     /**
      * @var string mailer URL base
      */
-    private $mub;
+    private string $mub;
 
     /**
      * Methods.
@@ -34,11 +53,17 @@ class SmartAssetsHelperService
     /**
      * SmartAssetsHelperService constructor.
      *
+     * @param CacheManager    $cacheManager
+     * @param DataManager     $dataManager
+     * @param FilterManager   $filterManager
      * @param KernelInterface $kernel
      * @param string          $mub
      */
-    public function __construct(KernelInterface $kernel, $mub)
+    public function __construct(CacheManager $cacheManager, DataManager $dataManager, FilterManager $filterManager, KernelInterface $kernel, $mub)
     {
+        $this->cacheManager = $cacheManager;
+        $this->dataManager = $dataManager;
+        $this->filterManager = $filterManager;
         $this->kernel = $kernel;
         $this->mub = $mub;
     }
@@ -96,7 +121,7 @@ class SmartAssetsHelperService
         $result = $this->getAbsoluteAssetPathContextIndependent($assetPath);
 
         if ($this->isCliContext()) {
-            $result = $this->kernel->getRootDir().DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'public'.$assetPath;
+            $result = $this->kernel->getProjectDir().DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'public'.$assetPath;
         }
 
         return $result;
@@ -128,7 +153,7 @@ class SmartAssetsHelperService
         $result = $this->getRelativeAssetPathContextIndependent($assetPath);
 
         if ($this->isCliContext()) {
-            $result = $this->kernel->getRootDir().DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'public'.$assetPath;
+            $result = $this->kernel->getProjectDir().DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'public'.$assetPath;
         }
 
         return $result;
@@ -143,7 +168,7 @@ class SmartAssetsHelperService
      */
     public function getAbsoluteAssetFilePath($assetPath)
     {
-        return $this->kernel->getRootDir().DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'public'.$assetPath;
+        return $this->kernel->getProjectDir().DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'public'.$assetPath;
     }
 
     /**
@@ -157,5 +182,25 @@ class SmartAssetsHelperService
     public function getAbsoluteLiipMediaCacheAssetFilePathByFilter($assetPath, $liipImagineFilter)
     {
         return str_replace(DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'public'.DIRECTORY_SEPARATOR, DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'public'.DIRECTORY_SEPARATOR.'media'.DIRECTORY_SEPARATOR.'cache'.DIRECTORY_SEPARATOR.$liipImagineFilter.DIRECTORY_SEPARATOR, $this->getAbsoluteAssetFilePath($assetPath));
+    }
+
+    /**
+     * Returns absolute file path.
+     *
+     * @param string $assetPath
+     * @param string $liipImagineFilter
+     *
+     * @return string
+     */
+    public function getAbsoluteLiipMediaCacheAssetFilePathByFilterAndResolveItIfIsNecessary($assetPath, $liipImagineFilter)
+    {
+        if (!$this->cacheManager->isStored($assetPath, $liipImagineFilter)) {
+            $this->cacheManager->store($this->filterManager->applyFilter($this->dataManager->find($liipImagineFilter, $assetPath), $liipImagineFilter), $assetPath, $liipImagineFilter);
+        }
+
+        $url = $this->cacheManager->generateUrl($assetPath, $liipImagineFilter, [], null, UrlGeneratorInterface::ABSOLUTE_PATH);
+        $url = str_replace('/resolve/', '/', $url);
+
+        return $this->kernel->getProjectDir().DIRECTORY_SEPARATOR.'public'.$url;
     }
 }

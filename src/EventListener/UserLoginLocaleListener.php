@@ -20,7 +20,7 @@ class UserLoginLocaleListener
     /**
      * @var Session
      */
-    private $session;
+    private Session $session;
 
     /**
      * Methods.
