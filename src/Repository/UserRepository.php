@@ -66,6 +66,44 @@ class UserRepository extends ServiceEntityRepository
     }
 
     /**
+     * @param int|null $limit
+     * @param string   $order
+     *
+     * @return QueryBuilder
+     */
+    public function getEnabledWorkersSortedByNameQB($limit = null, $order = 'ASC')
+    {
+        return $this->findAllSortedByNameQB($limit, $order)
+            ->where('u.enabled = :enabled')
+            ->andWhere('u.roles LIKE :operator OR u.roles LIKE :technician')
+            ->setParameter('operator', '%'.UserRolesEnum::ROLE_OPERATOR.'%')
+            ->setParameter('technician', '%'.UserRolesEnum::ROLE_TECHNICIAN.'%')
+            ->setParameter('enabled', true);
+    }
+
+    /**
+     * @param int|null $limit
+     * @param string   $order
+     *
+     * @return Query
+     */
+    public function getEnabledWorkersSortedByNameQ($limit = null, $order = 'ASC')
+    {
+        return $this->getEnabledWorkersSortedByNameQB($limit, $order)->getQuery();
+    }
+
+    /**
+     * @param int|null $limit
+     * @param string   $order
+     *
+     * @return array
+     */
+    public function getEnabledWorkersSortedByName($limit = null, $order = 'ASC')
+    {
+        return $this->getEnabledWorkersSortedByNameQ($limit, $order)->getResult();
+    }
+
+    /**
      * @param Customer|null $customer
      * @param int|null      $limit
      * @param string        $order

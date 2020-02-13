@@ -8,7 +8,9 @@ use Doctrine\ORM\QueryBuilder;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
+use Sonata\AdminBundle\Form\Type\ModelType;
 use Sonata\AdminBundle\Route\RouteCollection;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
 /**
  * Class WorkOrderTaskAdmin.
@@ -73,9 +75,13 @@ class WorkerTimesheetAdmin extends AbstractBaseAdmin
             )
             ->add(
                 'worker',
-                null,
+                EntityType::class,
                 array(
                     'label' => 'admin.workertimesheet.worker',
+                    'class' => User::class,
+                    'expanded' => false,
+                    'required' => true,
+                    'query_builder' => $this->ur->getEnabledWorkersSortedByNameQB(),
                 )
             )
             ->add(
@@ -136,6 +142,11 @@ class WorkerTimesheetAdmin extends AbstractBaseAdmin
                 null,
                 array(
                     'label' => 'admin.workertimesheet.worker',
+                ),
+                EntityType::class,
+                array(
+                    'class' => User::class,
+                    'query_builder' => $this->ur->getEnabledWorkersSortedByNameQB(),
                 )
             )
             ->add('workDescription',
