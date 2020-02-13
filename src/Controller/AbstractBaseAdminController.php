@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Service\AuthCustomerService;
 use Sonata\AdminBundle\Controller\CRUDController as Controller;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -74,5 +75,13 @@ abstract class AbstractBaseAdminController extends Controller
         }
 
         return $url;
+    }
+
+    /**
+     * @return AuthCustomerService
+     */
+    protected function getGuardian()
+    {
+        return $this->get('app.auth_customer');
     }
 }

@@ -33,7 +33,7 @@ class DeliveryNoteRepository extends ServiceEntityRepository
      */
     public function findAllSortedByIdQB($limit = null, $order = 'ASC')
     {
-        $query = $this->createQueryBuilder('t')->orderBy('t.id', $order);
+        $query = $this->createQueryBuilder('dn')->orderBy('dn.id', $order);
         if (!is_null($limit)) {
             $query->setMaxResults($limit);
         }
@@ -61,5 +61,38 @@ class DeliveryNoteRepository extends ServiceEntityRepository
     public function findAllSortedById($limit = null, $order = 'ASC')
     {
         return $this->findAllSortedByIdQ($limit, $order)->getResult();
+    }
+
+    /**
+     * @param null   $limit
+     * @param string $order
+     *
+     * @return QueryBuilder
+     */
+    public function findAllSortedByDateDescQB($limit = null, $order = 'DESC')
+    {
+        return $this->findAllSortedByIdQB($limit, $order)->addOrderBy('dn.date', $order);
+    }
+
+    /**
+     * @param null   $limit
+     * @param string $order
+     *
+     * @return Query
+     */
+    public function findAllSortedByDateDescQ($limit = null, $order = 'DESC')
+    {
+        return $this->findAllSortedByDateDescQB($limit, $order)->getQuery();
+    }
+
+    /**
+     * @param null   $limit
+     * @param string $order
+     *
+     * @return array
+     */
+    public function findAllSortedByDateDesc($limit = null, $order = 'DESC')
+    {
+        return $this->findAllSortedByDateDescQ($limit, $order)->getResult();
     }
 }

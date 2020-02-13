@@ -102,6 +102,12 @@ services:
         factory: [ '@doctrine', getRepository ]
         arguments:
             - App:WorkOrderTask
+    app.delivery_note_repository:
+        public: true
+        class: App\Repository\DeliveryNoteRepository
+        factory: [ '@doctrine', getRepository ]
+        arguments:
+            - App:DeliveryNote
     app.repositories_service:
         class: App\Service\RepositoriesService
         arguments:
@@ -120,3 +126,4 @@ services:
             - '@app.vehicle_repository'
             - '@app.work_order_repository'
             - '@app.work_order_task_repository'
+            - '@app.delivery_note_repository'

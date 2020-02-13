@@ -20,6 +20,18 @@ security:
             - ROLE_ADMIN_WORKER_TIMESHEET_ALL
         ROLE_TECHNICIAN:
             - ROLE_OPERATOR
+            - ROLE_ADMIN_WORK_ORDER_LIST
+            - ROLE_ADMIN_WORK_ORDER_SHOW
+            - ROLE_ADMIN_WORK_ORDER_VIEW
+            - ROLE_ADMIN_DELIVERY_NOTE_ALL
+            - ROLE_ADMIN_DELIVERY_NOTE_TIME_REGISTER_ALL
+            - ROLE_ADMIN_NON_STANDARD_USED_MATERIAL_ALL
+        ROLE_ADMIN:
+            - ROLE_TECHNICIAN
+            - ROLE_ADMIN_CUSTOMER_ALL
+            - ROLE_ADMIN_WINDFARM_ALL
+            - ROLE_ADMIN_WINDMILL_ALL
+            - ROLE_ADMIN_USER_ALL
             - ROLE_ADMIN_BLADE_ALL
             - ROLE_ADMIN_TURBINE_ALL
             - ROLE_ADMIN_DAMAGE_ALL
@@ -32,19 +44,10 @@ security:
             - ROLE_ADMIN_BLADE_PHOTO_ALL
             - ROLE_ADMIN_OBSERVATION_ALL
             - ROLE_ADMIN_PHOTO_ALL
-        ROLE_ADMIN:
-            - ROLE_TECHNICIAN
-            - ROLE_ADMIN_CUSTOMER_ALL
-            - ROLE_ADMIN_WINDFARM_ALL
-            - ROLE_ADMIN_WINDMILL_ALL
-            - ROLE_ADMIN_USER_ALL
             - ROLE_ADMIN_WORK_ORDER_ALL
             - ROLE_ADMIN_WORK_ORDER_TASK_ALL
             - ROLE_ADMIN_VEHICLE_ALL
-            - ROLE_ADMIN_DELIVERY_NOTE_ALL
             - ROLE_ADMIN_PRESENCE_MONITORING_ALL
-            - ROLE_ADMIN_DELIVERY_NOTE_TIME_REGISTER_ALL
-            - ROLE_ADMIN_NON_STANDARD_USED_MATERIAL_ALL
         ROLE_SUPER_ADMIN:
             - ROLE_ADMIN
             - ROLE_ADMIN_DAMAGE_TRANSLATION_ALL
@@ -59,12 +62,12 @@ security:
             id: fos_user.user_provider.username_email
     firewalls:
         dev:
-            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            pattern:  ^/(_(profiler|wdt)|css|images|js)/
             security: false
         admin:
             anonymous:   true
             switch_user: false
-            pattern:     ^/admin(.*)
+            pattern:     ^/admin
             context:     user
             provider:    fos_userbundle
             form_login:

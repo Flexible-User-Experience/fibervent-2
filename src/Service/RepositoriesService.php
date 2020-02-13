@@ -8,6 +8,7 @@ use App\Repository\BladeRepository;
 use App\Repository\CustomerRepository;
 use App\Repository\DamageCategoryRepository;
 use App\Repository\DamageRepository;
+use App\Repository\DeliveryNoteRepository;
 use App\Repository\StateRepository;
 use App\Repository\TurbineRepository;
 use App\Repository\UserRepository;
@@ -101,6 +102,11 @@ class RepositoriesService
     private WorkOrderTaskRepository $wotr;
 
     /**
+     * @var DeliveryNoteRepository
+     */
+    private DeliveryNoteRepository $dnr;
+
+    /**
      * Methods.
      */
 
@@ -122,8 +128,9 @@ class RepositoriesService
      * @param VehicleRepository        $vr
      * @param WorkOrderRepository      $wor
      * @param WorkOrderTaskRepository  $wotr
+     * @param DeliveryNoteRepository   $dnr
      */
-    public function __construct(CustomerRepository $cr, UserRepository $ur, WindmillRepository $wmr, WindfarmRepository $wfr, BladeRepository $br, TurbineRepository $tr, StateRepository $sr, DamageRepository $dr, DamageCategoryRepository $dcr, AuditRepository $ar, WindmillBladeRepository $wbr, BladeDamageRepository $bdr, VehicleRepository $vr, WorkOrderRepository $wor, WorkOrderTaskRepository $wotr)
+    public function __construct(CustomerRepository $cr, UserRepository $ur, WindmillRepository $wmr, WindfarmRepository $wfr, BladeRepository $br, TurbineRepository $tr, StateRepository $sr, DamageRepository $dr, DamageCategoryRepository $dcr, AuditRepository $ar, WindmillBladeRepository $wbr, BladeDamageRepository $bdr, VehicleRepository $vr, WorkOrderRepository $wor, WorkOrderTaskRepository $wotr, DeliveryNoteRepository $dnr)
     {
         $this->cr = $cr;
         $this->ur = $ur;
@@ -140,6 +147,7 @@ class RepositoriesService
         $this->vr = $vr;
         $this->wor = $wor;
         $this->wotr = $wotr;
+        $this->dnr = $dnr;
     }
 
     /**
@@ -260,5 +268,13 @@ class RepositoriesService
     public function getWotr()
     {
         return $this->wotr;
+    }
+
+    /**
+     * @return DeliveryNoteRepository
+     */
+    public function getDnr()
+    {
+        return $this->dnr;
     }
 }

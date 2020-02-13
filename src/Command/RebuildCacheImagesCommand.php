@@ -22,22 +22,22 @@ class RebuildCacheImagesCommand extends AbstractBaseCommand
     /**
      * @var int
      */
-    private $photosFound = 0;
+    private int $photosFound = 0;
 
     /**
      * @var int
      */
-    private $photosNotFound = 0;
+    private int $photosNotFound = 0;
 
     /**
      * @var int
      */
-    private $blPhotosFound = 0;
+    private int $blPhotosFound = 0;
 
     /**
      * @var int
      */
-    private $blPhotosNotFound = 0;
+    private int $blPhotosNotFound = 0;
 
     /**
      * Methods.

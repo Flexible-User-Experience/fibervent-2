@@ -354,6 +354,7 @@ class DeliveryNotePdfBuilderService
         /** @var WorkOrderTask $workOrderTask */
         foreach ($dn->getWorkOrderTasks() as $workOrderTask) {
             $this->tcpdf->Cell(102, 5, $workOrderTask->getLongDescriptionForEmbedForm(), 1, 1, 'L', false);
+            $this->tcpdf->SetX(self::PDF_MARGIN_LEFT + self::H_DIVISOR);
         }
         $this->tcpdf->SetX(self::PDF_MARGIN_LEFT + self::H_DIVISOR);
         $this->tcpdf->Cell(102, 5, '', 0, 1, 'C', false);

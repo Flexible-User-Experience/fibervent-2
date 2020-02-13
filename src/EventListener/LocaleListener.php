@@ -16,7 +16,7 @@ class LocaleListener implements EventSubscriberInterface
     /**
      * @var string
      */
-    private $defaultLocale;
+    private string $defaultLocale;
 
     /**
      * Methods.
