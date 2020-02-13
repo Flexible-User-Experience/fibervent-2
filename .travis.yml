@@ -5,12 +5,12 @@ sudo: false
 cache:
   directories:
     - $HOME/.composer/cache/files
-    - ./bin/.phpunit
+    - $HOME/symfony-bridge/.phpunit
 
 env:
   global:
-    - SYMFONY_PHPUNIT_DIR=./bin/.phpunit
-    - SYMFONY_DEPRECATIONS_HELPER=29
+    - PHPUNIT_FLAGS="-v"
+    - SYMFONY_PHPUNIT_DIR="$HOME/symfony-bridge/.phpunit"
 
 matrix:
   fast_finish: true
