@@ -98,19 +98,25 @@ class WorkerTimesheetPdfBuilderService
         $this->tcpdf->SetFillColor(183, 223, 234);
         $this->tcpdf->SetFont('', 'B', 7);
         $this->tcpdf->SetX(self::PDF_MARGIN_LEFT + 50);
-        $this->tcpdf->Cell(30, 6, strtoupper($this->ts->trans('admin.workertimesheet.head_line_2')), 1, 0, 'L', true);
+        $this->tcpdf->Cell(30, 6, strtoupper($this->ts->trans('admin.workertimesheet.head_line_2')), 1, 0, 'C', true);
         $this->tcpdf->SetFillColor(255, 255, 255);
+        $this->tcpdf->SetFont('', '', 7);
         $this->tcpdf->Cell(137, 6, $operator->getFullname(), 1, 0, 'L', true);
         $this->tcpdf->SetFillColor(183, 223, 234);
+        $this->tcpdf->SetFont('', 'B', 7);
         $this->tcpdf->Cell(20, 6, strtoupper($this->ts->trans('admin.workertimesheet.head_line_3')), 1, 0, 'C', true);
         $this->tcpdf->SetFillColor(255, 255, 255);
+        $this->tcpdf->SetFont('', '', 7);
         $this->tcpdf->Cell(30, 6, $periodString, 1, 1, 'C', true);
 
         // main table head line
         $this->tcpdf->SetFillColor(183, 223, 234);
+        $this->tcpdf->SetFont('', 'B', 7);
         $this->tcpdf->Cell(145, 6, $this->ts->trans('admin.workertimesheet.head_line_4'), 1, 0, 'C', true);
         $this->tcpdf->Cell(80, 6, $this->ts->trans('admin.workertimesheet.head_line_5'), 1, 0, 'C', true);
         $this->tcpdf->Cell(42, 6, $this->ts->trans('admin.workertimesheet.head_line_6'), 1, 1, 'C', true);
+        // secondary table head line
+        $this->tcpdf->SetFont('', '', 7);
         $this->tcpdf->Cell(20, 12, $this->ts->trans('admin.workertimesheet.head_line_7'), 1, 0, 'C', true);
         $this->tcpdf->Cell(20, 12, $this->ts->trans('admin.workertimesheet.head_line_8'), 1, 0, 'C', true);
         $this->tcpdf->Cell(105, 12, $this->ts->trans('admin.workertimesheet.head_line_9'), 1, 0, 'C', true);
@@ -126,23 +132,24 @@ class WorkerTimesheetPdfBuilderService
         $i = 0;
         /** @var WorkerTimesheet $wt */
         foreach ($items as $wt) {
-            $cellBackgroundFill = false;
             if (++$i === $itemsCount) {
                 $this->tcpdf->SetFont('', 'B', 7);
-                $cellBackgroundFill = true;
                 $this->tcpdf->SetFillColor(183, 223, 234);
-                $this->tcpdf->Cell(80, 6, $this->ts->trans('admin.presencemonitoring.total'), 1, 0, 'R', $cellBackgroundFill);
+                $this->tcpdf->Cell(145, 6, $this->ts->trans('admin.presencemonitoring.total'), 1, 0, 'R', true);
                 $this->tcpdf->SetFillColor(108, 197, 205);
-                $this->drawTotalHourCells($wt, $cellBackgroundFill);
+                $this->drawTotalHourCells($wt, true);
             } else {
                 $this->tcpdf->Cell(20, 6, $wt->getDeliveryNote()->getDateString(), 1, 0, 'C', 0);
-                $this->tcpdf->Cell(15, 6, $wt->getTotalNormalHours(), 1, 0, 'C', 0);
-                $this->tcpdf->Cell(15, 6, $wt->getTotalVerticalHours(), 1, 0, 'C', 0);
-                $this->tcpdf->Cell(15, 6, $wt->getTotalInclementWeatherHours(), 1, 0, 'C', 0);
-                $this->tcpdf->Cell(15, 6, $wt->getTotalTripHours(), 1, 0, 'C', 0);
+                $this->tcpdf->Cell(20, 6, $wt->getDeliveryNote()->getWorkOrder()->getProjectNumber(), 1, 0, 'C', 0);
+                $this->tcpdf->Cell(105, 6, '---', 1, 0, 'L', 0);
+                $this->tcpdf->Cell(16, 6, $wt->getTotalNormalHours(), 1, 0, 'R', 0);
+                $this->tcpdf->Cell(16, 6, $wt->getTotalVerticalHours(), 1, 0, 'R', 0);
+                $this->tcpdf->Cell(16, 6, '---', 1, 0, 'R', 0);
+                $this->tcpdf->Cell(16, 6, $wt->getTotalInclementWeatherHours(), 1, 0, 'R', 0);
+                $this->tcpdf->Cell(16, 6, $wt->getTotalTripHours(), 1, 0, 'R', 0);
+                $this->tcpdf->Cell(21, 6, '---', 1, 0, 'C', 0);
+                $this->tcpdf->Cell(21, 6, $wt->getDeliveryNote()->getVehicle(), 1, 1, 'C', 0);
             }
-            $this->tcpdf->Cell(35, 6, '', 1, 1, 'C', 0);
-            $this->tcpdf->SetFont('', '', 7);
         }
 
         // final sign boxes
@@ -164,8 +171,12 @@ class WorkerTimesheetPdfBuilderService
      */
     private function drawTotalHourCells(WorkerTimesheet $wt, bool $cellBackgroundFill)
     {
-        $this->tcpdf->Cell(20, 6, $wt->getTotalNormalHours() ? MinutesEnum::transformToHoursAmountString($wt->getTotalNormalHours()) : '0h', 1, 0, 'R', $cellBackgroundFill);
-        $this->tcpdf->Cell(25, 6, $wt->getTotalVerticalHours() ? MinutesEnum::transformToHoursAmountString($wt->getTotalVerticalHours()) : '0h', 1, 0, 'R', $cellBackgroundFill);
-        $this->tcpdf->Cell(20, 6, $wt->getTotalInclementWeatherHours() ? MinutesEnum::transformToHoursAmountString($wt->getTotalInclementWeatherHours()) : '0h', 1, 0, 'R', $cellBackgroundFill);
+        $this->tcpdf->Cell(16, 6, $wt->getTotalNormalHours() ? MinutesEnum::transformToHoursAmountString($wt->getTotalNormalHours()) : '0h', 1, 0, 'R', $cellBackgroundFill);
+        $this->tcpdf->Cell(16, 6, $wt->getTotalVerticalHours() ? MinutesEnum::transformToHoursAmountString($wt->getTotalVerticalHours()) : '0h', 1, 0, 'R', $cellBackgroundFill);
+        $this->tcpdf->Cell(16, 6, '---', 1, 0, 'R', $cellBackgroundFill);
+        $this->tcpdf->Cell(16, 6, $wt->getTotalInclementWeatherHours() ? MinutesEnum::transformToHoursAmountString($wt->getTotalInclementWeatherHours()) : '0h', 1, 0, 'R', $cellBackgroundFill);
+        $this->tcpdf->Cell(16, 6, $wt->getTotalTripHours() ? MinutesEnum::transformToHoursAmountString($wt->getTotalTripHours()) : '0h', 1, 0, 'R', $cellBackgroundFill);
+        $this->tcpdf->SetFillColor(183, 223, 234);
+        $this->tcpdf->Cell(42, 6, '', 1, 1, 'C', $cellBackgroundFill);
     }
 }
