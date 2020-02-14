@@ -52,7 +52,7 @@ class WorkerTimesheetManager
      * @param int $year
      * @param int $month
      *
-     * @return array|PresenceMonitoring[]
+     * @return array|WorkerTimesheet[]
      * @throws Exception
      */
     public function createFullMonthItemsListByOperatorYearAndMonth(User $operator, $year, $month)
@@ -63,7 +63,7 @@ class WorkerTimesheetManager
         $daysInMonth = cal_days_in_month(CAL_GREGORIAN, $month , $year);
         $day = new DateTime();
         $day->setDate($year, $month, 1);
-        $totalItem = $this->buildEmptyItemForDay($operator, $day);
+        $totalItem = $this->buildEmptyItemForDay($operator);
 
         for ($dayNumber = 1; $dayNumber <= $daysInMonth; $dayNumber++) {
             $day = new DateTime();
@@ -89,17 +89,18 @@ class WorkerTimesheetManager
 
     /**
      * @param User $operator
-     * @param DateTime $day
      *
-     * @return PresenceMonitoring
+     * @return WorkerTimesheet
      */
-    private function buildEmptyItemForDay(User $operator, DateTime $day)
+    private function buildEmptyItemForDay(User $operator)
     {
-        $emptyItem = new PresenceMonitoring();
+        $emptyItem = new WorkerTimesheet();
         $emptyItem
             ->setWorker($operator)
-            ->setDate($day)
-            ->setCategory(PresenceMonitoringCategoryEnum::WORKDAY)
+            ->setTotalNormalHours(0)
+            ->setTotalVerticalHours(0)
+            ->setTotalInclementWeatherHours(0)
+            ->setTotalTripHours(0)
         ;
 
         return $emptyItem;

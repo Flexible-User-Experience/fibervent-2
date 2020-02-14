@@ -61,6 +61,12 @@ services:
         arguments:
             - '@translator'
             - '@app.smart_assets_helper'
+    app.worker_timesheet_pdf_builder:
+        public: true
+        class: App\Service\WorkerTimesheetPdfBuilderService
+        arguments:
+            - '@translator'
+            - '@app.smart_assets_helper'
     app.delivery_note_pdf_builder:
         public: true
         class: App\Service\DeliveryNotePdfBuilderService
