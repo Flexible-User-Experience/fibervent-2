@@ -4,10 +4,7 @@ namespace App\Manager;
 
 use App\Entity\WorkerTimesheet;
 use App\Entity\User;
-use App\Enum\PresenceMonitoringCategoryEnum;
 use App\Repository\WorkerTimesheetRepository;
-use DateTime;
-use Exception;
 
 /**
  * Class WorkerTimesheetManager
@@ -53,34 +50,19 @@ class WorkerTimesheetManager
      * @param int $month
      *
      * @return array|WorkerTimesheet[]
-     * @throws Exception
      */
     public function createFullMonthItemsListByOperatorYearAndMonth(User $operator, $year, $month)
     {
-        $result = array();
         $items = $this->getAllItemsByOperatorYearAndMonthSortedByDate($operator, $year, $month);
-        $currentItem = array_shift($items);
-        $daysInMonth = cal_days_in_month(CAL_GREGORIAN, $month , $year);
-        $day = new DateTime();
-        $day->setDate($year, $month, 1);
         $totalItem = $this->buildEmptyItemForDay($operator);
-
-        for ($dayNumber = 1; $dayNumber <= $daysInMonth; $dayNumber++) {
-            $day = new DateTime();
-            $day->setDate($year, $month, $dayNumber);
-            if ($currentItem && $currentItem->getDateString() == $day->format('d/m/Y')) {
-                if ($currentItem->getCategory() == PresenceMonitoringCategoryEnum::WORKDAY) {
-                    $totalItem
-                        ->setTotalHours($totalItem->getTotalHours() + $currentItem->getTotalHours())
-                        ->setNormalHours($totalItem->getNormalHours() + $currentItem->getNormalHours())
-                        ->setExtraHours($totalItem->getExtraHours() + $currentItem->getExtraHours())
-                    ;
-                }
-                array_push($result, $currentItem);
-                $currentItem = array_shift($items);
-            } else {
-                array_push($result, $this->buildEmptyItemForDay($operator, $day));
-            }
+        /** @var WorkerTimesheet $item */
+        foreach ($items as $item) {
+            $totalItem
+                ->setTotalNormalHours($totalItem->getTotalNormalHours() + $item->getTotalNormalHours())
+                ->setTotalVerticalHours($totalItem->getTotalVerticalHours() + $item->getTotalVerticalHours())
+                ->setTotalInclementWeatherHours($totalItem->getTotalInclementWeatherHours() + $item->getTotalInclementWeatherHours())
+                ->setTotalTripHours($totalItem->getTotalTripHours() + $item->getTotalTripHours())
+            ;
         }
         array_push($result, $totalItem);
 
