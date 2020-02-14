@@ -75,26 +75,13 @@ class WorkerTimesheetPdfBuilderService
         $this->tcpdf->SetMargins(self::PDF_MARGIN_LEFT, self::PDF_MARGIN_TOP + 10, self::PDF_MARGIN_RIGHT, true);
         $this->tcpdf->SetAutoPageBreak(true, self::PDF_MARGIN_BOTTOM + 10);
         $this->tcpdf->AddPage('L', 'A4', true, true);
-        $this->tcpdf->Image($this->sahs->getAbsoluteAssetPathContextIndependentWithVersionStrategy('build/fibervent_logo_white_landscape.jpg'), self::PDF_MARGIN_LEFT, self::PDF_MARGIN_TOP + 10, 35, 0, 'JPEG', '', 'T', false, 300, '', false, false, 0, false, false, false);
+        $this->tcpdf->Image($this->sahs->getAbsoluteAssetPathContextIndependentWithVersionStrategy('build/fibervent_logo_white_landscape.jpg'), self::PDF_MARGIN_LEFT, self::PDF_MARGIN_TOP + 10, 45, 0, 'JPEG', '', 'T', false, 300, '', false, false, 0, false, false, false);
         // colors, line width and bold font
         $this->tcpdf->SetFillColor(108, 197, 205);
         $this->tcpdf->SetTextColor(0);
         $this->tcpdf->SetLineWidth(0.1);
         $this->tcpdf->SetFont('', 'B', 10);
 
-        // customer and worker table info
-        $this->tcpdf->SetAbsXY(self::PDF_MARGIN_LEFT, self::PDF_MARGIN_TOP + 22);
-        $this->tcpdf->Cell(180, 9, $this->ts->trans('admin.presencemonitoring.head_line_1'), 1, 1, 'C', true);
-        $this->tcpdf->SetFillColor(183, 223, 234);
-        $this->tcpdf->SetFont('', 'B', 7);
-        $this->tcpdf->Cell(90, 6, strtoupper($this->ts->trans('admin.presencemonitoring.brand')), 1, 0, 'C', true);
-        $this->tcpdf->Cell(90, 6, strtoupper($this->ts->trans('admin.presencemonitoring.operator')), 1, 1, 'C', true);
-        $this->tcpdf->SetFillColor(108, 197, 205);
-        $this->tcpdf->Cell(90, 6, $this->ts->trans('admin.presencemonitoring.brand_title').': '.$this->ts->trans('fibervent.name'), 1, 0, 'L', true);
-        $this->tcpdf->Cell(90, 6, $this->ts->trans('admin.presencemonitoring.operator_name').': '.$operator->getFullname(), 1, 1, 'L', true);
-        $this->tcpdf->Cell(90, 6, $this->ts->trans('admin.presencemonitoring.brand_cif').': '.$this->ts->trans('fibervent.cif'), 1, 0, 'L', true);
-        $this->tcpdf->Cell(90, 6, $this->ts->trans('admin.presencemonitoring.operator_nif').': '.$operator->getNif(), 1, 1, 'L', true);
-        $this->tcpdf->SetFillColor(183, 223, 234);
         $today = new DateTimeImmutable();
         $periodString = '';
         $itemsCount = count($items);
@@ -104,26 +91,36 @@ class WorkerTimesheetPdfBuilderService
             $firstItemDate = $firstItemDate->getDeliveryNote()->getDate();
             $periodString = $this->ts->trans(MonthsEnum::getOldMonthEnumArray()[intval($firstItemDate->format('n'))]).' '.$firstItemDate->format('Y');
         }
-        $this->tcpdf->Cell(90, 6, $this->ts->trans('admin.presencemonitoring.head_line_2').': '.$periodString, 1, 0, 'L', true);
-        $this->tcpdf->Cell(90, 6, $this->ts->trans('admin.presencemonitoring.head_line_3').': '.$today->format('d/m/Y'), 1, 1, 'L', true);
-        $this->tcpdf->SetFillColor(108, 197, 205);
+
+        // customer and worker table info
+        $this->tcpdf->SetAbsXY(self::PDF_MARGIN_LEFT + 50, self::PDF_MARGIN_TOP + 10);
+        $this->tcpdf->Cell(217, 9, $this->ts->trans('admin.workertimesheet.head_line_1'), 1, 1, 'C', true);
+        $this->tcpdf->SetFillColor(183, 223, 234);
+        $this->tcpdf->SetFont('', 'B', 7);
+        $this->tcpdf->SetX(self::PDF_MARGIN_LEFT + 50);
+        $this->tcpdf->Cell(30, 6, strtoupper($this->ts->trans('admin.workertimesheet.head_line_2')), 1, 0, 'L', true);
+        $this->tcpdf->SetFillColor(255, 255, 255);
+        $this->tcpdf->Cell(137, 6, $operator->getFullname(), 1, 0, 'L', true);
+        $this->tcpdf->SetFillColor(183, 223, 234);
+        $this->tcpdf->Cell(20, 6, strtoupper($this->ts->trans('admin.workertimesheet.head_line_3')), 1, 0, 'C', true);
+        $this->tcpdf->SetFillColor(255, 255, 255);
+        $this->tcpdf->Cell(30, 6, $periodString, 1, 1, 'C', true);
 
         // main table head line
-        $this->tcpdf->Cell(20, 12, $this->ts->trans('admin.presencemonitoring.day'), 1, 0, 'C', true);
-        $this->tcpdf->Cell(30, 6, $this->ts->trans('admin.presencemonitoring.morning'), 1, 0, 'C', true);
-        $this->tcpdf->Cell(30, 6, $this->ts->trans('admin.presencemonitoring.afternoon'), 1, 0, 'C', true);
-        $this->tcpdf->Cell(20, 12, $this->ts->trans('admin.presencemonitoring.total_hours_short'), 1, 0, 'C', true);
-        $this->tcpdf->Cell(25, 12, $this->ts->trans('admin.presencemonitoring.normal_hours_short'), 1, 0, 'C', true);
-        $this->tcpdf->Cell(20, 12, $this->ts->trans('admin.presencemonitoring.extra_hours_short'), 1, 0, 'C', true);
-        $this->tcpdf->Cell(35, 12, $this->ts->trans('admin.presencemonitoring.sign'), 1, 0, 'C', true);
-
-        // main table head line 2
-        $this->tcpdf->SetAbsXY(self::PDF_MARGIN_LEFT + 20, self::PDF_MARGIN_TOP + 51);
-        $this->tcpdf->Cell(15, 6, $this->ts->trans('admin.presencemonitoring.begin'), 1, 0, 'C', true);
-        $this->tcpdf->Cell(15, 6, $this->ts->trans('admin.presencemonitoring.end'), 1, 0, 'C', true);
-        $this->tcpdf->Cell(15, 6, $this->ts->trans('admin.presencemonitoring.begin'), 1, 0, 'C', true);
-        $this->tcpdf->Cell(15, 6, $this->ts->trans('admin.presencemonitoring.end'), 1, 1, 'C', true);
-        $this->tcpdf->SetFont('', '', 7);
+        $this->tcpdf->SetFillColor(183, 223, 234);
+        $this->tcpdf->Cell(145, 6, $this->ts->trans('admin.workertimesheet.head_line_4'), 1, 0, 'C', true);
+        $this->tcpdf->Cell(80, 6, $this->ts->trans('admin.workertimesheet.head_line_5'), 1, 0, 'C', true);
+        $this->tcpdf->Cell(42, 6, $this->ts->trans('admin.workertimesheet.head_line_6'), 1, 1, 'C', true);
+        $this->tcpdf->Cell(20, 12, $this->ts->trans('admin.workertimesheet.head_line_7'), 1, 0, 'C', true);
+        $this->tcpdf->Cell(20, 12, $this->ts->trans('admin.workertimesheet.head_line_8'), 1, 0, 'C', true);
+        $this->tcpdf->Cell(105, 12, $this->ts->trans('admin.workertimesheet.head_line_9'), 1, 0, 'C', true);
+        $this->tcpdf->Cell(16, 12, $this->ts->trans('admin.workertimesheet.head_line_10'), 1, 0, 'C', true);
+        $this->tcpdf->Cell(16, 12, $this->ts->trans('admin.workertimesheet.head_line_11'), 1, 0, 'C', true);
+        $this->tcpdf->Cell(16, 12, $this->ts->trans('admin.workertimesheet.head_line_12'), 1, 0, 'C', true);
+        $this->tcpdf->Cell(16, 12, $this->ts->trans('admin.workertimesheet.head_line_13'), 1, 0, 'C', true);
+        $this->tcpdf->Cell(16, 12, $this->ts->trans('admin.workertimesheet.head_line_14'), 1, 0, 'C', true);
+        $this->tcpdf->Cell(21, 12, $this->ts->trans('admin.workertimesheet.head_line_15'), 1, 0, 'C', true);
+        $this->tcpdf->Cell(21, 12, $this->ts->trans('admin.workertimesheet.head_line_16'), 1, 1, 'C', true);
 
         // main table values
         $i = 0;
