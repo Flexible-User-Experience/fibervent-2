@@ -4,6 +4,7 @@ namespace App\Admin;
 
 use App\Entity\DeliveryNote;
 use App\Entity\User;
+use App\Entity\WorkerTimesheet;
 use App\Enum\UserRolesEnum;
 use Doctrine\ORM\QueryBuilder;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
@@ -64,6 +65,11 @@ class WorkerTimesheetAdmin extends AbstractBaseAdmin
      */
     protected function configureFormFields(FormMapper $formMapper)
     {
+        $isNewRecord = $this->id($this->getSubject()) ? false : true;
+        if (!$isNewRecord) {
+            /** @var WorkerTimesheet $workerTimesheet */
+            $workerTimesheet = $this->getSubject();
+        }
         $formMapper
             ->with('admin.common.general', $this->getFormMdSuccessBoxArray(4))
             ->add(
@@ -74,7 +80,7 @@ class WorkerTimesheetAdmin extends AbstractBaseAdmin
                     'class' => DeliveryNote::class,
                     'expanded' => false,
                     'required' => true,
-                    'query_builder' => $this->dnr->findAllSortedByDateDescQB(),
+                    'query_builder' => $isNewRecord ? $this->dnr->findAllSortedByDateDescQB() : $this->dnr->findAllRelatedToWorkerSortedByDateDescQB($workerTimesheet->getWorker()),
                 )
             )
             ->add(

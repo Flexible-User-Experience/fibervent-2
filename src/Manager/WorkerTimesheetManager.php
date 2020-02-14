@@ -2,7 +2,7 @@
 
 namespace App\Manager;
 
-use App\Entity\PresenceMonitoring;
+use App\Entity\WorkerTimesheet;
 use App\Entity\User;
 use App\Enum\PresenceMonitoringCategoryEnum;
 use App\Repository\WorkerTimesheetRepository;
@@ -40,23 +40,11 @@ class WorkerTimesheetManager
      * @param int  $year
      * @param int  $month
      *
-     * @return array|PresenceMonitoring[]
+     * @return array|WorkerTimesheet[]
      */
     public function getAllItemsByOperatorYearAndMonthSortedByDate(User $operator, $year, $month)
     {
-        return $this->pmr->findAllDaysByOperatorYearAndMonthSortedByDate($operator, $year, $month);
-    }
-
-    /**
-     * @param User $operator
-     * @param int  $year
-     * @param int  $month
-     *
-     * @return array|PresenceMonitoring[]
-     */
-    public function getWorkdaysByOperatorYearAndMonthSortedByDate(User $operator, $year, $month)
-    {
-        return $this->pmr->findWorkdaysByOperatorYearAndMonthSortedByDate($operator, $year, $month);
+        return $this->wtr->findAllDaysByOperatorYearAndMonthSortedByDate($operator, $year, $month);
     }
 
     /**
