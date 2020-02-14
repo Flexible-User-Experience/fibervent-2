@@ -1,3 +1,3 @@
-{% if admin.isGranted('EDIT', object) and admin.hasRoute('buildPresenceMonitoring') and (object.hasRole(constant('App\\Enum\\UserRolesEnum::ROLE_OPERATOR')) or object.hasRole(constant('App\\Enum\\UserRolesEnum::ROLE_TECHNICIAN'))) %}
+{% if admin.isGranted('EDIT', object) and admin.hasRoute('buildPresenceMonitoring') and (object.hasRole(constant('App\\Enum\\UserRolesEnum::ROLE_OPERATOR')) or object.hasRole(constant('App\\Enum\\UserRolesEnum::ROLE_TECHNICIAN')) or object.hasRole(constant('App\\Enum\\UserRolesEnum::ROLE_ADMIN'))) %}
     <a href="{{ admin.generateObjectUrl('buildPresenceMonitoring', object) }}" class="btn btn-sm btn-default edit_link" title="{{ 'admin.common.print' | trans({}, 'messages') }} {{ 'admin.presencemonitoring.title' | trans({}, 'messages') | lower }}"><i class="fa fa-file-pdf-o"></i>&nbsp;<i class="fa fa-clock-o"></i></a>
 {% endif %}

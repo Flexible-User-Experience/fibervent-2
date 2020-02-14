@@ -108,6 +108,12 @@ services:
         factory: [ '@doctrine', getRepository ]
         arguments:
             - App:DeliveryNote
+    app.worker_timesheet_repository:
+        public: true
+        class: App\Repository\WorkerTimesheetRepository
+        factory: [ '@doctrine', getRepository ]
+        arguments:
+            - App:WorkerTimesheet
     app.repositories_service:
         class: App\Service\RepositoriesService
         arguments:

@@ -6,9 +6,13 @@ use App\Entity\PresenceMonitoring;
 use App\Entity\User;
 use App\Enum\MonthsEnum;
 use App\Form\Type\UserOperatorChooseYearAndMonthPresenceMonitoring;
+use App\Form\Type\UserOperatorChooseYearAndMonthWorkerTimesheet;
 use App\Form\Type\UserProfileFormType;
 use App\Manager\PresenceMonitoringManager;
+use App\Manager\WorkerTimesheetManager;
 use App\Service\PresenceMonitoringPdfBuilderService;
+use App\Service\WorkerTimesheetPdfBuilderService;
+use Exception;
 use FOS\UserBundle\Model\UserInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -69,7 +73,7 @@ class UserAdminController extends AbstractBaseAdminController
      * @param int $id
      *
      * @return Response
-     * @throws \Exception
+     * @throws Exception
      */
     public function buildPresenceMonitoringAction(Request $request, $id)
     {
@@ -89,7 +93,7 @@ class UserAdminController extends AbstractBaseAdminController
             /** @var PresenceMonitoringPdfBuilderService $pmbs */
             $pmbs = $this->get('app.presence_monitoring_pdf_builder');
             $pdf = $pmbs->build($operator, $pmitems);
-            $pdf->Output($this->getDestPdfFilePath($operator, $pmitems), 'F');
+            $pdf->Output($this->getDestPdfFilePath($operator, 'registro-diario', $pmitems), 'F');
             $showPdfPreview = true;
         }
 
@@ -107,27 +111,71 @@ class UserAdminController extends AbstractBaseAdminController
     }
 
     /**
-     * @param User       $user
-     * @param array|null $items
+     * @param Request $request
+     * @param int $id
      *
-     * @return string
+     * @return Response
+     * @throws Exception
      */
-    private function getDestPdfFilePath(User $user, $items = null)
+    public function buildWorkerTimesheetAction(Request $request, $id)
     {
-        $krd = $this->getParameter('kernel.project_dir');
+        $showPdfPreview = false;
+        $pmitems = array();
+        /** @var User $operator */
+        $operator = $this->admin->getObject($id);
+        if (!$operator) {
+            throw $this->createAccessDeniedException('This operator does not exisits.');
+        }
+        $form = $this->createForm(UserOperatorChooseYearAndMonthWorkerTimesheet::class, $operator);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            /** @var WorkerTimesheetManager $wtm */
+            $wtm = $this->get('app.manager_worker_timesheet');
+            $pmitems = $wtm->createFullMonthItemsListByOperatorYearAndMonth($operator, $form->get('year')->getData(), $form->get('month')->getData());
+            /** @var WorkerTimesheetPdfBuilderService $wtbs */
+            $wtbs = $this->get('app.worker_timesheet_pdf_builder');
+            $pdf = $wtbs->build($operator, $pmitems);
+            $pdf->Output($this->getDestPdfFilePath($operator, 'parte-de-trabajo', $pmitems), 'F');
+            $showPdfPreview = true;
+        }
 
-        return $krd.DIRECTORY_SEPARATOR.'public'.$this->getShortPdfFilePath($user, $items);
+        return $this->renderWithExtraParams(
+            'Admin/User/build_worker_timesheet.html.twig',
+            array(
+                'action' => 'show',
+                'object' => $operator,
+                'form' => $form->createView(),
+                'elements' => $this->admin->getShow(),
+                'show_pdf_preview' => $showPdfPreview,
+                'pdf_short_path' => $this->getShortPdfFilePath($operator, $pmitems),
+            )
+        );
     }
 
     /**
      * @param User       $user
+     * @param string     $filenamePrefix
      * @param array|null $items
      *
      * @return string
      */
-    private function getShortPdfFilePath(User $user, $items = null)
+    private function getDestPdfFilePath(User $user, string $filenamePrefix, $items = null)
     {
-        return DIRECTORY_SEPARATOR.'pdfs'.DIRECTORY_SEPARATOR.'registro-diario-'.$user->getId().'-'.$this->getPeriodSluggedName($items).'.pdf';
+        $krd = $this->getParameter('kernel.project_dir');
+
+        return $krd.DIRECTORY_SEPARATOR.'public'.$this->getShortPdfFilePath($user, $filenamePrefix, $items);
+    }
+
+    /**
+     * @param User       $user
+     * @param string     $filenamePrefix
+     * @param array|null $items
+     *
+     * @return string
+     */
+    private function getShortPdfFilePath(User $user, string $filenamePrefix, $items = null)
+    {
+        return DIRECTORY_SEPARATOR.'pdfs'.DIRECTORY_SEPARATOR.$filenamePrefix.'-'.$user->getId().'-'.$this->getPeriodSluggedName($items).'.pdf';
     }
 
     /**

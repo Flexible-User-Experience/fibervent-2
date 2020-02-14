@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Entity\User;
 use App\Entity\WorkerTimesheet;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry as RegistryInterface;
@@ -33,7 +34,7 @@ class WorkerTimesheetRepository extends ServiceEntityRepository
      */
     public function findAllSortedByIdQB($limit = null, $order = 'ASC')
     {
-        $query = $this->createQueryBuilder('t')->orderBy('t.id', $order);
+        $query = $this->createQueryBuilder('wt')->orderBy('wt.id', $order);
         if (!is_null($limit)) {
             $query->setMaxResults($limit);
         }
@@ -61,5 +62,49 @@ class WorkerTimesheetRepository extends ServiceEntityRepository
     public function findAllSortedById($limit = null, $order = 'ASC')
     {
         return $this->findAllSortedByIdQ($limit, $order)->getResult();
+    }
+
+    /**
+     * @param User $operator
+     * @param int  $year
+     * @param int  $month
+     *
+     * @return QueryBuilder
+     */
+    public function findAllDaysByOperatorYearAndMonthSortedByDateQB(User $operator, $year, $month)
+    {
+        return $this->createQueryBuilder('wt')
+            ->leftJoin('wt.deliveryNote', 'd')
+            ->where('wt.worker = :operator')
+            ->andWhere('YEAR(d.date) = :year')
+            ->andWhere('MONTH(d.date) = :month')
+            ->setParameter('operator', $operator)
+            ->setParameter('year', $year)
+            ->setParameter('month', $month)
+            ->orderBy('d.date', 'ASC');
+    }
+
+    /**
+     * @param User $operator
+     * @param int  $year
+     * @param int  $month
+     *
+     * @return Query
+     */
+    public function findAllDaysByOperatorYearAndMonthSortedByDateQ(User $operator, $year, $month)
+    {
+        return $this->findAllDaysByOperatorYearAndMonthSortedByDateQB($operator, $year, $month)->getQuery();
+    }
+
+    /**
+     * @param User $operator
+     * @param int  $year
+     * @param int  $month
+     *
+     * @return array
+     */
+    public function findAllDaysByOperatorYearAndMonthSortedByDate(User $operator, $year, $month)
+    {
+        return $this->findAllDaysByOperatorYearAndMonthSortedByDateQ($operator, $year, $month)->getResult();
     }
 }

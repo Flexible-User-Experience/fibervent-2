@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\DeliveryNote;
+use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\Query;
 use Doctrine\ORM\QueryBuilder;
@@ -94,5 +95,38 @@ class DeliveryNoteRepository extends ServiceEntityRepository
     public function findAllSortedByDateDesc($limit = null, $order = 'DESC')
     {
         return $this->findAllSortedByDateDescQ($limit, $order)->getResult();
+    }
+
+    /**
+     * @param User $worker
+     *
+     * @return QueryBuilder
+     */
+    public function findAllRelatedToWorkerSortedByDateDescQB($worker)
+    {
+        return $this->findAllSortedByDateDescQB()
+            ->where('dn.teamLeader = :worker OR dn.teamTechnician1 = :worker OR dn.teamTechnician2 = :worker OR dn.teamTechnician3 = :worker OR dn.teamTechnician4 = :worker')
+            ->setParameter('worker', $worker)
+        ;
+    }
+
+    /**
+     * @param User $worker
+     *
+     * @return Query
+     */
+    public function findAllRelatedToWorkerSortedByDateDescQ(User $worker)
+    {
+        return $this->findAllRelatedToWorkerSortedByDateDescQB($worker)->getQuery();
+    }
+
+    /**
+     * @param User $worker
+     *
+     * @return array
+     */
+    public function findAllRelatedToWorkerSortedByDateDesc(User $worker)
+    {
+        return $this->findAllRelatedToWorkerSortedByDateDescQ($worker)->getResult();
     }
 }

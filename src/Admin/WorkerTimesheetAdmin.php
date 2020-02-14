@@ -4,12 +4,12 @@ namespace App\Admin;
 
 use App\Entity\DeliveryNote;
 use App\Entity\User;
+use App\Entity\WorkerTimesheet;
 use App\Enum\UserRolesEnum;
 use Doctrine\ORM\QueryBuilder;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
-use Sonata\AdminBundle\Form\Type\ModelType;
 use Sonata\AdminBundle\Route\RouteCollection;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
@@ -65,6 +65,19 @@ class WorkerTimesheetAdmin extends AbstractBaseAdmin
      */
     protected function configureFormFields(FormMapper $formMapper)
     {
+        $isNewRecord = $this->id($this->getSubject()) ? false : true;
+        $deliveryNoteQueryBuilder = $this->dnr->findAllSortedByDateDescQB();
+        if (!$isNewRecord) {
+            /** @var WorkerTimesheet $workerTimesheet */
+            $workerTimesheet = $this->getSubject();
+            $deliveryNoteQueryBuilder = $this->dnr->findAllRelatedToWorkerSortedByDateDescQB($workerTimesheet->getWorker());
+        } else {
+            /** @var User $worker */
+            $worker = $this->tss->getToken()->getUser();
+            if ($worker->hasRole(UserRolesEnum::ROLE_OPERATOR) || $worker->hasRole(UserRolesEnum::ROLE_TECHNICIAN)) {
+                $deliveryNoteQueryBuilder = $this->dnr->findAllRelatedToWorkerSortedByDateDescQB($worker);
+            }
+        }
         $formMapper
             ->with('admin.common.general', $this->getFormMdSuccessBoxArray(4))
             ->add(
@@ -75,7 +88,7 @@ class WorkerTimesheetAdmin extends AbstractBaseAdmin
                     'class' => DeliveryNote::class,
                     'expanded' => false,
                     'required' => true,
-                    'query_builder' => $this->dnr->findAllSortedByDateDescQB(),
+                    'query_builder' => $deliveryNoteQueryBuilder,
                 )
             )
             ->add(
@@ -254,7 +267,7 @@ class WorkerTimesheetAdmin extends AbstractBaseAdmin
                     'row_align' => 'right',
                     'actions' => array(
                         'edit' => array('template' => 'Admin/Buttons/list__action_edit_button.html.twig'),
-                        'delete' => array('template' => 'Admin/Buttons/list__action_super_admin_delete_button.html.twig'),
+                        'delete' => array('template' => 'Admin/Buttons/list__action_delete_button.html.twig'),
                     ),
                 )
             )
