@@ -66,9 +66,17 @@ class WorkerTimesheetAdmin extends AbstractBaseAdmin
     protected function configureFormFields(FormMapper $formMapper)
     {
         $isNewRecord = $this->id($this->getSubject()) ? false : true;
+        $deliveryNoteQueryBuilder = $this->dnr->findAllSortedByDateDescQB();
         if (!$isNewRecord) {
             /** @var WorkerTimesheet $workerTimesheet */
             $workerTimesheet = $this->getSubject();
+            $deliveryNoteQueryBuilder = $this->dnr->findAllRelatedToWorkerSortedByDateDescQB($workerTimesheet->getWorker());
+        } else {
+            /** @var User $worker */
+            $worker = $this->tss->getToken()->getUser();
+            if ($worker->hasRole(UserRolesEnum::ROLE_OPERATOR) || $worker->hasRole(UserRolesEnum::ROLE_TECHNICIAN)) {
+                $deliveryNoteQueryBuilder = $this->dnr->findAllRelatedToWorkerSortedByDateDescQB($worker);
+            }
         }
         $formMapper
             ->with('admin.common.general', $this->getFormMdSuccessBoxArray(4))
@@ -80,7 +88,7 @@ class WorkerTimesheetAdmin extends AbstractBaseAdmin
                     'class' => DeliveryNote::class,
                     'expanded' => false,
                     'required' => true,
-                    'query_builder' => $isNewRecord ? $this->dnr->findAllSortedByDateDescQB() : $this->dnr->findAllRelatedToWorkerSortedByDateDescQB($workerTimesheet->getWorker()),
+                    'query_builder' => $deliveryNoteQueryBuilder,
                 )
             )
             ->add(
