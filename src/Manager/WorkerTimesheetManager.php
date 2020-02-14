@@ -64,9 +64,9 @@ class WorkerTimesheetManager
                 ->setTotalTripHours($totalItem->getTotalTripHours() + $item->getTotalTripHours())
             ;
         }
-        array_push($result, $totalItem);
+        array_push($items, $totalItem);
 
-        return $result;
+        return $items;
     }
 
     /**
