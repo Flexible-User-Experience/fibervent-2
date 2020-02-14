@@ -85,7 +85,7 @@ class WorkerTimesheetPdfBuilderService
         $today = new DateTimeImmutable();
         $periodString = '';
         $itemsCount = count($items);
-        if ($itemsCount > 0) {
+        if ($itemsCount > 1) {
             /** @var WorkerTimesheet $firstItemDate */
             $firstItemDate = $items[0];
             $firstItemDate = $firstItemDate->getDeliveryNote()->getDate();
@@ -141,12 +141,12 @@ class WorkerTimesheetPdfBuilderService
             } else {
                 $this->tcpdf->Cell(20, 6, $wt->getDeliveryNote()->getDateString(), 1, 0, 'C', 0);
                 $this->tcpdf->Cell(20, 6, $wt->getDeliveryNote()->getWorkOrder()->getProjectNumber(), 1, 0, 'C', 0);
-                $this->tcpdf->Cell(105, 6, '---', 1, 0, 'L', 0);
-                $this->tcpdf->Cell(16, 6, $wt->getTotalNormalHours(), 1, 0, 'R', 0);
-                $this->tcpdf->Cell(16, 6, $wt->getTotalVerticalHours(), 1, 0, 'R', 0);
+                $this->tcpdf->Cell(105, 6, $wt->getWorkDescription(), 1, 0, 'L', 0);
+                $this->tcpdf->Cell(16, 6, $this->getHumanizedHoursString($wt->getTotalNormalHours()), 1, 0, 'R', 0);
+                $this->tcpdf->Cell(16, 6, $this->getHumanizedHoursString($wt->getTotalVerticalHours()), 1, 0, 'R', 0);
                 $this->tcpdf->Cell(16, 6, '---', 1, 0, 'R', 0);
-                $this->tcpdf->Cell(16, 6, $wt->getTotalInclementWeatherHours(), 1, 0, 'R', 0);
-                $this->tcpdf->Cell(16, 6, $wt->getTotalTripHours(), 1, 0, 'R', 0);
+                $this->tcpdf->Cell(16, 6, $this->getHumanizedHoursString($wt->getTotalInclementWeatherHours()), 1, 0, 'R', 0);
+                $this->tcpdf->Cell(16, 6, $this->getHumanizedHoursString($wt->getTotalTripHours()), 1, 0, 'R', 0);
                 $this->tcpdf->Cell(21, 6, '---', 1, 0, 'C', 0);
                 $this->tcpdf->Cell(21, 6, $wt->getDeliveryNote()->getVehicle(), 1, 1, 'C', 0);
             }
@@ -171,12 +171,27 @@ class WorkerTimesheetPdfBuilderService
      */
     private function drawTotalHourCells(WorkerTimesheet $wt, bool $cellBackgroundFill)
     {
-        $this->tcpdf->Cell(16, 6, $wt->getTotalNormalHours() ? MinutesEnum::transformToHoursAmountString($wt->getTotalNormalHours()) : '0h', 1, 0, 'R', $cellBackgroundFill);
-        $this->tcpdf->Cell(16, 6, $wt->getTotalVerticalHours() ? MinutesEnum::transformToHoursAmountString($wt->getTotalVerticalHours()) : '0h', 1, 0, 'R', $cellBackgroundFill);
+        $this->tcpdf->Cell(16, 6, $wt->getTotalNormalHours() ? $this->getHumanizedHoursString($wt->getTotalNormalHours()) : '0h', 1, 0, 'R', $cellBackgroundFill);
+        $this->tcpdf->Cell(16, 6, $wt->getTotalVerticalHours() ? $this->getHumanizedHoursString($wt->getTotalVerticalHours()) : '0h', 1, 0, 'R', $cellBackgroundFill);
         $this->tcpdf->Cell(16, 6, '---', 1, 0, 'R', $cellBackgroundFill);
-        $this->tcpdf->Cell(16, 6, $wt->getTotalInclementWeatherHours() ? MinutesEnum::transformToHoursAmountString($wt->getTotalInclementWeatherHours()) : '0h', 1, 0, 'R', $cellBackgroundFill);
-        $this->tcpdf->Cell(16, 6, $wt->getTotalTripHours() ? MinutesEnum::transformToHoursAmountString($wt->getTotalTripHours()) : '0h', 1, 0, 'R', $cellBackgroundFill);
+        $this->tcpdf->Cell(16, 6, $wt->getTotalInclementWeatherHours() ? $this->getHumanizedHoursString($wt->getTotalInclementWeatherHours()) : '0h', 1, 0, 'R', $cellBackgroundFill);
+        $this->tcpdf->Cell(16, 6, $wt->getTotalTripHours() ? $this->getHumanizedHoursString($wt->getTotalTripHours()) : '0h', 1, 0, 'R', $cellBackgroundFill);
         $this->tcpdf->SetFillColor(183, 223, 234);
         $this->tcpdf->Cell(42, 6, '', 1, 1, 'C', $cellBackgroundFill);
+    }
+
+    /**
+     * @param float|null $hours
+     *
+     * @return string
+     */
+    private function getHumanizedHoursString(?float $hours)
+    {
+        $result = '0h';
+        if ($hours) {
+            $result = MinutesEnum::transformToHoursAmountString($hours);
+        }
+
+        return $result;
     }
 }

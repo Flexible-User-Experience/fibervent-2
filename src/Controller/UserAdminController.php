@@ -191,7 +191,7 @@ class UserAdminController extends AbstractBaseAdminController
         $ts = $this->get('translator');
         $periodString = '';
         $itemsCount = count($items);
-        if ($itemsCount > 0) {
+        if ($itemsCount > 1) {
             /** @var PresenceMonitoring|WorkerTimesheet $searchedItem */
             if ($fromFristItem) {
                 $searchedItem = $items[0];
