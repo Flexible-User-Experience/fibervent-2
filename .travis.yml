@@ -49,4 +49,3 @@ script:
 branches:
   only:
     - master
-    - devel
