@@ -6,9 +6,12 @@ use App\Entity\PresenceMonitoring;
 use App\Entity\User;
 use App\Enum\MonthsEnum;
 use App\Form\Type\UserOperatorChooseYearAndMonthPresenceMonitoring;
+use App\Form\Type\UserOperatorChooseYearAndMonthWorkerTimesheet;
 use App\Form\Type\UserProfileFormType;
 use App\Manager\PresenceMonitoringManager;
+use App\Manager\WorkerTimesheetManager;
 use App\Service\PresenceMonitoringPdfBuilderService;
+use Exception;
 use FOS\UserBundle\Model\UserInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -69,7 +72,7 @@ class UserAdminController extends AbstractBaseAdminController
      * @param int $id
      *
      * @return Response
-     * @throws \Exception
+     * @throws Exception
      */
     public function buildPresenceMonitoringAction(Request $request, $id)
     {
@@ -95,6 +98,48 @@ class UserAdminController extends AbstractBaseAdminController
 
         return $this->renderWithExtraParams(
             'Admin/User/build_presence_monitoring.html.twig',
+            array(
+                'action' => 'show',
+                'object' => $operator,
+                'form' => $form->createView(),
+                'elements' => $this->admin->getShow(),
+                'show_pdf_preview' => $showPdfPreview,
+                'pdf_short_path' => $this->getShortPdfFilePath($operator, $pmitems),
+            )
+        );
+    }
+
+    /**
+     * @param Request $request
+     * @param int $id
+     *
+     * @return Response
+     * @throws Exception
+     */
+    public function buildWorkerTimesheetAction(Request $request, $id)
+    {
+        $showPdfPreview = false;
+        $pmitems = array();
+        /** @var User $operator */
+        $operator = $this->admin->getObject($id);
+        if (!$operator) {
+            throw $this->createAccessDeniedException('This operator does not exisits.');
+        }
+        $form = $this->createForm(UserOperatorChooseYearAndMonthWorkerTimesheet::class, $operator);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            /** @var WorkerTimesheetManager $wtm */
+            $wtm = $this->get('app.manager_worker_timesheet');
+            $pmitems = $wtm->createFullMonthItemsListByOperatorYearAndMonth($operator, $form->get('year')->getData(), $form->get('month')->getData());
+            /** @var PresenceMonitoringPdfBuilderService $pmbs */
+            $pmbs = $this->get('app.presence_monitoring_pdf_builder');
+            $pdf = $pmbs->build($operator, $pmitems);
+            $pdf->Output($this->getDestPdfFilePath($operator, $pmitems), 'F');
+            $showPdfPreview = true;
+        }
+
+        return $this->renderWithExtraParams(
+            'Admin/User/build_worker_timesheet.html.twig',
             array(
                 'action' => 'show',
                 'object' => $operator,
