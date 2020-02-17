@@ -70,7 +70,9 @@ class WorkerTimesheetAdmin extends AbstractBaseAdmin
         if (!$isNewRecord) {
             /** @var WorkerTimesheet $workerTimesheet */
             $workerTimesheet = $this->getSubject();
-            $deliveryNoteQueryBuilder = $this->dnr->findAllRelatedToWorkerSortedByDateDescQB($workerTimesheet->getWorker());
+            if (!$workerTimesheet->getWorker()->hasRole(UserRolesEnum::ROLE_ADMIN)) {
+                $deliveryNoteQueryBuilder = $this->dnr->findAllRelatedToWorkerSortedByDateDescQB($workerTimesheet->getWorker());
+            }
         } else {
             /** @var User $worker */
             $worker = $this->tss->getToken()->getUser();

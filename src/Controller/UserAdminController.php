@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\PresenceMonitoring;
 use App\Entity\User;
+use App\Entity\WorkerTimesheet;
 use App\Enum\MonthsEnum;
 use App\Form\Type\UserOperatorChooseYearAndMonthPresenceMonitoring;
 use App\Form\Type\UserOperatorChooseYearAndMonthWorkerTimesheet;
@@ -105,7 +106,7 @@ class UserAdminController extends AbstractBaseAdminController
                 'form' => $form->createView(),
                 'elements' => $this->admin->getShow(),
                 'show_pdf_preview' => $showPdfPreview,
-                'pdf_short_path' => $this->getShortPdfFilePath($operator, $pmitems),
+                'pdf_short_path' => $this->getShortPdfFilePath($operator, 'registro-diario', $pmitems),
             )
         );
     }
@@ -147,7 +148,7 @@ class UserAdminController extends AbstractBaseAdminController
                 'form' => $form->createView(),
                 'elements' => $this->admin->getShow(),
                 'show_pdf_preview' => $showPdfPreview,
-                'pdf_short_path' => $this->getShortPdfFilePath($operator, $pmitems),
+                'pdf_short_path' => $this->getShortPdfFilePath($operator, 'parte-de-trabajo', $pmitems),
             )
         );
     }
@@ -170,12 +171,43 @@ class UserAdminController extends AbstractBaseAdminController
      * @param User       $user
      * @param string     $filenamePrefix
      * @param array|null $items
+     * @param bool       $fromFristItem
      *
      * @return string
      */
-    private function getShortPdfFilePath(User $user, string $filenamePrefix, $items = null)
+    private function getShortPdfFilePath(User $user, string $filenamePrefix, $items = null, $fromFristItem = true)
     {
         return DIRECTORY_SEPARATOR.'pdfs'.DIRECTORY_SEPARATOR.$filenamePrefix.'-'.$user->getId().'-'.$this->getPeriodSluggedName($items).'.pdf';
+    }
+
+    /**
+     * @param array|null $items
+     * @param bool       $fromFristItem
+     *
+     * @return string
+     */
+    private function getPeriodSluggedName($items, $fromFristItem = true)
+    {
+        $ts = $this->get('translator');
+        $periodString = '';
+        $itemsCount = count($items);
+        if ($itemsCount > 1) {
+            /** @var PresenceMonitoring|WorkerTimesheet $searchedItem */
+            if ($fromFristItem) {
+                $searchedItem = $items[0];
+            } else {
+                $searchedItem = $items[$itemsCount - 1];
+            }
+            if ($searchedItem instanceof PresenceMonitoring) {
+                $searchedItem = $searchedItem->getDate();
+            }
+            if ($searchedItem instanceof WorkerTimesheet) {
+                $searchedItem = $searchedItem->getDeliveryNote()->getDate();
+            }
+            $periodString = strtolower($ts->trans(MonthsEnum::getOldMonthEnumArray()[intval($searchedItem->format('n'))])).'_'.$searchedItem->format('Y');
+        }
+
+        return $periodString;
     }
 
     /**
@@ -183,18 +215,18 @@ class UserAdminController extends AbstractBaseAdminController
      *
      * @return string
      */
-    private function getPeriodSluggedName($items)
+    private function getPeriodSluggedNameFromFirstItem($items)
     {
-        $ts = $this->get('translator');
-        $periodString = '';
-        $itemsCount = count($items);
-        if ($itemsCount > 0) {
-            /** @var PresenceMonitoring $lastItemDate */
-            $lastItemDate = $items[$itemsCount - 1];
-            $lastItemDate = $lastItemDate->getDate();
-            $periodString = strtolower($ts->trans(MonthsEnum::getOldMonthEnumArray()[intval($lastItemDate->format('n'))])).'_'.$lastItemDate->format('Y');
-        }
+        return $this->getPeriodSluggedName($items, true);
+    }
 
-        return $periodString;
+    /**
+     * @param array|null $items
+     *
+     * @return string
+     */
+    private function getPeriodSluggedNameFromLastItem($items)
+    {
+        return $this->getPeriodSluggedName($items, false);
     }
 }
