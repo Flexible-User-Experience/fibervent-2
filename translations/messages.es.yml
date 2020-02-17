@@ -525,6 +525,22 @@ admin:
     total_vertical_hours: Total horas verticales
     total_inclement_weather_hours: Total horas incl. meteorológicas
     total_trip_hours: Total horas desplazamiento
+    head_line_1: 'PARTES DE TRABAJO'
+    head_line_2: 'Nombre'
+    head_line_3: 'Mes'
+    head_line_4: 'ACTIVIDAD'
+    head_line_5: 'HORAS'
+    head_line_6: 'EQUIPO / VEHICULO'
+    head_line_7: 'Fecha'
+    head_line_8: 'Proyecto'
+    head_line_9: 'Descripción Trabajo Realizado'
+    head_line_10: 'Normal'
+    head_line_11: 'Vertical'
+    head_line_12: 'Extra'
+    head_line_13: 'Inclem. Meteo'
+    head_line_14: 'Desplazamiento'
+    head_line_15: 'Equipo'
+    head_line_16: 'Vehículo'
   presencemonitoring:
     title: Registro horario
     title_list: Registro horario

@@ -73,6 +73,11 @@ services:
         class: App\Manager\PresenceMonitoringManager
         arguments:
             - '@app.precense_monitoring_repository'
+    app.manager_worker_timesheet:
+        public: true
+        class: App\Manager\WorkerTimesheetManager
+        arguments:
+            - '@app.worker_timesheet_repository'
     app.manager_delivery_note_time_register:
         public: true
         class: App\Manager\DeliveryNoteTimeRegisterManager
