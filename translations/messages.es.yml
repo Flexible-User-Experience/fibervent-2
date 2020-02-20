@@ -582,6 +582,9 @@ admin:
       send: Generar PDF
   repair:
     name: Reparación
+    title: Reparaciones
+    title_list: Reparaciones
+    title_create: Crear
 month:
   january: Enero
   febraury: Febrero
