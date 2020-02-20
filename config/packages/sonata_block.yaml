@@ -5,3 +5,4 @@ sonata_block:
         sonata.user.block.menu:        ~
         sonata.block.service.text:     ~
         admin.block.audits:            ~
+        admin.block.event_calendar:    ~

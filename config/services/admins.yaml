@@ -145,6 +145,17 @@ services:
     # Sonata Blocks
     admin.block.audits:
         class: App\Admin\Block\AuditsBlock
+        arguments:
+            - 'sonata.admin.block.audits'
+            - '@templating'
+            - '@doctrine.orm.entity_manager'
+            - '@app.auth_customer'
         tags:
             - { name: sonata.block }
-        arguments: [ 'sonata.admin.block.audits', '@templating', '@doctrine.orm.entity_manager', '@app.auth_customer' ]
+    admin.block.event_calendar:
+        class: App\Admin\Block\EventCalendarBlock
+        arguments:
+            - 'app.block.event_calendar'
+            - '@templating.engine.twig'
+        tags:
+            - { name: sonata.block }
