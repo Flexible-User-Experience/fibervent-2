@@ -19,20 +19,20 @@ document.addEventListener("DOMContentLoaded", () => {
 
     var calendar = new Calendar(calendarEl, {
         themeSystem: "standard",
-        defaultView: "timeGridWeek",
+        defaultView: "dayGridMonth",
         nowIndicator: true,
         editable: true,
-        locale: "ca",
+        locale: "es",
         firstDay: 1,
         height: "auto",
         minTime: "08:00:00",
         googleCalendarApiKey: "AIzaSyB332MhD5g142kIo79ZagVcXUidQwHbWwk",
         buttonText: {
-            today: "avui",
+            today: "hoy",
             month: "mes",
-            week:  "setmana",
+            week:  "semana",
             day:   "dia",
-            list:  "llistat"
+            list:  "listado"
         },
         eventSources: [
             {
@@ -52,7 +52,7 @@ document.addEventListener("DOMContentLoaded", () => {
         header: {
             left: "prev,next today",
             center: "title",
-            right: "dayGridMonth,timeGridWeek,timeGridDay",
+            right: "dayGridMonth",
         },
         plugins: [interactionPlugin, dayGridPlugin, timeGridPlugin, bootstrapPlugin, googleCalendarPlugin], // https://fullcalendar.io/docs/plugin-index
         timeZone: "UTC"
