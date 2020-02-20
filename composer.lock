@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2ae0afe2385def1e2196eab9a92ae01d",
+    "content-hash": "2176a401a0e525ecca5ef3a8d7546a6a",
     "packages": [
         {
             "name": "a2lix/translation-form-bundle",
@@ -9387,16 +9387,16 @@
         },
         {
             "name": "hautelook/alice-bundle",
-            "version": "dev-master",
+            "version": "v2.7.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/hautelook/AliceBundle.git",
-                "reference": "d1a529d739c0d416c5c5a24563e4bb43b4747a3d"
+                "reference": "05ccc72119f76e6131077bbb306899dd59db3f6d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/hautelook/AliceBundle/zipball/d1a529d739c0d416c5c5a24563e4bb43b4747a3d",
-                "reference": "d1a529d739c0d416c5c5a24563e4bb43b4747a3d",
+                "url": "https://api.github.com/repos/hautelook/AliceBundle/zipball/05ccc72119f76e6131077bbb306899dd59db3f6d",
+                "reference": "05ccc72119f76e6131077bbb306899dd59db3f6d",
                 "shasum": ""
             },
             "require": {
@@ -9451,7 +9451,7 @@
                 "orm",
                 "symfony"
             ],
-            "time": "2020-02-19T20:34:29+00:00"
+            "time": "2020-02-18T12:31:48+00:00"
         },
         {
             "name": "myclabs/deep-copy",
@@ -10585,8 +10585,7 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "mewesk/twig-spreadsheet-bundle": 20,
-        "hautelook/alice-bundle": 20
+        "mewesk/twig-spreadsheet-bundle": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,
