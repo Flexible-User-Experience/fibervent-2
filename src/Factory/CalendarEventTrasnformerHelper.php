@@ -3,7 +3,7 @@
 namespace App\Factory;
 
 use App\Entity\DeliveryNote;
-use App\Entity\User;
+use App\Entity\WorkerTimesheet;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Routing\RouterInterface;
 use CalendarBundle\Entity\Event;
@@ -35,26 +35,31 @@ class CalendarEventTrasnformerHelper
     }
 
     /**
-     * @param DeliveryNote $deliveryNote
-     * @param User         $worker
+     * @param DeliveryNote         $deliveryNote
+     * @param WorkerTimesheet|null $workerTimesheet
      *
      * @return Event
      */
-    public function build(DeliveryNote $deliveryNote, User $worker)
+    public function build(DeliveryNote $deliveryNote, ?WorkerTimesheet $workerTimesheet)
     {
-//        if ($appEvent->getGroup()->isForPrivateLessons()) {
-//            $eventFullCalendar = new Event($appEvent->getShortCalendarTitleForPrivateLessons(), $appEvent->getBegin());
-//        } else {
-//            $eventFullCalendar = new Event($appEvent->getShortCalendarTitle(), $appEvent->getBegin());
-//        }
-        $eventFullCalendar = new Event($deliveryNote->getId().' · '.$deliveryNote->getWorkOrder()->getProjectNumber(), $deliveryNote->getDate());
+        if (!is_null($workerTimesheet)) {
+            $options = [
+                'textColor' => '#FFFFFF',
+                'borderColor' => '#00FF00',
+                'backgroundColor' => '#00FF00',
+                'url' => $this->router->generate('admin_app_workertimesheet_edit', array('id' => $workerTimesheet->getId()), UrlGeneratorInterface::ABSOLUTE_PATH),
+            ];
+        } else {
+            $options = [
+                'textColor' => '#FFFFFF',
+                'borderColor' => '#FF0000',
+                'backgroundColor' => '#FF0000',
+                'url' => $this->router->generate('admin_app_workertimesheet_create', array('for_delivery_note' => $deliveryNote->getId()), UrlGeneratorInterface::ABSOLUTE_PATH),
+            ];
+        }
+        $eventFullCalendar = new Event('#'.$deliveryNote->getId().' · '.$deliveryNote->getWorkOrder()->getProjectNumber(), $deliveryNote->getDate());
         $eventFullCalendar->setEnd($deliveryNote->getDate());
-        $eventFullCalendar->setOptions([
-            'textColor' => '#FFFFFF',
-            'borderColor' => '#00FF00',
-            'backgroundColor' => '#00FF00',
-//            'url' => $this->router->generate('admin_app_event_edit', array('id' => $appEvent->getId()), UrlGeneratorInterface::ABSOLUTE_PATH),
-        ]);
+        $eventFullCalendar->setOptions($options);
         $eventFullCalendar->setAllDay(true);
 
         return $eventFullCalendar;

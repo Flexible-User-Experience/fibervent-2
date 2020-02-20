@@ -4,9 +4,11 @@ namespace App\EventListener;
 
 use App\Entity\DeliveryNote;
 use App\Entity\User;
+use App\Entity\WorkerTimesheet;
 use App\Enum\UserRolesEnum;
 use App\Factory\CalendarEventTrasnformerHelper;
 use App\Repository\DeliveryNoteRepository;
+use App\Repository\WorkerTimesheetRepository;
 use CalendarBundle\CalendarEvents;
 use CalendarBundle\Event\CalendarEvent;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -32,6 +34,11 @@ class FullCalendarListener implements EventSubscriberInterface
      * @var DeliveryNoteRepository
      */
     private DeliveryNoteRepository $dnrs;
+
+    /**
+     * @var WorkerTimesheetRepository
+     */
+    private WorkerTimesheetRepository $wtrs;
 
     /**
      * @var RequestStack
@@ -62,15 +69,17 @@ class FullCalendarListener implements EventSubscriberInterface
      *
      * @param CalendarEventTrasnformerHelper $ceths
      * @param DeliveryNoteRepository         $dnrs
+     * @param WorkerTimesheetRepository      $wtrs
      * @param RequestStack                   $rss
      * @param RouterInterface                $router
      * @param AuthorizationCheckerInterface  $acs
      * @param TokenStorageInterface          $tss
      */
-    public function __construct(CalendarEventTrasnformerHelper $ceths, DeliveryNoteRepository $dnrs, RequestStack $rss, RouterInterface $router, AuthorizationCheckerInterface $acs, TokenStorageInterface $tss)
+    public function __construct(CalendarEventTrasnformerHelper $ceths, DeliveryNoteRepository $dnrs, WorkerTimesheetRepository $wtrs, RequestStack $rss, RouterInterface $router, AuthorizationCheckerInterface $acs, TokenStorageInterface $tss)
     {
         $this->ceths = $ceths;
         $this->dnrs = $dnrs;
+        $this->wtrs = $wtrs;
         $this->rss = $rss;
         $this->router = $router;
         $this->acs = $acs;
@@ -103,11 +112,20 @@ class FullCalendarListener implements EventSubscriberInterface
         if ('sonata_admin_dashboard' == $route && ($this->acs->isGranted(UserRolesEnum::ROLE_OPERATOR) || $this->acs->isGranted(UserRolesEnum::ROLE_TECHNICIAN))) {
             /** @var User $user */
             $user = $this->tss->getToken()->getUser();
-            //// admin dashboard action
+            /** @var DeliveryNote[] $deliveryNotes */
             $deliveryNotes = $this->dnrs->getItemsByDatesIntervalAndWorkerSortedByDateAsc($startDate, $endDate, $user);
             /** @var DeliveryNote $deliveryNote */
             foreach ($deliveryNotes as $deliveryNote) {
-                $calendarEvent->addEvent($this->ceths->build($deliveryNote, $route));
+                /** @var WorkerTimesheet[] $relatedWorkerTimesheets */
+                $relatedWorkerTimesheets = $this->wtrs->findItemsByDelvireyNoteAndWorkeSortedByDate($deliveryNote, $user);
+                if (count($relatedWorkerTimesheets) > 0) {
+                    /** @var WorkerTimesheet $workerTimesheet */
+                    foreach ($relatedWorkerTimesheets as $workerTimesheet) {
+                        $calendarEvent->addEvent($this->ceths->build($deliveryNote, $workerTimesheet));
+                    }
+                } else {
+                    $calendarEvent->addEvent($this->ceths->build($deliveryNote, null));
+                }
             }
         }
     }
