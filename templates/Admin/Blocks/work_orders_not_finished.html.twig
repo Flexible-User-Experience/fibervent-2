@@ -22,10 +22,19 @@
                     <tr>
                         <td>{{ work_order.projectNumber }}</td>
                         <td>{{ work_order.customer }}</td>
-                        <td>{{ work_order.customer }}</td>
-                        <td class="text-center">{{ work_order.customer }}</td>
+                        <td>{{ work_order.windfarmsString }}</td>
+                        <td class="text-center">
+                            {% for repairAccessType in work_order.repairAccessTypesStringsArray %}
+                                <span class="label label-default"{% if loop.index > 1%} style="margin-left:5px"{% endif %}>{{ repairAccessType | trans }}</span>
+                            {% endfor %}
+                        </td>
                         <td class="text-center">{{ work_order | draw_work_order_status_label | raw }}</td>
-                        <td class="text-right"><a href="{{ path('admin_app_deliverynote_create', {for_work_order: work_order.id}) }}" class="btn btn-sm btn-default edit_link" title="{{ 'admin.workertimesheet.title_create' | trans }} {{ 'admin.deliverynote.title_new' | trans }}"><i class="fa fa-plus-circle"></i></a></td>
+                        <td class="text-right">
+                            <div class="btn-group">
+                                <a href="{{ path('admin_app_workorder_show', {id: work_order.id}) }}" class="btn btn-sm btn-default edit_link" title="{{ 'admin.audit.title_show' | trans }}"><i class="fa fa-eye"></i></a>
+                                <a href="{{ path('admin_app_deliverynote_create', {for_work_order: work_order.id}) }}" class="btn btn-sm btn-default edit_link" title="{{ 'admin.workertimesheet.title_create' | trans }} {{ 'admin.deliverynote.title_new' | trans }}"><i class="fa fa-plus-circle"></i></a>
+                            </div>
+                        </td>
                     </tr>
                 {% endfor %}
                 </tbody>
