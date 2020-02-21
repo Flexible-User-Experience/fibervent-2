@@ -13,11 +13,9 @@ import "@fullcalendar/bootstrap/main.css";
 import "./index.css"; // this will create a calendar.css file reachable to 'encore_entry_link_tags'
 
 document.addEventListener("DOMContentLoaded", () => {
-    var calendarEl = document.getElementById("calendar-holder");
-
-    var eventsUrl = calendarEl.dataset.eventsUrl;
-
-    var calendar = new Calendar(calendarEl, {
+    let calendarEl = document.getElementById("calendar-holder");
+    let eventsUrl = calendarEl.dataset.eventsUrl;
+    let calendar = new Calendar(calendarEl, {
         themeSystem: "standard",
         defaultView: "dayGridMonth",
         nowIndicator: true,
@@ -52,7 +50,7 @@ document.addEventListener("DOMContentLoaded", () => {
         header: {
             left: "prev,next today",
             center: "title",
-            right: "dayGridMonth",
+            right: "dayGridMonth,timeGridWeek",
         },
         plugins: [interactionPlugin, dayGridPlugin, timeGridPlugin, bootstrapPlugin, googleCalendarPlugin], // https://fullcalendar.io/docs/plugin-index
         timeZone: "UTC"

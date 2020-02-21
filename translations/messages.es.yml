@@ -516,6 +516,7 @@ admin:
     description: Descripción
     no_records: 'No existen materiales no estándar utilizados asociados.'
   workertimesheet:
+    title_new: nuevo parte de trabajo
     title: Partes de trabajo
     title_list: Partes de trabajo
     title_create: Crear
