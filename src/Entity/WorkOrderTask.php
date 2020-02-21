@@ -118,8 +118,24 @@ class WorkOrderTask extends AbstractBase
     private $deliveryNotes;
 
     /**
+     * @var WorkOrderTaskPhoto[]|ArrayCollection
+     *
+     * @ORM\OneToMany(targetEntity="App\Entity\WorkOrderTaskPhoto", inversedBy="workOrderTask")
+     */
+    private $photos;
+
+    /**
      * Methods.
      */
+
+    /**
+     * WorkOrderTask constructor.
+     */
+    public function __construct()
+    {
+        $this->deliveryNotes = new ArrayCollection();
+        $this->photos = new ArrayCollection();
+    }
 
     /**
      * @param int $id
@@ -455,11 +471,56 @@ class WorkOrderTask extends AbstractBase
     /**
      * @param DeliveryNote[]|ArrayCollection $deliveryNotes
      *
-     * @return WorkOrderTask
+     * @return $this
      */
     public function setDeliveryNotes($deliveryNotes)
     {
         $this->deliveryNotes = $deliveryNotes;
+
+        return $this;
+    }
+
+    /**
+     * @return WorkOrderTaskPhoto[]|ArrayCollection
+     */
+    public function getPhotos()
+    {
+        return $this->photos;
+    }
+
+    /**
+     * @param WorkOrderTaskPhoto $photo
+     *
+     * @return $this
+     */
+    public function addPhoto(WorkOrderTaskPhoto $photo)
+    {
+        $photo->setWorkOrderTask($this);
+        $this->photos->add($photo);
+
+        return $this;
+    }
+
+    /**
+     * @param WorkOrderTaskPhoto $photo
+     *
+     * @return $this
+     */
+    public function removePhoto(WorkOrderTaskPhoto $photo)
+    {
+        $this->photos->removeElement($photo);
+
+        return $this;
+    }
+
+    /**
+     * @param WorkOrderTaskPhoto[]|ArrayCollection $photos
+     *
+     * @return $this
+     */
+    public function setPhotos($photos)
+    {
+        $this->photos = $photos;
 
         return $this;
     }
