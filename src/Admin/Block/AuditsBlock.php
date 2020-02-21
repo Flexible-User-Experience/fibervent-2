@@ -3,8 +3,8 @@
 namespace App\Admin\Block;
 
 use App\Enum\AuditStatusEnum;
+use App\Repository\AuditRepository;
 use App\Service\AuthCustomerService;
-use Doctrine\ORM\EntityManagerInterface;
 use Sonata\BlockBundle\Block\Service\AbstractBlockService;
 use Sonata\BlockBundle\Block\BlockContextInterface;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,9 +19,9 @@ use Symfony\Component\Templating\EngineInterface;
 class AuditsBlock extends AbstractBlockService
 {
     /**
-     * @var EntityManagerInterface
+     * @var AuditRepository
      */
-    private EntityManagerInterface $em;
+    private AuditRepository $ars;
 
     /**
      * @var AuthCustomerService
@@ -35,15 +35,15 @@ class AuditsBlock extends AbstractBlockService
     /**
      * Constructor.
      *
-     * @param string                 $name
-     * @param EngineInterface        $templating
-     * @param EntityManagerInterface $em
-     * @param AuthCustomerService    $acs
+     * @param string              $name
+     * @param EngineInterface     $templating
+     * @param AuditRepository     $ars
+     * @param AuthCustomerService $acs
      */
-    public function __construct($name, EngineInterface $templating, EntityManagerInterface $em, AuthCustomerService $acs)
+    public function __construct($name, EngineInterface $templating, AuditRepository $ars, AuthCustomerService $acs)
     {
         parent::__construct($name, $templating);
-        $this->em = $em;
+        $this->ars = $ars;
         $this->acs = $acs;
     }
 
@@ -58,11 +58,11 @@ class AuditsBlock extends AbstractBlockService
     public function execute(BlockContextInterface $blockContext, Response $response = null)
     {
         if ($this->acs->isCustomerUser()) {
-            $doingAudits = $this->em->getRepository('App:Audit')->getDoingAuditsByCustomerAmount($this->acs->getCustomer());
-            $pendingAudits = $this->em->getRepository('App:Audit')->getPendingAuditsByCustomerAmount($this->acs->getCustomer());
+            $doingAudits = $this->ars->getDoingAuditsByCustomerAmount($this->acs->getCustomer());
+            $pendingAudits = $this->ars->getPendingAuditsByCustomerAmount($this->acs->getCustomer());
         } else {
-            $doingAudits = $this->em->getRepository('App:Audit')->getDoingAuditsAmount();
-            $pendingAudits = $this->em->getRepository('App:Audit')->getPendingAuditsAmount();
+            $doingAudits = $this->ars->getDoingAuditsAmount();
+            $pendingAudits = $this->ars->getPendingAuditsAmount();
         }
 
         return $this->renderResponse(

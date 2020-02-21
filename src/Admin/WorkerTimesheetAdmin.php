@@ -2,10 +2,16 @@
 
 namespace App\Admin;
 
+use App\Entity\DeliveryNote;
+use App\Entity\User;
+use App\Entity\WorkerTimesheet;
+use App\Enum\UserRolesEnum;
+use Doctrine\ORM\QueryBuilder;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
-use Sonata\AdminBundle\Show\ShowMapper;
+use Sonata\AdminBundle\Route\RouteCollection;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
 /**
  * Class WorkOrderTaskAdmin.
@@ -22,24 +28,80 @@ class WorkerTimesheetAdmin extends AbstractBaseAdmin
     );
 
     /**
+     * Configure route collection.
+     *
+     * @param RouteCollection $collection
+     */
+    protected function configureRoutes(RouteCollection $collection)
+    {
+        $collection->remove('show');
+    }
+
+    /**
+     * @param string $context
+     *
+     * @return QueryBuilder
+     */
+    public function createQuery($context = 'list')
+    {
+        /** @var User $user */
+        $user = $this->tss->getToken()->getUser();
+        /** @var QueryBuilder $query */
+        $query = parent::createQuery($context);
+        if ($user->hasRole(UserRolesEnum::ROLE_OPERATOR) || $user->hasRole(UserRolesEnum::ROLE_TECHNICIAN)) {
+            /** @var string $ra */
+            $ra = $query->getRootAliases()[0];
+            $query
+                ->andWhere($ra.'.worker = :worker')
+                ->setParameter('worker', $user)
+            ;
+        }
+
+        return $query;
+    }
+
+    /**
      * @param FormMapper $formMapper
      */
     protected function configureFormFields(FormMapper $formMapper)
     {
+        $isNewRecord = $this->id($this->getSubject()) ? false : true;
+        $deliveryNoteQueryBuilder = $this->dnr->findAllSortedByDateDescQB();
+        if (!$isNewRecord) {
+            /** @var WorkerTimesheet $workerTimesheet */
+            $workerTimesheet = $this->getSubject();
+            if (!$workerTimesheet->getWorker()->hasRole(UserRolesEnum::ROLE_ADMIN)) {
+                $deliveryNoteQueryBuilder = $this->dnr->findAllRelatedToWorkerSortedByDateDescQB($workerTimesheet->getWorker());
+            }
+        } else {
+            /** @var User $worker */
+            $worker = $this->tss->getToken()->getUser();
+            if ($worker->hasRole(UserRolesEnum::ROLE_OPERATOR) || $worker->hasRole(UserRolesEnum::ROLE_TECHNICIAN)) {
+                $deliveryNoteQueryBuilder = $this->dnr->findAllRelatedToWorkerSortedByDateDescQB($worker);
+            }
+        }
         $formMapper
-            ->with('admin.common.general', $this->getFormMdSuccessBoxArray(4))
+            ->with('admin.common.general', $this->getFormMdSuccessBoxArray(8))
             ->add(
                 'deliveryNote',
-                null,
+                EntityType::class,
                 array(
                     'label' => 'admin.deliverynote.title',
+                    'class' => DeliveryNote::class,
+                    'expanded' => false,
+                    'required' => true,
+                    'query_builder' => $deliveryNoteQueryBuilder,
                 )
             )
             ->add(
                 'worker',
-                null,
+                EntityType::class,
                 array(
                     'label' => 'admin.workertimesheet.worker',
+                    'class' => User::class,
+                    'expanded' => false,
+                    'required' => true,
+                    'query_builder' => $this->ur->getEnabledWorkersSortedByNameQB(),
                 )
             )
             ->add(
@@ -94,12 +156,22 @@ class WorkerTimesheetAdmin extends AbstractBaseAdmin
                 null,
                 array(
                     'label' => 'admin.deliverynote.title',
+                ),
+                EntityType::class,
+                array(
+                    'class' => DeliveryNote::class,
+                    'query_builder' => $this->dnr->findAllSortedByDateDescQB(),
                 )
             )
             ->add('worker',
                 null,
                 array(
                     'label' => 'admin.workertimesheet.worker',
+                ),
+                EntityType::class,
+                array(
+                    'class' => User::class,
+                    'query_builder' => $this->ur->getEnabledWorkersSortedByNameQB(),
                 )
             )
             ->add('workDescription',
@@ -122,6 +194,7 @@ class WorkerTimesheetAdmin extends AbstractBaseAdmin
                 null,
                 array(
                     'label' => 'admin.deliverynote.title',
+                    'associated_property' => 'id',
                     'sortable' => true,
                     'sort_field_mapping' => array('fieldName' => 'id'),
                     'sort_parent_association_mappings' => array(array('fieldName' => 'deliveryNote')),
@@ -196,74 +269,10 @@ class WorkerTimesheetAdmin extends AbstractBaseAdmin
                     'row_align' => 'right',
                     'actions' => array(
                         'edit' => array('template' => 'Admin/Buttons/list__action_edit_button.html.twig'),
-                        // 'show' => array('template' => 'Admin/Buttons/list__action_show_button.html.twig'),
+                        'delete' => array('template' => 'Admin/Buttons/list__action_delete_button.html.twig'),
                     ),
                 )
             )
-        ;
-    }
-
-
-
-    /**
-     * @param ShowMapper $showMapper
-     */
-    protected function configureShowFields(ShowMapper $showMapper)
-    {
-        $showMapper
-            ->with('admin.common.general', $this->getFormMdSuccessBoxArray(4))
-            ->add(
-                'deliveryNote',
-                null,
-                array(
-                    'label' => 'admin.deliverynote.title',
-                )
-            )
-            ->add(
-                'worker',
-                null,
-                array(
-                    'label' => 'admin.workertimesheet.worker',
-                )
-            )
-            ->add(
-                'workDescription',
-                null,
-                array(
-                    'label' => 'admin.workertimesheet.work_description',
-                )
-            )
-            ->end()
-            ->with('admin.common.details', $this->getFormMdSuccessBoxArray(4))
-            ->add(
-                'totalNormalHours',
-                null,
-                array(
-                    'label' => 'admin.workertimesheet.total_normal_hours',
-                )
-            )
-            ->add(
-                'totalVerticalHours',
-                null,
-                array(
-                    'label' => 'admin.workertimesheet.total_vertical_hours',
-                )
-            )
-            ->add(
-                'totalInclementWeatherHours',
-                null,
-                array(
-                    'label' => 'admin.workertimesheet.total_inclement_weather_hours',
-                )
-            )
-            ->add(
-                'totalTripHours',
-                null,
-                array(
-                    'label' => 'admin.workertimesheet.total_trip_hours',
-                )
-            )
-            ->end()
         ;
     }
 }

@@ -212,6 +212,18 @@ class Windfarm extends AbstractBase
     }
 
     /**
+     * @return string
+     */
+    public function getManagerPhone()
+    {
+        if (!is_null($this->manager)) {
+            return $this->manager->getPhone();
+        }
+
+        return '---';
+    }
+
+    /**
      * @return ArrayCollection
      */
     public function getWindmills()

@@ -129,16 +129,36 @@ class AjaxResponse
      */
     public function getJsonEncodedResult()
     {
+        return $this->commonGetJsonEncodedResult(true);
+    }
+
+    /**
+     * @return false|string
+     */
+    public function getJsonEncodedResultWithoutFirstOptionSelected()
+    {
+        return $this->commonGetJsonEncodedResult(false);
+    }
+
+    /**
+     * @param bool|null $markFirstOptionAsSelected
+     *
+     * @return false|string
+     */
+    private function commonGetJsonEncodedResult($markFirstOptionAsSelected = true)
+    {
         if (is_array($this->getData()) && count($this->getData()) > 0) {
             /** @var array $data */
             foreach ($this->getData() as $data) {
                 if (is_array($data) && array_key_exists('id', $data) && array_key_exists('text', $data)) {
-                    $this->htmlOptionStringData .= sprintf('<option value="%s">%s</option>', (string) $data['id'], $data['text']);
+                    $this->htmlOptionStringData .= sprintf("<option value='%s'>%s</option>", (string) $data['id'], $data['text']);
                 }
             }
-            $pos = strpos($this->getHtmlOptionStringData(), '<option value="');
-            if (false !== $pos) {
-                $this->htmlOptionStringData = substr_replace($this->htmlOptionStringData, '<option selected="selected" value="', $pos, 15);
+            if ($markFirstOptionAsSelected) {
+                $pos = strpos($this->getHtmlOptionStringData(), "<option value='");
+                if (false !== $pos) {
+                    $this->htmlOptionStringData = substr_replace($this->htmlOptionStringData, "<option selected='selected' value='", $pos, 15);
+                }
             }
         }
         $result = array(

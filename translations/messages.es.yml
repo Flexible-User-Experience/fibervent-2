@@ -221,6 +221,7 @@ admin:
     title_create: Crear
     title_show: Mostrar
     title_delete: Borrar
+    status_block_title: Estado Inspecciones
     windmill: Aerogenerador
     observations: Observaciones
     year: Año
@@ -418,6 +419,7 @@ admin:
     title_create: Crear
     sn: 'S/N'
   workorder:
+    block_title_list: Proyectos en curso
     title: Proyecto
     title_list: Proyecto
     title_create: Crear
@@ -435,6 +437,7 @@ admin:
     is_from_audit_short: Proviene auditoría
     repair_access_types: Tipos de acceso
     windfarms: Parques eólicos
+    related_delivery_notes_amount: Albaranes
   workordertask:
     title: Tareas
     title_list: Tareas
@@ -450,6 +453,7 @@ admin:
     size: Dimensión
     team: Equipo
     is_from_audit: Inspección
+    no_records: 'No existen tareas asociadas.'
   vehicle:
     title: Vehículo
     title_list: Vehículos
@@ -461,9 +465,11 @@ admin:
     id: Número
     new: Añadir albarán
     no_records: 'No existen albaranes asociados.'
+    title_new: nuevo albarán
     title: Albarán
     title_list: Albarán
     title_create: Crear
+    title_block: Calendario de albaranes
     date: Fecha
     repair_windmill_sections: Secciones reparación aerogenerador
     repair_windmill_sections_short: Secciones reparación
@@ -505,6 +511,7 @@ admin:
     end: Fin
     total_hours: Total horas
     comment: Comentario
+    no_records: 'No existen fichajes asociados.'
   nonstandardusedmaterial:
     title: Materiales no estándar utilizados
     title_list: Materiales no estándar utilizados
@@ -512,7 +519,9 @@ admin:
     quantity: Cantidad
     item: Artículo
     description: Descripción
+    no_records: 'No existen materiales no estándar utilizados asociados.'
   workertimesheet:
+    title_new: nuevo parte de trabajo
     title: Partes de trabajo
     title_list: Partes de trabajo
     title_create: Crear
@@ -522,6 +531,22 @@ admin:
     total_vertical_hours: Total horas verticales
     total_inclement_weather_hours: Total horas incl. meteorológicas
     total_trip_hours: Total horas desplazamiento
+    head_line_1: 'PARTES DE TRABAJO'
+    head_line_2: 'Nombre'
+    head_line_3: 'Mes'
+    head_line_4: 'ACTIVIDAD'
+    head_line_5: 'HORAS'
+    head_line_6: 'EQUIPO / VEHICULO'
+    head_line_7: 'Fecha'
+    head_line_8: 'Proyecto'
+    head_line_9: 'Descripción Trabajo Realizado'
+    head_line_10: 'Normal'
+    head_line_11: 'Vertical'
+    head_line_12: 'Extra'
+    head_line_13: 'Inclem. Meteo'
+    head_line_14: 'Desplazamiento'
+    head_line_15: 'Equipo'
+    head_line_16: 'Vehículo'
   presencemonitoring:
     title: Registro horario
     title_list: Registro horario
@@ -563,6 +588,13 @@ admin:
       send: Generar PDF
   repair:
     name: Reparación
+    title: Reparaciones
+    title_list: Reparaciones
+    title_create: Crear
+calendar:
+  success_delivery_note: albaranes con parte creado
+  pendeing_delivery_note: albaranes con parte pendiente de crear
+  holidays: festivos
 month:
   january: Enero
   febraury: Febrero

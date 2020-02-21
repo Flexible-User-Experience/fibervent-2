@@ -15,7 +15,7 @@ class CustomerAjaxResponseManager
     /**
      * @var AuditRepository
      */
-    private $ar;
+    private AuditRepository $ar;
 
     /**
      * Methods.

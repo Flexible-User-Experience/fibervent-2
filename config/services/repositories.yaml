@@ -96,6 +96,24 @@ services:
         factory: [ '@doctrine', getRepository ]
         arguments:
             - App:WorkOrder
+    app.work_order_task_repository:
+        public: true
+        class: App\Repository\WorkOrderTaskRepository
+        factory: [ '@doctrine', getRepository ]
+        arguments:
+            - App:WorkOrderTask
+    app.delivery_note_repository:
+        public: true
+        class: App\Repository\DeliveryNoteRepository
+        factory: [ '@doctrine', getRepository ]
+        arguments:
+            - App:DeliveryNote
+    app.worker_timesheet_repository:
+        public: true
+        class: App\Repository\WorkerTimesheetRepository
+        factory: [ '@doctrine', getRepository ]
+        arguments:
+            - App:WorkerTimesheet
     app.repositories_service:
         class: App\Service\RepositoriesService
         arguments:
@@ -113,3 +131,5 @@ services:
             - '@app.blade_damage_repository'
             - '@app.vehicle_repository'
             - '@app.work_order_repository'
+            - '@app.work_order_task_repository'
+            - '@app.delivery_note_repository'

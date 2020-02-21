@@ -1,38 +1,38 @@
-{% extends 'SonataAdminBundle:CRUD:base_show.html.twig' %}
+{% extends '@SonataAdmin/CRUD/base_show.html.twig' %}
 
 {% block sonata_admin_content %}
-<div class="sonata-ba-show">
-    <div class="sonata-ba-view row">
-        <div class="col-md-5">
-            <div class="box box-primary">
-                <div class="box-header with-border">
-                    <h4 class="box-title"><strong>Enviar inpecció núm. {{ object.id }} per email</strong></h4><br>
-                    <h4 class="box-title" style="margin-bottom:40px">{{ object }}</h4>
-                    <div class="box-body table-responsive no-padding">
-                        {{ form(form) }}
+    <div class="sonata-ba-show">
+        <div class="sonata-ba-view row">
+            <div class="col-md-5">
+                <div class="box box-primary">
+                    <div class="box-header with-border">
+                        <h4 class="box-title"><strong>Enviar inpecció núm. {{ object.id }} por email</strong></h4><br>
+                        <h4 class="box-title" style="margin-bottom:40px">{{ object }}</h4>
+                        <div class="box-body table-responsive no-padding">
+                            {{ form(form) }}
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="col-md-7">
-            <div class="box box-primary">
-                <div class="box-header with-border">
-                    <h4 class="box-title" style="margin-bottom:10px">PDF</h4>
-                    <div class="box-body table-responsive no-padding">
-                        <div style="display:block;margin-bottom:10px">
-                            <div class="btn-group btn-group-xs" role="group" aria-label="pager">
-                                <button id="prev" class="btn btn-info"><i class="fa fa-chevron-left"></i></button>
-                                <button id="next" class="btn btn-info"><i class="fa fa-chevron-right"></i></button>
+            <div class="col-md-7">
+                <div class="box box-primary">
+                    <div class="box-header with-border">
+                        <h4 class="box-title" style="margin-bottom:10px">PDF</h4>
+                        <div class="box-body table-responsive no-padding">
+                            <div style="display:block;margin-bottom:10px">
+                                <div class="btn-group btn-group-xs" role="group" aria-label="pager">
+                                    <button id="prev" class="btn btn-info"><i class="fa fa-chevron-left"></i></button>
+                                    <button id="next" class="btn btn-info"><i class="fa fa-chevron-right"></i></button>
+                                </div>
+                                <span class="label label-default pull-right">{{ 'pdf.footer.1_page' | trans | lower }} <span id="page_num"></span> / <span id="page_count"></span></span>
                             </div>
-                            <span class="label label-default pull-right">{{ 'pdf.footer.1_page' | trans | lower }} <span id="page_num"></span> / <span id="page_count"></span></span>
+                            <canvas id="pdf-canvas" style="border: solid 1px #EEE"></canvas>
                         </div>
-                        <canvas id="pdf-canvas" style="border: solid 1px #EEE"></canvas>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 {% endblock %}
 
 {% block javascripts %}

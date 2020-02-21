@@ -69,7 +69,7 @@ class WorkOrder extends AbstractBase
     /**
      * @var Audit[]|ArrayCollection
      *
-     * @ORM\OneToMany(targetEntity="Audit", mappedBy="workOrder")
+     * @ORM\OneToMany(targetEntity="Audit", mappedBy="workOrder", orphanRemoval=false)
      */
     private $audits;
 
@@ -242,6 +242,24 @@ class WorkOrder extends AbstractBase
     public function getWindfarms()
     {
         return $this->windfarms;
+    }
+
+    /**
+     * @return string
+     */
+    public function getWindfarmsString()
+    {
+        $result = '---';
+        if ($this->getWindfarms()) {
+            $ra = array();
+            /** @var Windfarm $windfarm */
+            foreach ($this->getWindfarms() as $windfarm) {
+                $ra[] = $windfarm->getName();
+            }
+            $result = implode(', ', $ra);
+        }
+
+        return $result;
     }
 
     /**

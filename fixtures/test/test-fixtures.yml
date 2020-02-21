@@ -261,6 +261,7 @@ App\Entity\Vehicle:
 App\Entity\DeliveryNote:
   deliverynote{1..3}:
     workOrder: '@workorder<numberBetween(1, 2)>'
+    windmill: '@windmill<numberBetween(1, 8)>'
     date: <dateTimeThisYear('now')>
     repairWindmillSections: ['<numberBetween(0, 2)>']
     teamLeader: '@admin'

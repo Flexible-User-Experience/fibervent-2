@@ -9,6 +9,8 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
@@ -26,18 +28,18 @@ class UserOperatorChooseYearAndMonthPresenceMonitoring extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $now = new \DateTimeImmutable();
         $builder
             ->add(
                 'month',
                 ChoiceType::class,
                 array(
                     'mapped' => false,
-                    'required' => true,
+                    'required' => false,
+                    'expanded' => false,
                     'multiple' => false,
+                    'placeholder' => false,
                     'label' => 'admin.presencemonitoring.form.month',
                     'choices' => MonthsEnum::getMonthEnumArray(),
-                    'empty_data' => 3,
                 )
             )
             ->add(
@@ -62,6 +64,28 @@ class UserOperatorChooseYearAndMonthPresenceMonitoring extends AbstractType
                 )
             )
         ;
+
+        $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
+            $now = new \DateTimeImmutable();
+            $form = $event->getForm();
+            $previousMonthSelected = $form->get('month')->getData();
+            $form
+                ->add(
+                    'month',
+                    ChoiceType::class,
+                    array(
+                        'mapped' => false,
+                        'required' => false,
+                        'expanded' => false,
+                        'multiple' => false,
+                        'placeholder' => false,
+                        'label' => 'admin.presencemonitoring.form.month',
+                        'choices' => MonthsEnum::getMonthEnumArray(),
+                        'data' => $previousMonthSelected ?: $now->format('n'),
+                    )
+                )
+            ;
+        });
     }
 
     /**

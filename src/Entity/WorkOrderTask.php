@@ -21,6 +21,8 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  */
 class WorkOrderTask extends AbstractBase
 {
+    const DEFAULT_DESCRIPTION = '---';
+
     /**
      * @var WorkOrder
      *
@@ -118,6 +120,39 @@ class WorkOrderTask extends AbstractBase
     /**
      * Methods.
      */
+
+    /**
+     * @param int $id
+     *
+     * @return $this
+     */
+    public function setFakeId(int $id)
+    {
+        $this->id = $id;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getLongDescriptionForEmbedForm()
+    {
+        $result = '';
+        if ($this->getWindmillBlade()) {
+            $result = 'Pala '.$this->getWindmillBlade()->getOrder();
+        }
+        if ($this->getBladeDamage()) {
+            $result .= ' · Daño '.$this->getBladeDamage()->getCalculatedNumberByRadius();
+            if ($this->getDescription() != self::DEFAULT_DESCRIPTION) {
+                $result .= ' · '.$this->getDescription();
+            }
+        } else {
+            $result .= ' · '.$this->getDescription();
+        }
+
+        return $result;
+    }
 
     /**
      * @return WorkOrder
@@ -248,7 +283,7 @@ class WorkOrderTask extends AbstractBase
      *
      * @return WorkOrderTask
      */
-    public function setPosition(int $position): WorkOrderTask
+    public function setPosition(?int $position): WorkOrderTask
     {
         $this->position = $position;
 
@@ -268,7 +303,7 @@ class WorkOrderTask extends AbstractBase
      *
      * @return WorkOrderTask
      */
-    public function setRadius(int $radius): WorkOrderTask
+    public function setRadius(?int $radius): WorkOrderTask
     {
         $this->radius = $radius;
 
@@ -288,7 +323,7 @@ class WorkOrderTask extends AbstractBase
      *
      * @return WorkOrderTask
      */
-    public function setDistance(int $distance): WorkOrderTask
+    public function setDistance(?int $distance): WorkOrderTask
     {
         $this->distance = $distance;
 
@@ -308,7 +343,7 @@ class WorkOrderTask extends AbstractBase
      *
      * @return WorkOrderTask
      */
-    public function setSize(int $size): WorkOrderTask
+    public function setSize(?int $size): WorkOrderTask
     {
         $this->size = $size;
 
@@ -336,7 +371,7 @@ class WorkOrderTask extends AbstractBase
      *
      * @return WorkOrderTask
      */
-    public function setEdge(int $edge): WorkOrderTask
+    public function setEdge(?int $edge): WorkOrderTask
     {
         $this->edge = $edge;
 

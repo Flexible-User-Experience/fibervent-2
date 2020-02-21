@@ -13,6 +13,8 @@ use App\Entity\WorkOrder;
 use App\Enum\BladeEnum;
 use App\Enum\RepairAccessTypeEnum;
 use App\Enum\RepairWindmillSectionEnum;
+use App\Enum\UserRolesEnum;
+use Doctrine\ORM\QueryBuilder;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
@@ -47,9 +49,38 @@ class DeliveryNoteAdmin extends AbstractBaseAdmin
     protected function configureRoutes(RouteCollection $collection)
     {
         $collection
-            ->add('pdf', $this->getRouterIdParameter().'/pdf')
             ->remove('batch')
+            ->add('getWindfarmsFromWorkOrderId', $this->getRouterIdParameter().'/get-windfarms-from-work-order-id')
+            ->add('pdf', $this->getRouterIdParameter().'/pdf')
+            ->add('email', $this->getRouterIdParameter().'/email')
         ;
+    }
+
+    /**
+     * @param string $context
+     *
+     * @return QueryBuilder
+     */
+    public function createQuery($context = 'list')
+    {
+        /** @var User $user */
+        $user = $this->tss->getToken()->getUser();
+        /** @var QueryBuilder $query */
+        $query = parent::createQuery($context);
+        if ($user->hasRole(UserRolesEnum::ROLE_OPERATOR) || $user->hasRole(UserRolesEnum::ROLE_TECHNICIAN)) {
+            /** @var string $ra */
+            $ra = $query->getRootAliases()[0];
+            $query
+                ->andWhere($ra.'.teamLeader = :teamLeader OR '.$ra.'.teamTechnician1 = :teamTechnician1 OR '.$ra.'.teamTechnician2 = :teamTechnician2 OR '.$ra.'.teamTechnician3 = :teamTechnician3 OR '.$ra.'.teamTechnician4 = :teamTechnician4')
+                ->setParameter('teamLeader', $user)
+                ->setParameter('teamTechnician1', $user)
+                ->setParameter('teamTechnician2', $user)
+                ->setParameter('teamTechnician3', $user)
+                ->setParameter('teamTechnician4', $user)
+            ;
+        }
+
+        return $query;
     }
 
     /**
@@ -57,6 +88,11 @@ class DeliveryNoteAdmin extends AbstractBaseAdmin
      */
     protected function configureFormFields(FormMapper $formMapper)
     {
+        $isNewRecord = $this->id($this->getSubject()) ? false : true;
+        /** @var WorkOrder[]|array $availableWorkOrders */
+        $availableWorkOrders = $this->wor->findAvailableSortedByProjectNumber();
+        /** @var Windfarm[]|array $availableWindfarms */
+        $availableWindfarms = $this->wfr->findMultipleRelatedWithAWorkOrdersArraySortedByName($availableWorkOrders);
         $formMapper
             ->with('admin.common.general', $this->getFormMdSuccessBoxArray(4))
             ->add(
@@ -67,33 +103,25 @@ class DeliveryNoteAdmin extends AbstractBaseAdmin
                     'format' => 'd/M/y',
                 )
             )
-        ;
-        $formMapper
             ->add(
                 'workOrder',
                 EntityType::class,
                 array(
                     'label' => 'admin.workorder.title',
                     'class' => WorkOrder::class,
-                    'query_builder' => $this->wor->findAllSortedByProjectNumberQB(),
+                    'query_builder' => $this->wor->findAvailableSortedByProjectNumberQB(),
                     'required' => true,
                 )
             )
-            ->end()
-            ->with('admin.deliverynote.pdf.customer_data', $this->getFormMdSuccessBoxArray(4))
-        ;
-        $formMapper
             ->add(
                 'windfarm',
                 EntityType::class,
                 array(
                     'label' => 'admin.windfarm.title',
                     'class' => Windfarm::class,
-                    'query_builder' => $this->wfr->findAllSortedByNameQB(),
+                    'query_builder' => $this->wfr->findMultipleRelatedWithAWorkOrdersArraySortedByNameQB($availableWorkOrders),
                 )
             )
-        ;
-        $formMapper
             ->end()
             ->with('admin.deliverynote.pdf.windfarm_data', $this->getFormMdSuccessBoxArray(4))
             ->add(
@@ -102,7 +130,7 @@ class DeliveryNoteAdmin extends AbstractBaseAdmin
                 array(
                     'label' => 'admin.windmill.title',
                     'class' => Windmill::class,
-                    'query_builder' => $this->wmr->findEnabledSortedByCustomerWindfarmAndWindmillCodeQB(),
+                    'query_builder' => $this->wmr->findMultipleByWindfarmsArrayQB($availableWindfarms),
                 )
             )
             ->add(
@@ -112,8 +140,8 @@ class DeliveryNoteAdmin extends AbstractBaseAdmin
                     'label' => 'admin.deliverynote.pdf.work_in',
                     'choices' => RepairWindmillSectionEnum::getEnumArray(),
                     'multiple' => true,
-                    'expanded' => false,
-                    'required' => true,
+                    'expanded' => true,
+                    'required' => false,
                 )
             )
             ->add(
@@ -121,10 +149,10 @@ class DeliveryNoteAdmin extends AbstractBaseAdmin
                 ChoiceType::class,
                 array(
                     'label' => 'admin.deliverynote.pdf.blade_number',
-                    'choices' => BladeEnum::getLongTextEnumArray(),
+                    'choices' => BladeEnum::getEnumArray(),
                     'multiple' => true,
-                    'expanded' => false,
-                    'required' => true,
+                    'expanded' => true,
+                    'required' => false,
                 )
             )
             ->end()
@@ -202,8 +230,8 @@ class DeliveryNoteAdmin extends AbstractBaseAdmin
                     'label' => 'admin.deliverynote.repair_access_types',
                     'choices' => RepairAccessTypeEnum::getEnumArray(),
                     'multiple' => true,
-                    'expanded' => false,
-                    'required' => true,
+                    'expanded' => true,
+                    'required' => false,
                 )
             )
             ->add(
@@ -221,71 +249,83 @@ class DeliveryNoteAdmin extends AbstractBaseAdmin
                 )
             )
             ->end()
-            ->with('admin.workordertask.title', $this->getFormMdSuccessBoxArray(4))
-            ->add(
-                'workOrderTasks',
-                ModelType::class,
-                array(
-                    'label' => 'admin.workordertask.title',
-                    'multiple' => true,
-                    'expanded' => false,
-                    'required' => false,
-                    'btn_add' => false,
-                )
-            )
-            ->end()
-            ->with('admin.deliverynotetimeregister.title', $this->getFormMdSuccessBoxArray(12))
-            ->add(
-                'timeRegisters',
-                CollectionType::class,
-                array(
-                    'label' => ' ',
-                    'required' => false,
-                    'btn_add' => true,
-                    'error_bubbling' => true,
-                    'type_options' => array(
-                        'delete' => true,
-                    ),
-                ),
-                array(
-                    'edit' => 'inline',
-                    'inline' => 'table',
-                )
-            )
-            ->end()
-            ->with('admin.nonstandardusedmaterial.title', $this->getFormMdSuccessBoxArray(8))
-            ->add(
-                'nonStandardUsedMaterials',
-                CollectionType::class,
-                array(
-                    'label' => ' ',
-                    'required' => false,
-                    'btn_add' => true,
-                    'error_bubbling' => true,
-                    'type_options' => array(
-                        'delete' => true,
-                    ),
-                ),
-                array(
-                    'edit' => 'inline',
-                    'inline' => 'table',
-                )
-            )
-            ->end()
-            ->with('admin.deliverynote.observations', $this->getFormMdSuccessBoxArray(4))
-            ->add(
-                'observations',
-                TextareaType::class,
-                array(
-                    'label' => 'admin.deliverynote.observations',
-                    'required' => false,
-                    'attr' => array(
-                        'rows' => 6,
-                    ),
-                )
-            )
-            ->end()
         ;
+        if (!$isNewRecord) {
+            /** @var DeliveryNote $deliveryNote */
+            $deliveryNote = $this->getSubject();
+            /** @var WorkOrder $workOrder */
+            $workOrder = $deliveryNote->getWorkOrder();
+            /** @var Windmill $windmill */
+            $windmill = $deliveryNote->getWindmill();
+            $formMapper
+                ->with('admin.workordertask.title', $this->getFormMdSuccessBoxArray(8))
+                ->add(
+                    'workOrderTasks',
+                    ModelType::class,
+                    array(
+                        'label' => 'admin.workordertask.title',
+                        'multiple' => true,
+                        'expanded' => true,
+                        'required' => false,
+                        'by_reference' => false,
+                        'property' => 'getLongDescriptionForEmbedForm',
+                        'query' => $this->wotr->findItemsByWorkOrderAndWindmillSortedByIdQB($workOrder, $windmill),
+                    )
+                )
+                ->end()
+                ->with('admin.deliverynotetimeregister.title', $this->getFormMdSuccessBoxArray(12))
+                ->add(
+                    'timeRegisters',
+                    CollectionType::class,
+                    array(
+                        'label' => ' ',
+                        'required' => false,
+                        'btn_add' => true,
+                        'error_bubbling' => true,
+                        'type_options' => array(
+                            'delete' => true,
+                        ),
+                    ),
+                    array(
+                        'edit' => 'inline',
+                        'inline' => 'table',
+                    )
+                )
+                ->end()
+                ->with('admin.nonstandardusedmaterial.title', $this->getFormMdSuccessBoxArray(8))
+                ->add(
+                    'nonStandardUsedMaterials',
+                    CollectionType::class,
+                    array(
+                        'label' => ' ',
+                        'required' => false,
+                        'btn_add' => true,
+                        'error_bubbling' => true,
+                        'type_options' => array(
+                            'delete' => true,
+                        ),
+                    ),
+                    array(
+                        'edit' => 'inline',
+                        'inline' => 'table',
+                    )
+                )
+                ->end()
+                ->with('admin.deliverynote.observations', $this->getFormMdSuccessBoxArray(4))
+                ->add(
+                    'observations',
+                    TextareaType::class,
+                    array(
+                        'label' => 'admin.deliverynote.observations',
+                        'required' => false,
+                        'attr' => array(
+                            'rows' => 6,
+                        ),
+                    )
+                )
+            ;
+        }
+        $formMapper->end();
     }
 
     /**
@@ -294,20 +334,6 @@ class DeliveryNoteAdmin extends AbstractBaseAdmin
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
         $datagridMapper
-            ->add(
-                'date',
-                'doctrine_orm_date',
-                array(
-                    'label' => 'admin.deliverynote.date',
-                    'field_type' => DatePickerType::class,
-                    'format' => 'd/m/Y',
-                ),
-                null,
-                array(
-                    'widget' => 'single_text',
-                    'format' => 'dd/MM/yyyy',
-                )
-            )
             ->add(
                 'id',
                 null,
@@ -325,6 +351,20 @@ class DeliveryNoteAdmin extends AbstractBaseAdmin
                 array(
                     'class' => WorkOrder::class,
                     'query_builder' => $this->wor->findAllSortedByProjectNumberQB(),
+                )
+            )
+            ->add(
+                'date',
+                'doctrine_orm_date',
+                array(
+                    'label' => 'admin.deliverynote.date',
+                    'field_type' => DatePickerType::class,
+                    'format' => 'd/m/Y',
+                ),
+                null,
+                array(
+                    'widget' => 'single_text',
+                    'format' => 'dd/MM/yyyy',
                 )
             )
             ->add(
@@ -527,22 +567,12 @@ class DeliveryNoteAdmin extends AbstractBaseAdmin
     {
         $listMapper
             ->add(
-                'date',
-                null,
-                array(
-                    'label' => 'admin.deliverynote.date',
-                    'format' => 'd/m/Y',
-                    'row_align' => 'center',
-                    'header_class' => 'text-center',
-                )
-            )
-            ->add(
                 'id',
                 null,
                 array(
                     'label' => 'admin.deliverynote.id',
-                    'row_align' => 'center',
-                    'header_class' => 'text-center',
+                    'row_align' => 'right',
+                    'header_class' => 'text-right',
                 )
             )
             ->add(
@@ -558,10 +588,27 @@ class DeliveryNoteAdmin extends AbstractBaseAdmin
                 )
             )
             ->add(
+                'date',
+                null,
+                array(
+                    'label' => 'admin.deliverynote.date',
+                    'format' => 'd/m/Y',
+                    'row_align' => 'center',
+                    'header_class' => 'text-center',
+                )
+            )
+            ->add(
                 'workOrder.customer',
                 null,
                 array(
                     'label' => 'admin.customer.title',
+                    'associated_property' => 'name',
+                    'sortable' => true,
+                    'sort_field_mapping' => array('fieldName' => 'name'),
+                    'sort_parent_association_mappings' => array(
+                        array('fieldName' => 'workOrder'),
+                        array('fieldName' => 'customer'),
+                    ),
                 )
             )
             ->add(
@@ -579,6 +626,7 @@ class DeliveryNoteAdmin extends AbstractBaseAdmin
                 null,
                 array(
                     'label' => 'admin.windmill.title',
+                    'associated_property' => 'code',
                     'sortable' => true,
                     'sort_field_mapping' => array('fieldName' => 'code'),
                     'sort_parent_association_mappings' => array(array('fieldName' => 'windmill')),
@@ -644,7 +692,10 @@ class DeliveryNoteAdmin extends AbstractBaseAdmin
                     'actions' => array(
                         'edit' => array('template' => 'Admin/Buttons/list__action_edit_button.html.twig'),
                         'show' => array('template' => 'Admin/Buttons/list__action_show_button.html.twig'),
+                        'email' => array('template' => 'Admin/Buttons/list__action_email_button.html.twig'),
                         'pdf' => array('template' => 'Admin/Buttons/list__action_pdf_windfarm_button.html.twig'),
+                        'create_timesheet' => array('template' => 'Admin/Buttons/list__action_create_new_worker_timesheet_from_delivery_note_button.html.twig'),
+                        'delete' => array('template' => 'Admin/Buttons/list__action_super_admin_delete_button.html.twig'),
                     ),
                 )
             )
@@ -659,18 +710,10 @@ class DeliveryNoteAdmin extends AbstractBaseAdmin
         $showMapper
             ->with('admin.common.general', $this->getFormMdSuccessBoxArray(4))
             ->add(
-                'date',
-                null,
-                array(
-                    'label' => 'admin.deliverynote.date',
-                    'format' => 'd/m/Y',
-                )
-            )
-            ->add(
                 'id',
                 null,
                 array(
-                    'label' => 'admin.workorder.project_number_short',
+                    'label' => 'admin.deliverynote.id',
                 )
             )
             ->add(
@@ -680,8 +723,14 @@ class DeliveryNoteAdmin extends AbstractBaseAdmin
                     'label' => 'admin.workorder.title',
                 )
             )
-            ->end()
-            ->with('admin.deliverynote.pdf.customer_data', $this->getFormMdSuccessBoxArray(4))
+            ->add(
+                'date',
+                null,
+                array(
+                    'label' => 'admin.deliverynote.date',
+                    'format' => 'd/m/Y',
+                )
+            )
             ->add(
                 'workOrder.customer',
                 null,
@@ -689,6 +738,8 @@ class DeliveryNoteAdmin extends AbstractBaseAdmin
                     'label' => 'admin.customer.title',
                 )
             )
+            ->end()
+            ->with('admin.deliverynote.pdf.windfarm_data', $this->getFormMdSuccessBoxArray(4))
             ->add(
                 'windfarm',
                 null,
@@ -703,10 +754,8 @@ class DeliveryNoteAdmin extends AbstractBaseAdmin
                     'label' => 'admin.customer.city',
                 )
             )
-            ->end()
-            ->with('admin.deliverynote.pdf.windfarm_data', $this->getFormMdSuccessBoxArray(4))
             ->add(
-                'windmill',
+                'windmill.code',
                 null,
                 array(
                     'label' => 'admin.windmill.title',
@@ -804,18 +853,17 @@ class DeliveryNoteAdmin extends AbstractBaseAdmin
                 )
             )
             ->end()
-            // TODO insert here "Descripcion del trabajo realizado"
-            ->with('admin.nonstandardusedmaterial.title', $this->getFormMdSuccessBoxArray(4))
+            ->with('admin.workordertask.title', $this->getFormMdSuccessBoxArray(8))
             ->add(
-                'nonStandardUsedMaterials',
+                'workOrderTasks',
                 null,
                 array(
-                    'label' => 'admin.nonstandardusedmaterial.title',
-                    'template' => 'Admin/Cells/show__non_standard_used_materials.html.twig',
+                    'label' => 'admin.workordertask.title',
+                    'template' => 'Admin/Cells/show__delivery_note_work_order_tasks.html.twig',
                 )
             )
             ->end()
-            ->with('admin.deliverynotetimeregister.title', $this->getFormMdSuccessBoxArray(8))
+            ->with('admin.deliverynotetimeregister.title', $this->getFormMdSuccessBoxArray(12))
             ->add(
                 'timeRegisters',
                 null,
@@ -825,7 +873,17 @@ class DeliveryNoteAdmin extends AbstractBaseAdmin
                 )
             )
             ->end()
-            ->with('admin.deliverynote.observations', $this->getFormMdSuccessBoxArray(4))
+            ->with('admin.nonstandardusedmaterial.title', $this->getFormMdSuccessBoxArray(6))
+            ->add(
+                'nonStandardUsedMaterials',
+                null,
+                array(
+                    'label' => 'admin.nonstandardusedmaterial.title',
+                    'template' => 'Admin/Cells/show__non_standard_used_materials.html.twig',
+                )
+            )
+            ->end()
+            ->with('admin.deliverynote.observations', $this->getFormMdSuccessBoxArray(6))
             ->add(
                 'observations',
                 null,

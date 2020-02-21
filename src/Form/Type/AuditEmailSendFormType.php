@@ -54,7 +54,7 @@ class AuditEmailSendFormType extends AbstractType
                     'mapped' => false,
                     'required' => false,
                     'label' => 'admin.audit.email.subject',
-                    'data' => 'Resultado inspección Fibervent',
+                    'data' => $options['default_subject'],
                 )
             )
             ->add(
@@ -91,6 +91,7 @@ class AuditEmailSendFormType extends AbstractType
         $resolver->setDefaults(
             array(
                 'data_class' => Audit::class,
+                'default_subject' => null,
                 'default_msg' => null,
                 'to_emails_list' => null,
                 'cc_emails_list' => null,

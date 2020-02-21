@@ -1,0 +1,86 @@
+{% extends "Admin/edit.html.twig" %}
+
+{# override javascript includes #}
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/fosjsrouting/js/router.min.js') }}"></script>
+    <script src="{{ path('fos_js_routing_js', {callback: 'fos.Router.setData'}) }}"></script>
+    <script type="text/javascript">
+        jQuery(document).ready(function() {
+            let workOrderNode = jQuery('#{{ form.workOrder.vars.id }}');
+            let windfarmNode = jQuery('#{{ form.windfarm.vars.id }}');
+            workOrderNode.change(function(event) {
+                let workOrderId = event.val;
+                updateWindfarmNodeBySelectedWorkOrderId(workOrderId, false);
+            });
+            windfarmNode.change(function(event) {
+                let windfarmId = event.val;
+                updateWindmillNodeBySelectedWorkOrderIdAndWindfarmId(workOrderNode.val(), windfarmId, false);
+            });
+            {% if admin.id(object) %}
+                {# edit mode #}
+                {% if object.nonStandardUsedMaterials | length > 0 %}
+                    let bnsum = jQuery('#field_widget_{{ form.nonStandardUsedMaterials.vars.id }}')[0].children[0].children[0].children[0];
+                    bnsum.children[0].width = '5%';
+                    bnsum.children[2].width = '5%';
+                {% endif %}
+                jQuery(document).on('sonata.add_element', function(event, elementId, objectId, uniqid) {
+                    let bnsum = jQuery('#field_widget_{{ form.nonStandardUsedMaterials.vars.id }}')[0].children[0].children[0].children[0];
+                    bnsum.children[0].width = '5%';
+                    bnsum.children[2].width = '5%';
+                });
+                updateWindfarmNodeBySelectedWorkOrderId(workOrderNode.val(), true);
+            {% else %}
+                {# new record mode, maybe user wants to add a new delivery note from a previos work order (add action in show view) #}
+                let forWorkOrderId = getUrlParameter('for_work_order');
+                if (forWorkOrderId !== undefined) {
+                    workOrderNode.select2('val', forWorkOrderId);
+                    updateWindfarmNodeBySelectedWorkOrderId(forWorkOrderId, false);
+                }
+                updateWindfarmNodeBySelectedWorkOrderId(parseInt(workOrderNode.val()), false);
+            {% endif %}
+        });
+        function updateWindfarmNodeBySelectedWorkOrderId(workOrderId, setPreviousSelectedValue) {
+            jQuery.get(Routing.generate('admin_app_deliverynote_getWindfarmsFromWorkOrderId', {id: workOrderId})).done(function (response) {
+                let jsonResponse = jQuery.parseJSON(response);
+                let workOrderNode = jQuery('#{{ form.workOrder.vars.id }}');
+                let workOrderNodeVal = parseInt(workOrderNode.val());
+                let windfarmNode = jQuery('#{{ form.windfarm.vars.id }}');
+                let windfarmNodeVal = parseInt(windfarmNode.val());
+                windfarmNode.empty().html(jsonResponse.htmlOptionStringData);
+                if (setPreviousSelectedValue) {
+                    windfarmNode.select2('val', windfarmNodeVal);
+                    updateWindmillNodeBySelectedWorkOrderIdAndWindfarmId(workOrderNodeVal, windfarmNodeVal, true);
+                } else {
+                    windfarmNode.select2('val', jsonResponse.data[0].id);
+                    updateWindmillNodeBySelectedWorkOrderIdAndWindfarmId(workOrderNodeVal, jsonResponse.data[0].id, false);
+                }
+            });
+        }
+        function updateWindmillNodeBySelectedWorkOrderIdAndWindfarmId(selectedWorkOrderId, selectedWindfarmId, setPreviousSelectedValue) {
+            jQuery.post(Routing.generate('admin_app_workorder_getWindmillsFromWorkOrderIdAndWindfarmId', {woid: selectedWorkOrderId, wfid: selectedWindfarmId})).done(function (response) {
+                let jsonResponse = jQuery.parseJSON(response);
+                let windmillNode = jQuery('#{{ form.windmill.vars.id }}');
+                let windmillNodeVal = parseInt(windmillNode.val());
+                windmillNode.empty().html(jsonResponse.htmlOptionStringData);
+                if (setPreviousSelectedValue) {
+                    windmillNode.select2('val', windmillNodeVal);
+                } else {
+                    windmillNode.select2('val', jsonResponse.data[0].id);
+                }
+            });
+        }
+        function getUrlParameter(sParam) {
+            let sPageURL = window.location.search.substring(1),
+                sURLVariables = sPageURL.split('&'),
+                sParameterName,
+                i;
+            for (i = 0; i < sURLVariables.length; i++) {
+                sParameterName = sURLVariables[i].split('=');
+                if (sParameterName[0] === sParam) {
+                    return sParameterName[1] === undefined ? true : decodeURIComponent(sParameterName[1]);
+                }
+            }
+        }
+    </script>
+{% endblock %}

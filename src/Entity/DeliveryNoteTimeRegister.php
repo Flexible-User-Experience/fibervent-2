@@ -155,7 +155,7 @@ class DeliveryNoteTimeRegister extends AbstractBase
      *
      * @return DeliveryNoteTimeRegister
      */
-    public function setBegin(DateTime $begin): DeliveryNoteTimeRegister
+    public function setBegin(?DateTime $begin): DeliveryNoteTimeRegister
     {
         $this->begin = $begin;
 
@@ -183,7 +183,7 @@ class DeliveryNoteTimeRegister extends AbstractBase
      *
      * @return DeliveryNoteTimeRegister
      */
-    public function setEnd(DateTime $end): DeliveryNoteTimeRegister
+    public function setEnd(?DateTime $end): DeliveryNoteTimeRegister
     {
         $this->end = $end;
 

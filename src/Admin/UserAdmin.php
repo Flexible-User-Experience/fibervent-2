@@ -53,6 +53,7 @@ class UserAdmin extends ParentUserAdmin
         $collection
             ->add('profile')
             ->add('buildPresenceMonitoring', $this->getRouterIdParameter().'/build-presence-monitoring')
+            ->add('buildWorkerTimesheet', $this->getRouterIdParameter().'/build-worker-timesheet')
             ->remove('show')
             ->remove('batch')
             ->remove('delete')
@@ -335,6 +336,7 @@ class UserAdmin extends ParentUserAdmin
                     'actions' => array(
                         'edit' => array('template' => 'Admin/Buttons/list__action_edit_button.html.twig'),
                         'buildPresenceMonitoring' => array('template' => 'Admin/Buttons/list__action_build_presence_monitoring_button.html.twig'),
+                        'buildWorkerTimesheet' => array('template' => 'Admin/Buttons/list__action_worker_timesheet_pdf_monthly_resume_button.html.twig'),
                     ),
                 )
             );

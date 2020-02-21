@@ -107,6 +107,8 @@ services:
         arguments: [~, App\Entity\DeliveryNote, App\Controller\DeliveryNoteAdminController, '@security.authorization_checker', '@security.token_storage', '@app.repositories_service', '@vich_uploader.templating.helper.uploader_helper', '@liip_imagine.cache.manager' ]
         tags:
             - { name: sonata.admin, manager_type: orm, label: 'Albarán', group: 'WorkOrder', label_translator_strategy: 'sonata.admin.label.strategy.noop', show_in_dashboard: true }
+        calls:
+            - [ setTemplate, [ edit, 'Admin/DeliveryNote/edit.html.twig' ] ]
     admin.delivery_note_time_register:
         class: App\Admin\DeliveryNoteTimeRegisterAdmin
         arguments: [~, App\Entity\DeliveryNoteTimeRegister, ~, '@security.authorization_checker', '@security.token_storage', '@app.repositories_service', '@vich_uploader.templating.helper.uploader_helper', '@liip_imagine.cache.manager' ]
@@ -119,9 +121,11 @@ services:
             - { name: sonata.admin, manager_type: orm, label: 'Materiales no est. utilizados', group: 'WorkOrder', label_translator_strategy: 'sonata.admin.label.strategy.noop', show_in_dashboard: false }
     admin.worker_timesheet:
         class: App\Admin\WorkerTimesheetAdmin
-        arguments: [~, App\Entity\WorkerTimesheet, ~, '@security.authorization_checker', '@security.token_storage', '@app.repositories_service', '@vich_uploader.templating.helper.uploader_helper', '@liip_imagine.cache.manager' ]
+        arguments: [~, App\Entity\WorkerTimesheet, App\Controller\WorkerTimesheetAdminController, '@security.authorization_checker', '@security.token_storage', '@app.repositories_service', '@vich_uploader.templating.helper.uploader_helper', '@liip_imagine.cache.manager' ]
         tags:
             - { name: sonata.admin, manager_type: orm, label: 'Partes de trabajo', group: 'WorkOrder', label_translator_strategy: 'sonata.admin.label.strategy.noop', show_in_dashboard: true }
+        calls:
+            - [ setTemplate, [ edit, 'Admin/WorkerTimesheet/edit.html.twig' ] ]
     admin.presence_monitoring:
         class: App\Admin\PresenceMonitoringAdmin
         arguments: [~, App\Entity\PresenceMonitoring, ~, '@security.authorization_checker', '@security.token_storage', '@app.repositories_service', '@vich_uploader.templating.helper.uploader_helper', '@liip_imagine.cache.manager' ]
@@ -141,6 +145,25 @@ services:
     # Sonata Blocks
     admin.block.audits:
         class: App\Admin\Block\AuditsBlock
+        arguments:
+            - 'app.block.audits'
+            - '@templating.engine.twig'
+            - '@app.audit_repository'
+            - '@app.auth_customer'
         tags:
             - { name: sonata.block }
-        arguments: [ 'sonata.admin.block.audits', '@templating', '@doctrine.orm.entity_manager', '@app.auth_customer' ]
+    admin.block.event_calendar:
+        class: App\Admin\Block\EventCalendarBlock
+        arguments:
+            - 'app.block.event_calendar'
+            - '@templating.engine.twig'
+        tags:
+            - { name: sonata.block }
+    admin.block.work_orders_not_finished:
+        class: App\Admin\Block\WorkOrdersNotFinishedBlock
+        arguments:
+            - 'app.block.work_orders_not_finished'
+            - '@templating.engine.twig'
+            - '@app.work_order_repository'
+        tags:
+            - { name: sonata.block }

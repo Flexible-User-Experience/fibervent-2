@@ -1,0 +1,36 @@
+{% if object.workOrderTasks | length > 0 %}
+    <table class="table">
+        <thead>
+            <tr>
+                <th>{{ 'admin.workordertask.wtg' | trans }}</th>
+                <th class="text-center">{{ 'admin.workordertask.blade' | trans }}</th>
+                <th class="text-center">{{ 'admin.workordertask.damage' | trans }}</th>
+                <th>{{ 'admin.workordertask.description' | trans }}</th>
+                <th class="text-center">{{ 'admin.workordertask.is_completed' | trans }}</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for workOrderTask in object.workOrderTasks %}
+            <tr>
+                <td>{{ workOrderTask.windmill.code }}</td>
+                <td class="text-center">{{ workOrderTask.windmillBlade }}</td>
+                <td class="text-center">{% if workOrderTask.bladeDamage %}{{ workOrderTask.bladeDamage }}{% else %}---{% endif %}</td>
+                <td>{{ workOrderTask.description }}</td>
+                <td class="text-center">
+                    {% if workOrderTask.isCompleted %}
+                        <span class="label label-success">Si</span>
+                    {% else %}
+                        <span class="label label-danger">No</span>
+                    {% endif %}
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <div class="box-body">
+        <div class="alert alert-warning" role="alert">
+            <i class="fa fa-warning"></i> {{ 'admin.workordertask.no_records' | trans }}
+        </div>
+    </div>
+{% endif %}
