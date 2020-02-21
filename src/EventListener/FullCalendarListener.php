@@ -107,11 +107,10 @@ class FullCalendarListener implements EventSubscriberInterface
         $matcher = $this->router->getMatcher();
         $parameters = $matcher->match($path);
         $route = $parameters['_route'];
+        /** @var User $user */
+        $user = $this->tss->getToken()->getUser();
 
-
-        if ('sonata_admin_dashboard' == $route && ($this->acs->isGranted(UserRolesEnum::ROLE_OPERATOR) || $this->acs->isGranted(UserRolesEnum::ROLE_TECHNICIAN))) {
-            /** @var User $user */
-            $user = $this->tss->getToken()->getUser();
+        if ('sonata_admin_dashboard' == $route && ($user->hasRole(UserRolesEnum::ROLE_OPERATOR) || $user->hasRole(UserRolesEnum::ROLE_TECHNICIAN))) {
             /** @var DeliveryNote[] $deliveryNotes */
             $deliveryNotes = $this->dnrs->getItemsByDatesIntervalAndWorkerSortedByDateAsc($startDate, $endDate, $user);
             /** @var DeliveryNote $deliveryNote */
