@@ -7,10 +7,30 @@
         jQuery(document).ready(function() {
             let workerMainNode = jQuery('#sonata-ba-field-container-{{ form.worker.vars.id }}');
             let workerNode = jQuery('#{{ form.worker.vars.id }}');
+            let deliveryNoteNode = jQuery('#{{ form.deliveryNote.vars.id }}');
             {% if app.user.hasRole(constant('App\\Enum\\UserRolesEnum::ROLE_OPERATOR')) or app.user.hasRole(constant('App\\Enum\\UserRolesEnum::ROLE_TECHNICIAN')) %}
                 workerNode.select2('val', {{ app.user.id }});
                 workerMainNode.addClass('hidden');
             {% endif %}
+            {% if not admin.id(object) %}
+                {# create a new record #}
+                let forDeliveryNoteId = getUrlParameter('for_delivery_note');
+                if (forDeliveryNoteId !== undefined) {
+                    deliveryNoteNode.select2('val', forDeliveryNoteId);
+                }
+            {% endif %}
         });
+        function getUrlParameter(sParam) {
+            let sPageURL = window.location.search.substring(1),
+                sURLVariables = sPageURL.split('&'),
+                sParameterName,
+                i;
+            for (i = 0; i < sURLVariables.length; i++) {
+                sParameterName = sURLVariables[i].split('=');
+                if (sParameterName[0] === sParam) {
+                    return sParameterName[1] === undefined ? true : decodeURIComponent(sParameterName[1]);
+                }
+            }
+        }
     </script>
 {% endblock %}

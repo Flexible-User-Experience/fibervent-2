@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2ae0afe2385def1e2196eab9a92ae01d",
+    "content-hash": "511b11de8740a06f783125b01e4fae19",
     "packages": [
         {
             "name": "a2lix/translation-form-bundle",
@@ -3692,16 +3692,16 @@
         },
         {
             "name": "sonata-project/admin-bundle",
-            "version": "3.59.0",
+            "version": "3.61.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sonata-project/SonataAdminBundle.git",
-                "reference": "ad355443f99af87ae68115d095a9112a73fedcfe"
+                "reference": "4d66e8595bfed4f9264365d6b2db1c44532b82d3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sonata-project/SonataAdminBundle/zipball/ad355443f99af87ae68115d095a9112a73fedcfe",
-                "reference": "ad355443f99af87ae68115d095a9112a73fedcfe",
+                "url": "https://api.github.com/repos/sonata-project/SonataAdminBundle/zipball/4d66e8595bfed4f9264365d6b2db1c44532b82d3",
+                "reference": "4d66e8595bfed4f9264365d6b2db1c44532b82d3",
                 "shasum": ""
             },
             "require": {
@@ -3731,7 +3731,6 @@
                 "symfony/security-bundle": "^4.3",
                 "symfony/security-core": "^4.3",
                 "symfony/security-csrf": "^4.3",
-                "symfony/templating": "^4.3",
                 "symfony/translation": "^4.3",
                 "symfony/twig-bridge": "^4.3",
                 "symfony/twig-bundle": "^4.3",
@@ -3797,7 +3796,7 @@
                 "bootstrap",
                 "sonata"
             ],
-            "time": "2020-02-10T06:52:16+00:00"
+            "time": "2020-02-18T21:59:42+00:00"
         },
         {
             "name": "sonata-project/block-bundle",
@@ -8707,6 +8706,64 @@
             "time": "2020-01-21T11:12:16+00:00"
         },
         {
+            "name": "tattali/calendar-bundle",
+            "version": "v1.1.8",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/tattali/CalendarBundle.git",
+                "reference": "c2310a9509a105cb6046acd78c388a68fdbdafba"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/tattali/CalendarBundle/zipball/c2310a9509a105cb6046acd78c388a68fdbdafba",
+                "reference": "c2310a9509a105cb6046acd78c388a68fdbdafba",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.1",
+                "symfony/dependency-injection": "^3.4 || ^4.0 || ^5.0",
+                "symfony/event-dispatcher": "^3.4 || ^4.0 || ^5.0",
+                "symfony/framework-bundle": "^3.4 || ^4.0 || ^5.0"
+            },
+            "require-dev": {
+                "phpspec/prophecy": "^1.8",
+                "phpunit/phpunit": "^7.5",
+                "symfony/dotenv": "^4.2",
+                "symfony/phpunit-bridge": "^4.2",
+                "symfony/yaml": "^4.2"
+            },
+            "suggest": {
+                "doctrine/mongodb-odm-bundle": "To support MongoDB.",
+                "symfony/orm-pack": "To support Doctrine ORM and Migration."
+            },
+            "type": "symfony-bundle",
+            "autoload": {
+                "psr-4": {
+                    "CalendarBundle\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Théo Attali",
+                    "email": "theoattali@gmail.com",
+                    "homepage": "https://theoattali.fr"
+                }
+            ],
+            "description": "Provides event calendar for your Symfony 4 project. Compatible with Doctrine ORM & ODM, and API like Google Calendar.",
+            "homepage": "https://github.com/tattali/CalendarBundle",
+            "keywords": [
+                "calendar",
+                "fullcalendar",
+                "symfony",
+                "symfony calendar"
+            ],
+            "time": "2019-12-15T17:00:27+00:00"
+        },
+        {
             "name": "tecnickcom/tcpdf",
             "version": "6.3.5",
             "source": {
@@ -9388,16 +9445,16 @@
         },
         {
             "name": "hautelook/alice-bundle",
-            "version": "dev-master",
+            "version": "v2.7.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/hautelook/AliceBundle.git",
-                "reference": "b6246190d20b91f2ab7b2d0fd71a7188edc8d62b"
+                "reference": "05ccc72119f76e6131077bbb306899dd59db3f6d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/hautelook/AliceBundle/zipball/b6246190d20b91f2ab7b2d0fd71a7188edc8d62b",
-                "reference": "b6246190d20b91f2ab7b2d0fd71a7188edc8d62b",
+                "url": "https://api.github.com/repos/hautelook/AliceBundle/zipball/05ccc72119f76e6131077bbb306899dd59db3f6d",
+                "reference": "05ccc72119f76e6131077bbb306899dd59db3f6d",
                 "shasum": ""
             },
             "require": {
@@ -9452,7 +9509,7 @@
                 "orm",
                 "symfony"
             ],
-            "time": "2020-01-21T11:42:02+00:00"
+            "time": "2020-02-18T12:31:48+00:00"
         },
         {
             "name": "myclabs/deep-copy",
@@ -10586,8 +10643,7 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "mewesk/twig-spreadsheet-bundle": 20,
-        "hautelook/alice-bundle": 20
+        "mewesk/twig-spreadsheet-bundle": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,

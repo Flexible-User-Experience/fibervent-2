@@ -11,8 +11,9 @@ sonata_admin:
     security:
         handler: sonata.admin.security.handler.role
     templates:
-        layout: 'Admin/layout.html.twig'
-        edit:   'Admin/edit.html.twig'
+        layout:    'Admin/layout.html.twig'
+        dashboard: 'Admin/dashboard.html.twig'
+        edit:      'Admin/edit.html.twig'
     dashboard:
         groups:
             Client:
@@ -33,43 +34,53 @@ sonata_admin:
         blocks:
             -
                 position: top
-                type: sonata.block.service.text
-                class: 'col-md-12'
+                type:     sonata.block.service.text
+                class:    'col-md-12'
                 settings:
                     content: >
                         <h1 class='text-center' style='margin:0 0 25px 0'>%project_web_title%</h1>
             -
                 position: top
-                type: sonata.admin.block.admin_list
-                class: 'col-lg-4 col-md-6 col-sm-12'
+                type:     admin.block.work_orders_not_finished
+                class:    'col-xs-12'
+                roles:    [ 'ROLE_TECHNICIAN' ]
+            -
+                position: top
+                type:     admin.block.event_calendar
+                class:    'col-xs-12'
+                roles:    [ 'ROLE_OPERATOR', 'ROLE_TECHNICIAN' ]
+            -
+                position: top
+                type:     sonata.admin.block.admin_list
+                class:    'col-lg-4 col-md-6 col-sm-12'
                 settings:
                     groups: [ Client ]
             -
                 position: top
-                type: sonata.admin.block.admin_list
-                class: 'col-lg-4 col-md-6 col-sm-12'
+                type:     sonata.admin.block.admin_list
+                class:    'col-lg-4 col-md-6 col-sm-12'
                 settings:
                     groups: [ Windfarm ]
             -
                 position: top
-                type: sonata.admin.block.admin_list
-                class: 'col-lg-4 col-md-6 col-sm-12'
+                type:     sonata.admin.block.admin_list
+                class:    'col-lg-4 col-md-6 col-sm-12'
                 settings:
                     groups: [ Audit ]
             -
                 position: top
-                type: sonata.admin.block.admin_list
-                class: 'col-lg-4 col-md-6 col-sm-12'
+                type:     sonata.admin.block.admin_list
+                class:    'col-lg-4 col-md-6 col-sm-12'
                 settings:
                     groups: [ WorkOrder ]
             -
                 position: top
-                type: sonata.admin.block.admin_list
-                class: 'col-lg-4 col-md-6 col-sm-12'
+                type:     sonata.admin.block.admin_list
+                class:    'col-lg-4 col-md-6 col-sm-12'
                 settings:
                     groups: [ PresenceMonitoring ]
             -
                 position: top
-                type: admin.block.audits
-                class: 'col-lg-4 col-md-6 col-sm-12'
-                roles: [ 'ROLE_ADMIN' ]
+                type:     admin.block.audits
+                class:    'col-lg-4 col-md-6 col-sm-12'
+                roles:    [ 'ROLE_ADMIN' ]

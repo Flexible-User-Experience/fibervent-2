@@ -17,3 +17,14 @@ import Routing from '../../vendor/friendsofsymfony/jsrouting-bundle/Resources/pu
 
 window.Dropzone = require('dropzone/dist/min/dropzone.min');
 // console.log('Hello Webpack Encore! Edit me in assets/js/app.js');
+
+$(document).ready(function() {
+    // console.log('assets/js/app.js on Ready trigger');
+    $('[data-toggle="popover"]').popover();
+    // FB.getLoginStatus(function(response) {
+    //     console.log('getLoginStatus');
+    //     statusChangeCallback(response);
+    // });
+});
+
+// console.log('Hello Webpack Encore! Edit me in assets/js/app.js');

@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Entity\DeliveryNote;
 use App\Entity\User;
 use App\Entity\WorkerTimesheet;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
@@ -106,5 +107,44 @@ class WorkerTimesheetRepository extends ServiceEntityRepository
     public function findAllDaysByOperatorYearAndMonthSortedByDate(User $operator, $year, $month)
     {
         return $this->findAllDaysByOperatorYearAndMonthSortedByDateQ($operator, $year, $month)->getResult();
+    }
+
+    /**
+     * @param DeliveryNote $deliveryNote
+     * @param User         $operator
+     *
+     * @return QueryBuilder
+     */
+    public function findItemsByDelvireyNoteAndWorkeSortedByDateQB(DeliveryNote $deliveryNote, User $operator)
+    {
+        return $this->createQueryBuilder('wt')
+            ->join('wt.deliveryNote', 'd')
+            ->where('wt.worker = :operator')
+            ->andWhere('wt.deliveryNote = :delivery')
+            ->setParameter('operator', $operator)
+            ->setParameter('delivery', $deliveryNote)
+            ->orderBy('d.date', 'ASC');
+    }
+
+    /**
+     * @param DeliveryNote $deliveryNote
+     * @param User         $operator
+     *
+     * @return Query
+     */
+    public function findItemsByDelvireyNoteAndWorkeSortedByDateQ(DeliveryNote $deliveryNote, User $operator)
+    {
+        return $this->findItemsByDelvireyNoteAndWorkeSortedByDateQB($deliveryNote, $operator)->getQuery();
+    }
+
+    /**
+     * @param DeliveryNote $deliveryNote
+     * @param User         $operator
+     *
+     * @return array
+     */
+    public function findItemsByDelvireyNoteAndWorkeSortedByDate(DeliveryNote $deliveryNote, User $operator)
+    {
+        return $this->findItemsByDelvireyNoteAndWorkeSortedByDateQ($deliveryNote, $operator)->getResult();
     }
 }
