@@ -45,15 +45,15 @@ class CalendarEventTrasnformerHelper
         if (!is_null($workerTimesheet)) {
             $options = [
                 'textColor' => '#FFFFFF',
-                'borderColor' => '#00FF00',
-                'backgroundColor' => '#00FF00',
+                'borderColor' => '#64B660',
+                'backgroundColor' => '#64B660',
                 'url' => $this->router->generate('admin_app_workertimesheet_edit', array('id' => $workerTimesheet->getId()), UrlGeneratorInterface::ABSOLUTE_PATH),
             ];
         } else {
             $options = [
                 'textColor' => '#FFFFFF',
-                'borderColor' => '#FF0000',
-                'backgroundColor' => '#FF0000',
+                'borderColor' => '#EEAC56',
+                'backgroundColor' => '#EEAC56',
                 'url' => $this->router->generate('admin_app_workertimesheet_create', array('for_delivery_note' => $deliveryNote->getId()), UrlGeneratorInterface::ABSOLUTE_PATH),
             ];
         }

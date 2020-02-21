@@ -81,7 +81,7 @@ class WorkerTimesheetAdmin extends AbstractBaseAdmin
             }
         }
         $formMapper
-            ->with('admin.common.general', $this->getFormMdSuccessBoxArray(4))
+            ->with('admin.common.general', $this->getFormMdSuccessBoxArray(8))
             ->add(
                 'deliveryNote',
                 EntityType::class,
