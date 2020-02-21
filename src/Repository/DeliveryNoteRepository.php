@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\DeliveryNote;
 use App\Entity\User;
+use DateTimeInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\Query;
 use Doctrine\ORM\QueryBuilder;
@@ -128,5 +129,47 @@ class DeliveryNoteRepository extends ServiceEntityRepository
     public function findAllRelatedToWorkerSortedByDateDesc(User $worker)
     {
         return $this->findAllRelatedToWorkerSortedByDateDescQ($worker)->getResult();
+    }
+
+    /**
+     * @param DateTimeInterface $begin
+     * @param DateTimeInterface $end
+     * @param User              $worker
+     *
+     * @return QueryBuilder
+     */
+    public function getItemsByDatesIntervalAndWorkerSortedByDateAscQB(DateTimeInterface $begin, DateTimeInterface $end, User $worker)
+    {
+        return $this->findAllSortedByDateDescQB()
+            ->where('dn.teamLeader = :worker OR dn.teamTechnician1 = :worker OR dn.teamTechnician2 = :worker OR dn.teamTechnician3 = :worker OR dn.teamTechnician4 = :worker')
+            ->andWhere('dn.date BETWEEN :startDate AND :endDate')
+            ->setParameter('worker', $worker)
+            ->setParameter('startDate', $begin->format('Y-m-d H:i:s'))
+            ->setParameter('endDate', $end->format('Y-m-d H:i:s'))
+        ;
+    }
+
+    /**
+     * @param DateTimeInterface $begin
+     * @param DateTimeInterface $end
+     * @param User              $worker
+     *
+     * @return Query
+     */
+    public function getItemsByDatesIntervalAndWorkerSortedByDateAscQ(DateTimeInterface $begin, DateTimeInterface $end, User $worker)
+    {
+        return $this->getItemsByDatesIntervalAndWorkerSortedByDateAscQB($begin, $end, $worker)->getQuery();
+    }
+
+    /**
+     * @param DateTimeInterface $begin
+     * @param DateTimeInterface $end
+     * @param User              $worker
+     *
+     * @return array
+     */
+    public function getItemsByDatesIntervalAndWorkerSortedByDateAsc(DateTimeInterface $begin, DateTimeInterface $end, User $worker)
+    {
+        return $this->getItemsByDatesIntervalAndWorkerSortedByDateAscQ($begin, $end, $worker)->getResult();
     }
 }

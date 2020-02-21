@@ -245,6 +245,24 @@ class WorkOrder extends AbstractBase
     }
 
     /**
+     * @return string
+     */
+    public function getWindfarmsString()
+    {
+        $result = '---';
+        if ($this->getWindfarms()) {
+            $ra = array();
+            /** @var Windfarm $windfarm */
+            foreach ($this->getWindfarms() as $windfarm) {
+                $ra[] = $windfarm->getName();
+            }
+            $result = implode(', ', $ra);
+        }
+
+        return $result;
+    }
+
+    /**
      * @param Windfarm[]|array|ArrayCollection $windfarms
      *
      * @return WorkOrder

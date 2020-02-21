@@ -3,7 +3,7 @@ twig:
     debug: '%kernel.debug%'
     strict_variables: '%kernel.debug%'
     globals:
-        admin_tag_version:        'v2.0.25'
+        admin_tag_version:        'v2.0.26'
         main_brand_title:         '%project_web_title%'
         google_analytics_enabled: '%google_analytics_enabled%'
         google_analytics_account: '%google_analytics_account%'

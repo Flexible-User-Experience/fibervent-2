@@ -1,0 +1,3 @@
+{% if admin.isGranted('VIEW', object) %}
+    <a href="{{ path('admin_app_workertimesheet_create', {for_delivery_note: object.id}) }}" class="btn btn-sm btn-default edit_link" title="{{ 'admin.workertimesheet.title_create' | trans }} {{ 'admin.workertimesheet.title_new' | trans }}"><i class="fa fa-plus-circle"></i></a>
+{% endif %}
