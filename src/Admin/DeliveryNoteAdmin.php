@@ -66,7 +66,7 @@ class DeliveryNoteAdmin extends AbstractBaseAdmin
         $user = $this->tss->getToken()->getUser();
         /** @var QueryBuilder $query */
         $query = parent::createQuery($context);
-        if ($user->hasRole(UserRolesEnum::ROLE_TECHNICIAN)) {
+        if ($user->hasRole(UserRolesEnum::ROLE_OPERATOR) || $user->hasRole(UserRolesEnum::ROLE_TECHNICIAN)) {
             /** @var string $ra */
             $ra = $query->getRootAliases()[0];
             $query

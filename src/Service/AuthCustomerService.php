@@ -116,7 +116,7 @@ class AuthCustomerService
             return true;
         }
 
-        if ($this->acs->isGranted(UserRolesEnum::ROLE_TECHNICIAN) && (
+        if (($this->acs->isGranted(UserRolesEnum::ROLE_OPERATOR) || $this->acs->isGranted(UserRolesEnum::ROLE_TECHNICIAN)) && (
             ($deliveryNote->getTeamLeader() && $deliveryNote->getTeamLeader()->getId() == $this->getUser()->getId()) ||
             ($deliveryNote->getTeamTechnician1() && $deliveryNote->getTeamTechnician1()->getId() == $this->getUser()->getId()) ||
             ($deliveryNote->getTeamTechnician2() && $deliveryNote->getTeamTechnician2()->getId() == $this->getUser()->getId()) ||
