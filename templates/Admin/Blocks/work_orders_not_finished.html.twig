@@ -3,30 +3,40 @@
 {% block block %}
     <div class="box box-primary">
         <div class="box-header">
-            <h3 class="box-title">{{ 'admin.workorder.block_title_list' | trans }}</h3>
+            <h2 class="box-title">{{ 'admin.workorder.block_title_list' | trans }}</h2>
         </div>
-        <div class="box-body table-responsive no-padding">
+        <div class="box-body table-responsive">
             <table class="table table-bordered table-striped table-hover sonata-ba-list">
                 <thead>
                 <tr class="sonata-ba-list-field-header">
-                    <th>{{ 'enum.audit_status.pending' | trans }}</th>
-                    <th>{{ 'enum.audit_status.pending' | trans }}</th>
-                    {#                    <td>#}
-                    {#                        <div class="btn-group">#}
-                    {#                            <a href="#" class="btn btn-link btn-flat"><i class="fa fa-pause-circle"></i> {{ pending_audits }}</a>#}
-                    {#                        </div>#}
-                    {#                    </td>#}
+                    <th>{{ 'admin.workorder.project_number_short' | trans }}</th>
+                    <th>{{ 'admin.windfarm.customer' | trans }}</th>
+                    <th>{{ 'admin.workorder.windfarms' | trans }}</th>
+                    <th class="text-center">{{ 'admin.workorder.repair_access_types' | trans }}</th>
+                    <th class="text-center">{{ 'admin.audit.status' | trans }}</th>
+                    <th class="text-right">{{ 'admin.common.action' | trans }}</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    {% for work_order in not_finished_work_orders %}
-                        <td>{{ work_order.id }}</td>
-                        <td>{{ work_order.id }}</td>
-                    {% endfor %}
-                </tr>
+                {% for work_order in not_finished_work_orders %}
+                    <tr>
+                        <td>{{ work_order.projectNumber }}</td>
+                        <td>{{ work_order.customer }}</td>
+                        <td>{{ work_order.customer }}</td>
+                        <td class="text-center">{{ work_order.customer }}</td>
+                        <td class="text-center">{{ work_order | draw_work_order_status_label | raw }}</td>
+                        <td class="text-right"><a href="{{ path('admin_app_deliverynote_create', {for_work_order: work_order.id}) }}" class="btn btn-sm btn-default edit_link" title="{{ 'admin.workertimesheet.title_create' | trans }} {{ 'admin.deliverynote.title_new' | trans }}"><i class="fa fa-plus-circle"></i></a></td>
+                    </tr>
+                {% endfor %}
                 </tbody>
             </table>
+        </div>
+        <div class="box-footer">
+            <div class="row">
+                <div class="col-xs-12">
+                    <a href="{{ path('admin_app_deliverynote_create') }}" class="btn btn-primary"><i class="fa fa-plus-circle"></i> {{ 'admin.deliverynote.title_create' | trans }} {{ 'admin.deliverynote.title_new' | trans }}</a>
+                </div>
+            </div>
         </div>
     </div>
 {% endblock %}

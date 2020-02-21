@@ -3,6 +3,9 @@
 {% block block %}
     {% if app.user.role(constant('App\\Enum\\UserRolesEnum::ROLE_OPERATOR')) or app.user.role(constant('App\\Enum\\UserRolesEnum::ROLE_TECHNICIAN')) %}
         <div class="box box-primary">
+            <div class="box-header">
+                <h2 class="box-title">{{ 'admin.deliverynote.title' | trans }}</h2>
+            </div>
             <div class="box-body">
                 <div class="row">
                     <div class="col-xs-12 margin-bottom">

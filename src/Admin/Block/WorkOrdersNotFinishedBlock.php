@@ -48,7 +48,7 @@ class WorkOrdersNotFinishedBlock extends AbstractBlockService
      */
     public function execute(BlockContextInterface $blockContext, Response $response = null)
     {
-        $notFinishedWorkOrders = $this->wors->findAvailableSortedByProjectNumber();
+        $notFinishedWorkOrders = $this->wors->findAvailableSortedByProjectNumber(null, 'DESC');
 
         return $this->renderResponse(
             $blockContext->getTemplate(),
