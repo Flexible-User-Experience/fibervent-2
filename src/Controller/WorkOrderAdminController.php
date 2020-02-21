@@ -14,7 +14,10 @@ use App\Repository\WindmillBladeRepository;
 use App\Repository\WindmillRepository;
 use App\Repository\WorkOrderRepository;
 use App\Service\WorkOrderPdfBuilderService;
+use Doctrine\ORM\EntityNotFoundException;
 use Exception;
+use Symfony\Component\HttpFoundation\File\Exception\NoFileException;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -175,9 +178,46 @@ class WorkOrderAdminController extends AbstractBaseAdminController
         return new Response($pdf->Output('informe_proyecto_'.$object->getId().'.pdf', 'I'), 200, array('Content-type' => 'application/pdf'));
     }
 
-    public function uploadWorkOrderTaskFileAction()
+    /**
+     * @param Request $request      WorkOrder task ID
+     * @param int     $id           WorkOrder ID
+     * @param int     $filerowindex WorkOrderTask file row index
+     *
+     * @return JsonResponse
+     *
+     * @throws EntityNotFoundException
+     * @throws NoFileException
+     */
+    public function uploadWorkOrderTaskFileAction(Request $request, $id, $filerowindex)
     {
+        /** @var WorkOrder $object */
+        $object = $this->getPersistedObject();
+        if (!$object) {
+            throw new EntityNotFoundException();
+        }
+        /** @var UploadedFile $file */
+        $file = $request->files->get('file');
+        if (!$file) {
+            throw new NoFileException();
+        }
+        if (count($object->getWorkOrderTasks()) >= ($filerowindex + 1)) {
+            // is related with an existing WorkOrderTask
+            /** @var WorkOrderTask $selectedWorkOrderTask */
+            $selectedWorkOrderTask = $object->getWorkOrderTasks()[$filerowindex];
+        } else {
+            // is related with an undefined (new) WorkOrderTask
+            /** @var WorkOrderTask $selectedWorkOrderTask */
+            $selectedWorkOrderTask = new WorkOrderTask();
+            $selectedWorkOrderTask->setFakeId(-1);
+            $selectedWorkOrderTask->setDescription('no description');
+        }
 
+        return new JsonResponse([
+            'hit' => 'me',
+            'filename' => $file->getFilename(),
+            'selected_work_order_task_id' => $selectedWorkOrderTask->getId(),
+            'selected_work_order_task_description' => $selectedWorkOrderTask->getDescription(),
+        ]);
     }
 
     /**

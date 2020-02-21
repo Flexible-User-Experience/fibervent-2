@@ -86,6 +86,7 @@ class AuditAdminController extends AbstractBaseAdminController
      * @param Request|null $request
      *
      * @return Response
+     *
      * @throws Exception
      */
     public function emailAction(Request $request = null)
@@ -99,6 +100,7 @@ class AuditAdminController extends AbstractBaseAdminController
         $pdf->Output($this->getDestAuditFilePath($object), 'F');
 
         $form = $this->createForm(AuditEmailSendFormType::class, $object, array(
+            'default_subject' => 'Resultado inspección Fibervent',
             'default_msg' => 'Adjunto archivo resultado auditoria número '.$object->getId(),
             'to_emails_list' => $this->getReversedToEmailsList($object),
             'cc_emails_list' => $this->getReversedCcEmailsList($object),
@@ -108,7 +110,7 @@ class AuditAdminController extends AbstractBaseAdminController
             $to = $form->get('to')->getData();
             $cc = $form->get('cc')->getData();
             $this->get('app.notification')->deliverAuditEmail($form, $this->getDestAuditFilePath($object));
-            $this->addFlash('sonata_flash_success', 'La auditoria núm. '.$object->getId().' s\'ha enviat correctament a '.$to.($cc ? ' amb còpia per a '.$cc : ''));
+            $this->addFlash('sonata_flash_success', 'La auditoria núm. '.$object->getId().' se ha enviado correctamente a '.$to.($cc ? ' con copia para '.$cc : ''));
 
             return new RedirectResponse($this->admin->generateUrl('list'));
         }
@@ -247,7 +249,7 @@ class AuditAdminController extends AbstractBaseAdminController
             $availableMails[$audit->getCustomer()->getEmail()] = $audit->getCustomer()->getName().' <'.$audit->getCustomer()->getEmail().'>';
         }
         if ($audit->getWindfarm() && $audit->getWindfarm()->getManager()) {
-            $availableMails[$audit->getWindfarm()->getManager()->getEmail()] = $audit->getWindfarm()->getMangerFullname().' <'.$audit->getWindfarm()->getManager()->getEmail().'>';
+            $availableMails[$audit->getWindfarm()->getManager()->getEmail()] = $audit->getWindfarm()->getManagerFullname().' <'.$audit->getWindfarm()->getManager()->getEmail().'>';
         }
         if ($audit->getCustomer()) {
             /** @var User $user */

@@ -48,7 +48,7 @@ class WorkOrderAdmin extends AbstractBaseAdmin
             ->add('getWindmillsFromSelectedWindfarmsIds', 'get-windmills-from-selected-windfarms-ids')
             ->add('getWindmillsFromWorkOrderIdAndWindfarmId', 'get-windmills-from-work-order/{woid}/and-windfarm/{wfid}')
             ->add('pdf', $this->getRouterIdParameter().'/pdf')
-            ->add('uploadWorkOrderTaskFile', $this->getRouterIdParameter().'/upload-work-order-task-files')
+            ->add('uploadWorkOrderTaskFile', $this->getRouterIdParameter().'/upload-work-order-task-files/{filerowindex}')
         ;
     }
 

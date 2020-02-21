@@ -115,8 +115,8 @@
         function setDropzone(index) {
             {% if object.workOrderTasks | length > 0 %}
                 let myDropzone = new Dropzone('#{{ form.workOrderTasks.vars.id }}_' + index + '_multifiles', {
-                    url: Routing.generate('admin_app_deliverynote_getWindfarmsFromWorkOrderId', {id: index}),
-                    uploadMultiple: true,
+                    url: Routing.generate('admin_app_workorder_uploadWorkOrderTaskFile', {id: {{ object.id }}, filerowindex: index}),
+                    uploadMultiple: false,
                     maxFiles: 5,
                     thumbnailWidth: 80,
                     thumbnailHeight: 80,
@@ -124,6 +124,15 @@
                     addRemoveLinks: true,
                     dictDefaultMessage: '<i class="fa fa-cloud-upload"></i> Arrastra aquí tus archivos.',
                     autoQueue: true
+                });
+                myDropzone.on("addedfile", function(file) {
+                    console.log('addedfile event fired', file);
+                });
+                myDropzone.on("success", function(file, serverResponse) {
+                    console.log('success event fired', file, serverResponse);
+                });
+                myDropzone.on("error", function(file, errorMessage) {
+                    console.log('error event fired', file, errorMessage);
                 });
             {% endif %}
         }
