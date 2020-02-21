@@ -486,6 +486,7 @@ class WorkOrderAdmin extends AbstractBaseAdmin
                         'edit' => array('template' => 'Admin/Buttons/list__action_edit_button.html.twig'),
                         'show' => array('template' => 'Admin/Buttons/list__action_show_button.html.twig'),
                         'pdf' => array('template' => 'Admin/Buttons/list__action_pdf_work_order_button.html.twig'),
+                        'create_delivery_note' => array('template' => 'Admin/Buttons/list__action_create_new_delivery_note_from_work_order_button.html.twig'),
                         'delete' => array('template' => 'Admin/Buttons/list__action_super_admin_delete_button.html.twig'),
                     ),
                 )

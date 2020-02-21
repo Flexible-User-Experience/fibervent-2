@@ -692,7 +692,7 @@ class DeliveryNoteAdmin extends AbstractBaseAdmin
                         'edit' => array('template' => 'Admin/Buttons/list__action_edit_button.html.twig'),
                         'show' => array('template' => 'Admin/Buttons/list__action_show_button.html.twig'),
                         'pdf' => array('template' => 'Admin/Buttons/list__action_pdf_windfarm_button.html.twig'),
-                        'create_timesheet' => array('template' => 'Admin/Buttons/list__action_create_new_worker_timesheet_from_delivery_note_windfarm_button.html.twig'),
+                        'create_timesheet' => array('template' => 'Admin/Buttons/list__action_create_new_worker_timesheet_from_delivery_note_button.html.twig'),
                         'delete' => array('template' => 'Admin/Buttons/list__action_super_admin_delete_button.html.twig'),
                     ),
                 )

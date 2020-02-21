@@ -462,6 +462,7 @@ admin:
     id: Número
     new: Añadir albarán
     no_records: 'No existen albaranes asociados.'
+    title_new: nuevo albarán
     title: Albarán
     title_list: Albarán
     title_create: Crear
