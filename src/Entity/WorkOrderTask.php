@@ -122,6 +122,18 @@ class WorkOrderTask extends AbstractBase
      */
 
     /**
+     * @param int $id
+     *
+     * @return $this
+     */
+    public function setFakeId(int $id)
+    {
+        $this->id = $id;
+
+        return $this;
+    }
+
+    /**
      * @return string
      */
     public function getLongDescriptionForEmbedForm()
