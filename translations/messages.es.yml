@@ -221,6 +221,7 @@ admin:
     title_create: Crear
     title_show: Mostrar
     title_delete: Borrar
+    status_block_title: Estado Inspecciones
     windmill: Aerogenerador
     observations: Observaciones
     year: Año
@@ -436,6 +437,7 @@ admin:
     is_from_audit_short: Proviene auditoría
     repair_access_types: Tipos de acceso
     windfarms: Parques eólicos
+    related_delivery_notes_amount: Albaranes
   workordertask:
     title: Tareas
     title_list: Tareas
@@ -467,6 +469,7 @@ admin:
     title: Albarán
     title_list: Albarán
     title_create: Crear
+    title_block: Calendario de albaranes
     date: Fecha
     repair_windmill_sections: Secciones reparación aerogenerador
     repair_windmill_sections_short: Secciones reparación
@@ -588,6 +591,10 @@ admin:
     title: Reparaciones
     title_list: Reparaciones
     title_create: Crear
+calendar:
+  success_delivery_note: albaranes con parte creado
+  pendeing_delivery_note: albaranes con parte pendiente de crear
+  holidays: festivos
 month:
   january: Enero
   febraury: Febrero

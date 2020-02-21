@@ -4,12 +4,17 @@
     {% if app.user.role(constant('App\\Enum\\UserRolesEnum::ROLE_OPERATOR')) or app.user.role(constant('App\\Enum\\UserRolesEnum::ROLE_TECHNICIAN')) %}
         <div class="box box-primary">
             <div class="box-header">
-                <h2 class="box-title">{{ 'admin.deliverynote.title' | trans }}</h2>
+                <h2 class="box-title">{{ 'admin.deliverynote.title_block' | trans }}</h2>
             </div>
             <div class="box-body">
                 <div class="row">
                     <div class="col-xs-12 margin-bottom">
                         <div id="calendar-holder" data-events-url="{{ path('fc_load_events') }}"></div>
+                        <div class="legend">
+                            <span class="label label-success">{{ 'calendar.success_delivery_note' | trans }}</span>
+                            <span class="label label-warning">{{ 'calendar.pendeing_delivery_note' | trans }}</span>
+                            <span class="label label-danger">{{ 'calendar.holidays' | trans }}</span>
+                        </div>
                     </div>
                     <div class="col-xs-12">
                         <a href="{{ path('admin_app_workertimesheet_create') }}" class="btn btn-primary"><i class="fa fa-plus-circle"></i> {{ 'admin.workertimesheet.title_create' | trans }} {{ 'admin.workertimesheet.title_new' | trans }}</a>
