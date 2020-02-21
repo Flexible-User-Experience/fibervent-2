@@ -146,9 +146,9 @@ services:
     admin.block.audits:
         class: App\Admin\Block\AuditsBlock
         arguments:
-            - 'sonata.admin.block.audits'
-            - '@templating'
-            - '@doctrine.orm.entity_manager'
+            - 'app.block.audits'
+            - '@templating.engine.twig'
+            - '@app.audit_repository'
             - '@app.auth_customer'
         tags:
             - { name: sonata.block }
@@ -157,5 +157,13 @@ services:
         arguments:
             - 'app.block.event_calendar'
             - '@templating.engine.twig'
+        tags:
+            - { name: sonata.block }
+    admin.block.work_orders_not_finished:
+        class: App\Admin\Block\WorkOrdersNotFinishedBlock
+        arguments:
+            - 'app.block.work_orders_not_finished'
+            - '@templating.engine.twig'
+            - '@app.work_order_repository'
         tags:
             - { name: sonata.block }

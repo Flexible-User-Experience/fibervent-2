@@ -418,6 +418,7 @@ admin:
     title_create: Crear
     sn: 'S/N'
   workorder:
+    block_title_list: Proyectos en curso
     title: Proyecto
     title_list: Proyecto
     title_create: Crear
