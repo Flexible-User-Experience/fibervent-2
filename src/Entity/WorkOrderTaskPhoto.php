@@ -27,7 +27,7 @@ class WorkOrderTaskPhoto extends AbstractBase
     /**
      * @var File
      *
-     * @Vich\UploadableField(mapping="blade", fileNameProperty="imageName")
+     * @Vich\UploadableField(mapping="work_order_task_photo", fileNameProperty="imageName")
      * @Assert\File(
      *     maxSize = "10M",
      *     mimeTypes = {"image/jpg", "image/jpeg", "image/png", "image/gif"}
@@ -39,7 +39,7 @@ class WorkOrderTaskPhoto extends AbstractBase
     /**
      * @var WorkOrderTask
      *
-     * @ORM\ManyToOne(targetEntity="WorkOrderTask", inversedBy="photos")
+     * @ORM\ManyToOne(targetEntity="App\Entity\WorkOrderTask", inversedBy="photos")
      * @ORM\Cache(usage="NONSTRICT_READ_WRITE")
      */
     private $workOrderTask;

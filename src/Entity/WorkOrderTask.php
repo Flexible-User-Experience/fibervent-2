@@ -120,7 +120,7 @@ class WorkOrderTask extends AbstractBase
     /**
      * @var WorkOrderTaskPhoto[]|ArrayCollection
      *
-     * @ORM\OneToMany(targetEntity="App\Entity\WorkOrderTaskPhoto", inversedBy="workOrderTask")
+     * @ORM\OneToMany(targetEntity="App\Entity\WorkOrderTaskPhoto", mappedBy="workOrderTask")
      */
     private $photos;
 

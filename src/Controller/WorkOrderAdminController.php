@@ -180,14 +180,15 @@ class WorkOrderAdminController extends AbstractBaseAdminController
     }
 
     /**
-     * @param Request $request      WorkOrder task ID
-     * @param int     $id           WorkOrder ID
-     * @param int     $filerowindex WorkOrderTask file row index
+     * @param Request $request WorkOrder task ID
+     * @param int $id WorkOrder ID
+     * @param int $filerowindex WorkOrderTask file row index
      *
      * @return JsonResponse
      *
      * @throws EntityNotFoundException
      * @throws NoFileException
+     * @throws Exception
      */
     public function uploadWorkOrderTaskFileAction(Request $request, $id, $filerowindex)
     {
@@ -208,23 +209,25 @@ class WorkOrderAdminController extends AbstractBaseAdminController
             $photo = new WorkOrderTaskPhoto();
             $photo
                 ->setImageFile($file)
-                ->setImageName('name')
+                ->setImageName($file->getClientOriginalName())
                 ->setWorkOrderTask($selectedWorkOrderTask)
                 ->setEnabled(true)
             ;
             $selectedWorkOrderTask->addPhoto($photo);
             $this->getDoctrine()->getManager()->persist($photo);
             $this->getDoctrine()->getManager()->flush();
+            $hit = 'added';
         } else {
             // is related with an undefined (new) WorkOrderTask
             /** @var WorkOrderTask $selectedWorkOrderTask */
             $selectedWorkOrderTask = new WorkOrderTask();
             $selectedWorkOrderTask->setFakeId(-1);
             $selectedWorkOrderTask->setDescription('no description');
+            $hit = 'new';
         }
 
         return new JsonResponse([
-            'hit' => 'me',
+            'hit' => $hit,
             'filename' => $file->getFilename(),
             'selected_work_order_task_id' => $selectedWorkOrderTask->getId(),
             'selected_work_order_task_description' => $selectedWorkOrderTask->getDescription(),
