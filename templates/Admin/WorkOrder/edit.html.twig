@@ -123,7 +123,21 @@
                     parallelUploads: 20,
                     addRemoveLinks: true,
                     dictDefaultMessage: '<i class="fa fa-cloud-upload"></i> Arrastra aquí tus archivos.',
-                    autoQueue: true
+                    autoQueue: true,
+                    init: function() {
+                        let myDropzone = this;
+                        jQuery.get(Routing.generate('admin_app_workorder_getUploadedWorkOrderTaskPhotosForWorkOrderAndFileRow', {id: {{ object.id }}, filerowindex: index}), function(serverResponse) {
+                            console.log('init server response getUploadedWorkOrderTaskPhotosForWorkOrderAndFileRow', serverResponse);
+                            let hits = serverResponse.hit;
+                            if (jQuery.isArray(hits) && hits.length > 0 ) {
+                                jQuery.each(hits, function(i, val) {
+                                    let mockFile = { name: "Filename "+i, size: 12345 };
+                                    myDropzone.displayExistingFile(mockFile, val);
+                                });
+                            }
+                        });
+                        console.log('init', myDropzone);
+                    }
                 });
                 myDropzone.on("addedfile", function(file) {
                     console.log('addedfile event fired', file);

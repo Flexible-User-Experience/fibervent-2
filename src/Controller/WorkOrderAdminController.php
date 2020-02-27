@@ -14,6 +14,7 @@ use App\Repository\WindfarmRepository;
 use App\Repository\WindmillBladeRepository;
 use App\Repository\WindmillRepository;
 use App\Repository\WorkOrderRepository;
+use App\Service\SmartAssetsHelperService;
 use App\Service\WorkOrderPdfBuilderService;
 use Doctrine\ORM\EntityNotFoundException;
 use Exception;
@@ -180,9 +181,9 @@ class WorkOrderAdminController extends AbstractBaseAdminController
     }
 
     /**
-     * @param Request $request WorkOrder task ID
-     * @param int $id WorkOrder ID
-     * @param int $filerowindex WorkOrderTask file row index
+     * @param Request $request
+     * @param int     $id WorkOrder ID
+     * @param int     $filerowindex WorkOrderTask file row index
      *
      * @return JsonResponse
      *
@@ -229,6 +230,46 @@ class WorkOrderAdminController extends AbstractBaseAdminController
         return new JsonResponse([
             'hit' => $hit,
             'filename' => $file->getFilename(),
+            'selected_work_order_task_id' => $selectedWorkOrderTask->getId(),
+            'selected_work_order_task_description' => $selectedWorkOrderTask->getDescription(),
+        ]);
+    }
+
+
+    /**
+     * @param Request                  $request
+     * @param int                      $id WorkOrder ID
+     * @param int                      $filerowindex WorkOrderTask file row index
+     *
+     * @return JsonResponse
+     *
+     * @throws EntityNotFoundException
+     * @throws NoFileException
+     * @throws Exception
+     */
+    public function getUploadedWorkOrderTaskPhotosForWorkOrderAndFileRowAction(Request $request, $id, $filerowindex)
+    {
+        /** @var WorkOrder $object */
+        $object = $this->getPersistedObject();
+        if (!$object) {
+            throw new EntityNotFoundException();
+        }
+        $hit = ['error'];
+        if (count($object->getWorkOrderTasks()) >= ($filerowindex + 1)) {
+            // related WorkOrderTask selected
+            /** @var SmartAssetsHelperService $sahs */
+            $sahs = $this->get('app.smart_assets_helper');
+            /** @var WorkOrderTask $selectedWorkOrderTask */
+            $selectedWorkOrderTask = $object->getWorkOrderTasks()[$filerowindex];
+            $hit = [];
+            /** @var WorkOrderTaskPhoto $photo */
+            foreach ($selectedWorkOrderTask->getPhotos() as $photo) {
+                $hit[] = $sahs->getPublicPathForLiipFilter($photo, 'imageFile', '60x60');
+            }
+        }
+
+        return new JsonResponse([
+            'hit' => $hit,
             'selected_work_order_task_id' => $selectedWorkOrderTask->getId(),
             'selected_work_order_task_description' => $selectedWorkOrderTask->getDescription(),
         ]);
