@@ -10,6 +10,7 @@ use Symfony\Component\Asset\VersionStrategy\EmptyVersionStrategy;
 use Symfony\Component\Asset\VersionStrategy\JsonManifestVersionStrategy;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Vich\UploaderBundle\Templating\Helper\UploaderHelper;
 
 /**
  * Class SmartAssetsHelperService.
@@ -20,6 +21,11 @@ class SmartAssetsHelperService
 {
     const HTTP_PROTOCOL = 'https://';
     const PHP_SERVER_API_CLI_CONTEXT = 'cli';
+
+    /**
+     * @var UploaderHelper
+     */
+    private UploaderHelper $uploaderHelper;
 
     /**
      * @var CacheManager
@@ -53,14 +59,16 @@ class SmartAssetsHelperService
     /**
      * SmartAssetsHelperService constructor.
      *
+     * @param UploaderHelper  $uploaderHelper
      * @param CacheManager    $cacheManager
      * @param DataManager     $dataManager
      * @param FilterManager   $filterManager
      * @param KernelInterface $kernel
      * @param string          $mub
      */
-    public function __construct(CacheManager $cacheManager, DataManager $dataManager, FilterManager $filterManager, KernelInterface $kernel, $mub)
+    public function __construct(UploaderHelper $uploaderHelper, CacheManager $cacheManager, DataManager $dataManager, FilterManager $filterManager, KernelInterface $kernel, $mub)
     {
+        $this->uploaderHelper = $uploaderHelper;
         $this->cacheManager = $cacheManager;
         $this->dataManager = $dataManager;
         $this->filterManager = $filterManager;
@@ -189,5 +197,17 @@ class SmartAssetsHelperService
         $url = str_replace('/resolve/', '/', $url);
 
         return $this->kernel->getProjectDir().DIRECTORY_SEPARATOR.'public'.$url;
+    }
+
+    /**
+     * @param object|mixed $object
+     * @param string       $mapping Vich attribute name
+     * @param string       $filter  Liip filter name
+     *
+     * @return string
+     */
+    public function getPublicPathForLiipFilter($object, $mapping, $filter)
+    {
+        return $this->cacheManager->getBrowserPath($this->uploaderHelper->asset($object, $mapping), $filter);
     }
 }

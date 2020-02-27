@@ -19,12 +19,11 @@ use App\Repository\WindmillRepository;
 use App\Repository\WorkOrderRepository;
 use App\Repository\WorkOrderTaskRepository;
 use App\Service\RepositoriesService;
+use App\Service\SmartAssetsHelperService;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Route\RouteCollection;
-use Liip\ImagineBundle\Imagine\Cache\CacheManager;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationChecker;
-use Vich\UploaderBundle\Templating\Helper\UploaderHelper;
 
 /**
  * Class BaseAdmin.
@@ -124,14 +123,9 @@ abstract class AbstractBaseAdmin extends AbstractAdmin
     protected DeliveryNoteRepository $dnr;
 
     /**
-     * @var UploaderHelper
+     * @var SmartAssetsHelperService
      */
-    protected UploaderHelper $vus;
-
-    /**
-     * @var CacheManager
-     */
-    protected CacheManager $lis;
+    protected SmartAssetsHelperService $sahs;
 
     /**
      * Methods.
@@ -144,10 +138,9 @@ abstract class AbstractBaseAdmin extends AbstractAdmin
      * @param AuthorizationChecker  $acs
      * @param TokenStorageInterface $tss
      * @param RepositoriesService   $rs
-     * @param UploaderHelper        $vus
-     * @param CacheManager          $lis
+     * @param SmartAssetsHelperService $sahs
      */
-    public function __construct($code, $class, $baseControllerName, AuthorizationChecker $acs, TokenStorageInterface $tss, RepositoriesService $rs, UploaderHelper $vus, CacheManager $lis)
+    public function __construct($code, $class, $baseControllerName, AuthorizationChecker $acs, TokenStorageInterface $tss, RepositoriesService $rs, SmartAssetsHelperService $sahs)
     {
         parent::__construct($code, $class, $baseControllerName);
         $this->acs = $acs;
@@ -168,8 +161,7 @@ abstract class AbstractBaseAdmin extends AbstractAdmin
         $this->wor = $rs->getWor();
         $this->wotr = $rs->getWotr();
         $this->dnr = $rs->getDnr();
-        $this->vus = $vus;
-        $this->lis = $lis;
+        $this->sahs = $sahs;
     }
 
     /**
@@ -254,9 +246,6 @@ abstract class AbstractBaseAdmin extends AbstractAdmin
      */
     protected function getImageHelperFormMapperWithThumbnail($minWidth = 1200)
     {
-        return ($this->getSubject() ? $this->getSubject()->getImageName() ? '<img src="'.$this->lis->getBrowserPath(
-                $this->vus->asset($this->getSubject(), 'imageFile'),
-                '480xY'
-            ).'" class="admin-preview img-responsive" alt="thumbnail"/>' : '' : '').'<span style="width:100%;display:block;">'.$this->trans('admin.photo.help', ['%width%' => $minWidth]).'</span>';
+        return ($this->getSubject() ? $this->getSubject()->getImageName() ? '<img src="'.$this->sahs->getPublicPathForLiipFilter($this->getSubject(), 'imageFile', '480xY').'" class="admin-preview img-responsive" alt="thumbnail"/>' : '' : '').'<span style="width:100%;display:block;">'.$this->trans('admin.photo.help', ['%width%' => $minWidth]).'</span>';
     }
 }

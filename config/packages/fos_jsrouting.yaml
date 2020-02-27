@@ -6,4 +6,6 @@ fos_js_routing:
         - 'admin_app_workorder_getWindmillsFromWorkOrderIdAndWindfarmId'
         - 'admin_app_workorder_getWindmillbladesFromWindmillId'
         - 'admin_app_workorder_uploadWorkOrderTaskFile'
+        - 'admin_app_workorder_getUploadedWorkOrderTaskPhotosForWorkOrderAndFileRow'
+        - 'admin_app_workorder_removeWorkOrderTaskPhotoFromId'
         - 'admin_app_deliverynote_getWindfarmsFromWorkOrderId'
