@@ -24,3 +24,7 @@ textarea { resize: vertical; }
 .main-header .logo {
     width: 231px;
 }
+
+.dz-filename, .dz-size, .dropzone .dz-preview .dz-progress {
+    display: none;
+}
