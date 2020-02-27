@@ -226,6 +226,12 @@ class WorkOrderAdminController extends AbstractBaseAdminController
             $selectedWorkOrderTask->setFakeId(-1);
             $selectedWorkOrderTask->setDescription('no description');
             $hit = 'new';
+
+            return new JsonResponse([
+                'hit' => $hit,
+                'filename' => $file->getFilename(),
+                'error' => 'Debes guardar la tarea antes de subir imágenes. Por favor, haz clic en el botón actualizar primero.',
+            ], 400);
         }
 
         return new JsonResponse([

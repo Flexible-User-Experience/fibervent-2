@@ -54,9 +54,11 @@
                     let workOrderTasksAmount = jQuery('#field_widget_{{ form.workOrderTasks.vars.id }}')[0].children[0].children[1].childElementCount;
                     let windmillNodes = [];
                     for (let i = 0; i < workOrderTasksAmount; i++) {
+                        if (i < workOrderTasksAmount - 1) {
+                            setDropzone(i);
+                        }
                         windmillNodes[i] = jQuery('#{{ form.workOrderTasks.vars.id }}_' + i + '_windmill');
                         updateWindmillBladeNodeBySelectedWindmillId(windmillNodes[i].val(), windmillNodes[i], i, false);
-                        setDropzone(i);
                         windmillNodes[i].change((function() {
                             let k = i;
                             return function (event) {
@@ -128,11 +130,10 @@
                     init: function() {
                         let myDropzone = this;
                         jQuery.get(Routing.generate('admin_app_workorder_getUploadedWorkOrderTaskPhotosForWorkOrderAndFileRow', {id: {{ object.id }}, filerowindex: index}), function(serverResponse) {
-                            // console.log('init server response getUploadedWorkOrderTaskPhotosForWorkOrderAndFileRow', serverResponse);
                             let hits = serverResponse.hit;
                             if (jQuery.isArray(hits) && hits.length > 0 ) {
                                 jQuery.each(hits, function(i, val) {
-                                    let mockFile = { name: val.work_order_task_photo_id, size: 12345 };
+                                    let mockFile = {name: val.work_order_task_photo_id, size: 12345};
                                     myDropzone.displayExistingFile(mockFile, val.image_file_path);
                                 });
                             }
@@ -148,7 +149,12 @@
                     });
                 });
                 myDropzone.on("success", function(file, serverResponse) {
-                    console.log('success event fired', file, serverResponse);
+                    if (serverResponse.hit === 'new') {
+                        myDropzone.removeFile(file);
+                        console.log('ERROR! new row detected, WorkOrderTask not created', file, serverResponse);
+                    } else {
+                        console.log('successfully added file', file, serverResponse);
+                    }
                 });
                 myDropzone.on("error", function(file, errorMessage) {
                     console.log('error event fired', file, errorMessage);
