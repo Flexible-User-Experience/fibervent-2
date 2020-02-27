@@ -7,6 +7,7 @@ use App\Entity\Windfarm;
 use App\Entity\Windmill;
 use App\Entity\WorkOrder;
 use App\Entity\WorkOrderTask;
+use App\Entity\WorkOrderTaskPhoto;
 use App\Model\AjaxResponse;
 use App\Repository\CustomerRepository;
 use App\Repository\WindfarmRepository;
@@ -204,6 +205,16 @@ class WorkOrderAdminController extends AbstractBaseAdminController
             // is related with an existing WorkOrderTask
             /** @var WorkOrderTask $selectedWorkOrderTask */
             $selectedWorkOrderTask = $object->getWorkOrderTasks()[$filerowindex];
+            $photo = new WorkOrderTaskPhoto();
+            $photo
+                ->setImageFile($file)
+                ->setImageName('name')
+                ->setWorkOrderTask($selectedWorkOrderTask)
+                ->setEnabled(true)
+            ;
+            $selectedWorkOrderTask->addPhoto($photo);
+            $this->getDoctrine()->getManager()->persist($photo);
+            $this->getDoctrine()->getManager()->flush();
         } else {
             // is related with an undefined (new) WorkOrderTask
             /** @var WorkOrderTask $selectedWorkOrderTask */
