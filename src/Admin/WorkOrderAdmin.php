@@ -50,6 +50,7 @@ class WorkOrderAdmin extends AbstractBaseAdmin
             ->add('pdf', $this->getRouterIdParameter().'/pdf')
             ->add('uploadWorkOrderTaskFile', $this->getRouterIdParameter().'/upload-work-order-task-files/{filerowindex}')
             ->add('getUploadedWorkOrderTaskPhotosForWorkOrderAndFileRow', 'get-uploaded-work-order-task-photos-for-work-order/'.$this->getRouterIdParameter().'/and-file-row-index/{filerowindex}')
+            ->add('removeWorkOrderTaskPhotoFromId', 'remove-work-order-task-photo-from-id/{workordertaskphotoid}')
         ;
     }
 

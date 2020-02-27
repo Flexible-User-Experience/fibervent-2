@@ -25,6 +25,20 @@ textarea { resize: vertical; }
     width: 231px;
 }
 
+.dropzone .dz-preview {
+    position: relative;
+    display: inline-block;
+    width: 80px;
+    margin: 5px 0.5em 5px 0;
+}
+
 .dz-filename, .dz-size, .dropzone .dz-preview .dz-progress {
     display: none;
+}
+
+div.dz-default.dz-message {
+    width: 100%;
+    border: dashed 2px lightskyblue !important;
+    padding: 20px;
+    display: block;
 }
