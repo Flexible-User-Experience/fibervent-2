@@ -7,14 +7,20 @@ use App\Entity\Windfarm;
 use App\Entity\Windmill;
 use App\Entity\WorkOrder;
 use App\Entity\WorkOrderTask;
+use App\Entity\WorkOrderTaskPhoto;
 use App\Model\AjaxResponse;
 use App\Repository\CustomerRepository;
 use App\Repository\WindfarmRepository;
 use App\Repository\WindmillBladeRepository;
 use App\Repository\WindmillRepository;
 use App\Repository\WorkOrderRepository;
+use App\Repository\WorkOrderTaskPhotoRepository;
+use App\Service\SmartAssetsHelperService;
 use App\Service\WorkOrderPdfBuilderService;
+use Doctrine\ORM\EntityNotFoundException;
 use Exception;
+use Symfony\Component\HttpFoundation\File\Exception\NoFileException;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -175,9 +181,139 @@ class WorkOrderAdminController extends AbstractBaseAdminController
         return new Response($pdf->Output('informe_proyecto_'.$object->getId().'.pdf', 'I'), 200, array('Content-type' => 'application/pdf'));
     }
 
-    public function uploadWorkOrderTaskFileAction()
+    /**
+     * @param Request $request
+     * @param int     $id WorkOrder ID
+     * @param int     $filerowindex WorkOrderTask file row index
+     *
+     * @return JsonResponse
+     *
+     * @throws EntityNotFoundException
+     * @throws NoFileException
+     * @throws Exception
+     */
+    public function uploadWorkOrderTaskFileAction(Request $request, $id, $filerowindex)
     {
+        /** @var WorkOrder $object */
+        $object = $this->getPersistedObject();
+        if (!$object) {
+            throw new EntityNotFoundException();
+        }
+        /** @var UploadedFile $file */
+        $file = $request->files->get('file');
+        if (!$file) {
+            throw new NoFileException();
+        }
+        if (count($object->getWorkOrderTasks()) >= ($filerowindex + 1)) {
+            // is related with an existing WorkOrderTask
+            /** @var WorkOrderTask $selectedWorkOrderTask */
+            $selectedWorkOrderTask = $object->getWorkOrderTasks()[$filerowindex];
+            $photo = new WorkOrderTaskPhoto();
+            $photo
+                ->setImageFile($file)
+                ->setImageName($file->getClientOriginalName())
+                ->setWorkOrderTask($selectedWorkOrderTask)
+                ->setEnabled(true)
+            ;
+            $selectedWorkOrderTask->addPhoto($photo);
+            $this->getDoctrine()->getManager()->persist($photo);
+            $this->getDoctrine()->getManager()->flush();
+            $hit = 'added';
+        } else {
+            // is related with an undefined (new) WorkOrderTask
+            /** @var WorkOrderTask $selectedWorkOrderTask */
+            $selectedWorkOrderTask = new WorkOrderTask();
+            $selectedWorkOrderTask->setFakeId(-1);
+            $selectedWorkOrderTask->setDescription('no description');
+            $hit = 'new';
 
+            return new JsonResponse([
+                'hit' => $hit,
+                'filename' => $file->getFilename(),
+                'error' => 'Debes guardar la tarea antes de subir imágenes. Por favor, haz clic en el botón actualizar primero.',
+            ], 400);
+        }
+
+        return new JsonResponse([
+            'hit' => $hit,
+            'filename' => $file->getFilename(),
+            'selected_work_order_task_id' => $selectedWorkOrderTask->getId(),
+            'selected_work_order_task_description' => $selectedWorkOrderTask->getDescription(),
+        ]);
+    }
+
+    /**
+     * @param Request $request
+     * @param int     $id WorkOrder ID
+     * @param int     $filerowindex WorkOrderTask file row index
+     *
+     * @return JsonResponse
+     *
+     * @throws EntityNotFoundException
+     * @throws NoFileException
+     * @throws Exception
+     */
+    public function getUploadedWorkOrderTaskPhotosForWorkOrderAndFileRowAction(Request $request, $id, $filerowindex)
+    {
+        /** @var WorkOrder $object */
+        $object = $this->getPersistedObject();
+        if (!$object) {
+            throw new EntityNotFoundException();
+        }
+        $hit = 'error';
+        if (count($object->getWorkOrderTasks()) >= ($filerowindex + 1)) {
+            // related WorkOrderTask selected
+            /** @var SmartAssetsHelperService $sahs */
+            $sahs = $this->get('app.smart_assets_helper');
+            /** @var WorkOrderTask $selectedWorkOrderTask */
+            $selectedWorkOrderTask = $object->getWorkOrderTasks()[$filerowindex];
+            $hit = [];
+            /** @var WorkOrderTaskPhoto $photo */
+            foreach ($selectedWorkOrderTask->getPhotos() as $photo) {
+                $hit[] = array(
+                    'work_order_task_photo_id' => $photo->getId(),
+                    'image_file_path' => $sahs->getPublicPathForLiipFilter($photo, 'imageFile', '60x60'),
+                );
+            }
+        }
+
+        return new JsonResponse([
+            'hit' => $hit,
+            'selected_work_order_task_id' => $selectedWorkOrderTask->getId(),
+            'selected_work_order_task_description' => $selectedWorkOrderTask->getDescription(),
+        ]);
+    }
+
+    /**
+     * @param int $workordertaskphotoid
+     *
+     * @return JsonResponse
+     *
+     * @throws EntityNotFoundException
+     */
+    public function removeWorkOrderTaskPhotoFromIdAction($workordertaskphotoid)
+    {
+        /** @var WorkOrderTaskPhotoRepository $wotpr */
+        $wotpr = $this->getDoctrine()->getRepository(WorkOrderTaskPhoto::class);
+        /** @var WorkOrderTaskPhoto $object */
+        $object = $wotpr->find($workordertaskphotoid);
+        if (!$object) {
+            throw new EntityNotFoundException();
+        }
+        $hit = 'error';
+        $selectedWorkOrderTask = $object->getWorkOrderTask();
+        if ($selectedWorkOrderTask) {
+            $selectedWorkOrderTask->removePhoto($object);
+            $this->getDoctrine()->getManager()->remove($object);
+            $this->getDoctrine()->getManager()->flush();
+            $hit = 'success';
+        }
+
+        return new JsonResponse([
+            'hit' => $hit,
+            'selected_work_order_task_id' => $selectedWorkOrderTask->getId(),
+            'selected_work_order_task_description' => $selectedWorkOrderTask->getDescription(),
+        ]);
     }
 
     /**

@@ -2,9 +2,11 @@
 
 namespace App\Entity\Traits;
 
+use DateTimeImmutable;
+use Doctrine\ORM\Mapping as ORM;
+use Exception;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\File\File;
-use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Image trait.
@@ -36,7 +38,8 @@ trait ImageTrait
      * @param File|UploadedFile $imageFile
      *
      * @return $this
-     * @throws \Exception
+     *
+     * @throws Exception
      */
     public function setImageFile(File $imageFile = null)
     {
@@ -44,7 +47,7 @@ trait ImageTrait
         if ($imageFile) {
             // It is required that at least one field changes if you are using doctrine
             // otherwise the event listeners won't be called and the file is lost
-            $this->updatedAt = new \DateTime('now');
+            $this->updatedAt = new DateTimeImmutable('now');
         }
 
         return $this;
