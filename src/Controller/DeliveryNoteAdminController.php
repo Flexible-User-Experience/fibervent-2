@@ -7,6 +7,8 @@ use App\Entity\User;
 use App\Entity\WorkOrder;
 use App\Form\Type\DeliveryNoteEmailSendFormType;
 use App\Model\AjaxResponse;
+use App\Repository\DeliveryNoteRepository;
+use App\Repository\UserRepository;
 use App\Repository\WindfarmRepository;
 use App\Repository\WorkOrderRepository;
 use App\Service\DeliveryNotePdfBuilderService;
@@ -73,6 +75,29 @@ class DeliveryNoteAdminController extends AbstractBaseAdminController
             return new JsonResponse($ajaxResponse);
         }
         $ajaxResponse->setData($wfr->findOnlyRelatedWithAWorkOrderSortedByNameAjax($workOrder));
+        $jsonEncodedResult = $ajaxResponse->getJsonEncodedResult();
+
+        return new JsonResponse($jsonEncodedResult);
+    }
+
+    /**
+     * @param int $id WorkOrder ID
+     *
+     * @return JsonResponse
+     */
+    public function getWorkersFromDeliveryNoteId($id)
+    {
+        $ajaxResponse = new AjaxResponse();
+        /** @var DeliveryNoteRepository $dnr */
+        $dnr = $this->container->get('app.delivery_note_repository');
+        /** @var DeliveryNote $deliveryNote */
+        $deliveryNote = $dnr->find($id);
+        if (!$deliveryNote) {
+            return new JsonResponse($ajaxResponse);
+        }
+        /** @var UserRepository $ur */
+        $ur = $this->container->get('app.user_repository');
+        $ajaxResponse->setData($ur->getWorkersRelatedWithADeliveryNoteSortedByNameAjax($deliveryNote));
         $jsonEncodedResult = $ajaxResponse->getJsonEncodedResult();
 
         return new JsonResponse($jsonEncodedResult);

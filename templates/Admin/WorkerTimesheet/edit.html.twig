@@ -8,6 +8,11 @@
             let workerMainNode = jQuery('#sonata-ba-field-container-{{ form.worker.vars.id }}');
             let workerNode = jQuery('#{{ form.worker.vars.id }}');
             let deliveryNoteNode = jQuery('#{{ form.deliveryNote.vars.id }}');
+            deliveryNoteNode.change(function(event) {
+                let deliveryNoteId = event.val;
+                console.log('deliveryNoteNode change fired', deliveryNoteId);
+                updateWorkerNodeBySelectedDeliveryNoteId(deliveryNoteId, false);
+            });
             {% if app.user.hasRole(constant('App\\Enum\\UserRolesEnum::ROLE_OPERATOR')) or app.user.hasRole(constant('App\\Enum\\UserRolesEnum::ROLE_TECHNICIAN')) %}
                 workerNode.select2('val', {{ app.user.id }});
                 workerMainNode.addClass('hidden');
@@ -31,6 +36,21 @@
                     return sParameterName[1] === undefined ? true : decodeURIComponent(sParameterName[1]);
                 }
             }
+        }
+        function updateWorkerNodeBySelectedDeliveryNoteId(deliveryNoteId, setPreviousSelectedValue) {
+            console.log('updateWorkerNodeBySelectedDeliveryNoteId', deliveryNoteId, setPreviousSelectedValue);
+            jQuery.get(Routing.generate('admin_app_deliverynote_getWorkersFromDeliveryNoteId', {id: deliveryNoteId})).done(function (response) {
+                let jsonResponse = jQuery.parseJSON(response);
+                console.log('updateWorkerNodeBySelectedDeliveryNoteId AJAX GET response recived', jsonResponse);
+                let workerNode = jQuery('#{{ form.worker.vars.id }}');
+                let workerNodeVal = parseInt(workerNode.val());
+                workerNode.empty().html(jsonResponse.htmlOptionStringData);
+                if (setPreviousSelectedValue) {
+                    workerNode.select2('val', workerNodeVal);
+                } else {
+                    workerNode.select2('val', jsonResponse.data[0].id);
+                }
+            });
         }
     </script>
 {% endblock %}
