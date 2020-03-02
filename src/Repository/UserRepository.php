@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Customer;
+use App\Entity\DeliveryNote;
 use App\Enum\UserRolesEnum;
 use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
@@ -257,5 +258,57 @@ class UserRepository extends ServiceEntityRepository
     public function findRegionalManagersByCustomer(Customer $customer, $limit = null, $order = 'ASC')
     {
         return $this->findRegionalManagersByCustomerQ($customer, $limit, $order)->getResult();
+    }
+
+    /**
+     * @param DeliveryNote $deliveryNote
+     *
+     * @return QueryBuilder
+     */
+    public function getWorkersRelatedWithADeliveryNoteSortedByNameAjaxQB(DeliveryNote $deliveryNote)
+    {
+        $query = $this->createQueryBuilder('u')
+            ->select("CONCAT_WS(' ', u.firstname, u.lastname) AS text, u.id")
+            ->orderBy('u.lastname', 'ASC')
+            ->addOrderBy('u.firstname', 'ASC');
+        $workersIdsArray = [];
+        if ($deliveryNote->getTeamLeader()) {
+            $workersIdsArray[] = $deliveryNote->getTeamLeader()->getId();
+        }
+        if ($deliveryNote->getTeamTechnician1()) {
+            $workersIdsArray[] = $deliveryNote->getTeamTechnician1()->getId();
+        }
+        if ($deliveryNote->getTeamTechnician2()) {
+            $workersIdsArray[] = $deliveryNote->getTeamTechnician2()->getId();
+        }
+        if ($deliveryNote->getTeamTechnician3()) {
+            $workersIdsArray[] = $deliveryNote->getTeamTechnician3()->getId();
+        }
+        if ($deliveryNote->getTeamTechnician4()) {
+            $workersIdsArray[] = $deliveryNote->getTeamTechnician4()->getId();
+        }
+        $query->where($query->expr()->in('u.id', $workersIdsArray));
+
+        return $query;
+    }
+
+    /**
+     * @param DeliveryNote $deliveryNote
+     *
+     * @return Query
+     */
+    public function getWorkersRelatedWithADeliveryNoteSortedByNameAjaxQ(DeliveryNote $deliveryNote)
+    {
+        return $this->getWorkersRelatedWithADeliveryNoteSortedByNameAjaxQB($deliveryNote)->getQuery();
+    }
+
+    /**
+     * @param DeliveryNote $deliveryNote
+     *
+     * @return array
+     */
+    public function getWorkersRelatedWithADeliveryNoteSortedByNameAjax(DeliveryNote $deliveryNote)
+    {
+        return $this->getWorkersRelatedWithADeliveryNoteSortedByNameAjaxQ($deliveryNote)->getResult();
     }
 }

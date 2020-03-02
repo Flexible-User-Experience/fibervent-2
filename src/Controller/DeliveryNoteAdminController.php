@@ -85,7 +85,7 @@ class DeliveryNoteAdminController extends AbstractBaseAdminController
      *
      * @return JsonResponse
      */
-    public function getWorkersFromDeliveryNoteId($id)
+    public function getWorkersFromDeliveryNoteIdAction($id)
     {
         $ajaxResponse = new AjaxResponse();
         /** @var DeliveryNoteRepository $dnr */

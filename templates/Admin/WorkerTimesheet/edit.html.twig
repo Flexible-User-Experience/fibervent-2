@@ -3,6 +3,8 @@
 {# override javascript includes #}
 {% block javascripts %}
     {{ parent() }}
+    <script src="{{ asset('bundles/fosjsrouting/js/router.min.js') }}"></script>
+    <script src="{{ path('fos_js_routing_js', {callback: 'fos.Router.setData'}) }}"></script>
     <script type="text/javascript">
         jQuery(document).ready(function() {
             let workerMainNode = jQuery('#sonata-ba-field-container-{{ form.worker.vars.id }}');
@@ -10,8 +12,11 @@
             let deliveryNoteNode = jQuery('#{{ form.deliveryNote.vars.id }}');
             deliveryNoteNode.change(function(event) {
                 let deliveryNoteId = event.val;
-                console.log('deliveryNoteNode change fired', deliveryNoteId);
-                updateWorkerNodeBySelectedDeliveryNoteId(deliveryNoteId, false);
+                {% if app.user.hasRole(constant('App\\Enum\\UserRolesEnum::ROLE_OPERATOR')) or app.user.hasRole(constant('App\\Enum\\UserRolesEnum::ROLE_TECHNICIAN')) %}
+                    updateWorkerNodeBySelectedDeliveryNoteId(deliveryNoteId, true);
+                {% else %}
+                    updateWorkerNodeBySelectedDeliveryNoteId(deliveryNoteId, false);
+                {% endif %}
             });
             {% if app.user.hasRole(constant('App\\Enum\\UserRolesEnum::ROLE_OPERATOR')) or app.user.hasRole(constant('App\\Enum\\UserRolesEnum::ROLE_TECHNICIAN')) %}
                 workerNode.select2('val', {{ app.user.id }});
@@ -23,6 +28,11 @@
                 if (forDeliveryNoteId !== undefined) {
                     deliveryNoteNode.select2('val', forDeliveryNoteId);
                 }
+                {% if app.user.hasRole(constant('App\\Enum\\UserRolesEnum::ROLE_OPERATOR')) or app.user.hasRole(constant('App\\Enum\\UserRolesEnum::ROLE_TECHNICIAN')) %}
+                    updateWorkerNodeBySelectedDeliveryNoteId(deliveryNoteNode.val(), true);
+                {% else %}
+                    updateWorkerNodeBySelectedDeliveryNoteId(deliveryNoteNode.val(), false);
+                {% endif %}
             {% endif %}
         });
         function getUrlParameter(sParam) {
@@ -38,10 +48,8 @@
             }
         }
         function updateWorkerNodeBySelectedDeliveryNoteId(deliveryNoteId, setPreviousSelectedValue) {
-            console.log('updateWorkerNodeBySelectedDeliveryNoteId', deliveryNoteId, setPreviousSelectedValue);
             jQuery.get(Routing.generate('admin_app_deliverynote_getWorkersFromDeliveryNoteId', {id: deliveryNoteId})).done(function (response) {
                 let jsonResponse = jQuery.parseJSON(response);
-                console.log('updateWorkerNodeBySelectedDeliveryNoteId AJAX GET response recived', jsonResponse);
                 let workerNode = jQuery('#{{ form.worker.vars.id }}');
                 let workerNodeVal = parseInt(workerNode.val());
                 workerNode.empty().html(jsonResponse.htmlOptionStringData);

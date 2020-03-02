@@ -25,6 +25,8 @@ doctrine:
             FOSUserBundle:    ~
             SonataUserBundle: ~
         dql:
+            string_functions:
+                concat_ws: DoctrineExtensions\Query\Mysql\ConcatWs
             datetime_functions:
                 year:        DoctrineExtensions\Query\Mysql\Year
                 month:       DoctrineExtensions\Query\Mysql\Month
