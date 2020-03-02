@@ -3,11 +3,21 @@
 {# override javascript includes #}
 {% block javascripts %}
     {{ parent() }}
+    <script src="{{ asset('bundles/fosjsrouting/js/router.min.js') }}"></script>
+    <script src="{{ path('fos_js_routing_js', {callback: 'fos.Router.setData'}) }}"></script>
     <script type="text/javascript">
         jQuery(document).ready(function() {
             let workerMainNode = jQuery('#sonata-ba-field-container-{{ form.worker.vars.id }}');
             let workerNode = jQuery('#{{ form.worker.vars.id }}');
             let deliveryNoteNode = jQuery('#{{ form.deliveryNote.vars.id }}');
+            deliveryNoteNode.change(function(event) {
+                let deliveryNoteId = event.val;
+                {% if app.user.hasRole(constant('App\\Enum\\UserRolesEnum::ROLE_OPERATOR')) or app.user.hasRole(constant('App\\Enum\\UserRolesEnum::ROLE_TECHNICIAN')) %}
+                    updateWorkerNodeBySelectedDeliveryNoteId(deliveryNoteId, true);
+                {% else %}
+                    updateWorkerNodeBySelectedDeliveryNoteId(deliveryNoteId, false);
+                {% endif %}
+            });
             {% if app.user.hasRole(constant('App\\Enum\\UserRolesEnum::ROLE_OPERATOR')) or app.user.hasRole(constant('App\\Enum\\UserRolesEnum::ROLE_TECHNICIAN')) %}
                 workerNode.select2('val', {{ app.user.id }});
                 workerMainNode.addClass('hidden');
@@ -18,6 +28,11 @@
                 if (forDeliveryNoteId !== undefined) {
                     deliveryNoteNode.select2('val', forDeliveryNoteId);
                 }
+                {% if app.user.hasRole(constant('App\\Enum\\UserRolesEnum::ROLE_OPERATOR')) or app.user.hasRole(constant('App\\Enum\\UserRolesEnum::ROLE_TECHNICIAN')) %}
+                    updateWorkerNodeBySelectedDeliveryNoteId(deliveryNoteNode.val(), true);
+                {% else %}
+                    updateWorkerNodeBySelectedDeliveryNoteId(deliveryNoteNode.val(), false);
+                {% endif %}
             {% endif %}
         });
         function getUrlParameter(sParam) {
@@ -31,6 +46,19 @@
                     return sParameterName[1] === undefined ? true : decodeURIComponent(sParameterName[1]);
                 }
             }
+        }
+        function updateWorkerNodeBySelectedDeliveryNoteId(deliveryNoteId, setPreviousSelectedValue) {
+            jQuery.get(Routing.generate('admin_app_deliverynote_getWorkersFromDeliveryNoteId', {id: deliveryNoteId})).done(function (response) {
+                let jsonResponse = jQuery.parseJSON(response);
+                let workerNode = jQuery('#{{ form.worker.vars.id }}');
+                let workerNodeVal = parseInt(workerNode.val());
+                workerNode.empty().html(jsonResponse.htmlOptionStringData);
+                if (setPreviousSelectedValue) {
+                    workerNode.select2('val', workerNodeVal);
+                } else {
+                    workerNode.select2('val', jsonResponse.data[0].id);
+                }
+            });
         }
     </script>
 {% endblock %}

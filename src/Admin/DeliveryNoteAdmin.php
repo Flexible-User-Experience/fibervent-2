@@ -51,6 +51,7 @@ class DeliveryNoteAdmin extends AbstractBaseAdmin
         $collection
             ->remove('batch')
             ->add('getWindfarmsFromWorkOrderId', $this->getRouterIdParameter().'/get-windfarms-from-work-order-id')
+            ->add('getWorkersFromDeliveryNoteId', $this->getRouterIdParameter().'/get-workers-from-delivey-note-id')
             ->add('pdf', $this->getRouterIdParameter().'/pdf')
             ->add('email', $this->getRouterIdParameter().'/email')
         ;
