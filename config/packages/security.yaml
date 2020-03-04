@@ -51,6 +51,7 @@ security:
             - ROLE_ADMIN_WORK_ORDER_TASK_ALL
             - ROLE_ADMIN_VEHICLE_ALL
             - ROLE_ADMIN_PRESENCE_MONITORING_ALL
+            - ROLE_ADMIN_REPAIR_ALL
         ROLE_SUPER_ADMIN:
             - ROLE_ADMIN
             - ROLE_ADMIN_DAMAGE_TRANSLATION_ALL
