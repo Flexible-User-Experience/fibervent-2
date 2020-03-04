@@ -129,7 +129,7 @@ class Audit extends AbstractBase
     /**
      * @var bool
      *
-     * @ORM\Column(type="boolean", options={"default"=false})
+     * @ORM\Column(type="boolean", options={"default"=0}, nullable=true)
      */
     private $hasWorkOrder;
 
