@@ -6,9 +6,9 @@ use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
- * Class BackendControllerTest
+ * Class AdminBackendControllerTest
  */
-class BackendControllerTest extends WebTestCase
+class AdminBackendControllerTest extends WebTestCase
 {
     /**
      * Test backend pages
@@ -21,9 +21,9 @@ class BackendControllerTest extends WebTestCase
     }
 
     /**
-     * Test HTTP request is successful.
+     * Test successful HTTP responses.
      *
-     * @dataProvider provideSuccessfulUrls
+     * @dataProvider provideAdminPagesForSuccessfulUrls
      *
      * @param string $url
      */
@@ -35,11 +35,11 @@ class BackendControllerTest extends WebTestCase
     }
 
     /**
-     * Successful Urls provider.
+     * Successful URLs provider.
      *
      * @return array
      */
-    public function provideSuccessfulUrls()
+    public function provideAdminPagesForSuccessfulUrls()
     {
         return array(
             array('/admin/dashboard'),
@@ -61,9 +61,6 @@ class BackendControllerTest extends WebTestCase
             array('/admin/windfarms/windfarm/1/edit'),
             array('/admin/windfarms/windfarm/1/show'),
             array('/admin/windfarms/windfarm/1/map'),
-// TODO fix YEAR function with SQLITE Beberlei Doctrine extension
-//            array('/admin/windfarms/windfarm/1/excel'),
-//            array('/admin/windfarms/windfarm/1/pdf'),
             array('/admin/windfarms/windmill/list'),
             array('/admin/windfarms/windmill/create'),
             array('/admin/windfarms/windmill/1/edit'),
@@ -85,15 +82,9 @@ class BackendControllerTest extends WebTestCase
             array('/admin/audits/damage/list'),
             array('/admin/audits/damage/create'),
             array('/admin/audits/damage/1/edit'),
-            array('/admin/audits/damage-translation/list'),
-            array('/admin/audits/damage-translation/create'),
-            array('/admin/audits/damage-translation/1/edit'),
             array('/admin/audits/damage-category/list'),
             array('/admin/audits/damage-category/create'),
             array('/admin/audits/damage-category/1/edit'),
-            array('/admin/audits/damage-category-translation/list'),
-            array('/admin/audits/damage-category-translation/create'),
-            array('/admin/audits/damage-category-translation/1/edit'),
             array('/admin/audits/blade-damage/list'),
             array('/admin/audits/blade-damage/create'),
             array('/admin/audits/blade-damage/1/edit'),
@@ -115,7 +106,6 @@ class BackendControllerTest extends WebTestCase
             array('/admin/workorders/workorder/create'),
             array('/admin/workorders/workorder/1/edit'),
             array('/admin/workorders/workorder/1/delete'),
-//            array('/admin/workorders/workorder/1/pdf'),
             array('/admin/workorders/workorder/1/get-windfarms-from-customer-id'),
             array('/admin/workorders/workorder/1/get-windmillblades-from-windmill-id'),
             array('/admin/workorders/workordertask/list'),
@@ -153,9 +143,9 @@ class BackendControllerTest extends WebTestCase
     }
 
     /**
-     * Test HTTP request is not found.
+     * Test not found HTTP responses.
      *
-     * @dataProvider provideNotFoundUrls
+     * @dataProvider provideAdminPagesForNotFoundUrls
      *
      * @param string $url
      */
@@ -167,11 +157,11 @@ class BackendControllerTest extends WebTestCase
     }
 
     /**
-     * Not found Urls provider.
+     * Not found URLs provider.
      *
      * @return array
      */
-    public function provideNotFoundUrls()
+    public function provideAdminPagesForNotFoundUrls()
     {
         return array(
             array('/admin/customers/customer/batch'),
@@ -219,13 +209,44 @@ class BackendControllerTest extends WebTestCase
     }
 
     /**
+     * Test forbidden HTTP responses.
+     *
+     * @dataProvider provideAdminPagesForbiddenUrls
+     *
+     * @param string $url
+     */
+    public function testAdminPagesAreForbidden($url)
+    {
+        $client = $this->getAuthenticatedClient();
+        $client->request('GET', $url);
+        $this->assertEquals(403, $client->getResponse()->getStatusCode());
+    }
+
+    /**
+     * Forbidden or not found Urls provider.
+     *
+     * @return array
+     */
+    public function provideAdminPagesForbiddenUrls()
+    {
+        return array(
+            array('/admin/audits/damage-translation/list'),
+            array('/admin/audits/damage-translation/create'),
+            array('/admin/audits/damage-translation/1/edit'),
+            array('/admin/audits/damage-category-translation/list'),
+            array('/admin/audits/damage-category-translation/create'),
+            array('/admin/audits/damage-category-translation/1/edit'),
+        );
+    }
+
+    /**
      * @return KernelBrowser
      */
     private function getAuthenticatedClient()
     {
-        return static::createClient([], [     // authenticated user
-            'PHP_AUTH_USER' => 'test1',
-            'PHP_AUTH_PW'   => 'testpwd1',
+        return static::createClient([], [     // authenticated user with ROLE_ADMIN
+            'PHP_AUTH_USER' => 'test2',
+            'PHP_AUTH_PW'   => 'testpwd2',
         ]);
     }
 }

@@ -209,8 +209,8 @@ App\Entity\User:
     roles:
       - ROLE_SUPER_ADMIN
   admin:
-    username: <username()>
-    plainPassword: <password()>
+    username: 'test2'
+    plainPassword: 'testpwd2'
     phone: <e164PhoneNumber()>
     email: <safeEmail()>
     firstname: <name()>
