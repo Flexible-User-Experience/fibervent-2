@@ -181,7 +181,9 @@ class AdminBackendControllerTest extends WebTestCase
             array('/admin/windfarms/windmill-blade/batch'),
             array('/admin/audits/audit/batch'),
             array('/admin/audits/damage/1/delete'),
+            array('/admin/audits/damage-translation/1/delete'),
             array('/admin/audits/damage-category/1/delete'),
+            array('/admin/audits/damage-category-translation/1/delete'),
             array('/admin/audits/blade-damage/1/delete'),
             array('/admin/audits/blade-photo/1/delete'),
             array('/admin/audits/observation/1/delete'),
@@ -228,16 +230,12 @@ class AdminBackendControllerTest extends WebTestCase
     public function provideAdminPagesForbiddenUrls()
     {
         return array(
-            array('/admin/audits/damage-translation/1/delete'),
             array('/admin/audits/damage-translation/list'),
             array('/admin/audits/damage-translation/create'),
             array('/admin/audits/damage-translation/1/edit'),
-            array('/admin/audits/damage-translation/1/delete'),
-            array('/admin/audits/damage-category-translation/1/delete'),
             array('/admin/audits/damage-category-translation/list'),
             array('/admin/audits/damage-category-translation/create'),
             array('/admin/audits/damage-category-translation/1/edit'),
-            array('/admin/audits/damage-category-translation/1/delete'),
         );
     }
 

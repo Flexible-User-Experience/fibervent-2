@@ -35,6 +35,7 @@ security:
             - ROLE_ADMIN_WINDFARM_ALL
             - ROLE_ADMIN_WINDMILL_ALL
             - ROLE_ADMIN_USER_ALL
+            - ROLE_ADMIN_USER_LIST
             - ROLE_ADMIN_BLADE_ALL
             - ROLE_ADMIN_TURBINE_ALL
             - ROLE_ADMIN_DAMAGE_ALL
