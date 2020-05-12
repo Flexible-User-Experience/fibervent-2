@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f5fe1b19baeb8c19a4804b442d12b11c",
+    "content-hash": "b186894f3e4a18357f5ae24ac253cca1",
     "packages": [
         {
             "name": "a2lix/translation-form-bundle",
@@ -9909,16 +9909,16 @@
         },
         {
             "name": "vich/uploader-bundle",
-            "version": "1.13.2",
+            "version": "1.13.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dustin10/VichUploaderBundle.git",
-                "reference": "f24c3a1764d30cbe6e7d4d8bbc2daca6f0c2693e"
+                "reference": "282321173e8a01a295d04fa642658b6b10c3ec9a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dustin10/VichUploaderBundle/zipball/f24c3a1764d30cbe6e7d4d8bbc2daca6f0c2693e",
-                "reference": "f24c3a1764d30cbe6e7d4d8bbc2daca6f0c2693e",
+                "url": "https://api.github.com/repos/dustin10/VichUploaderBundle/zipball/282321173e8a01a295d04fa642658b6b10c3ec9a",
+                "reference": "282321173e8a01a295d04fa642658b6b10c3ec9a",
                 "shasum": ""
             },
             "require": {
@@ -9942,7 +9942,6 @@
                 "doctrine/orm": "^2.7",
                 "ext-sqlite3": "*",
                 "knplabs/knp-gaufrette-bundle": "^0.7",
-                "kphoen/rusty": "dev-update-php-parser",
                 "league/flysystem-bundle": "^1.4",
                 "league/flysystem-memory": "^1.0",
                 "matthiasnoback/symfony-dependency-injection-test": "^4.1",
@@ -10003,7 +10002,7 @@
                 "file uploads",
                 "upload"
             ],
-            "time": "2020-03-11T14:30:56+00:00"
+            "time": "2020-02-06T07:49:31+00:00"
         },
         {
             "name": "webimpress/safe-writer",
