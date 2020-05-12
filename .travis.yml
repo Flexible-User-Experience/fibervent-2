@@ -20,7 +20,8 @@ matrix:
     - php: 7.4
 
 services:
-  - redis-server
+  - redis
+  - mysql
 
 before_install:
   - composer self-update
