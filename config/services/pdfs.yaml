@@ -13,7 +13,7 @@ services:
         arguments:
             - '@white_october.tcpdf'
             - '@liip_imagine.cache.manager'
-            - '@vich_uploader.templating.helper.uploader_helper'
+            - '@Vich\UploaderBundle\Templating\Helper\UploaderHelper'
             - '@app.smart_assets_helper'
             - '@translator.default'
             - '@app.damage_repository'
@@ -30,7 +30,7 @@ services:
         arguments:
             - '@white_october.tcpdf'
             - '@liip_imagine.cache.manager'
-            - '@vich_uploader.templating.helper.uploader_helper'
+            - '@Vich\UploaderBundle\Templating\Helper\UploaderHelper'
             - '@app.smart_assets_helper'
             - '@translator.default'
             - '@app.damage_repository'

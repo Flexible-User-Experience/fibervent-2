@@ -38,7 +38,7 @@ services:
         public: true
         class: App\Service\SmartAssetsHelperService
         arguments:
-            - '@vich_uploader.templating.helper.uploader_helper'
+            - '@Vich\UploaderBundle\Templating\Helper\UploaderHelper'
             - '@liip_imagine.cache.manager'
             - '@liip_imagine.data.manager'
             - '@liip_imagine.filter.manager'
