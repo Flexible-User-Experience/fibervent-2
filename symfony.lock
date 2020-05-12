@@ -93,18 +93,6 @@
     "doctrine/reflection": {
         "version": "v1.0.0"
     },
-    "easycorp/easy-log-handler": {
-        "version": "1.0",
-        "recipe": {
-            "repo": "github.com/symfony/recipes",
-            "branch": "master",
-            "version": "1.0",
-            "ref": "70062abc2cd58794d2a90274502f81b55cd9951b"
-        },
-        "files": [
-            "config/packages/dev/easy_log_handler.yaml"
-        ]
-    },
     "egulias/email-validator": {
         "version": "2.1.11"
     },
@@ -816,6 +804,12 @@
         "files": [
             "config/packages/twig_extensions.yaml"
         ]
+    },
+    "twig/extra-bundle": {
+        "version": "v3.0.3"
+    },
+    "twig/string-extra": {
+        "version": "v3.0.3"
     },
     "twig/twig": {
         "version": "v2.11.3"
