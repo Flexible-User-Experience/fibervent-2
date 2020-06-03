@@ -352,7 +352,7 @@ class UserAdmin extends ParentUserAdmin
     protected function getImageHelperFormMapperWithThumbnail($minWidth = 1200)
     {
         $lis = $this->getConfigurationPool()->getContainer()->get('liip_imagine.cache.manager');
-        $vus = $this->getConfigurationPool()->getContainer()->get('vich_uploader.templating.helper.uploader_helper');
+        $vus = $this->getConfigurationPool()->getContainer()->get('app.smart_assets_helper')->getVichUploaderHerlper();
 
         return ($this->getSubject() ? $this->getSubject()->getImageName() ? '<img src="'.$lis->getBrowserPath(
                 $vus->asset($this->getSubject(), 'imageFile'),

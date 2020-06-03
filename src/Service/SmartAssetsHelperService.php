@@ -77,6 +77,14 @@ class SmartAssetsHelperService
     }
 
     /**
+     * @return UploaderHelper
+     */
+    public function getVichUploaderHerlper()
+    {
+        return $this->uploaderHelper;
+    }
+
+    /**
      * Determine if this PHP script is executed under a CLI context.
      *
      * @return bool
