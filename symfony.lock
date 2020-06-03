@@ -93,6 +93,9 @@
     "doctrine/reflection": {
         "version": "v1.0.0"
     },
+    "doctrine/sql-formatter": {
+        "version": "1.1.0"
+    },
     "egulias/email-validator": {
         "version": "2.1.11"
     },
@@ -146,9 +149,6 @@
     "imagine/imagine": {
         "version": "v0.7.1"
     },
-    "jdorn/sql-formatter": {
-        "version": "v1.2.17"
-    },
     "jms/metadata": {
         "version": "2.0.0"
     },
@@ -195,6 +195,9 @@
             "config/routes/liip_imagine.yaml"
         ]
     },
+    "maennchen/zipstream-php": {
+        "version": "2.1.0"
+    },
     "markbaker/complex": {
         "version": "1.4.7"
     },
@@ -209,6 +212,9 @@
     },
     "myclabs/deep-copy": {
         "version": "1.9.4"
+    },
+    "myclabs/php-enum": {
+        "version": "1.7.6"
     },
     "nelmio/alice": {
         "version": "3.2",
@@ -255,6 +261,9 @@
     },
     "psr/container": {
         "version": "1.0.0"
+    },
+    "psr/http-message": {
+        "version": "1.0.1"
     },
     "psr/link": {
         "version": "1.0.0"
@@ -580,6 +589,9 @@
     },
     "symfony/polyfill-php73": {
         "version": "v1.12.0"
+    },
+    "symfony/polyfill-php80": {
+        "version": "v1.17.0"
     },
     "symfony/process": {
         "version": "v4.3.4"
