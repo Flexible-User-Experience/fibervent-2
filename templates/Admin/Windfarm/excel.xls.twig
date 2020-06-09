@@ -47,6 +47,7 @@
         {# HEADER #}
         {% xlsrow 1 %}
             {% xlscell {
+                merge: 9,
                 style: {
                     alignment: {
                         horizontal: 'left',
@@ -54,13 +55,13 @@
                     },
                     font: {
                         size: 18
-                        }
-                    },
-                    merge: 9
+                    }
+                }
             } %}{{ 'pdf.damage_table_header.9_excel_title' | trans({'%name%': windfarm.name | upper}, 'messages', locale) }} {{ year }}{% endxlscell %}
         {% endxlsrow %}
         {% xlsrow 2 %}
             {% xlscell 1 {
+                merge: 'A3',
                 style: {
                     borders: {
                         allborders: {
@@ -84,10 +85,10 @@
                             rgb: 'D9E2F2'
                         }
                     }
-                },
-                merge: 'A3'
+                }
             } %}WTG{% endxlscell %}
             {% xlscell 2 {
+                merge: 'B3',
                 style: {
                     borders: {
                         allborders: {
@@ -111,10 +112,10 @@
                             rgb: 'D9E2F2'
                         }
                     }
-                },
-                merge: 'B3'
+                }
             } %}{{ 'pdf.damage_table_header.10_blade' | trans({}, 'messages', locale) }}{% endxlscell %}
             {% xlscell 3 {
+                merge: 'D2',
                 style: {
                     borders: {
                         allborders: {
@@ -138,8 +139,7 @@
                             rgb: 'D9E2F2'
                         }
                     }
-                },
-                merge: 'D2'
+                }
             } %}{{ 'pdf.damage_table_header.1_damage' | trans({}, 'messages', locale) }}{% endxlscell %}
             {% xlscell 4 {
                 style: {
@@ -158,9 +158,9 @@
                         }
                     }
                 }
-            } %}
-            {% endxlscell %}
+            } %}{% endxlscell %}
             {% xlscell 5 {
+                merge: 'G2',
                 style: {
                     borders: {
                         top: {
@@ -170,7 +170,7 @@
                             }
                         }
                     },
-                alignment: {
+                    alignment: {
                         horizontal: 'center',
                         vertical: 'center'
                     },
@@ -184,8 +184,7 @@
                             rgb: 'D9E2F2'
                         }
                     }
-                },
-                merge: 'G2'
+                }
             } %}{{ 'pdf.damage_table_header.2_position' | trans({}, 'messages', locale) }}{% endxlscell %}
             {% xlscell 6 {
                 style: {
@@ -204,8 +203,7 @@
                         }
                     }
                 }
-            } %}
-            {% endxlscell %}
+            } %}{% endxlscell %}
             {% xlscell 7 {
                 style: {
                     borders: {
@@ -223,9 +221,9 @@
                         }
                     }
                 }
-            } %}
-            {% endxlscell %}
+            } %}{% endxlscell %}
             {% xlscell 8 {
+                merge: 'H3',
                 style: {
                     borders: {
                         allborders: {
@@ -249,36 +247,10 @@
                             rgb: 'D9E2F2'
                         }
                     }
-                },
-                merge: 'H3'
+                }
             } %}{{ 'pdf.damage_table_header.6_size' | trans({}, 'messages', locale) }}{% endxlscell %}
             {% xlscell 9 {
-                style: {
-                    borders: {
-                        allborders: {
-                            style: 'thin',
-                            color: {
-                                rgb: '8FABD9'
-                            }
-                        }
-                    },
-                    alignment: {
-                        horizontal: 'center',
-                        vertical: 'center' },
-                    font: {
-                        size: '12',
-                        bold: true
-                    },
-                    fill: {
-                        type: 'solid',
-                        color: {
-                            rgb: 'D9E2F2'
-                        }
-                    }
-                },
-                merge: 'I3'
-            } %}{{ 'pdf.damage_table_header.7_description' | trans({}, 'messages', locale) }}{% endxlscell %}
-            {% xlscell 10 {
+                merge: 'I3',
                 style: {
                     borders: {
                         allborders: {
@@ -302,8 +274,34 @@
                             rgb: 'D9E2F2'
                         }
                     }
-                },
-                merge: 'J3'
+                }
+            } %}{{ 'pdf.damage_table_header.7_description' | trans({}, 'messages', locale) }}{% endxlscell %}
+            {% xlscell 10 {
+                merge: 'J3',
+                style: {
+                    borders: {
+                        allborders: {
+                            style: 'thin',
+                            color: {
+                                rgb: '8FABD9'
+                            }
+                        }
+                    },
+                    alignment: {
+                        horizontal: 'center',
+                        vertical: 'center'
+                    },
+                    font: {
+                        size: '12',
+                        bold: true
+                    },
+                    fill: {
+                        type: 'solid',
+                        color: {
+                            rgb: 'D9E2F2'
+                        }
+                    }
+                }
             } %}CAT{% endxlscell %}
         {% endxlsrow %}
         {% xlsrow 3 %}
@@ -324,8 +322,7 @@
                         }
                     }
                 }
-            } %}
-            {% endxlscell %}
+            } %}{% endxlscell %}
             {% xlscell 2 {
                 style: {
                     borders: {
@@ -343,8 +340,7 @@
                         }
                     }
                 }
-            } %}
-            {% endxlscell %}
+            } %}{% endxlscell %}
             {% xlscell 3 {
                 style: {
                     borders: {
@@ -402,9 +398,9 @@
                     borders: {
                         allborders: {
                             style: 'thin',
-                                color: {
-                                    rgb: '8FABD9'
-                                }
+                            color: {
+                                rgb: '8FABD9'
+                            }
                         }
                     },
                     alignment: {
@@ -491,7 +487,7 @@
                             rgb: 'D9E2F2'
                         }
                     }
-            }
+                }
             } %}{% endxlscell %}
             {% xlscell 9 {
                 style: {
@@ -527,7 +523,7 @@
                             rgb: 'D9E2F2'
                         }
                     }
-            }
+                }
             } %}{% endxlscell %}
         {% endxlsrow %}
         {# BODY #}
@@ -549,8 +545,8 @@
                                     horizontal: 'center',
                                     vertical: 'center'
                                 }
-                            },
-                        }%}{{ audit.windmill.code }}{% endxlscell %}
+                            }
+                        } %}{{ audit.windmill.code }}{% endxlscell %}
                         {% xlscell 2 {
                             style: {
                                 borders: {
@@ -565,8 +561,8 @@
                                     horizontal: 'center',
                                     vertical: 'center'
                                 }
-                            },
-                        }%}{{ auditWindmillBlade.windmillBlade.order }}{% endxlscell %}
+                            }
+                        } %}{{ auditWindmillBlade.windmillBlade.order }}{% endxlscell %}
                         {% xlscell 3 {
                             style: {
                                 borders: {
@@ -581,9 +577,10 @@
                                     horizontal: 'center',
                                     vertical: 'center'
                                 }
-                            },
-                        }%}{{ loop.index }}{% endxlscell %}
+                            }
+                        } %}{{ loop.index }}{% endxlscell %}
                         {% xlscell 4 {
+                            dataType: 's',
                             style: {
                                 borders: {
                                     allborders: {
@@ -597,9 +594,8 @@
                                     horizontal: 'center',
                                     vertical: 'center'
                                 }
-                            },
-                            dataType: 's'
-                        }%}{{ bladeDamage.damage.code }}{% endxlscell %}
+                            }
+                        } %}{{ bladeDamage.damage.code }}{% endxlscell %}
                         {% xlscell 5 {
                             style: {
                                 borders: {
@@ -614,8 +610,8 @@
                                     horizontal: 'center',
                                     vertical: 'center'
                                 }
-                            },
-                        }%}{{ bladeDamage.positionStringLocalized | trans({}, 'messages', locale) }}{% endxlscell %}
+                            }
+                        } %}{{ bladeDamage.positionStringLocalized | trans({}, 'messages', locale) }}{% endxlscell %}
                         {% xlscell 6 {
                             style: {
                                 borders: {
@@ -630,8 +626,8 @@
                                     horizontal: 'center',
                                     vertical: 'center'
                                 }
-                            },
-                        }%}{{ bladeDamage.radius }} m{% endxlscell %}
+                            }
+                        } %}{{ bladeDamage.radius }} m{% endxlscell %}
                         {% xlscell 7 {
                             style: {
                                 borders: {
@@ -646,8 +642,8 @@
                                     horizontal: 'center',
                                     vertical: 'center'
                                 }
-                            },
-                        }%}{{ bladeDamage.localizedDistanceString | trans({'%dist%': bladeDamage.distanceScaled}, 'messages', locale) }}{% endxlscell %}
+                            }
+                        } %}{{ bladeDamage.localizedDistanceString | trans({'%dist%': bladeDamage.distanceScaled}, 'messages', locale) }}{% endxlscell %}
                         {% xlscell 8 {
                             style: {
                                 borders: {
@@ -662,8 +658,8 @@
                                     horizontal: 'center',
                                     vertical: 'center'
                                 }
-                            },
-                        }%}{{ bladeDamage.size }} cm{% endxlscell %}
+                            }
+                        } %}{{ bladeDamage.size }} cm{% endxlscell %}
                         {% xlscell 9 {
                             style: {
                                 borders: {
@@ -675,7 +671,7 @@
                                     }
                                 }
                             }
-                        }%}{{ get_localized_description(bladeDamage.damage, locale) }}{% endxlscell %}
+                        } %}{{ get_localized_description(bladeDamage.damage, locale) }}{% endxlscell %}
                         {% xlscell 10 {
                             style: {
                                 borders: {
@@ -715,8 +711,8 @@
                                     horizontal: 'center',
                                     vertical: 'center'
                                 }
-                            },
-                        }%}{{ audit.windmill.code }}{% endxlscell %}
+                            }
+                        } %}{{ audit.windmill.code }}{% endxlscell %}
                         {% xlscell 2 {
                             style: {
                                 borders: {
@@ -731,8 +727,8 @@
                                     horizontal: 'center',
                                     vertical: 'center'
                                 }
-                            },
-                        }%}{{ auditWindmillBlade.windmillBlade.order }}{% endxlscell %}
+                            }
+                        } %}{{ auditWindmillBlade.windmillBlade.order }}{% endxlscell %}
                         {% xlscell 3 {
                             style: {
                                 borders: {
@@ -747,9 +743,10 @@
                                     horizontal: 'center',
                                     vertical: 'center'
                                 }
-                            },
-                        }%}-{% endxlscell %}
+                            }
+                        } %}-{% endxlscell %}
                         {% xlscell 4 {
+                            dataType: 's',
                             style: {
                                 borders: {
                                     allborders: {
@@ -763,8 +760,7 @@
                                     horizontal: 'center',
                                     vertical: 'center'
                                 }
-                            },
-                            dataType: 's'
+                            }
                         }%}0.00{% endxlscell %}
                         {% xlscell 5 {
                             style: {
@@ -780,8 +776,8 @@
                                     horizontal: 'center',
                                     vertical: 'center'
                                 }
-                            },
-                        }%}-{% endxlscell %}
+                            }
+                        } %}-{% endxlscell %}
                         {% xlscell 6 {
                             style: {
                                 borders: {
@@ -796,8 +792,8 @@
                                     horizontal: 'center',
                                     vertical: 'center'
                                 }
-                            },
-                        }%}-{% endxlscell %}
+                            }
+                        } %}-{% endxlscell %}
                         {% xlscell 7 {
                             style: {
                                 borders: {
@@ -812,8 +808,8 @@
                                     horizontal: 'center',
                                     vertical: 'center'
                                 }
-                            },
-                        }%}-{% endxlscell %}
+                            }
+                        } %}-{% endxlscell %}
                         {% xlscell 8 {
                             style: {
                                 borders: {
@@ -828,8 +824,8 @@
                                     horizontal: 'center',
                                     vertical: 'center'
                                 }
-                            },
-                        }%}-{% endxlscell %}
+                            }
+                        } %}-{% endxlscell %}
                         {% xlscell 9 {
                             style: {
                                 borders: {
@@ -841,7 +837,7 @@
                                     }
                                 }
                             }
-                        }%}{{ 'pdf.damage_table_body.no_damages_found' | trans({}, 'messages', locale) }}{% endxlscell %}
+                        } %}{{ 'pdf.damage_table_body.no_damages_found' | trans({}, 'messages', locale) }}{% endxlscell %}
                         {% xlscell 10 {
                             style: {
                                 borders: {
