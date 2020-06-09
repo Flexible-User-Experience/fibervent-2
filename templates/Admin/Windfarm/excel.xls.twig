@@ -1,11 +1,11 @@
-{% xlsdocument %}
+{% xlsdocument {format: 'xls'} %}
     {% xlssheet 'hoja1' {
         columnDimension: {
             'A': {
-                autoSize: true,
+                autoSize: true
             },
             'I': {
-                autoSize: true,
+                autoSize: true
             }
         },
         pageMargins: {
@@ -26,21 +26,33 @@
             scale: 100,
             verticalCentered: false
         },
-        printGridlines: true,
-        rightToLeft: false,
         rowDimension: {
-            'default': {
+            '1': {
                 collapsed: false,
                 outlineLevel: 0,
-                rowHeight: -1,
-                rowIndex: '1',
+                rowHeight: 28.0,
+                rowIndex: 1,
+                visible: true,
+                xfIndex: 0,
+                zeroHeight: false
+            },
+            default: {
+                collapsed: false,
+                outlineLevel: 0,
+                rowHeight: 18.0,
+                rowIndex: 1,
                 visible: true,
                 xfIndex: 0,
                 zeroHeight: false
             }
         },
-        sheetState: 'visible',
+        protection: {
+            sort: true
+        },
         showGridlines: true,
+        printGridlines: false,
+        rightToLeft: false,
+        sheetState: 'visible',
         tabColor: 'FF0000',
         zoomScale: 100
     } %}
@@ -532,6 +544,7 @@
                 {% for bladeDamage in auditWindmillBlade.bladeDamages if is_row_available(bladeDamage.damageCategory, damage_categories) %}
                     {% xlsrow %}
                         {% xlscell 1 {
+                            dataType: 's',
                             style: {
                                 borders: {
                                     allBorders: {
@@ -548,6 +561,7 @@
                             }
                         } %}{{ audit.windmill.code }}{% endxlscell %}
                         {% xlscell 2 {
+                            dataType: 'n',
                             style: {
                                 borders: {
                                     allBorders: {
@@ -564,6 +578,7 @@
                             }
                         } %}{{ auditWindmillBlade.windmillBlade.order }}{% endxlscell %}
                         {% xlscell 3 {
+                            dataType: 'n',
                             style: {
                                 borders: {
                                     allBorders: {
@@ -597,6 +612,7 @@
                             }
                         } %}{{ bladeDamage.damage.code }}{% endxlscell %}
                         {% xlscell 5 {
+                            dataType: 's',
                             style: {
                                 borders: {
                                     allBorders: {
@@ -613,6 +629,7 @@
                             }
                         } %}{{ bladeDamage.positionStringLocalized | trans({}, 'messages', locale) }}{% endxlscell %}
                         {% xlscell 6 {
+                            dataType: 's',
                             style: {
                                 borders: {
                                     allBorders: {
@@ -629,6 +646,7 @@
                             }
                         } %}{{ bladeDamage.radius }} m{% endxlscell %}
                         {% xlscell 7 {
+                            dataType: 's',
                             style: {
                                 borders: {
                                     allBorders: {
@@ -645,6 +663,7 @@
                             }
                         } %}{% if bladeDamage.edge == constant('App\\Enum\\BladeDamageEdgeEnum::EDGE_UNDEFINED') %}{{ 'pdf.damage_table_body.none' | trans({}, 'messages', locale) }}{% else %}{{ bladeDamage.localizedDistanceString | trans({'%dist%': bladeDamage.distanceScaled}, 'messages', locale) }}{% endif %}{% endxlscell %}
                         {% xlscell 8 {
+                            dataType: 's',
                             style: {
                                 borders: {
                                     allBorders: {
@@ -661,6 +680,7 @@
                             }
                         } %}{{ bladeDamage.size }} cm{% endxlscell %}
                         {% xlscell 9 {
+                            dataType: 's',
                             style: {
                                 borders: {
                                     allBorders: {
@@ -673,6 +693,7 @@
                             }
                         } %}{{ get_localized_description(bladeDamage.damage, locale) }}{% endxlscell %}
                         {% xlscell 10 {
+                            dataType: 'n',
                             style: {
                                 borders: {
                                     allBorders: {
