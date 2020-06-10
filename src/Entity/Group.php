@@ -12,7 +12,7 @@ use Sonata\UserBundle\Entity\BaseGroup as BaseGroup;
  *
  * @ORM\Entity(repositoryClass="App\Repository\GroupRepository")
  * @ORM\Table(name="admin_group")
- * @ORM\Cache(usage="NONSTRICT_READ_WRITE")
+ * ORM\Cache(usage="NONSTRICT_READ_WRITE")
  */
 class Group extends BaseGroup
 {

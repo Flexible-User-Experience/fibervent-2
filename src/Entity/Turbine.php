@@ -15,7 +15,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  *
  * @ORM\Table(uniqueConstraints={@ORM\UniqueConstraint(name="model_unique", columns={"model", "power", "tower_height"})})
  * @ORM\Entity(repositoryClass="App\Repository\TurbineRepository")
- * @ORM\Cache(usage="NONSTRICT_READ_WRITE")
+ * ORM\Cache(usage="NONSTRICT_READ_WRITE")
  * @Gedmo\SoftDeleteable(fieldName="removedAt", timeAware=false)
  * @UniqueEntity({"model", "power", "towerHeight"})
  */
@@ -48,7 +48,7 @@ class Turbine extends AbstractBase
      * @var ArrayCollection
      *
      * @ORM\OneToMany(targetEntity="Windmill", mappedBy="turbine")
-     * @ORM\Cache(usage="NONSTRICT_READ_WRITE")
+     * ORM\Cache(usage="NONSTRICT_READ_WRITE")
      */
     private $windmills;
 

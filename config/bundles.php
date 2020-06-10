@@ -31,7 +31,7 @@ return [
     Sonata\UserBundle\SonataUserBundle::class => ['all' => true],
     WhiteOctober\TCPDFBundle\WhiteOctoberTCPDFBundle::class => ['all' => true],
     FOS\CKEditorBundle\FOSCKEditorBundle::class => ['all' => true],
-    Snc\RedisBundle\SncRedisBundle::class => ['all' => true],
+//    Snc\RedisBundle\SncRedisBundle::class => ['all' => true],
     Oh\GoogleMapFormTypeBundle\OhGoogleMapFormTypeBundle::class => ['all' => true],
     MewesK\TwigSpreadsheetBundle\MewesKTwigSpreadsheetBundle::class => ['all' => true],
     Nelmio\Alice\Bridge\Symfony\NelmioAliceBundle::class => ['dev' => true, 'test' => true],

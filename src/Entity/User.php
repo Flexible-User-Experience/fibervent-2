@@ -19,7 +19,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  *
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  * @ORM\Table(name="admin_user")
- * @ORM\Cache(usage="NONSTRICT_READ_WRITE")
+ * ORM\Cache(usage="NONSTRICT_READ_WRITE")
  * @Gedmo\SoftDeleteable(fieldName="removedAt", timeAware=false)
  * @Vich\Uploadable
  */
@@ -53,7 +53,7 @@ class User extends BaseUser
      * @var Customer
      *
      * @ORM\ManyToOne(targetEntity="Customer", inversedBy="contacts")
-     * @ORM\Cache(usage="NONSTRICT_READ_WRITE")
+     * ORM\Cache(usage="NONSTRICT_READ_WRITE")
      */
     private $customer;
 

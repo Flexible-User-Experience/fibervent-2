@@ -16,14 +16,14 @@ use Gedmo\Translatable\Entity\MappedSuperclass\AbstractPersonalTranslation;
  *     "locale", "object_id", "field"
  *   })}
  * )
- * @ORM\Cache(usage="NONSTRICT_READ_WRITE")
+ * ORM\Cache(usage="NONSTRICT_READ_WRITE")
  */
 class DamageTranslation extends AbstractPersonalTranslation
 {
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Damage", inversedBy="translations")
      * @ORM\JoinColumn(name="object_id", referencedColumnName="id", onDelete="CASCADE")
-     * @ORM\Cache(usage="NONSTRICT_READ_WRITE")
+     * ORM\Cache(usage="NONSTRICT_READ_WRITE")
      */
     protected $object;
 

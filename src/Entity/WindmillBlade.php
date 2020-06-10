@@ -13,7 +13,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
  *
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="App\Repository\WindmillBladeRepository")
- * @ORM\Cache(usage="NONSTRICT_READ_WRITE")
+ * ORM\Cache(usage="NONSTRICT_READ_WRITE")
  * @Gedmo\SoftDeleteable(fieldName="removedAt", timeAware=false)
  */
 class WindmillBlade extends AbstractBase
@@ -38,7 +38,7 @@ class WindmillBlade extends AbstractBase
      * @var Windmill
      *
      * @ORM\ManyToOne(targetEntity="Windmill", inversedBy="windmillBlades")
-     * @ORM\Cache(usage="NONSTRICT_READ_WRITE")
+     * ORM\Cache(usage="NONSTRICT_READ_WRITE")
      */
     private $windmill;
 
