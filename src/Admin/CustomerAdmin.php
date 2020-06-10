@@ -110,8 +110,7 @@ class CustomerAdmin extends AbstractBaseAdmin
                 array(
                     'label' => 'admin.customer.web',
                     'required' => false,
-                    'help' => 'http://...',
-                    'sonata_help' => 'http://...',
+                    'help' => 'https://...',
                 )
             )
             ->end()

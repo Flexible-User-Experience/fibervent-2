@@ -54,7 +54,7 @@ class BladePhotoAdmin extends AbstractBaseAdmin
                 FileType::class,
                 array(
                     'label' => 'admin.bladephoto.imagefile',
-                    'help' => $this->getImageHelperFormMapperWithThumbnail(),
+                    'sonata_help' => $this->getImageHelperFormMapperWithThumbnail(),
                     'required' => false,
                 )
             )

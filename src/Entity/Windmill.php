@@ -72,7 +72,7 @@ class Windmill extends AbstractBase
      * @var ArrayCollection
      *
      * @ORM\OneToMany(targetEntity="Audit", mappedBy="windmill")
-     * @ORM\Cache(usage="NONSTRICT_READ_WRITE")
+     * ORM\Cache(usage="NONSTRICT_READ_WRITE")
      */
     private $audits;
 

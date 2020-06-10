@@ -48,7 +48,6 @@ class AuditWindmillBlade extends AbstractBase
      * @var ArrayCollection
      *
      * @ORM\OneToMany(targetEntity="Observation", mappedBy="auditWindmillBlade", cascade={"persist", "remove"}, orphanRemoval=true))
-     * @ORM\Cache(usage="NONSTRICT_READ_WRITE")
      * @Assert\Valid
      */
     private $observations;
@@ -57,7 +56,6 @@ class AuditWindmillBlade extends AbstractBase
      * @var ArrayCollection
      *
      * @ORM\OneToMany(targetEntity="BladePhoto", mappedBy="auditWindmillBlade", cascade={"persist", "remove"}, orphanRemoval=true))
-     * @ORM\Cache(usage="NONSTRICT_READ_WRITE")
      * @Assert\Valid
      */
     private $bladePhotos;

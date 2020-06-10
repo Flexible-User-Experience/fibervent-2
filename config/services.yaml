@@ -51,6 +51,7 @@ services:
         arguments:
             - '@security.authorization_checker'
             - '@security.token_storage'
+    # Redis
     snc_second_level_cache:
         class: '%snc_redis.doctrine_cache_predis.class%'
         arguments:

@@ -1,29 +1,29 @@
 snc_redis:
     clients:
         default:
-            type: predis
-            alias: default
-            dsn: 'redis://localhost'
+            type:    phpredis
+            alias:   default
+            dsn:     '%env(string:REDIS_URL)%'
             logging: '%kernel.debug%'
         doctrine:
-            type: predis
-            alias: doctrine
-            dsn: 'redis://localhost'
+            type:    predis
+            alias:   doctrine
+            dsn:     '%env(string:REDIS_URL)%'
             logging: '%kernel.debug%'
     doctrine:
         metadata_cache:
-            client: doctrine
+            client:         doctrine
             entity_manager: default
-            namespace: 'fib2dmc:'
+            namespace:      'fib2dmc:'
         result_cache:
-            client: doctrine
+            client:         doctrine
             entity_manager: default
-            namespace: 'fib2drc:'
+            namespace:      'fib2drc:'
         query_cache:
-            client: doctrine
+            client:         doctrine
             entity_manager: default
-            namespace: 'fib2dqc:'
+            namespace:      'fib2dqc:'
         second_level_cache:
-            client: doctrine
+            client:         doctrine
             entity_manager: default
-            namespace: 'fib2dslc:'
+            namespace:      'fib2dslc:'
