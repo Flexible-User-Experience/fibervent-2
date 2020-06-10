@@ -16,7 +16,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  *
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="App\Repository\WorkOrderTaskPhotoRepository")
- * ORM\Cache(usage="NONSTRICT_READ_WRITE")
+ * @ORM\Cache(usage="NONSTRICT_READ_WRITE")
  * @Gedmo\SoftDeleteable(fieldName="removedAt", timeAware=false)
  * @Vich\Uploadable
  */
@@ -40,7 +40,7 @@ class WorkOrderTaskPhoto extends AbstractBase
      * @var WorkOrderTask
      *
      * @ORM\ManyToOne(targetEntity="App\Entity\WorkOrderTask", inversedBy="photos")
-     * ORM\Cache(usage="NONSTRICT_READ_WRITE")
+     * @ORM\Cache(usage="NONSTRICT_READ_WRITE")
      */
     private $workOrderTask;
 

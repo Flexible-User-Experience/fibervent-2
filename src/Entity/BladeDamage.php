@@ -16,7 +16,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="App\Repository\BladeDamageRepository")
- * ORM\Cache(usage="NONSTRICT_READ_WRITE")
+ * @ORM\Cache(usage="NONSTRICT_READ_WRITE")
  * @Gedmo\SoftDeleteable(fieldName="removedAt", timeAware=false)
  */
 class BladeDamage extends AbstractBase
@@ -75,7 +75,7 @@ class BladeDamage extends AbstractBase
      * @var Damage
      *
      * @ORM\ManyToOne(targetEntity="Damage")
-     * ORM\Cache(usage="NONSTRICT_READ_WRITE")
+     * @ORM\Cache(usage="NONSTRICT_READ_WRITE")
      */
     private $damage;
 
@@ -83,7 +83,7 @@ class BladeDamage extends AbstractBase
      * @var DamageCategory
      *
      * @ORM\ManyToOne(targetEntity="DamageCategory")
-     * ORM\Cache(usage="NONSTRICT_READ_WRITE")
+     * @ORM\Cache(usage="NONSTRICT_READ_WRITE")
      */
     private $damageCategory;
 
@@ -91,7 +91,7 @@ class BladeDamage extends AbstractBase
      * @var AuditWindmillBlade
      *
      * @ORM\ManyToOne(targetEntity="AuditWindmillBlade", inversedBy="bladeDamages")
-     * ORM\Cache(usage="NONSTRICT_READ_WRITE")
+     * @ORM\Cache(usage="NONSTRICT_READ_WRITE")
      */
     private $auditWindmillBlade;
 
@@ -99,7 +99,7 @@ class BladeDamage extends AbstractBase
      * @var ArrayCollection
      *
      * @ORM\OneToMany(targetEntity="Photo", mappedBy="bladeDamage", cascade={"persist", "remove"}, orphanRemoval=true))
-     * ORM\Cache(usage="NONSTRICT_READ_WRITE")
+     * @ORM\Cache(usage="NONSTRICT_READ_WRITE")
      * @Assert\Valid
      */
     private $photos;
