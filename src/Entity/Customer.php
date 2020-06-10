@@ -23,7 +23,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  *
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="App\Repository\CustomerRepository")
- * ORM\Cache(usage="NONSTRICT_READ_WRITE")
+ * @ORM\Cache(usage="NONSTRICT_READ_WRITE")
  * @Gedmo\SoftDeleteable(fieldName="removedAt", timeAware=false)
  * @Vich\Uploadable
  */
@@ -83,7 +83,7 @@ class Customer extends AbstractBase
      * @var State
      *
      * @ORM\ManyToOne(targetEntity="State", inversedBy="customers")
-     * ORM\Cache(usage="NONSTRICT_READ_WRITE")
+     * @ORM\Cache(usage="NONSTRICT_READ_WRITE")
      */
     private $state;
 
@@ -91,7 +91,7 @@ class Customer extends AbstractBase
      * @var ArrayCollection
      *
      * @ORM\OneToMany(targetEntity="Windfarm", mappedBy="customer", cascade={"persist", "remove"})
-     * ORM\Cache(usage="NONSTRICT_READ_WRITE")
+     * @ORM\Cache(usage="NONSTRICT_READ_WRITE")
      */
     private $windfarms;
 
@@ -99,7 +99,7 @@ class Customer extends AbstractBase
      * @var ArrayCollection
      *
      * @ORM\OneToMany(targetEntity="User", mappedBy="customer", cascade={"persist", "remove"})
-     * ORM\Cache(usage="NONSTRICT_READ_WRITE")
+     * @ORM\Cache(usage="NONSTRICT_READ_WRITE")
      */
     private $contacts;
 

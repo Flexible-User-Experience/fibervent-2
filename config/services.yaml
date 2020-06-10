@@ -51,10 +51,11 @@ services:
         arguments:
             - '@security.authorization_checker'
             - '@security.token_storage'
-#    snc_second_level_cache:
-#        class: '%snc_redis.doctrine_cache_phpredis.class%'
-#        arguments:
-#            - '@snc_redis.doctrine'
+    # Redis
+    snc_second_level_cache:
+        class: '%snc_redis.doctrine_cache_predis.class%'
+        arguments:
+            - '@snc_redis.doctrine'
     # Managers
     app.manager_observation:
         class: App\Manager\ObservationManager
