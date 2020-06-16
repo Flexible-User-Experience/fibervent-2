@@ -17,6 +17,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  *
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="App\Repository\PhotoRepository")
+ * @ORM\Cache(usage="NONSTRICT_READ_WRITE")
  * @Gedmo\SoftDeleteable(fieldName="removedAt", timeAware=false)
  * @Vich\Uploadable
  */
@@ -41,6 +42,7 @@ class Photo extends AbstractBase
      * @var BladeDamage
      *
      * @ORM\ManyToOne(targetEntity="BladeDamage", inversedBy="photos")
+     * @ORM\Cache(usage="NONSTRICT_READ_WRITE")
      */
     private $bladeDamage;
 
