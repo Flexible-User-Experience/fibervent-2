@@ -13,7 +13,7 @@
         "a2lix/translation-form-bundle": "^2.0",
         "beberlei/doctrineextensions": "^1.0",
         "doctrine/doctrine-bundle": "^2.0",
-        "doctrine/doctrine-migrations-bundle": "^2.0",
+        "doctrine/doctrine-migrations-bundle": "^3.0",
         "doctrine/orm": "^2.7",
         "egulias/email-validator": "^2.1",
         "friendsofsymfony/ckeditor-bundle": "^2.1",
