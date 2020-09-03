@@ -7,7 +7,7 @@ use Sonata\BlockBundle\Block\BlockContextInterface;
 use Sonata\BlockBundle\Block\Service\AbstractBlockService;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Templating\EngineInterface;
+use Twig\Environment;
 
 /**
  * Class WorkOrdersNotFinishedBlock.
@@ -28,13 +28,12 @@ class WorkOrdersNotFinishedBlock extends AbstractBlockService
     /**
      * Constructor.
      *
-     * @param string              $name
-     * @param EngineInterface     $templating
+     * @param Environment         $templating
      * @param WorkOrderRepository $wors
      */
-    public function __construct($name, EngineInterface $templating, WorkOrderRepository $wors)
+    public function __construct(Environment $templating, WorkOrderRepository $wors)
     {
-        parent::__construct($name, $templating);
+        parent::__construct($templating);
         $this->wors = $wors;
     }
 
@@ -46,7 +45,7 @@ class WorkOrdersNotFinishedBlock extends AbstractBlockService
      *
      * @return Response
      */
-    public function execute(BlockContextInterface $blockContext, Response $response = null)
+    public function execute(BlockContextInterface $blockContext, Response $response = null): Response
     {
         $notFinishedWorkOrders = $this->wors->findAvailableSortedByProjectNumber(null, 'DESC');
 
@@ -63,19 +62,9 @@ class WorkOrdersNotFinishedBlock extends AbstractBlockService
     }
 
     /**
-     * Get name.
-     *
-     * @return string
-     */
-    public function getName()
-    {
-        return 'event_calendar';
-    }
-
-    /**
      * @param OptionsResolver $resolver
      */
-    public function configureSettings(OptionsResolver $resolver)
+    public function configureSettings(OptionsResolver $resolver): void
     {
         $resolver->setDefaults(array(
             'title' => 'WorkOrdersNotFinishedBlock',

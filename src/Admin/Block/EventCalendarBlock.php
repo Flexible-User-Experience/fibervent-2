@@ -22,7 +22,7 @@ class EventCalendarBlock extends AbstractBlockService
      *
      * @return Response
      */
-    public function execute(BlockContextInterface $blockContext, Response $response = null)
+    public function execute(BlockContextInterface $blockContext, Response $response = null): Response
     {
         return $this->renderResponse(
             $blockContext->getTemplate(),
@@ -36,19 +36,9 @@ class EventCalendarBlock extends AbstractBlockService
     }
 
     /**
-     * Get name.
-     *
-     * @return string
-     */
-    public function getName()
-    {
-        return 'event_calendar';
-    }
-
-    /**
      * @param OptionsResolver $resolver
      */
-    public function configureSettings(OptionsResolver $resolver)
+    public function configureSettings(OptionsResolver $resolver): void
     {
         $resolver->setDefaults(array(
             'title' => 'Calendar',
