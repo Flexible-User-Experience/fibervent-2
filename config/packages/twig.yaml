@@ -10,7 +10,7 @@ twig:
         google_maps_api_key:      '%google_maps_api_key%'
     form_themes:
         - 'bootstrap_3_layout.html.twig'
-        - '@SonataCore/Form/datepicker.html.twig'
+        - '@SonataForm/Form/datepicker.html.twig'
         - '@FOSCKEditor/Form/ckeditor_widget.html.twig'
         - 'Admin/Form/action_button_from_template.html.twig'
         - 'Admin/Form/audit_diagram_type_form_template.html.twig'
