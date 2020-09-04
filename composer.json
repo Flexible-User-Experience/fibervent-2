@@ -12,6 +12,8 @@
         "ext-redis": "*",
         "a2lix/translation-form-bundle": "^2.0",
         "beberlei/doctrineextensions": "^1.0",
+        "cocur/slugify": "^4.0",
+        "doctrine/doctrine-migrations-bundle": "^3.0",
         "egulias/email-validator": "^2.1",
         "friendsofsymfony/ckeditor-bundle": "^2.1",
         "friendsofsymfony/jsrouting-bundle": "^2.5",
