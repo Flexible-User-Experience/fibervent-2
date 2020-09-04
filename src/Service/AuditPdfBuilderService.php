@@ -131,7 +131,7 @@ class AuditPdfBuilderService extends AbstractPdfBuilderService
             // logo
             if ($audit->getCustomer()->isShowLogoInPdfs() && $audit->getCustomer()->getImageName()) {
                 // customer has logo
-                $pdf->Image($this->sahs->getAbsoluteAssetFilePath($this->uh->asset($audit->getCustomer(), 'imageFile')), CustomTcpdf::PDF_MARGIN_LEFT + 12, 45, 55, 0, '', '', 'T', 2, 300, '', false, false, 0, false, false, false);
+                $pdf->Image($this->sahs->getAbsoluteLiipMediaCacheAssetFilePathByFilterAndResolveItIfIsNecessary($this->uh->asset($audit->getCustomer(), 'imageFile'), '1080xY'), CustomTcpdf::PDF_MARGIN_LEFT + 12, 45, 55, 0, '', '', 'T', 2, 300, '', false, false, 0, false, false, false);
                 $pdf->Image($this->sahs->getAbsoluteAssetPathContextIndependentWithVersionStrategy('build/fibervent_logo_white_landscape.jpg'), 100, 45, 78, 0, 'JPEG', '', 'T', false, 300, '', false, false, 0, false, false, false);
             } else {
                 // customer hasn't logo
