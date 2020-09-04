@@ -9,6 +9,11 @@ liip_imagine:
             web_path: ~
     filter_sets:
         cache: ~
+        1080xY:
+            quality: 80
+            filters:
+                auto_rotate: ~
+                thumbnail: { size: [ 1080, null ], mode: outbound }
         960x540:
             quality: 80
             filters:

@@ -9,7 +9,7 @@ use Sonata\BlockBundle\Block\Service\AbstractBlockService;
 use Sonata\BlockBundle\Block\BlockContextInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Templating\EngineInterface;
+use Twig\Environment;
 
 /**
  * Class AuditsBlock.
@@ -40,9 +40,9 @@ class AuditsBlock extends AbstractBlockService
      * @param AuditRepository     $ars
      * @param AuthCustomerService $acs
      */
-    public function __construct($name, EngineInterface $templating, AuditRepository $ars, AuthCustomerService $acs)
+    public function __construct(Environment $templating, AuditRepository $ars, AuthCustomerService $acs)
     {
-        parent::__construct($name, $templating);
+        parent::__construct($templating);
         $this->ars = $ars;
         $this->acs = $acs;
     }
@@ -55,7 +55,7 @@ class AuditsBlock extends AbstractBlockService
      *
      * @return Response
      */
-    public function execute(BlockContextInterface $blockContext, Response $response = null)
+    public function execute(BlockContextInterface $blockContext, Response $response = null): Response
     {
         if ($this->acs->isCustomerUser()) {
             $doingAudits = $this->ars->getDoingAuditsByCustomerAmount($this->acs->getCustomer());
@@ -81,21 +81,11 @@ class AuditsBlock extends AbstractBlockService
     }
 
     /**
-     * Get name.
-     *
-     * @return string
-     */
-    public function getName()
-    {
-        return 'done_audits';
-    }
-
-    /**
      * Define the default options for the block.
      *
      * @param OptionsResolver $resolver
      */
-    public function configureSettings(OptionsResolver $resolver)
+    public function configureSettings(OptionsResolver $resolver): void
     {
         $resolver->setDefaults(
             array(
